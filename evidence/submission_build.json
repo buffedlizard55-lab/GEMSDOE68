@@ -1,0 +1,229 @@
+{
+ "schema": 1,
+ "generated_utc": "2026-10-12T01:41:05Z",
+ "lane": "auto-context stacked refinement (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436)",
+ "base_name": "gems68-autoctx-40000-20261012T014104Z",
+ "note": "GEMSDOE68 autoctx stage2 x1 budget 40000 rmin 2.4 offcat>2.0px",
+ "data": {
+  "feature_stack_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+  "n_channels": 47,
+  "footprint_px": 5167373,
+  "grid": {
+   "crs": "EPSG:32611",
+   "pixel_m": 100.0,
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ]
+  }
+ },
+ "timing": {
+  "stage1_seconds": 34.0,
+  "stage2_seconds": [
+   19.6
+  ],
+  "iterations": 1
+ },
+ "emission": {
+  "candidates": 4761049,
+  "emitted": 40000,
+  "budget": 40000,
+  "r_min_px": 2.4,
+  "exclude_catalogue_px": 2.0,
+  "on_catalogue": 0
+ },
+ "marginal_bar_at_0p2778": 0.05556,
+ "outputs": {
+  "zeros": {
+   "path": "docs/downloads/gems68-autoctx-40000-20261012T014104Z-zeros.tif",
+   "bytes": 786110,
+   "sha256": "82d44d05f4f82a9fabf9a82c1656363e87280a0702f6d4df1cbdf03bc74fd0e2",
+   "outside": "zeros",
+   "format_check": {
+    "ok": true,
+    "checks": {
+     "single_band": true,
+     "driver_geotiff": {
+      "ok": true,
+      "detail": "GTiff"
+     },
+     "count_1": {
+      "ok": true,
+      "detail": "1"
+     },
+     "dtype_float32": {
+      "ok": true,
+      "detail": "float32"
+     },
+     "crs_EPSG32611": {
+      "ok": true,
+      "detail": "EPSG:32611 != EPSG:32611"
+     },
+     "shape_match": {
+      "ok": true,
+      "detail": "(3730, 3292) != (3730, 3292)"
+     },
+     "transform_match": {
+      "ok": true,
+      "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) != (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+     },
+     "finite_inside_footprint": {
+      "ok": true,
+      "detail": "0 NaN inside footprint"
+     },
+     "outside_footprint_is_zero_or_nan": {
+      "ok": true,
+      "detail": "0 non-zero finite pixels outside the footprint"
+     },
+     "values_in_0_1": {
+      "ok": true,
+      "detail": "min=0.0 max=1.0"
+     },
+     "not_all_zero": {
+      "ok": true,
+      "detail": "raster is entirely zero"
+     },
+     "emitted_pixels": 40000,
+     "finite_pixels": 12279160,
+     "footprint_pixels": 5167373
+    },
+    "failures": [],
+    "sha256": "82d44d05f4f82a9fabf9a82c1656363e87280a0702f6d4df1cbdf03bc74fd0e2",
+    "bytes": 786110
+   }
+  },
+  "zeros_zip": {
+   "path": "docs/downloads/gems68-autoctx-40000-20261012T014104Z-zeros.zip",
+   "bytes": 60081,
+   "sha256": "969f1c491e71611d88f29ef7fb6b60db4c691219322be9ca65fad44c2b35f8c1"
+  },
+  "nan": {
+   "path": "docs/downloads/gems68-autoctx-40000-20261012T014104Z-nan.tif",
+   "bytes": 1545970,
+   "sha256": "e0a9761f77bbf75588f224e028169843749adef1853cbae4f548062442ddbfaf",
+   "outside": "nan",
+   "format_check": {
+    "ok": true,
+    "checks": {
+     "single_band": true,
+     "driver_geotiff": {
+      "ok": true,
+      "detail": "GTiff"
+     },
+     "count_1": {
+      "ok": true,
+      "detail": "1"
+     },
+     "dtype_float32": {
+      "ok": true,
+      "detail": "float32"
+     },
+     "crs_EPSG32611": {
+      "ok": true,
+      "detail": "EPSG:32611 != EPSG:32611"
+     },
+     "shape_match": {
+      "ok": true,
+      "detail": "(3730, 3292) != (3730, 3292)"
+     },
+     "transform_match": {
+      "ok": true,
+      "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) != (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+     },
+     "finite_inside_footprint": {
+      "ok": true,
+      "detail": "0 NaN inside footprint"
+     },
+     "outside_footprint_is_zero_or_nan": {
+      "ok": true,
+      "detail": "0 non-zero finite pixels outside the footprint"
+     },
+     "values_in_0_1": {
+      "ok": true,
+      "detail": "min=0.0 max=1.0"
+     },
+     "not_all_zero": {
+      "ok": true,
+      "detail": "raster is entirely zero"
+     },
+     "emitted_pixels": 40000,
+     "finite_pixels": 5167373,
+     "footprint_pixels": 5167373
+    },
+    "failures": [],
+    "sha256": "e0a9761f77bbf75588f224e028169843749adef1853cbae4f548062442ddbfaf",
+    "bytes": 1545970
+   }
+  },
+  "surface": {
+   "path": "docs/downloads/gems68-autoctx-40000-20261012T014104Z-surface-zeros.tif",
+   "bytes": 14987418,
+   "sha256": "f3716679fd0a1579c4be328baf7760d5e6a2763492f053acc1a91e0d568dd90e",
+   "outside": "zeros",
+   "format_check": {
+    "ok": true,
+    "checks": {
+     "single_band": true,
+     "driver_geotiff": {
+      "ok": true,
+      "detail": "GTiff"
+     },
+     "count_1": {
+      "ok": true,
+      "detail": "1"
+     },
+     "dtype_float32": {
+      "ok": true,
+      "detail": "float32"
+     },
+     "crs_EPSG32611": {
+      "ok": true,
+      "detail": "EPSG:32611 != EPSG:32611"
+     },
+     "shape_match": {
+      "ok": true,
+      "detail": "(3730, 3292) != (3730, 3292)"
+     },
+     "transform_match": {
+      "ok": true,
+      "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) != (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+     },
+     "finite_inside_footprint": {
+      "ok": true,
+      "detail": "0 NaN inside footprint"
+     },
+     "outside_footprint_is_zero_or_nan": {
+      "ok": true,
+      "detail": "0 non-zero finite pixels outside the footprint"
+     },
+     "values_in_0_1": {
+      "ok": true,
+      "detail": "min=0.0 max=0.9999998211860657"
+     },
+     "not_all_zero": {
+      "ok": true,
+      "detail": "raster is entirely zero"
+     },
+     "emitted_pixels": 5167373,
+     "finite_pixels": 12279160,
+     "footprint_pixels": 5167373
+    },
+    "failures": [],
+    "sha256": "f3716679fd0a1579c4be328baf7760d5e6a2763492f053acc1a91e0d568dd90e",
+    "bytes": 14987418
+   }
+  }
+ },
+ "registry": [],
+ "registry_verdict": {
+  "duplicate": false,
+  "worst_spearman": null,
+  "worst_overlap": null,
+  "lane_ok": true
+ },
+ "seconds": 59.7
+}
