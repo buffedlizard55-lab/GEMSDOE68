@@ -1,0 +1,39 @@
+{
+ "generated_utc": "2026-10-12T04:20:57Z",
+ "lane": "auto-context stacked refinement",
+ "emission_params": {
+  "stage": "stage2",
+  "radius_px": 3,
+  "budget": 20000
+ },
+ "dot_count": 20000,
+ "footprint_cells": 5164312,
+ "catalogue_cells": 60988,
+ "mean_prob_under_dots": 0.7132660746574402,
+ "mean_prob_all": 0.1519828587770462,
+ "n_training_rows": 243858,
+ "n_positives": 60894,
+ "files": {
+  "nan": {
+   "path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
+   "sha256": "cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf",
+   "bytes": 291557,
+   "emitted_cells": 20000,
+   "validator_passed": true,
+   "validator_failures": [],
+   "validator_skipped": [],
+   "n_checks": 16
+  },
+  "zeros": {
+   "path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif",
+   "sha256": "7175e1681ed2878cccaca89c6945700a043434118a31e4fe5ab4b0e557451260",
+   "bytes": 291559,
+   "emitted_cells": 20000,
+   "validator_passed": true,
+   "validator_failures": [],
+   "validator_skipped": [],
+   "n_checks": 16
+  }
+ },
+ "elapsed_s": 312.9
+}

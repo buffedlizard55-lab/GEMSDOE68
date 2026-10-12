@@ -1,2 +1,9 @@
-import sys, pathlib
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent / "src"))
+"""Make ``src`` importable for the test suite without installing the package."""
+
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))

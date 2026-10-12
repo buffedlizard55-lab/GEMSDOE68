@@ -1,0 +1,160 @@
+{
+  "generated_utc": "2026-10-11 (reconciled against current shared package and stored per-file comparison hashes)",
+  "template": "https://github.com/buffedlizard55-lab/60GEMSDOE; the live upstream revision/tarball digest was not independently verified in this checkout. Per-file template_sha256 values are retained as the historical comparison basis.",
+  "policy": "Reuse the canonical shared src/gems57 package. This repository contains local shared-package differences; no external owner-template PR/merge is claimed. The legacy research runner remains disabled until upstream/shared-tooling and release gates are reviewed.",
+  "n_files": 23,
+  "n_identical": 19,
+  "files": {
+    "__init__.py": {
+      "sha256": "bd7f12b45caf67b7b4d0da4656c7c3895513bec524ec0b7f251227ecbdd39d26",
+      "template_sha256": "bd7f12b45caf67b7b4d0da4656c7c3895513bec524ec0b7f251227ecbdd39d26",
+      "identical": true,
+      "bytes": 641
+    },
+    "anatomy.py": {
+      "sha256": "adbbad445c65eb91d693d3a3698ddafa47f6cc9ce456bb8a48a80e76c6e560a3",
+      "template_sha256": "f47103ae0f615a0f04ef0427ea83ad2dd11ecd4af34e53b99f2e20e557025cf9",
+      "identical": false,
+      "bytes": 20046
+    },
+    "damagezone_envelope.py": {
+      "sha256": "5e5cc359f3ccc239a0906d96f642057461ae7928e967f02249b62dab2ac98a36",
+      "template_sha256": "5e5cc359f3ccc239a0906d96f642057461ae7928e967f02249b62dab2ac98a36",
+      "identical": true,
+      "bytes": 9838
+    },
+    "emit.py": {
+      "sha256": "05c473e736e4a599b35be77b2791b62d72460383853c8fba0eb56ea26c99055d",
+      "template_sha256": "05c473e736e4a599b35be77b2791b62d72460383853c8fba0eb56ea26c99055d",
+      "identical": true,
+      "bytes": 19204
+    },
+    "evaluate_holdout.py": {
+      "sha256": "ad86640b46f3c5fc6b1aceec4c4bfc82d03e35008b37ab2a8ad6076e6810ff3a",
+      "template_sha256": "ad86640b46f3c5fc6b1aceec4c4bfc82d03e35008b37ab2a8ad6076e6810ff3a",
+      "identical": true,
+      "bytes": 7490
+    },
+    "evaluator_provenance.py": {
+      "sha256": "6f1d1932fbe427ceb028f74d80926aa836b2cb77c982625c97d1c4141b7b80e2",
+      "template_sha256": "6f1d1932fbe427ceb028f74d80926aa836b2cb77c982625c97d1c4141b7b80e2",
+      "identical": true,
+      "bytes": 2952
+    },
+    "faultzone.py": {
+      "sha256": "620537490173e565898911577f6cdf95e288d8eff326830a1da9c71f4b467bdd",
+      "template_sha256": "620537490173e565898911577f6cdf95e288d8eff326830a1da9c71f4b467bdd",
+      "identical": true,
+      "bytes": 17696
+    },
+    "fit.py": {
+      "sha256": "936488cc00c0f71c64d7e36a94dd1ddd0f17625abeefb41e7c6e75360ac14ae8",
+      "template_sha256": "936488cc00c0f71c64d7e36a94dd1ddd0f17625abeefb41e7c6e75360ac14ae8",
+      "identical": true,
+      "bytes": 5891
+    },
+    "fitting.py": {
+      "sha256": "91fbc11fc51374ca07b5246d5221edee33636e546fa457331e84272b80a7cbc7",
+      "template_sha256": "91fbc11fc51374ca07b5246d5221edee33636e546fa457331e84272b80a7cbc7",
+      "identical": true,
+      "bytes": 10707
+    },
+    "gates.py": {
+      "sha256": "c4b0253277ebb25051e43337aaf19d9d619e3ab7672c796b5527a5146ac7bca8",
+      "template_sha256": "7c57f70dbba58bb1112df4193a3de56516af0f981970d4b943b394f99b573dae",
+      "identical": false,
+      "bytes": 10890
+    },
+    "geo.py": {
+      "sha256": "4320d4fb718a66a794b21c35af28cc1f2ce7b6e49649b17e86b3e9eb34235ff8",
+      "template_sha256": "4320d4fb718a66a794b21c35af28cc1f2ce7b6e49649b17e86b3e9eb34235ff8",
+      "identical": true,
+      "bytes": 6015
+    },
+    "grid.py": {
+      "sha256": "b96df7ec0f33658a61b0baa5db85fcd19be2cd8b1873f99699bd26bddae8cd8d",
+      "template_sha256": "b96df7ec0f33658a61b0baa5db85fcd19be2cd8b1873f99699bd26bddae8cd8d",
+      "identical": true,
+      "bytes": 8704
+    },
+    "holdout.py": {
+      "sha256": "7a0a84176986190b527aa9c6a84216c2dab4b599f25b1143db5f420e85020ab1",
+      "template_sha256": "7a0a84176986190b527aa9c6a84216c2dab4b599f25b1143db5f420e85020ab1",
+      "identical": true,
+      "bytes": 14883
+    },
+    "metric.py": {
+      "sha256": "4b10227952378d30cc1a60781cdff6ea58916abadde3af3b14185176c66c13e0",
+      "template_sha256": "4afe10cbaa229948520c75194b1ebc32676e72544f05582f0725092b097b4d7f",
+      "identical": false,
+      "bytes": 9914
+    },
+    "network.py": {
+      "sha256": "d5e53d7df182e69bb22a6e39ac16f43d3f5b730e503d86538d5f8f7360020943",
+      "template_sha256": "d5e53d7df182e69bb22a6e39ac16f43d3f5b730e503d86538d5f8f7360020943",
+      "identical": true,
+      "bytes": 9095
+    },
+    "offcatalogue.py": {
+      "sha256": "5c1937dda9f16563d8679446bb60e66c8c878e7440c522c44afa0e7879b7b6e8",
+      "template_sha256": "5c1937dda9f16563d8679446bb60e66c8c878e7440c522c44afa0e7879b7b6e8",
+      "identical": true,
+      "bytes": 16436
+    },
+    "relay_bend_anatomy.py": {
+      "sha256": "cb9b79b9b61feaaaf6305009f571b6222c1ec390d1f94a1b05a91e05e7eb5dcb",
+      "template_sha256": "cb9b79b9b61feaaaf6305009f571b6222c1ec390d1f94a1b05a91e05e7eb5dcb",
+      "identical": true,
+      "bytes": 13742
+    },
+    "spatial.py": {
+      "sha256": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8",
+      "template_sha256": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8",
+      "identical": true,
+      "bytes": 9879
+    },
+    "strand_orientation.py": {
+      "sha256": "c1dd6d8bc39c48c4cda11321c116e600b59b18cf1764e23ce3d5438bea9dd0bc",
+      "template_sha256": "c1dd6d8bc39c48c4cda11321c116e600b59b18cf1764e23ce3d5438bea9dd0bc",
+      "identical": true,
+      "bytes": 5342
+    },
+    "strike_zone.py": {
+      "sha256": "eaf5b1030b731ec743650568d28598d3b6104e641a089dd6cca196e05be4e9c4",
+      "template_sha256": "eaf5b1030b731ec743650568d28598d3b6104e641a089dd6cca196e05be4e9c4",
+      "identical": true,
+      "bytes": 5132
+    },
+    "submission_writer.py": {
+      "sha256": "41220185ac2823fe5358603d38f2a915ea3e5f1ab1f94f0b237295b38b4a2565",
+      "template_sha256": "41220185ac2823fe5358603d38f2a915ea3e5f1ab1f94f0b237295b38b4a2565",
+      "identical": true,
+      "bytes": 6387
+    },
+    "uniqueness.py": {
+      "sha256": "480ec371decb829eeeba36a75372ac6f7489b475a2e74625cc9198a6dab05bc3",
+      "template_sha256": "1c5094b814277ae801ccea6a47cf744429cffcdc10f9cc79f229d5fc44a8df95",
+      "identical": false,
+      "bytes": 31502
+    },
+    "validate.py": {
+      "sha256": "e7849554b47f6a2b66aeb2f7cfd5db06267412f049f52a73f1c41f934a2c34dd",
+      "template_sha256": "e7849554b47f6a2b66aeb2f7cfd5db06267412f049f52a73f1c41f934a2c34dd",
+      "identical": true,
+      "bytes": 4765
+    }
+  },
+  "local_shared_source_patch": {
+    "files": [
+      "src/gems57/uniqueness.py",
+      "src/gems57/gates.py"
+    ],
+    "reason": "This PR separates continuous-surface rank/pixel checks from final-dot overlap; recomputes absolute Spearman/overlap thresholds for cached rows; requires an explicit organizer-complete registry certificate plus matching expected-raster count before any full uniqueness pass; keeps density classification diagnostic only.",
+    "upstream_status": "not submitted or merged; live upstream revision not independently verified"
+  },
+  "comparison_limitations": "origin/main does not track registry/template_pin.json although the earlier provenance note referenced it. Current hashes are checked against the stored per-file template_sha256 values only; no live upstream clone or tarball comparison was performed in this reconciliation.",
+  "inherited_main_source_differences": [
+    "src/gems57/anatomy.py",
+    "src/gems57/metric.py"
+  ]
+}

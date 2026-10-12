@@ -1,17 +1,37 @@
+# Both lanes of this repository are configured here: the "verified pipeline" that
+# arrived from main (package gems68) and this session's lane (package gems68 with
+# the lane68_* entry points).  The union of both dependency sets is declared so
+# either lane installs.
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "gems68"
+name = "gemsdoe68"
 version = "0.1.0"
-description = "Auto-context stacked refinement for the DOE GEMS Prize Challenge (GEMSDOE68 lane)"
+description = "Auto-context stacked fault discovery for the DOE GEMS Prize (DrivenData #306)"
 requires-python = ">=3.10"
-dependencies = ["numpy", "scipy", "lightgbm", "rasterio", "tifffile"]
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "rasterio>=1.3",
+    "affine>=2.4",
+    "scikit-image>=0.21",
+    "scikit-learn>=1.3",
+    "lightgbm>=4.0",
+    "pandas>=2.0",
+    "shapely>=2.0",
+    "matplotlib>=3.7",
+    "tifffile",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4"]
+test = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-package-dir = {"" = "src"}
-packages = ["gems68"]
+pythonpath = ["src"]
