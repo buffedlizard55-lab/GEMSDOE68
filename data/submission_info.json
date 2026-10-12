@@ -1,0 +1,10 @@
+{
+  "out_filename": "gemsdoe68-autocontext-s2-20261012T014136Z-zeros.tif",
+  "nan_filename": "gemsdoe68-autocontext-s2-20261012T014136Z-nan.tif",
+  "out_path": "docs/downloads/gemsdoe68-autocontext-s2-20261012T014136Z-zeros.tif",
+  "nan_path": "docs/downloads/gemsdoe68-autocontext-s2-20261012T014136Z-nan.tif",
+  "sha256": "753b55a678a4a7e7389167b1f9ede915f366ac907b54df0861266f0a5d70f7a5",
+  "sha256_nan": "ec75090b9a5d695662e56d46e2e96bc3164683c7fdcdb43413438a0f95063b7e",
+  "n_dots": 35707,
+  "submission_name": "gemsdoe68-autocontext-s2-20261012T014136Z"
+}

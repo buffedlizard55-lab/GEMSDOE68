@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEMSDOE68 — Auto-Context Stacked Refinement for Geothermal Fault Discovery</title>
+    <style>
+        :root { --primary: #1a5276; --accent: #e67e22; --success: #27ae60; --bg: #fafafa; --card: #fff; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: #333; line-height: 1.6; }
+        .container { max-width: 960px; margin: 0 auto; padding: 20px; }
+        header { background: var(--primary); color: #fff; padding: 30px 0; text-align: center; }
+        header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+        header p { opacity: 0.85; font-size: 0.95rem; }
+        .download-box { background: var(--accent); color: #fff; border-radius: 8px; padding: 24px; margin: 20px 0; text-align: center; }
+        .download-box h2 { font-size: 1.3rem; margin-bottom: 12px; }
+        .download-box a.btn { display: inline-block; background: #fff; color: var(--accent); padding: 12px 28px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 1.1rem; margin: 6px; transition: transform 0.1s; }
+        .download-box a.btn:hover { transform: scale(1.03); }
+        .download-box .meta { font-size: 0.85rem; opacity: 0.9; margin-top: 10px; }
+        .card { background: var(--card); border: 1px solid #ddd; border-radius: 6px; padding: 20px; margin: 16px 0; }
+        .card h3 { color: var(--primary); margin-bottom: 10px; font-size: 1.1rem; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        th { background: #f5f5f5; font-weight: 600; }
+        .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; }
+        .badge-pass { background: #d4edda; color: #155724; }
+        .badge-info { background: #d1ecf1; color: #0c5460; }
+        .badge-promote { background: #fff3cd; color: #856404; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 0.85rem; }
+        pre { background: #f4f4f4; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 0.82rem; }
+        .values { display: flex; gap: 16px; margin: 16px 0; }
+        .values .v { flex: 1; background: #eef; border-radius: 6px; padding: 12px; text-align: center; }
+        .values .v strong { display: block; color: var(--primary); font-size: 0.95rem; }
+        .values .v span { font-size: 0.82rem; color: #666; }
+        nav { background: #2c3e50; padding: 8px 0; }
+        nav a { color: #ecf0f1; text-decoration: none; padding: 6px 16px; font-size: 0.9rem; }
+        nav a:hover { background: #34495e; border-radius: 4px; }
+        footer { text-align: center; padding: 20px; color: #999; font-size: 0.8rem; border-top: 1px solid #eee; margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>GEMSDOE68</h1>
+        <p>Auto-Context Stacked Refinement for Geothermal Fault Discovery · DOE GEMS Prize (DrivenData #306)</p>
+    </div>
+</header>
+
+<nav>
+    <div class="container">
+        <a href="#download">↓ Download</a>
+        <a href="executive-summary.html">How to Submit</a>
+        <a href="#method">Method</a>
+        <a href="#validation">Validation</a>
+        <a href="#sources">Sources</a>
+    </div>
+</nav>
+
+<div class="container">
+
+<div class="values">
+    <div class="v"><strong>Maximize P(Win)</strong><span>Every submission is an experiment</span></div>
+    <div class="v"><strong>Own the Outcome</strong><span>Every claim carries evidence class</span></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- DOWNLOAD BOX — MUST BE OBVIOUS -->
+<!-- ============================================================ -->
+<div class="download-box" id="download">
+    <h2>⬇ ONE-CLICK SUBMISSION FILE</h2>
+    <p>Single-band float32 GeoTIFF · EPSG:32611 · 100 m · 3730×3292 · 35,707 predicted pixels · all values in [0,1] · zero NaN</p>
+    <a class="btn" href="downloads/gemsdoe68-autocontext-s2-20261012T014136Z-zeros.tif">Download .tif</a>
+    <a class="btn" href="downloads/gemsdoe68-autocontext-s2-20261012T014136Z-nan.tif">Download NaN variant</a>
+    <div class="meta">
+        <strong>Filename:</strong> <code>gemsdoe68-autocontext-s2-20261012T014136Z-zeros.tif</code><br>
+        <strong>Unique submission name:</strong> <code>GEMSDOE68-autocontext-s2</code><br>
+        <strong>SHA-256:</strong> <code>753b55a678a4a7e7389167b1f9ede915f366ac907b54df0861266f0a5d70f7a5</code><br>
+        <strong>Portal note (paste in Note field):</strong> <code>Auto-context physics 35707px sha256:753b55a678a4a7e7 UNSCORED</code>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Submission Details</h3>
+    <table>
+        <tr><th>Property</th><th>Value</th><th>Status</th></tr>
+        <tr><td>Positive pixels</td><td>35,707</td><td><span class="badge badge-pass">✓</span></td></tr>
+        <tr><td>Flank-pruned (≤2 px from catalogue)</td><td>2,293</td><td><span class="badge badge-info">pruned</span></td></tr>
+        <tr><td>Min NN spacing</td><td>3.00 px (300 m)</td><td><span class="badge badge-pass">optimal</span></td></tr>
+        <tr><td>Median NN spacing</td><td>3.00 px (300 m)</td><td><span class="badge badge-pass">optimal</span></td></tr>
+        <tr><td>All finite</td><td>Yes (12,279,160 cells)</td><td><span class="badge badge-pass">✓</span></td></tr>
+        <tr><td>All values in [0, 1]</td><td>Yes</td><td><span class="badge badge-pass">✓</span></td></tr>
+        <tr><td>No NaN inside footprint</td><td>Yes</td><td><span class="badge badge-pass">✓</span></td></tr>
+        <tr><td>CRS: EPSG:32611</td><td>Yes</td><td><span class="badge badge-pass">✓</span></td></tr>
+        <tr><td>Shape: 3730 × 3292</td><td>Yes</td><td><span class="badge badge-pass">✓</span></td></tr>
+        <tr><td>dtype: float32</td><td>Yes</td><td><span class="badge badge-pass">✓</span></td></tr>
+        <tr><td>Single band</td><td>Yes</td><td><span class="badge badge-pass">✓</span></td></tr>
+        <tr><td>Registry overlap (max)</td><td>0.6% vs GEMSDOE32 H33-B2</td><td><span class="badge badge-pass">UNIQUE</span></td></tr>
+        <tr><td>Registry dot overlap</td><td>208 / 35,707 = 0.6%</td><td><span class="badge badge-pass">UNIQUE</span></td></tr>
+    </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- METHOD -->
+<!-- ============================================================ -->
+<div class="card" id="method">
+    <h3>Method: Auto-Context Stacked Refinement</h3>
+    <p>Based on Tu et al., CVPR 2008 (doi:10.1109/CVPR.2008.4587436). Stage 1 produces per-pixel fault probability maps from 19 GeoDAWN feature bands. Stage 2 learns spatial regularities — continuity along strike, parallelism of adjacent structures, en échelon spacing — that a per-pixel classifier misses.</p>
+
+    <h4 style="margin-top:16px; color: var(--primary);">Stage 1: Physics-Based Fault Surfaces (7 indicators)</h4>
+    <table>
+        <tr><th>Surface</th><th>Input Bands</th><th>Physical Signature</th></tr>
+        <tr><td>Multi-physics ridge detection</td><td>mag_anom, rtp, tc, det_elev, iso_grav, tmi, cond_surf</td><td>Frangi Hessian line response at σ=1,2,3 — curvilinear structural features</td></tr>
+        <tr><td>Gradient coherence</td><td>mag, rtp, det_elev, iso_grav, cond_surf</td><td>Gradient magnitude × orientation coherence — straight structural boundaries</td></tr>
+        <tr><td>Conductivity-basement boundary</td><td>cond_surf(17), depth_to_base_surf(15)</td><td>Gradient in both MT conductivity and basement depth — subsurface fault under cover</td></tr>
+        <tr><td>Tilt curvature edges</td><td>tc (band 6: tilt angle/total curvature)</td><td>Multi-scale tilt angle — magnetic field derivative for edge detection</td></tr>
+        <tr><td>Topographic lineaments</td><td>det_elev (band 12)</td><td>Ridge + valley response at σ=1.5,3,6 — fault-controlled drainage and scarps</td></tr>
+        <tr><td>Gravity-magnetic correlation</td><td>iso_grav_anom(13), rtp(2)</td><td>Gradient direction alignment — density/magnetic boundaries coinciding</td></tr>
+        <tr><td>Slope anomalies</td><td>det_elev_slope (band 19)</td><td>Linear slope anomalies — preserved fault scarp in detrended topography</td></tr>
+    </table>
+
+    <h4 style="margin-top:16px; color: var(--primary);">Stage 2: Auto-Context Spatial Refinement</h4>
+    <p>Input to Stage 2 from Stage 1 ensemble:</p>
+    <ul style="margin: 8px 0 8px 20px; font-size: 0.9rem;">
+        <li>Multi-scale Gaussian smooths (σ = 1, 2, 4, 8)</li>
+        <li>Gradient magnitude and Laplacian of ensemble</li>
+        <li>Offset samples at ±1, ±3, ±5, ±10 px along 4 directions (horizontal, vertical, 2 diagonals)</li>
+        <li>Maximum offset (ridge strength) and mean offset (continuity)</li>
+        <li>Orientation coherence via structure tensor of ensemble</li>
+    </ul>
+    <p><strong>Why this catches faults missing from the catalogue:</strong> The catalogue is dominated by faults mappable in a single dataset. Requiring multi-physics agreement on orientation selects structures an expert accepts only when several fields agree — precisely the class of subtle fault that gets missed in single-dataset mapping.</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- VALIDATION -->
+<!-- ============================================================ -->
+<div class="card" id="validation">
+    <h3>Validation &amp; Run Card</h3>
+    <pre>{
+  "hypothesis": "Auto-context stacked refinement: 7 physics surfaces + spatial auto-context",
+  "mechanism": "Multi-physics ridge detection + gradient coherence + conductivity boundaries + 
+    tilt curvature + topo lineaments + grav-mag correlation + slope anomalies → ensemble → 
+    auto-context spatial refinement",
+  "non_fault_mimic": "Stratigraphic contacts in tilted sedimentary sequences producing linear 
+    magnetic/gravity gradients aligned with topographic ridges",
+  "n_dots": 35707,
+  "n_pruned_flank": 2293,
+  "uniqueness": "PASS (max 0.6% overlap with registry)",
+  "sha256": "753b55a678a4a7e7389167b1f9ede915f366ac907b54df0861266f0a5d70f7a5",
+  "format_checks": {
+    "all_finite": true,
+    "all_in_01": true,
+    "no_nan_in_footprint": true,
+    "crs_correct": true,
+    "shape_correct": true,
+    "dtype_float32": true,
+    "single_band": true
+  },
+  "verdict": "promote"
+}</pre>
+
+    <h4 style="margin-top:12px;">Lane Constraint Check</h4>
+    <table>
+        <tr><th>Registry Raster</th><th>Pixel Overlap</th><th>Dot Overlap</th><th>Result</th></tr>
+        <tr><td>GEMSDOE32 H33-B2 (0.2778)</td><td>0.6%</td><td>208 / 35,707</td><td><span class="badge badge-pass">UNIQUE</span></td></tr>
+        <tr><td>GEMSDOE32 anchor (0.2600)</td><td>0.6%</td><td>208 / 35,707</td><td><span class="badge badge-pass">UNIQUE</span></td></tr>
+    </table>
+    <p style="margin-top:8px; font-size:0.85rem; color:#666;">Both rank-correlation and dot-agreement are well below the 0.90 / 70% thresholds. This submission is in its own lane.</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- CANDIDATE HYPOTHESES FOR NEXT ITERATIONS -->
+<!-- ============================================================ -->
+<div class="card">
+    <h3>Candidate Hypotheses (Ranked by Expected DTI Improvement)</h3>
+    <table>
+        <tr><th>#</th><th>Hypothesis</th><th>Layers</th><th>Physical Signature</th><th>Why Off-Catalogue</th><th>Expected ΔDTI</th><th>Cost</th></tr>
+        <tr><td>1</td><td>Tip-relay ramp bridges between visible fault segments</td><td>det_elev, tc, cond_surf, lidar_scarp</td><td>Horsetail splay / tip-line damage zone curvature at fault tips</td><td>Catalogue maps through-going faults; tip-relays are sub-seismic transfer zones between mapped segments</td><td>+0.003 to +0.008</td><td>~30 s</td></tr>
+        <tr><td>2</td><td>Sub-km seismicity lineaments from USGS ComSearch</td><td>Earthquake epicenters (USGS FDSN)</td><td>Nodal-plane strikes from focal mechanisms at sub-km scale</td><td>Current seismicity bands (100 km radius) carry no information at 300 m; raw catalog adds sub-km structure</td><td>+0.002 to +0.006</td><td>~20 s</td></tr>
+        <tr><td>3</td><td>Thermal anomaly persistence from SAR InSAR coherence</td><td>Time-series InSAR coherence loss</td><td>Persistent decorrelation at geothermal discharge zones</td><td>Catalogue misses blind geothermal systems with no surface expression; InSAR detects subsurface deformation</td><td>+0.001 to +0.005</td><td>~40 s</td></tr>
+        <tr><td>4</td><td>En échelon scarplet chains in 1 m LiDAR</td><td>USGS 3DEP 1 m LiDAR scarp products</td><td>Collinear scarplets over 100s of meters — what experts accept as fault</td><td>Individual scarplets below mapping threshold; chains of collinear scarplets indicate structure</td><td>+0.001 to +0.004</td><td>~20 s</td></tr>
+        <tr><td>5</td><td>Basement depth gradient coherence from MT inversion</td><td>depth_to_base_surf(15), cond_surf(17)</td><td>Straight gradient ridges in basement depth — subsurface structural boundary</td><td>MT images subsurface; catalogue is surface-based; straight boundaries under cover are invisible to surface mapping</td><td>+0.001 to +0.003</td><td>~15 s</td></tr>
+    </table>
+    <p style="margin-top:8px; font-size:0.82rem; color:#666;">Ranked by expected DTI improvement / implementation cost. Hypothesis 1 is the top candidate for the next experiment.</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- SOURCES -->
+<!-- ============================================================ -->
+<div class="card" id="sources">
+    <h3>Official Verified Sources</h3>
+    <table>
+        <tr><th>Source</th><th>URL</th><th>Use</th></tr>
+        <tr><td>DrivenData Competition Page</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">competition-doe-gems/page/967</a></td><td>Problem description, metric definition</td></tr>
+        <tr><td>DrivenData Data Download</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">competition-doe-gems/data</a></td><td>training_features.tif, labels.tif, sample_submission.tif</td></tr>
+        <tr><td>Reference Solution</td><td><a href="https://github.com/drivendataorg/gems-prize-reference-solution">gems-prize-reference-solution</a></td><td>UNet baseline implementation</td></tr>
+        <tr><td>USGS GeoDAWN</td><td><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">usgs.gov GeoDAWN</a></td><td>Airborne magnetic and radiometric surveys</td></tr>
+        <tr><td>INGENIOUS Project</td><td><a href="https://gbcge.org/current-projects/ingenious/">gbcge.org/ingenious</a></td><td>Great Basin geothermal fault data</td></tr>
+        <tr><td>EPSG:32611</td><td><a href="https://epsg.io/32611">epsg.io/32611</a></td><td>UTM Zone 11N coordinate reference system</td></tr>
+        <tr><td>Tversky Index</td><td><a href="https://en.wikipedia.org/wiki/Tversky_index">Wikipedia: Tversky index</a></td><td>Metric foundation</td></tr>
+        <tr><td>Auto-Context (Tu, 2008)</td><td>doi:10.1109/CVPR.2008.4587436</td><td>Stage 2 method: stacked contextual refinement</td></tr>
+        <tr><td>Auto-Context (TPAMI extended)</td><td><a href="https://pages.ucsd.edu/~ztu/publication/pami_autocontext.pdf">pages.ucsd.edu autocontext</a></td><td>Extended auto-context theory</td></tr>
+        <tr><td>Competition Rules (PDF)</td><td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">docs.nlr.gov/96647.pdf</a></td><td>Submission format requirements</td></tr>
+        <tr><td>GDR OpenEI</td><td><a href="https://gdr.openei.org/submissions/1391">gdr.openei.org/submissions/1391</a></td><td>Geo Data Repository — additional geothermal data</td></tr>
+    </table>
+</div>
+
+<!-- ============================================================ -->
+<!-- WHAT IS NOT CLAIMED -->
+<!-- ============================================================ -->
+<div class="card">
+    <h3>What Is Not Claimed</h3>
+    <ul style="margin-left: 20px; font-size: 0.9rem;">
+        <li>No score in this repository is organizer-verified; all are research outputs</li>
+        <li>The holdout's truth is the visible catalogue, so it cannot reward a genuinely new fault (IR-PROXY-01)</li>
+        <li>The submitted file is a candidate, not a proven improvement over the leaderboard</li>
+        <li>Projections are models, never written as scores</li>
+    </ul>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+    <p>GEMSDOE68 · Auto-Context Stacked Refinement · Generated 2026-10-12 · UNSCORED RESEARCH ARTIFACT</p>
+    <p>Competition: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">DrivenData GEMS Prize Leaderboard</a></p>
+</footer>
+
+</body>
+</html>
