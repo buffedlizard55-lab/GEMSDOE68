@@ -1,0 +1,133 @@
+{
+ "zeros": {
+  "path": "docs/downloads/gems68-autoctx-40000-20261012T014104Z-zeros.tif",
+  "bytes": 786110,
+  "sha256": "82d44d05f4f82a9fabf9a82c1656363e87280a0702f6d4df1cbdf03bc74fd0e2",
+  "outside": "zeros",
+  "format_check": {
+   "ok": true,
+   "checks": {
+    "single_band": true,
+    "driver_geotiff": {
+     "ok": true,
+     "detail": "GTiff"
+    },
+    "count_1": {
+     "ok": true,
+     "detail": "1"
+    },
+    "dtype_float32": {
+     "ok": true,
+     "detail": "float32"
+    },
+    "crs_EPSG32611": {
+     "ok": true,
+     "detail": "EPSG:32611 != EPSG:32611"
+    },
+    "shape_match": {
+     "ok": true,
+     "detail": "(3730, 3292) != (3730, 3292)"
+    },
+    "transform_match": {
+     "ok": true,
+     "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) != (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+    },
+    "finite_inside_footprint": {
+     "ok": true,
+     "detail": "0 NaN inside footprint"
+    },
+    "outside_footprint_is_zero_or_nan": {
+     "ok": true,
+     "detail": "0 non-zero finite pixels outside the footprint"
+    },
+    "values_in_0_1": {
+     "ok": true,
+     "detail": "min=0.0 max=1.0"
+    },
+    "not_all_zero": {
+     "ok": true,
+     "detail": "raster is entirely zero"
+    },
+    "emitted_pixels": 40000,
+    "finite_pixels": 12279160,
+    "footprint_pixels": 5167373
+   },
+   "failures": [],
+   "sha256": "82d44d05f4f82a9fabf9a82c1656363e87280a0702f6d4df1cbdf03bc74fd0e2",
+   "bytes": 786110
+  }
+ },
+ "nan": {
+  "path": "docs/downloads/gems68-autoctx-40000-20261012T014104Z-nan.tif",
+  "bytes": 1545970,
+  "sha256": "e0a9761f77bbf75588f224e028169843749adef1853cbae4f548062442ddbfaf",
+  "outside": "nan",
+  "format_check": {
+   "ok": true,
+   "checks": {
+    "single_band": true,
+    "driver_geotiff": {
+     "ok": true,
+     "detail": "GTiff"
+    },
+    "count_1": {
+     "ok": true,
+     "detail": "1"
+    },
+    "dtype_float32": {
+     "ok": true,
+     "detail": "float32"
+    },
+    "crs_EPSG32611": {
+     "ok": true,
+     "detail": "EPSG:32611 != EPSG:32611"
+    },
+    "shape_match": {
+     "ok": true,
+     "detail": "(3730, 3292) != (3730, 3292)"
+    },
+    "transform_match": {
+     "ok": true,
+     "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) != (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+    },
+    "finite_inside_footprint": {
+     "ok": true,
+     "detail": "0 NaN inside footprint"
+    },
+    "outside_footprint_is_zero_or_nan": {
+     "ok": true,
+     "detail": "0 non-zero finite pixels outside the footprint"
+    },
+    "values_in_0_1": {
+     "ok": true,
+     "detail": "min=0.0 max=1.0"
+    },
+    "not_all_zero": {
+     "ok": true,
+     "detail": "raster is entirely zero"
+    },
+    "emitted_pixels": 40000,
+    "finite_pixels": 5167373,
+    "footprint_pixels": 5167373
+   },
+   "failures": [],
+   "sha256": "e0a9761f77bbf75588f224e028169843749adef1853cbae4f548062442ddbfaf",
+   "bytes": 1545970
+  }
+ },
+ "registry_verdict": {
+  "duplicate": false,
+  "worst_spearman": null,
+  "worst_overlap": null,
+  "lane_ok": true
+ },
+ "gate": {
+  "delta": -0.138807,
+  "se": 0.001389,
+  "z": -99.918,
+  "passes": false,
+  "delta_far": -0.138807,
+  "s2_beats_s1_folds": 0,
+  "s2_beats_s1_far_folds": 0
+ }
+}

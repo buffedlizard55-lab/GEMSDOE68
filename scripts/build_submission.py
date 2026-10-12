@@ -57,7 +57,7 @@ def train_full(stack, names, raw_idx, labels, footprint, theta, inner_folds=4,
 
     # ---- stage 1 ------------------------------------------------------------------------
     t0 = time.time()
-    prob_oof = np.zeros(H * W, dtype=np.float32)
+    prob_oof = np.zeros(ys_f.size, dtype=np.float32)
     flat = np.zeros((H, W), np.int64)
     flat[ys_f, xs_f] = np.arange(ys_f.size)
     for b in range(inner_folds):

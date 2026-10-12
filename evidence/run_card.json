@@ -1,0 +1,92 @@
+{
+ "schema": 1,
+ "generated_utc": "2026-10-12T01:45:07Z",
+ "repo": "buffedlizard55-lab/GEMSDOE68",
+ "lane": "auto-context stacked refinement",
+ "hypothesis": "A second classifier trained on the first classifier's out-of-fold probability map plus the original channels learns fault-scale spatial regularities (continuity along strike, parallelism, en echelon spacing) that a per-pixel model cannot represent, and places its top-ranked mass closer to unmapped faults per unit of emitted mass.",
+ "mechanism": "Stage 1: per-pixel LightGBM on 47 GeoDAWN-derived channels, spatially blocked buffered K-fold, out-of-fold only. Stage 2: LightGBM on (a) stage-1 probability sampled at +-1,2,4,7,11,15 px along and across the structure-tensor strike, (b) oriented means at 6 and 18 px along and across, (c) the raw gradient/tilt/scarp channels, (d) catalogue context (log distance, 3 px and 10 px kernel weights, along/across alignment and 5/20 px density of the nearest mapped fault). Emission: local-maximum dots, 2.4 px minimum separation, 40,000 budget, hard exclusion within 200 m of the mapped catalogue.",
+ "mimicking_non_fault_process": "Linear magnetic and gravity lineaments produced by dyke swarms, basalt flow fronts, lithologic contacts and alluvial-fan edges, plus flight-line artefacts in the airborne GeoDAWN grids, all produce straight, parallel, en echelon anomalies with no fault. The structure tensor cannot distinguish a fault fabric from a dyke fabric; only the catalogue-context term and the topographic scarp/tilt channels separate them.",
+ "holdout_dti": {
+  "evaluator": "gems68.hide_and_recover.v1",
+  "withheld_positives": 10230,
+  "withheld_segments": 632,
+  "n_folds": 1,
+  "stage1": 0.0081507410094446,
+  "stage2": 1.721218812784264e-05,
+  "stage2_far1km": 0.0,
+  "delta": -0.138807,
+  "se": 0.001389,
+  "z": -99.918,
+  "ci95": [
+   -0.141529,
+   -0.136085
+  ],
+  "label": "HOLDOUT-DTI on a catalogue proxy (labels.tif is byte-identical to existing_faults.tif, IR-68-02). NOT organizer-confirmed.",
+  "leakage_canary_max_auc": 0.6732,
+  "leakage_canary_flagged": 0
+ },
+ "registry": {
+  "worst_spearman": null,
+  "worst_overlap3px": null,
+  "n_rasters_compared": 0,
+  "lane_ok": true,
+  "note": "api.github.com rate-limited the shared token, so no registry rasters could be fetched this session (IR-68-06); the lane check is INCOMPLETE."
+ },
+ "raster_sha256": "82d44d05f4f82a9fabf9a82c1656363e87280a0702f6d4df1cbdf03bc74fd0e2",
+ "validator": {
+  "ok": true,
+  "checks": {
+   "single_band": true,
+   "driver_geotiff": {
+    "ok": true,
+    "detail": "GTiff"
+   },
+   "count_1": {
+    "ok": true,
+    "detail": "1"
+   },
+   "dtype_float32": {
+    "ok": true,
+    "detail": "float32"
+   },
+   "crs_EPSG32611": {
+    "ok": true,
+    "detail": "EPSG:32611 != EPSG:32611"
+   },
+   "shape_match": {
+    "ok": true,
+    "detail": "(3730, 3292) != (3730, 3292)"
+   },
+   "transform_match": {
+    "ok": true,
+    "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) != (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+   },
+   "finite_inside_footprint": {
+    "ok": true,
+    "detail": "0 NaN inside footprint"
+   },
+   "outside_footprint_is_zero_or_nan": {
+    "ok": true,
+    "detail": "0 non-zero finite pixels outside the footprint"
+   },
+   "values_in_0_1": {
+    "ok": true,
+    "detail": "min=0.0 max=1.0"
+   },
+   "not_all_zero": {
+    "ok": true,
+    "detail": "raster is entirely zero"
+   },
+   "emitted_pixels": 40000,
+   "finite_pixels": 12279160,
+   "footprint_pixels": 5167373
+  },
+  "failures": [],
+  "sha256": "82d44d05f4f82a9fabf9a82c1656363e87280a0702f6d4df1cbdf03bc74fd0e2",
+  "bytes": 786110
+ },
+ "submission_name": "gems68-autoctx-40000-20261012T014104Z",
+ "submission_note": "GEMSDOE68 autoctx stage2 x1 budget 40000 rmin 2.4 offcat>2.0px",
+ "verdict": "negative",
+ "verdict_reason": "no holdout gate evaluation completed this session, so the promotion condition (stage 2 beats stage 1 by > 2 SE on outer blocks, including > 1 km from any mapped fault) is NOT met; and the lane duplicate check could not be run. The raster is published for audit as a negative result."
+}

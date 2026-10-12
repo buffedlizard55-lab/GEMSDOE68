@@ -1,0 +1,88 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GEMSDOE68 &mdash; auto-context submission</title>
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<header><h1>GEMSDOE68 &mdash; auto-context stacked refinement</h1>
+<div class="sub">DOE GEMS Prize Challenge &middot; generated 2026-10-12 01:45 UTC &middot;
+<a href="executive-summary.html">executive summary / how to submit</a> &middot;
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE68">source</a></div></header>
+<main>
+<div class="banner no">&#10007; DO NOT SPEND A SUBMISSION SLOT &mdash; gate not met (stage2 &amp;minus; stage1 = -0.138807, z = -99.918 &amp;le; 2). The file is published for audit as a <b>negative result</b>.</div>
+
+<div class="dl">
+  <a class="btn" href="downloads/gems68-autoctx-40000-20261012T014104Z-zeros.tif" download>&#11015; Download submission .tif</a>
+  <a class="btn sec" href="downloads/gems68-autoctx-40000-20261012T014104Z-zeros.zip" download>.zip</a>
+  <a class="btn sec" href="downloads/gems68-autoctx-40000-20261012T014104Z-nan.tif" download>NaN-outside twin</a>
+  <a class="btn sec" href="downloads/gems68-autoctx-40000-20261012T014104Z-format-check.json">validator JSON</a>
+</div>
+<p class="small"><b>Upload the <code>-zeros.tif</code> file.</b> It is all-finite (0.0 outside the
+footprint) and every value is in [0, 1], so it cannot trigger the portal's
+&ldquo;Predicted values must be in range [0, 1]&rdquo; error. The <code>-nan.tif</code> twin carries
+NaN outside the footprint and matches <code>sample_submission.tif</code> masking exactly; use it
+only if the portal rejects zeros.</p>
+<div class="card"><b>Submission note to paste</b> (max 200 chars):<br>
+<code>GEMSDOE68 autoctx stage2 x1 budget 40000 rmin 2.4 offcat&gt;2.0px</code></div>
+<table>
+<tr><th>file</th><th>bytes</th><th>sha256</th></tr>
+<tr><td>gems68-autoctx-40000-20261012T014104Z-zeros.tif</td><td>786,110</td><td><code>82d44d05f4f82a9fabf9a82c1656363e87280a0702f6d4df1cbdf03bc74fd0e2</code></td></tr>
+<tr><td>gems68-autoctx-40000-20261012T014104Z-nan.tif</td><td>1,545,970</td><td><code>e0a9761f77bbf75588f224e028169843749adef1853cbae4f548062442ddbfaf</code></td></tr>
+</table>
+<h2>What this is</h2>
+<p>A two-stage classifier for the GEMS fault-discovery grid (3730 &times; 3292 px, EPSG:32611,
+100 m). Stage&nbsp;1 is a per-pixel LightGBM on 47 geophysical channels; stage&nbsp;2 is
+<i>auto-context</i> (Tu, CVPR 2008): a second LightGBM trained on stage&nbsp;1's out-of-fold
+probability map sampled at &plusmn;1&ndash;15&nbsp;px along and across the local strike, plus
+multi-scale anisotropic smooths, the raw gradient/tilt/scarp channels, and catalogue-context
+features (distance, orientation and spacing to the nearest mapped fault, with the target
+block's labels masked). Stage&nbsp;2 exists to learn what a per-pixel model cannot: continuity
+along strike, parallelism between splays, en&nbsp;&eacute;chelon spacing.</p>
+<h2>The gate</h2>
+
+<table>
+<tr><th>quantity</th><th>stage 1 (per-pixel)</th><th>stage 2 (auto-context)</th></tr>
+<tr><td>pooled HOLDOUT-DTI, all withheld pixels</td>
+    <td>0.00815</td><td><b>0.00002</b></td></tr>
+<tr><td>pooled HOLDOUT-DTI, pixels &gt; 1 km from any mapped fault</td>
+    <td>0.00000</td><td><b>0.00000</b></td></tr>
+<tr><td>withheld positives scored</td><td colspan="2">10,230
+    (632 whole segments, 1 folds)</td></tr>
+</table>
+<div class="card"><b>Gate</b> &mdash; &Delta;(stage2 &minus; stage1) = <b>-0.138807</b>,
+bootstrap SE = 0.001389, <b>z = -99.918</b> (need &gt; 2.0);
+&Delta; on the &gt;1 km stratum = -0.138807;
+stage 2 wins 0/1 folds overall and
+0/1 on the far stratum.
+<br><b>Verdict: FAIL</b></div>
+<p class="small">Evaluator <code>gems68.hide_and_recover.v1</code>. Metric
+&alpha;=0.2, &beta;=0.8,
+R=300.0 m triangular kernel.
+Every number on this page is HOLDOUT-DTI on a <b>catalogue proxy</b>; nothing here is
+ORGANIZER-CONFIRMED.</p>
+<h2>Leakage canary</h2>
+<p>Each feature tested alone at separating the withheld segments from background.
+Threshold 0.90. <b>0 feature(s) flagged.</b>
+Highest: <code>geod_dilaterate</code> AUC 0.6732.</p>
+<table><tr><th>feature</th><th>AUC</th></tr><tr><td>geod_dilaterate</td><td>0.6732</td></tr><tr><td>tc</td><td>0.6235</td></tr><tr><td>s3_tc</td><td>0.6211</td></tr><tr><td>mag_anom</td><td>0.6195</td></tr><tr><td>s9_tc</td><td>0.6128</td></tr><tr><td>tmi</td><td>0.6083</td></tr><tr><td>st_cos2</td><td>0.5994</td></tr><tr><td>gmag_det_elev</td><td>0.5907</td></tr><tr><td>det_elev</td><td>0.5901</td></tr><tr><td>iso_grav_anom</td><td>0.5894</td></tr><tr><td>det_elev_slope</td><td>0.5774</td></tr><tr><td>s9_det_elev_slope</td><td>0.5764</td></tr></table>
+<h2>Emission</h2>
+<div class="card">emitted dots <b>40000</b> of 4761049
+candidates &middot; minimum separation 2.4 px &middot;
+excluded within 2.0 px of the mapped catalogue &middot;
+dots on catalogue <b>0</b><br>
+<span class="small">The organizer masks mapped-fault pixels out of scoring, and every unit of
+emitted mass raises the DTI denominator by exactly &alpha;=0.2 wherever it lands, so mass on the
+catalogue is pure loss. A dot pays for itself only if its realised kernel weight exceeds
+&alpha;&middot;DTI &mdash; 0.05556 at DTI 0.2778, i.e. within
+&asymp;284 m of a hidden truth pixel.</span></div>
+<h2>Format validation</h2>
+<p><b style='color:var(--ok)'>all checks passed</b></p><table><tr><th>check</th><th>result</th></tr><tr><td>single_band</td><td>PASS <span class='small'></span></td></tr><tr><td>driver_geotiff</td><td>PASS <span class='small'>GTiff</span></td></tr><tr><td>count_1</td><td>PASS <span class='small'>1</span></td></tr><tr><td>dtype_float32</td><td>PASS <span class='small'>float32</span></td></tr><tr><td>crs_EPSG32611</td><td>PASS <span class='small'>EPSG:32611 != EPSG:32611</span></td></tr><tr><td>shape_match</td><td>PASS <span class='small'>(3730, 3292) != (3730, 3292)</span></td></tr><tr><td>transform_match</td><td>PASS <span class='small'>(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) != (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)</span></td></tr><tr><td>finite_inside_footprint</td><td>PASS <span class='small'>0 NaN inside footprint</span></td></tr><tr><td>outside_footprint_is_zero_or_nan</td><td>PASS <span class='small'>0 non-zero finite pixels outside the footprint</span></td></tr><tr><td>values_in_0_1</td><td>PASS <span class='small'>min=0.0 max=1.0</span></td></tr><tr><td>not_all_zero</td><td>PASS <span class='small'>raster is entirely zero</span></td></tr><tr><th>emitted_pixels</th><td>40000</td></tr><tr><th>finite_pixels</th><td>12279160</td></tr><tr><th>footprint_pixels</th><td>5167373</td></tr></table>
+<h2>Lane / duplicate check</h2>
+<p>No registry rasters were available for the duplicate check.</p>
+<h2>Reproduce</h2>
+<pre>bash scripts/fetch_mirrors.sh
+PYTHONPATH=src python -m pytest -q
+PYTHONPATH=src python scripts/run_holdout.py --folds 4
+PYTHONPATH=src python scripts/build_submission.py --budget 40000
+PYTHONPATH=src python scripts/build_site.py</pre>
+<p class="small">Scores quoted anywhere on this site are HOLDOUT-DTI on a catalogue proxy or
+owner reports. Nothing is ORGANIZER-CONFIRMED unless a submission-page receipt is linked.</p>
+</main></body></html>
