@@ -1,0 +1,17 @@
+[project]
+name = "gems68"
+version = "0.1.0"
+description = "Auto-context stacked refinement for the DOE GEMS Prize Challenge (GEMSDOE68 lane)"
+requires-python = ">=3.10"
+dependencies = ["numpy", "scipy", "lightgbm", "rasterio", "tifffile"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["gems68"]

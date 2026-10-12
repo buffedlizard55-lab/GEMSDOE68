@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Executive summary &mdash; how to make a GEMS submission</title>
+<link rel="stylesheet" href="assets/site.css"></head><body>
+<header><h1>Executive summary &mdash; how to submit</h1>
+<div class="sub">generated 2026-10-12 01:45 UTC &middot; <a href="index.html">back to the submission page</a></div></header>
+<main>
+<div class="banner no">&#10007; DO NOT SPEND A SUBMISSION SLOT &mdash; gate not met (stage2 &amp;minus; stage1 = -0.138807, z = -99.918 &amp;le; 2). The file is published for audit as a <b>negative result</b>.</div>
+<h2>1. The file</h2>
+<p>One single-band GeoTIFF, float32, EPSG:32611, 3730&nbsp;&times;&nbsp;3292, transform
+<code>(100, 0, 243350, 0, -100, 4508550)</code>, values in [0,&nbsp;1]. A <code>.zip</code>
+containing exactly one GeoTIFF is also accepted.</p>
+
+<div class="dl">
+  <a class="btn" href="downloads/gems68-autoctx-40000-20261012T014104Z-zeros.tif" download>&#11015; Download submission .tif</a>
+  <a class="btn sec" href="downloads/gems68-autoctx-40000-20261012T014104Z-zeros.zip" download>.zip</a>
+  <a class="btn sec" href="downloads/gems68-autoctx-40000-20261012T014104Z-nan.tif" download>NaN-outside twin</a>
+  <a class="btn sec" href="downloads/gems68-autoctx-40000-20261012T014104Z-format-check.json">validator JSON</a>
+</div>
+<p class="small"><b>Upload the <code>-zeros.tif</code> file.</b> It is all-finite (0.0 outside the
+footprint) and every value is in [0, 1], so it cannot trigger the portal's
+&ldquo;Predicted values must be in range [0, 1]&rdquo; error. The <code>-nan.tif</code> twin carries
+NaN outside the footprint and matches <code>sample_submission.tif</code> masking exactly; use it
+only if the portal rejects zeros.</p>
+<div class="card"><b>Submission note to paste</b> (max 200 chars):<br>
+<code>GEMSDOE68 autoctx stage2 x1 budget 40000 rmin 2.4 offcat&gt;2.0px</code></div>
+<table>
+<tr><th>file</th><th>bytes</th><th>sha256</th></tr>
+<tr><td>gems68-autoctx-40000-20261012T014104Z-zeros.tif</td><td>786,110</td><td><code>82d44d05f4f82a9fabf9a82c1656363e87280a0702f6d4df1cbdf03bc74fd0e2</code></td></tr>
+<tr><td>gems68-autoctx-40000-20261012T014104Z-nan.tif</td><td>1,545,970</td><td><code>e0a9761f77bbf75588f224e028169843749adef1853cbae4f548062442ddbfaf</code></td></tr>
+</table>
+<h2>2. The form</h2>
+<ol>
+<li>Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">the submissions page</a>
+and click <b>New submission</b>.</li>
+<li><b>File to submit</b> &rarr; choose <code>gems68-autoctx-40000-20261012T014104Z-zeros.tif</code>.</li>
+<li><b>Note (optional)</b> &rarr; paste
+<code>GEMSDOE68 autoctx stage2 x1 budget 40000 rmin 2.4 offcat&gt;2.0px</code></li>
+<li>Submit. The score appears on the submissions page; record it in
+<code>registry/leaderboard.jsonl</code> with the file sha256 so the number is traceable.</li>
+</ol>
+<h2>3. The range error</h2>
+<p>The portal rejects a file with <i>&ldquo;Predicted values must be in range [0, 1]&rdquo;</i> when
+any value is outside [0,&nbsp;1] <b>or is NaN where the organizer expects a number</b>. The
+<code>-zeros.tif</code> twin has no NaN anywhere and every value is exactly 0.0 or 1.0, so it
+cannot produce that error. That is the file to upload.</p>
+<h2>4. Naming and the note</h2>
+<p>Name pattern: <code>gems68-autoctx-&lt;budget&gt;-&lt;UTC stamp&gt;</code>. The note names the
+method, the budget and the holdout gate so two runs can be told apart later.</p>
+<h2>5. Weekly cap</h2>
+<p>Submissions per week are capped by the organizer; check the cap on the submissions page
+before uploading. This repository never auto-uploads &mdash; promotion to a real slot is a
+separate human decision.</p>
+<h2>6. Links for manual verification</h2>
+<ul>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Problem description &amp; metric</a></li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/">About / resources</a></li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">Data tab (login required)</a></li>
+<li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Leaderboard</a></li>
+<li><a href="https://github.com/drivendataorg/gems-prize-reference-solution">Official reference solution</a></li>
+<li><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">USGS GeoDAWN survey</a></li>
+<li><a href="https://gbcge.org/current-projects/ingenious/">INGENIOUS / QFaults</a></li>
+<li><a href="https://epsg.io/32611">EPSG:32611</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Tversky_index">Tversky index</a></li>
+<li><a href="https://doi.org/10.1109/CVPR.2008.4587436">Tu, Contextual Classification, CVPR 2008</a> &middot;
+<a href="https://pages.ucsd.edu/~ztu/publication/pami_autocontext.pdf">TPAMI extended version</a></li>
+</ul>
+</main></body></html>
