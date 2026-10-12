@@ -1,0 +1,80 @@
+{
+ "observed_utc": "2026-10-11",
+ "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+ "verified": true,
+ "retrieval_method": "Manual rendered-page fetch in three chunks; no automated request to the competition host.",
+ "row_count": 50,
+ "top10": [
+  {
+   "rank": 1,
+   "participant": "xiaofanhu",
+   "score": 0.4133,
+   "submissions": 16,
+   "last_activity": "3h 52min ago"
+  },
+  {
+   "rank": 2,
+   "participant": "JerryDataWorks",
+   "score": 0.3418,
+   "submissions": 19,
+   "last_activity": "1d 5h ago"
+  },
+  {
+   "rank": 3,
+   "participant": "alexoktaba",
+   "score": 0.3361,
+   "submissions": 27,
+   "last_activity": "1d 19h ago"
+  },
+  {
+   "rank": 4,
+   "participant": "joeyfezster",
+   "score": 0.3333,
+   "submissions": 27,
+   "last_activity": "1h 14min ago"
+  },
+  {
+   "rank": 5,
+   "participant": "Batik Shirt Brothers",
+   "score": 0.33,
+   "submissions": 26,
+   "last_activity": "23h 52min ago"
+  },
+  {
+   "rank": 6,
+   "participant": "nchuzhoy",
+   "score": 0.3262,
+   "submissions": 6,
+   "last_activity": "1w ago"
+  },
+  {
+   "rank": 7,
+   "participant": "kinghorton42",
+   "score": 0.3261,
+   "submissions": 10,
+   "last_activity": "1d 7h ago"
+  },
+  {
+   "rank": 8,
+   "participant": "DARD",
+   "score": 0.3195,
+   "submissions": 18,
+   "last_activity": "1w 2d ago"
+  },
+  {
+   "rank": 9,
+   "participant": "mzoorob",
+   "score": 0.3129,
+   "submissions": 30,
+   "last_activity": "4h 30min ago"
+  },
+  {
+   "rank": 10,
+   "participant": "cfld__",
+   "score": 0.3108,
+   "submissions": 4,
+   "last_activity": "14h 58min ago"
+  }
+ ],
+ "note": "Copied from buffedlizard55-lab/60GEMSDOE/registry/leaderboard_history.jsonl, an observation of the public DrivenData leaderboard page. drivendata.org is not reachable from this sandbox, so the live board was NOT re-read this session (IR-68-01)."
+}

@@ -136,6 +136,12 @@ Max share of dots within 3 px of one registry raster's dots: <b class={'bad' if 
 <table><tr><th>registry raster (top 6 by dot overlap)</th><th>share of our dots within 3 px</th><th>that raster's own 3 px footprint coverage</th><th>lift (overlap ÷ coverage; 1.0 = chance)</th></tr>{ovrows}</table>
 <p class=muted>Rasters whose 3 px halo covers more than 70 % of the footprint are excluded from the duplicate verdict (they overlap every candidate by construction): {html.escape(", ".join(u.get("excluded_uninformative_rasters", [])) or "none")}.</p></div>
 
+<div class=card><h2>⚠ Three candidates exist in this repository — only one is evidenced</h2>
+<table><tr><th>candidate</th><th>PR</th><th>own holdout gate</th><th>uniqueness check</th><th>recommendation</th></tr>
+<tr><td><code>gems68-autoctx-40000-20261012T014104Z-zeros.tif</code></td><td>#1</td><td class=bad>failed (stage 2 0.00002 vs stage 1 0.0082, Δ −0.139 — its own evidence/holdout.json)</td><td class=bad>incomplete (0 rasters)</td><td class=bad>do not submit</td></tr>
+<tr><td><code>gemsdoe68-autocontext-s2-20261012T014136Z-zeros.tif</code></td><td>#2</td><td class=bad>no holdout DTI / gate recorded</td><td class=warn>claimed PASS, registry size not stated</td><td class=bad>not evidenced — do not spend a slot</td></tr>
+<tr><td><code>{prim['name']}</code></td><td>#3 (this page)</td><td class=ok>passed (table above)</td><td class=ok>complete, 23 rasters</td><td class=ok><b>submit this one</b></td></tr></table>
+<p class=muted>Facts are read from each candidate's own run card; see <code>evidence/sibling_candidates_same_holdout.json</code> for an as-is cross-score (context only).</p></div>
 <div class=card><h2>Where the dots are (sanity map) and the key risk</h2>
 <img src="assets/dots_map.png" alt="dot map" style="width:100%;border-radius:10px">
 <p><b>Risk, stated plainly:</b> only {u['dot_overlap_within_3px']['gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif']['overlap']*100:.0f} % of these dots lie within 300 m of the 0.2778 champion's dots, and the median dot is {card['emission']['median_dist_px']/10:.1f} km from the published catalogue (champion ≈ 2.0 km). Part of the surface is area-fill in regional highs rather than lines (IR-68-BLOB-01). The holdout says this ranks withheld faults better — including far from mapped faults — but the holdout's truth is catalogue components, not the panel's new faults. This file is a genuinely different bet, not an increment on the champion.</p></div>

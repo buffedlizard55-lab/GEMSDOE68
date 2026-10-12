@@ -236,3 +236,17 @@ def dti_bruteforce(pred, truth, alpha: float = ALPHA, beta: float = BETA,
         fp += pred[tuple(x)] * (1.0 - kmax)
     return dict(tp=tp, fp=fp, fn=fn,
                 dti=dti_from_components(tp, fp, fn, alpha, beta))
+
+
+# --- GEMSDOE68 merge aliases (sibling lane test names; same arithmetic as above) ---
+def marginal_bar(current_dti: float, alpha: float = ALPHA) -> float:
+    """Alias of :func:`marginal_inclusion_threshold` (k > alpha * DTI)."""
+    return marginal_inclusion_threshold(current_dti, alpha)
+
+
+def pooled_dti(parts, alpha: float = ALPHA, beta: float = BETA) -> dict:
+    """Pool tp/fp/fn components across folds BEFORE forming the ratio (not the mean of ratios)."""
+    tp = float(sum(p["tp"] for p in parts)); fp = float(sum(p["fp"] for p in parts))
+    fn = float(sum(p["fn"] for p in parts))
+    return dict(tp=tp, fp=fp, fn=fn, n_truth=int(sum(p.get("n_truth", 0) for p in parts)),
+                dti=dti_from_components(tp, fp, fn, alpha, beta))

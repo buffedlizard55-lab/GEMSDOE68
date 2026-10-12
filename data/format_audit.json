@@ -1,0 +1,31 @@
+{
+  "file": "gemsdoe68-autocontext-physics-20261012T013923Z-zeros.tif",
+  "sha256": "9fe68b626a5b398046da66c87627ce8d1a8192a43104547186b3a42255e570d9",
+  "sha256_nan": "22c026b23384d26a4d132d96a2969aebed5d31b2e065c962e8db5c219c76507c",
+  "bytes": 79653,
+  "meta": {
+    "crs": "EPSG:32611",
+    "width": 3292,
+    "height": 3730,
+    "dtype": "float32",
+    "nodata": null,
+    "count": 1,
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ]
+  },
+  "positive_pixels": 19636,
+  "all_finite": true,
+  "all_in_01": true,
+  "no_nan_in_footprint": true,
+  "footprint_correct": true,
+  "crs_correct": true,
+  "shape_correct": true,
+  "dtype_correct": true,
+  "single_band": true
+}

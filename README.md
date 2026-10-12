@@ -6,6 +6,22 @@
 
 Core values carried through every decision here: **Maximize P(Win)** and **Own the Outcome**.
 
+
+## ⚠ Three candidates exist in this repository — which one to submit
+
+Three parallel sessions ran the same auto-context brief against this repo (PRs #1, #2, #3). Facts below are
+read from **each candidate's own run card** (`evidence/submission_build.json` + `evidence/holdout.json` for PR #1,
+`data/run_card.json` for PR #2, `evidence/run_card.json` for PR #3):
+
+| candidate (docs/downloads/) | PR | own holdout gate (stage ≥2 beats stage 1 by >2 SE, incl. >1 km) | registry uniqueness check | own verdict | **recommendation** |
+|---|---|---|---|---|---|
+| `gems68-autoctx-40000-20261012T014104Z-zeros.tif` | #1 | **failed** — stage 2 = 0.00002 vs stage 1 = 0.0082, Δ −0.139 (its `evidence/holdout.json`) | incomplete (0 rasters fetched, IR-68-06 in its card) | negative | do not submit |
+| `gemsdoe68-autocontext-s2-20261012T014136Z-zeros.tif` | #2 | **no holdout DTI / gate recorded** in its card | "PASS", max overlap 0.0058, registry size not stated | promote | not evidenced — do not spend a slot |
+| **`gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.tif`** | #3 (this) | **passed** — stage 3 0.1189 vs stage 1 0.0816, Δ +0.0373 CI [0.026, 0.048]; >1 km Δ +0.0146 CI [0.004, 0.025] | complete — 23 rasters, max ρ 0.078, max informative overlap 37 % | promote | **this is the file to submit** |
+
+All three are format-valid binary dot rasters. `evidence/sibling_candidates_same_holdout.json` scores the three
+files as-is on PR #3's holdout (context only; biases differ by construction and are documented there).
+
 ## What this repository is
 
 One lane of a parallel run on the DrivenData #306 "DOE GEMS" fault-mapping prize: an
@@ -57,8 +73,10 @@ evidence/        exp1, exp2, run_card JSON (every number on the site comes from 
 knowledge/       why-0.2778 analysis
 registry/        data manifest + restore receipt, feature receipt, score ledger of the family
 scripts/         restore_data, build_features, run_autocontext (exp1), run_exp2, build_submission, build_site
-src/gems68/      grid, metric (template, verbatim), holdout (template subset), evaluate_holdout (template),
-                 validate (template), features, autocontext, experiment, emission, uniqueness
+src/gems68/      grid, metric (template, verbatim + 2 aliases), holdout (template subset), evaluate_holdout (template),
+                 validate (template), features, autocontext, experiment, emission, uniqueness;
+                 data.py / submission.py and scripts/{stage1_train,stage2_train,emission*,physics_surface,...}.py are the
+                 sibling sessions' pipelines (PR #1/#2), kept for audit
 tests/           metric oracle, emission, writer/validator, holdout invariants
 ```
 
