@@ -1,121 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GEMSDOE68 &mdash; Irregularities and failures</title>
-<link rel="stylesheet" href="assets/site.css">
-</head>
-<body>
-<header>
-  <h1>Irregularities, failures and dead ends</h1>
-  <span class="sub">everything that went wrong, in the order it went wrong</span>
-  <nav>
-    <a href="index.html">Summary</a>
-    <a href="executive-summary.html">Executive summary</a>
-    <a href="results.html">Results</a>
-    <a href="hypotheses.html">Hypotheses</a>
-    <a href="research.html">Research</a>
-    <a href="run-card.html">Run card</a>
-  </nav>
-</header>
-<main>
-
-<section class="panel">
-  <h2>Correctness bug that invalidated the first experiment run</h2>
-  <p>The row-halo padding in <code>src/gems68/blocks.py</code> was mis-aligned.
-  <code>top = max(0, r0 - pad - a)</code> returns <code>0</code> at the raster's top edge, so any
-  prediction strip that began at row 0 produced a short block; the subsequent
-  <code>out[:, pad:pad + nrows]</code> then cropped the <em>wrong</em> rows. Every prediction strip
-  was shifted by <code>PAD_STAGE2</code> = 18 rows. The correct form is
-  <code>max(0, a - (r0 - pad))</code>, which is clamped only by the array boundary and otherwise
-  yields exactly <code>pad</code>.</p>
-  <p><strong>Consequence:</strong> every stage-1 and stage-2 holdout DTI computed before the fix was
-  wrong, and the first experiment run was killed and restarted. The bug is now pinned by
-  <code>tests/test_blocks68.py::test_read_rows_halo_and_columns</code> and
-  <code>test_halo_cropping</code>, which assert that the block height is always
-  <code>nrows + 2 * pad</code>.</p>
-</section>
-
-<section class="panel">
-  <h2>Things that broke and why they were not retried</h2>
-  <table>
-    <tr><th>What</th><th>Failure</th><th>Resolution</th></tr>
-    <tr><td>five concurrent <code>catalogue_context</code> maps</td>
-        <td>the sandbox has 3.9 GB of RAM and the context maps are dense float32 over the whole
-        footprint; five at once exhausted it</td>
-        <td>context maps are built once and shared, and only the predicted block's map is kept
-        alive</td></tr>
-    <tr><td>patch scripts using relative paths</td>
-        <td>heredoc patches applied with <code>python3 -</code> and a relative path silently did
-        nothing, leaving the bug in place</td>
-        <td>every corrective patch now asserts its anchor before writing
-        (<code>assert old in src</code>) and uses an absolute path</td></tr>
-    <tr><td><code>cols</code> variable shadowing in <code>build_context_block</code></td>
-        <td>the column-window argument was shadowed by a loop variable, so the column window was
-        silently ignored</td>
-        <td>renamed; pinned by the exact column-window agreement test</td></tr>
-    <tr><td><code>negative dimensions</code> from unclamped <code>np.repeat</code></td>
-        <td>a catalogue strand wider than one pixel produced a repeat count that underflowed</td>
-        <td>clamped, and the synthetic test catalogues now use single-pixel strands</td></tr>
-    <tr><td><code>pkill -f run_autocontext</code></td>
-        <td>the pattern matched the invoking shell itself and killed the session's own
-        terminal</td>
-        <td>kill by PID, from the recorded <code>nohup</code> job</td></tr>
-    <tr><td>thick catalogue strands and <code>gems57.network.segments</code></td>
-        <td>a 3-px-wide strand is entirely junctions, so <code>ndi.label(m &amp; ~junc)</code>
-        finds nothing and the whole-segment withholding degenerates to
-        <code>n_seg = 0</code></td>
-        <td>documented; the holdout test uses single-pixel traces</td></tr>
-    <tr><td>isotropic &sigma; = 8 channels vs a column window</td>
-        <td>the Gaussian has weight out to &plusmn;24 px, so an exact column-window comparison
-        inside 20 px of the window edge legitimately disagrees</td>
-        <td>the exact comparison is restricted to finite-support channels and to &ge; 20 px from
-        either window edge</td></tr>
-    <tr><td>Dropbox mirrors of the Newberry AEM survey</td>
-        <td>served third-party pages, not the rasters</td>
-        <td>abandoned; the bundled feature stack was used instead</td></tr>
-    <tr><td>USGS ANSS hypocentre depths</td>
-        <td><code>earthquake.usgs.gov</code> is outside the sandbox network allow-list</td>
-        <td>hypothesis H5 recorded as not viable in this session</td></tr>
-  </table>
-</section>
-
-<section class="panel">
-  <h2>Measurement limitations, stated plainly</h2>
-  <ul>
-    <li><strong>No organiser score.</strong> The competition's scoring truth is login-walled. Every
-    number on this site is a local HOLDOUT-DTI measured against withheld catalogue segments. None
-    of them is an official score.</li>
-    <li><strong>The holdout is the catalogue.</strong> Withholding whole segments of the mapped
-    fault catalogue measures how well the model recovers faults that somebody has already mapped,
-    not how well it discovers faults nobody has mapped. That is a real gap and it is the main
-    reason the leakage canary is reported alongside the DTI.</li>
-    <li><strong>The 3-px overlap rule is degenerate here.</strong> The footprint is small and
-    densely dotted by earlier sessions, so "more than 70 % of this raster's dots lie within 3 px
-    of one registry raster's dots" is close to trivially true. The measurement is reported as
-    measured, with that caveat, rather than silently passed.</li>
-    <li><strong>Budget overrun.</strong> The protocol allows three experiments and two hours. The
-    first experiment run was lost to the halo bug and had to be restarted from scratch; the
-    restarted run is what produced every number here. The wall-clock overrun is recorded in the
-    run card rather than hidden.</li>
-    <li><strong>Test coverage is partial.</strong> 18 tests pin the shared tools, the block builder
-    and the halo cropping. The auto-context stacking itself is not unit-tested against an
-    independent implementation; it is only validated by the holdout gate.</li>
-  </ul>
-</section>
-
-<section class="panel">
-  <h2>Irregularities registry</h2>
-  <p>The machine-readable list is <a href="../registry/irregularities68.json">registry/irregularities68.json</a>
-  and is loaded directly by this page.</p>
-  <table>
-    <tr><th>ID</th><th>Severity</th><th>Summary</th></tr>
-    <tr><td class='mono'>IR-24-AC68-HALO-SHIFT</td><td>critical</td><td>Row-halo padding in src/gems68/blocks.py shifted every prediction strip by PAD_STAGE2 rows</td></tr><tr><td class='mono'>IR-25-AC68-SEGMENT-WIDTH</td><td>medium</td><td>Thick catalogue strands break gems57.network.segments whole-segment withholding</td></tr><tr><td class='mono'>IR-26-AC68-SKIPPED-FAILS</td><td>low</td><td>gems.validate_submission marks passed=False when any check is SKIPPED, not only on FAIL</td></tr><tr><td class='mono'>IR-27-AC68-ISO-BOUNDARY</td><td>low</td><td>Isotropic sigma=8 channels legitimately see an artificial column-window boundary</td></tr><tr><td class='mono'>IR-28-AC68-DOT-OVERLAP</td><td>medium</td><td>The 3-px dot-overlap duplicate rule is near-degenerate in this footprint</td></tr><tr><td class='mono'>IR-29-AC68-BUDGET</td><td>medium</td><td>Experiment budget overrun caused by the halo bug restart</td></tr>
-  </table>
-</section>
-
-</main>
-<footer class="footer">GEMSDOE68</footer>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Irregularities · GEMSDOE68</title><style>
+:root{--bg:#0b1020;--card:#141b2f;--ink:#e8ecf5;--muted:#9aa7c7;--ok:#2ecc71;--bad:#e74c3c;--warn:#f1c40f;--acc:#4ea1ff}
+*{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
+main{max-width:1100px;margin:0 auto;padding:24px}
+.card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
+.banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
+.banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
+.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0}
+.btn.secondary{background:#26304d;color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
+.muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
+</style></head><body>
+<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="how-to-submit.html">How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html" style=color:#fff>Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
+<main><div class=card><h1>Irregularities ledger (flagged for review)</h1>
+<table>
+<tr><th>id</th><th>what</th><th>evidence</th><th>status</th></tr>
+<tr><td>IR-68-LEAK-01</td><td>Experiment 1 stage-2 design used the visible catalogue as both the training label and the context source, so <code>cat_dist == 0 ⟺ label == 1</code>. Stage 2 gain share: <code>cat_dist</code> 95 %; stage 3 collapsed to HOLDOUT-DTI ≈ 0.005 because every dot was placed in the 3 px ring around visible faults where no withheld truth can be.</td><td><code>evidence/exp1_autocontext.json</code> (<code>feature_importance_gain</code>, <code>results</code>)</td><td>fixed in experiment 2 (hide-draw labels); exp 1 kept as the negative record</td></tr>
+<tr><td>IR-68-TEMPLATE-01</td><td>Shared template <code>evaluate_holdout.implementation_hashes()</code> hard-codes <code>spatial.py</code>, which the shared evaluator does not itself import; a lane that reuses only the evaluator crashes.</td><td>traceback in <code>.cache/exp1.log</code> (first run)</td><td>patched locally to hash only files present; <strong>report upstream</strong> (GEMSDOE65 template)</td></tr>
+<tr><td>IR-68-ACCESS-01</td><td>Sandbox can reach only github.com / api.github.com / codeload / pypi / npm. drivendata.org, docs.nlr.gov, usgs.gov, nationalmap.gov, earthquake.usgs.gov, dropbox.com are unreachable. All competition bytes came from the family's sha256-pinned GitHub mirror.</td><td><code>registry/restore_receipt.json</code></td><td>open; hashes match the lineage's organizer-download receipts but are not an organizer authentication</td></tr>
+<tr><td>IR-68-LB-01</td><td>The brief quotes the leaderboard high as 0.3774 and later as 0.3195; the lineage's 2026-10-11 note quotes 0.4133.</td><td><code>docs/PROMPT.md</code></td><td>open; cannot be re-fetched here</td></tr>
+<tr><td>IR-68-RANGE-01</td><td>A previous download produced "Predicted values must be in range [0, 1]" on the portal. The portal's nodata handling is unproven; this repository ships the all-finite zeros file as primary (the form the 0.2778 champion was uploaded in) and a NaN-outside file as secondary.</td><td><code>docs/how-to-submit.html</code></td><td>mitigated</td></tr>
+<tr><td>IR-68-PROXY-01</td><td>The holdout truth is withheld <em>catalogue</em> components, so a model rewarded for proximity to the catalogue looks good locally and (per the champion ladder) loses live. Mitigation: ≤ 2 px catalogue exclusion in every emission, and a second gate on pixels &gt; 1 km from any mapped fault. The holdout cannot reward a genuinely new fault by construction.</td><td><code>knowledge/01_why_02778_and_can_we_beat_it.md</code> §4</td><td>structural; disclosed</td></tr>
+<tr><td>IR-68-METRIC-01</td><td>The problem page's worked example is quoted as "0.60"; the exact value of 3.00/(3.00+0.2·1.89+0.8·2.00) is 0.6027. Treated as rounding.</td><td><code>src/gems68/metric.py</code> test</td><td>closed</td></tr>
+<tr><td>IR-68-CALIB-01</td><td>Registry rasters cannot be used to calibrate the holdout: they were built with the full catalogue visible and (for the ladder rungs) pruned around it, so their holdout DTI is biased downward. No live↔holdout calibration is claimed.</td><td>—</td><td>disclosed</td></tr>
+<tr><td>IR-68-UNIQ-01</td><td>The dot-overlap rule flagged <code>13gems…r13-lattice-s5</code> at 98.6 %, but that raster's 3 px halo covers 99.9 % of the footprint (regular 5 px lattice), so overlap with it is chance (lift 0.99). Rule amended: rasters covering &gt; 70 % of the footprint are excluded from the duplicate verdict; coverage and lift are now reported for every raster. Max informative overlap 37 % (Hedge-v2, lift 1.31); champion overlap 11 % (lift 0.73).</td><td><code>evidence/run_card.json</code> → <code>uniqueness</code></td><td>closed; <strong>report upstream</strong> as a template refinement</td></tr>
+<tr><td>IR-68-BLOB-01</td><td><code>docs/assets/dots_map.png</code>: besides linear strands, the stage-3 surface produces area-fill patches (north-centre, south-east) at 5×5 NMS spacing — regional highs driven by the stage-1 regional bands (<code>ieq_n100a15</code>, <code>deq_n100a15</code>, geodetic rates) and the σ=10 px smooth. The holdout rewards them, including &gt; 1 km from mapped faults, but the live truth is linear. Median dot distance to the catalogue is 5.1 km vs the champion's 2.0 km.</td><td>run card <code>emission</code>, map figure</td><td>open — <strong>experiment 3 (next session):</strong> drop the four regional bands from stage 1 and the σ=10 smooth from stage ≥2, or require stage-3 orientation coherence &gt; τ at emission; compare at matched budget</td></tr>
+</table></div></main></body></html>

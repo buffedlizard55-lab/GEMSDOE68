@@ -44,10 +44,10 @@ from gems57 import grid as G57                                                  
 from gems57 import metric as M57                                                     # noqa: E402
 from gems68 import blocks as B                                                       # noqa: E402
 from gems68 import catalogue_context as CC                                           # noqa: E402
-from gems68 import features as F                                                     # noqa: E402
+from gems68 import channel_stack as F                                                     # noqa: E402
 
 sys.path.insert(0, str(ROOT / "scripts"))
-from run_autocontext import (INNER_BUFFER_PX, NEG_RATIO, ROW_BLOCK,  # noqa: E402
+from lane68_autocontext import (INNER_BUFFER_PX, NEG_RATIO, ROW_BLOCK,  # noqa: E402
                              SEED_ROW_SAMPLE, bbox_of, make_model,
                              own_block_catalogue_context, predict_box,
                              quadrant_partition, stage1_row_matrix,

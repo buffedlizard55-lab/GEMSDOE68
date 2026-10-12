@@ -50,11 +50,18 @@
 
 ## Status
 
-**A unique candidate IS cleared for download.** See
-[`docs/index.html`](docs/index.html) — the download button is the first thing on the page — and
-[`docs/executive-summary.html`](docs/executive-summary.html) for the step-by-step submission
-instructions. The canonical machine-readable summary is
-[`docs/data/run-card.json`](docs/data/run-card.json), written by `scripts/write_run_card.py`.
+Two lanes now share this repository.
+
+**The repository site is [`docs/index.html`](docs/index.html)** — it links to both.
+
+**This session's lane (GEMSDOE68 / lane 68) is at
+[`docs/lane68/index.html`](docs/lane68/index.html)**, with a one-click download of the submission
+GeoTIFF at the very top of the page and a step-by-step
+[`docs/lane68/executive-summary.html`](docs/lane68/executive-summary.html). The canonical
+machine-readable summary is [`docs/lane68/data/run-card.json`](docs/lane68/data/run-card.json),
+written by `scripts/lane68_write_run_card.py`.
+
+**A unique candidate IS cleared for download.**
 
 | gate | result (local measurements unless labelled otherwise) |
 |---|---|
@@ -76,18 +83,27 @@ from the holdout sweep, not from the submission grid. Two files ship: `-nan` (pr
 16 validator checks) and `-zeros` (all-finite fallback, for a NaN-blind range check on the upload
 form).
 
+**No ORGANIZER-CONFIRMED score is claimed for either lane.** Every number above is a local
+HOLDOUT-DTI.
+
 ## Layout
 
 ```
 src/gems/          shared writer / validator / metric / release gate (vendored, unmodified)
 src/gems57/        shared hide-and-recover evaluator: holdout, metric, spatial folds (vendored)
-src/gems68/        THIS lane: cached channel stack, block feature engineering, catalogue context
-scripts/           run_autocontext.py (experiment), emit_submission.py (release),
-                   lane_check.py (duplicate gate), lane_density_null.py (overlap-rule control),
-                   write_run_card.py (the JSON card), build_site.py (site from evidence)
+src/gems68/        blocks.py, catalogue_context.py, channel_stack.py  -> lane 68 (this session)
+                   features.py, grid.py, autocontext.py, emission.py, ... -> the sibling lane
+                   that arrived from main; left untouched
+scripts/lane68_*   THIS lane: autocontext (experiment), emit_submission (release), lane_check +
+                   lane_density_null (duplicate gate), write_run_card (the JSON card),
+                   build_site (this lane's site, written to docs/lane68/)
+scripts/           the sibling lane's pipeline (run_autocontext.py, build_site.py, ...)
 registry/rasters/  the duplicate-gate corpus of prior rasters, intentionally tracked
-evidence/ac68_lane_density_null.json  the density-null control for the 3-px overlap rule
-docs/              the GitHub Pages site; docs/downloads/ holds the submission + receipt + zip
+evidence/          every measurement, as JSON, from both lanes
+docs/              the repository site, linking both lanes
+docs/lane68/       THIS lane's site: index with the one-click download at the top, plus
+                   executive-summary, results, hypotheses, research and run-card pages
+docs/downloads/    every submission raster + receipt + zip, from both lanes
 evidence/          every measurement, as JSON
 data/              competition data (git-ignored; see "Data placement")
 cache/             the built 45-channel stack (git-ignored, rebuilt by one call)
@@ -96,7 +112,7 @@ tests/             pytest suite
 
 ## Method (short)
 
-1. **Cached channel stack** (`src/gems68/features.py`) — 45 fold-invariant channels on the official
+1. **Cached channel stack** (`src/gems68/channel_stack.py`) — 45 fold-invariant channels on the official
    100 m grid: the 19 DrivenData feature bands, 6 derived gradient channels, 11 lidar-derived scarp
    channels and 8 GeoDAWN radiometric/magnetic channels, plus the lidar coverage flag. Built
    strip-by-strip into a memory-mapped array so the 3 GB sandbox never holds it all.
@@ -118,7 +134,10 @@ tests/             pytest suite
    footprint) so every label is used and every probability is still out-of-fold; the emission
    parameters (catalogue exclusion radius, dot budget) come from the holdout sweep; the file is
    written by the shared `gems.submission_writer` and validated by the shared
-   `gems.validate_submission`.
+   `gems.validate_submission`. The footprint written is the *official* one derived from band 1 of
+   `training_features.tif`, which is 3,061 cells smaller than the cached stack's own footprint; the
+   1,540 official-only cells receive 0 rather than NaN, because NaN inside the official footprint
+   is a validator failure.
 
 ## Data placement
 
@@ -172,5 +191,5 @@ Measured in this checkout: all four core files match their pinned sha256 exactly
 ## Tests
 
 ```bash
-PYTHONPATH=src python -m pytest tests -q     # 18 passed
+PYTHONPATH=src python -m pytest tests -q     # 37 passed, 8 skipped (both lanes)
 ```

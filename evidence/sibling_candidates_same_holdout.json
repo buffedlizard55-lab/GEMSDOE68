@@ -1,0 +1,17 @@
+{
+  "PR#1 gems68-autoctx-40000": {
+    "dots": 40000,
+    "values_binary": true,
+    "holdout_dti_as_is": 0.0
+  },
+  "PR#2 gemsdoe68-autocontext-s2": {
+    "dots": 35707,
+    "values_binary": true,
+    "holdout_dti_as_is": 0.0013
+  },
+  "PR#3 (this) s3-hidedraw-38000": {
+    "dots": 38000,
+    "values_binary": true,
+    "holdout_dti_as_is": 0.0409
+  }
+}

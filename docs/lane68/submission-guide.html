@@ -24,10 +24,10 @@
 
 <section class="hero">
   <h2>Fastest path: download and upload</h2>
-  <p class="mono" style="font-size:16px"><a href="docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif">docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif</a></p>
+  <p class="mono" style="font-size:16px"><a href="../downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif">docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif</a></p>
   <div class="dl">
-    <a href="docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif">&#8681; Download the GeoTIFF to submit</a>
-    <a class="alt" href="docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif">&#8681; All-finite fallback</a>
+    <a href="../downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif">&#8681; Download the GeoTIFF to submit</a>
+    <a class="alt" href="../downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif">&#8681; All-finite fallback</a>
   </div>
 </section>
 
@@ -83,7 +83,7 @@ PYTHONPATH=src python -m gems.validate_submission \
     --features  data/bridge/training_features.tif
 
 # duplicate / lane check against every prior raster in the registry
-python scripts/lane_check.py --stage emitted \
+python scripts/lane68_check.py --stage emitted \
     docs/downloads/&lt;file&gt;.tif registry/rasters/*.tif \
     --json evidence/ac68_lane_check.json</pre>
   <p class="small">Both commands are read-only. <code>validate_submission</code> exits 0 only when
@@ -96,16 +96,16 @@ python scripts/lane_check.py --stage emitted \
 # 2. build the cached 45-channel stack (takes ~1 minute)
 PYTHONPATH=src python -c "from gems68 import features as F; F.load_channels()"
 # 3. holdout experiment + emission-parameter sweep (~25 min)
-PYTHONPATH=src python scripts/run_autocontext.py --seeds 20 \
+PYTHONPATH=src python scripts/lane68_autocontext.py --seeds 20 \
     --dot-budget 32000 --out evidence/ac68_seed20.json
 # 4. emit the submission with the parameters tuned in step 3
-PYTHONPATH=src python scripts/emit_submission.py \
+PYTHONPATH=src python scripts/lane68_emit_submission.py \
     --params evidence/ac68_emission_params.json \
     --name GEMSDOE68-AC-stack3 --out docs/downloads
 # 5. lane check, then rebuild the site from the evidence
-python scripts/lane_check.py --stage emitted docs/downloads/*-nan.tif \
+python scripts/lane68_check.py --stage emitted docs/downloads/*-nan.tif \
     registry/rasters/*.tif --json evidence/ac68_lane_check.json
-PYTHONPATH=src python scripts/build_site.py</pre>
+PYTHONPATH=src python scripts/lane68_build_site.py</pre>
 </section>
 
 <h2>5. Where every number comes from</h2>

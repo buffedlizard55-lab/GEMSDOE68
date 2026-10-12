@@ -1,0 +1,21 @@
+{
+ "schema": 1,
+ "warning": "Every score quoted in this repository is either an OWNER REPORT transcribed from a GEMSDOE site, or a HOLDOUT-DTI computed locally on a catalogue proxy. Nothing here is ORGANIZER-CONFIRMED. The upstream registry carries the same warning (60GEMSDOE/registry/claims.json, IR-32-SCORE-01).",
+ "claims": [
+  {
+   "id": "GEMSDOE32-h33-2-b2",
+   "score": 0.2778,
+   "kind": "owner_report",
+   "source": "https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html",
+   "raster_sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+   "note": "best owner-reported score across the GEMSDOE family as listed in the brief"
+  },
+  {
+   "id": "leaderboard-rank1-2026-10-11",
+   "score": 0.4133,
+   "kind": "public_leaderboard_row",
+   "participant": "xiaofanhu",
+   "source": "registry/leaderboard_snapshot.json"
+  }
+ ]
+}

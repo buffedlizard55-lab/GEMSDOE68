@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "note": "Every hash was computed from the restored bytes. Pins prove mirror consistency, not organizer authentication. H66 runtime input requirements are enumerated by scripts/run_h66.py; the lidar sidecar and topo 100 m stack remain intentionally unpinned and block execution.",
+  "note": "Every hash was computed from the restored bytes. Pins prove mirror consistency, not organizer authentication.",
   "files": [
     {
       "id": "training_features",
@@ -260,28 +260,6 @@
       "sha256": "33003374335d84bf885f2d8f5e9dd4c57044c8ec58fa6a0d7fa581e8bc41c11d",
       "bytes": 1635084,
       "provenance": "owner-supplied scored-artifact mirror (GEMSDOE27 primary candidate manifest, generated_utc 2026-10-03T00:32:37Z); UNSCORED on the leaderboard; added 2026-10-04 because scripts/run_pipeline.py required it and it was absent from this manifest, which made the documented reproduce command abort (IR-32-MANIFEST-01)"
-    },
-    {
-      "id": "ext_topo_10m_derived_100m_u8",
-      "repo": null,
-      "ref": null,
-      "path": "data/external/topo_10m_derived_100m_u8.tif",
-      "dest": "external/topo_10m_derived_100m_u8.tif",
-      "group": "external",
-      "sha256": null,
-      "bytes": null,
-      "provenance": "Required by scripts/run_h66.py and src/gems66/channels66.py; a verified source/hash/bytes were not available during this review. Intentionally unpinned: s0 must fail until provenance and exact SHA-256 are supplied."
-    },
-    {
-      "id": "ext_lidar_scarp_features_sidecar",
-      "repo": null,
-      "ref": null,
-      "path": "data/external/lidar_scarp_features.json",
-      "dest": "external/lidar_scarp_features.json",
-      "group": "external",
-      "sha256": null,
-      "bytes": null,
-      "provenance": "Required by src/gems66/spec66.py to decode lidar_scarp_features_u8.tif; exact sidecar bytes/source were not verified in this review. Intentionally unpinned; s0 must fail until provenance and SHA-256 are supplied."
     }
   ]
 }

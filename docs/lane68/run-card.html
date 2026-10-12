@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GEMSDOE68 &mdash; Run card</title>
+<title>GEMSDOE68 lane &mdash; Run card</title>
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
@@ -22,10 +22,10 @@
 <main>
 
 <section class="panel">
-  <p>The run card is written by <code>scripts/write_run_card.py</code> from
+  <p>The run card is written by <code>scripts/lane68_write_run_card.py</code> from
   <code>evidence/ac68_seed20.json</code>, <code>evidence/ac68_emission.json</code> and
   <code>evidence/ac68_lane_check.json</code>.  Download it:
-  <a href="../evidence/run-card-ac68.json">evidence/run-card-ac68.json</a>.</p>
+  <a href="../../evidence/run-card-ac68.json">evidence/run-card-ac68.json</a>.</p>
   <p>Fields that the protocol asks for but that this run cannot supply are written as
   <code>null</code> or as an explicit <code>not measured</code> string &mdash; nothing is
   filled in from memory.</p>
@@ -64,12 +64,12 @@
 <section class="panel">
   <h2>Reproducing the card</h2>
   <pre class="code">cd /home/user/GEMSDOE68
-PYTHONPATH=src python scripts/run_autocontext.py --seeds 20 --dot-budget 32000 \
+PYTHONPATH=src python scripts/lane68_autocontext.py --seeds 20 --dot-budget 32000 \
     --out evidence/ac68_seed20.json
-PYTHONPATH=src python scripts/emit_submission.py --evidence evidence/ac68_seed20.json
-PYTHONPATH=src python scripts/lane_check.py
-PYTHONPATH=src python scripts/write_run_card.py
-PYTHONPATH=src python scripts/build_site.py</pre>
+PYTHONPATH=src python scripts/lane68_emit_submission.py --params evidence/ac68_params.json
+PYTHONPATH=src python scripts/lane68_check.py
+PYTHONPATH=src python scripts/lane68_write_run_card.py
+PYTHONPATH=src python scripts/lane68_build_site.py</pre>
   <p class="small">Tests: <code>PYTHONPATH=src python -m pytest tests -q</code> &rarr;
   18 passed, 6 warnings in 0.45s.</p>
 </section>
