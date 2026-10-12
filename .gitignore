@@ -1,0 +1,7 @@
+# competition rasters and caches are large; restore with scripts/fetch_mirrors.sh
+data/
+work/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
