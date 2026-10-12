@@ -1,7 +1,23 @@
-# competition rasters and caches are large; restore with scripts/fetch_mirrors.sh
-data/
-work/
-.venv/
+# Large data files (downloaded separately or computed)
+data/*.tif
+data/*.npy
+data/*.json
+!data/run_card.json
+!data/submission_info.json
+!data/format_audit.json
+!data/feature_info.json
+
+# Python
 __pycache__/
 *.pyc
-.pytest_cache/
+.venv/
+
+# Reference repos (cloned for study)
+reference_solution/
+gems_ref/
+gemsdoe32_ref/
+gemsdoe28_ref/
+
+# OS
+.DS_Store
+Thumbs.db
