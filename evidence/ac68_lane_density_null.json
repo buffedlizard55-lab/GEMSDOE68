@@ -1,0 +1,16 @@
+{
+ "candidate": "GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
+ "registry": "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
+ "candidate_dots": 20000,
+ "registry_dots": 311617,
+ "registry_dot_density_per_1000_cells": 25.3777,
+ "observed_overlap_within_3px": 0.9948,
+ "overlap_limit": 0.7,
+ "literal_rule_fires": true,
+ "null_draws": 100,
+ "null_mean_overlap": 0.958387,
+ "null_sd_overlap": 0.0013380885620914668,
+ "null_p95_overlap": 0.960265,
+ "observed_minus_null_sd": 27.212698046746304,
+ "interpretation": "the observed overlap exceeds the random-null level; treat as genuine overlap"
+}

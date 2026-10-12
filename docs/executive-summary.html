@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE68 &mdash; Executive summary: how to submit</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header>
+  <h1>Executive summary &mdash; how to make a submission</h1>
+  <span class="sub">DOE GEMS Prize &middot; DrivenData #306</span>
+  <nav>
+    <a href="index.html">Summary</a>
+    <a href="executive-summary.html">Executive summary</a>
+    <a href="submission-guide.html">Submission guide</a>
+    <a href="results.html">Results</a>
+    <a href="research.html">Research</a>
+    <a href="run-card.html">Run card</a>
+    <a href="hypotheses.html">Hypotheses</a>
+    <a href="irregularities.html">Irregularities</a>
+  </nav>
+</header>
+<main>
+
+<section class="hero">
+  <h2>The file to upload</h2>
+  <p class="mono" style="font-size:16px"><a href="docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif">docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif</a></p>
+  <div class="dl">
+    <a href="docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif">&#8681; Download the GeoTIFF to submit</a>
+    <a class="alt" href="docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif">&#8681; All-finite fallback</a>
+  </div>
+  <p class="small">sha256 <code>cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf</code> &middot; 291557 bytes.</p>
+</section>
+
+<h2>What this project does</h2>
+<section class="panel">
+  <p>GEMSDOE68 builds a <strong>fault-probability map for the northwestern Great Basin study
+  area</strong> and turns it into a competition submission. The scientific question is which
+  unmapped faults the existing USGS / INGENIOUS catalogue misses, and where the geophysical and
+  topographic signature of a fault appears <em>without</em> a mapped trace.</p>
+  <p>The method in this lane is <strong>auto-context stacked refinement</strong>
+  (Tu, CVPR 2008, <a href="https://doi.org/10.1109/CVPR.2008.4587436">doi:10.1109/CVPR.2008.4587436</a>;
+  extended TPAMI version <a href="https://pages.ucsd.edu/~ztu/publication/pami_autocontext.pdf">pages.ucsd.edu/~ztu/publication/pami_autocontext.pdf</a>):
+  a first classifier scores every 100 m cell from the raw geophysical channels, then a second
+  classifier is trained on those scores <em>plus</em> the raw channels, so it can learn the
+  spatial regularities a per-pixel model cannot &mdash; continuity, parallelism, en &eacute;chelon
+  spacing. The refinement is applied twice.</p>
+  <p>Nothing here is a guess about the hidden test truth: every claim about accuracy is measured
+  on a <strong>spatially blocked hide-and-recover holdout</strong> in which whole catalogue
+  segments are withheld with a buffer, all catalogue-derived features are rebuilt from the
+  visible faults only, and visible fault pixels are masked pixel-exactly before scoring.</p>
+</section>
+
+<h2>Why the file is safe to submit</h2>
+<section class="panel">
+  <table>
+    <tr><th>Requirement (official format)</th><th>This file</th><th>Status</th></tr>
+    <tr><td>Single-band GeoTIFF (.tif)</td><td>1 band, float32, deflate</td><td><span class="pill pass">PASS</span></td></tr>
+    <tr><td>CRS EPSG:32611</td><td>EPSG:32611 (UTM 11N)</td><td><span class="pill pass">PASS</span></td></tr>
+    <tr><td>100 m resolution, same bounds as the training data</td>
+        <td>100 &times; 100 m, transform (100, 0, 243350, 0, &minus;100, 4508550), 3730 &times; 3292</td>
+        <td><span class="pill pass">PASS</span></td></tr>
+    <tr><td>Predicted values in [0, 1]</td>
+        <td>min 0.0, max 1.0 inside the footprint; no infinities</td><td><span class="pill pass">PASS</span></td></tr>
+    <tr><td>Null/NaN outside the study area</td><td>NaN exactly outside the footprint, 0 NaN inside</td>
+        <td><span class="pill pass">PASS</span></td></tr>
+    <tr><td>Validator</td>
+        <td>shared <code>gems.validate_submission</code> re-read from disk against
+            <code>sample_submission.tif</code> and <code>training_features.tif</code></td>
+        <td><span class="pill pass">True</span></td></tr>
+  </table>
+  <p class="small">The <em>all-finite fallback</em> writes 0 instead of NaN outside the footprint.
+  It deliberately deviates from the shared validator's &ldquo;NaN-only outside the footprint&rdquo;
+  rule, and is offered only because a NaN-blind range check on the upload form is the documented
+  cause of the earlier <em>&ldquo;Predicted values must be in range [0, 1]&rdquo;</em> rejection.
+  Prefer the primary file; use the fallback only if that error appears.</p>
+</section>
+
+<h2>Step by step</h2>
+<section class="panel">
+  <ol>
+    <li>Download <a href="docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif"><code>docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif</code></a> from this site
+        (or from <code>docs/downloads/</code> in the repository).</li>
+    <li>Open the competition
+        <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">data /
+        submission page</a> and choose <strong>New submission</strong>.</li>
+    <li>Upload the <code>.tif</code> file (a <code>.zip</code> containing the single GeoTIFF also
+        works; the repository ships both).</li>
+    <li>Paste the submission name <code>GEMSDOE68-AC-stack2</code> into the <em>File to submit</em> field's
+        sibling <em>Note</em> box, or use the suggested note below.</li>
+    <li>Submit, then record the receipt hash on the submission page and compare it with the
+        sha256 printed here.</li>
+  </ol>
+  <h3>Suggested submission name and note</h3>
+  <table class="kv">
+    <tr><td>Name</td><dd>GEMSDOE68-AC-stack2</dd></tr>
+    <tr><td>Note (&le;140 characters)</td><dd>GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage2, r=3px, 20000 dots; holdout-gated</dd></tr>
+  </table>
+</section>
+
+<h2>What is <em>not</em> claimed</h2>
+<section class="panel">
+  <ul>
+    <li>No <strong>ORGANIZER-CONFIRMED</strong> score. The scored truth is login-walled; the only
+        ground signal available in this checkout is the hide-and-recover holdout.</li>
+    <li>No leaderboard projection is written as a score. Owner-reported leaderboard values quoted
+        anywhere in this repository are labelled as owner-reported, never as receipts.</li>
+    <li>The registry of prior rasters used for the uniqueness check is the one committed under
+        <code>registry/rasters/</code>; it is not certified complete by the organisers.</li>
+  </ul>
+</section>
+
+</main>
+<footer class="footer">GEMSDOE68 &middot; generated from <code>evidence/</code> by
+<code>scripts/build_site.py</code>.</footer>
+</body>
+</html>

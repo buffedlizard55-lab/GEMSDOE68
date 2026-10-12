@@ -1,0 +1,179 @@
+{
+ "schema": 4,
+ "lane": "auto-context stacked refinement (GEMSDOE68), following the native-resolution LiDAR scarp lane",
+ "ranking_basis": "Pre-implementation qualitative ranking by physical specificity, likely separation from named mimics, and cost. Sign and magnitude of DTI change are unmeasured for AC68-H2..H5; no score projection is made. Novelty against the full family registry is not established.",
+ "protocol": {
+  "feature_scales_m": [
+   2,
+   20
+  ],
+  "aggregation_m": 100,
+  "input_availability": "The competition data page requires login in this session and the checkout has no official rasters or shared cached stack. USGS 3DEP provides public-domain 1 m bare-earth DEMs in principle, but exact competition-area tile coverage/alignment is not verified.",
+  "holdout": "Withhold whole vector-defined fault segments, not artificial raster chunks, from lidar-covered spatial blocks. Use a preregistered spatial buffer around held segments; recommend matching the 300 m scoring support, subject to review by the two independent scientific leads. Catalogue-derived features use visible faults only; visible fault pixels are masked exactly. Restrict truth and scoring to lidar-covered held-out blocks.",
+  "metric": "Pooled distance-weighted Tversky, alpha=0.2, beta=0.8, 300 m triangular kernel. Report evaluator version, withheld-positive count, and a 95% spatial-block CI for every HOLDOUT-DTI result.",
+  "leakage": "Test every feature alone on the spatially blocked holdout. AUC >0.90 is leakage until disproven. No hidden/withheld catalogue data may affect features, masks, candidate eligibility, or thresholds.",
+  "range_front_gate": "Compare gains in lidar-covered held-out blocks both overall and off a prespecified range-front stratum; reject a gain confined to range fronts.",
+  "uniqueness": "Compare continuous pre-placement surfaces and final dots against the complete registry. Correlation >0.90 or >70% of candidate dots within 3 px is a duplicate/lane-drift stop. Incomplete registry means BLOCKED, not PASS.",
+  "budget": "Maximum three experiments or two hours. No competition slot before the candidate strictly beats the current valid holdout best under the same protocol."
+ },
+ "items": [
+  {
+   "id": "LIDAR-01",
+   "rank": 1,
+   "lane": "native-resolution LiDAR scarp channels",
+   "title": "Slope-aware scarp templates plus scale-persistent Steger/Frangi line evidence",
+   "layers": "Authorized 1 m bare-earth DEM tiles and the shared cached stack; Scarplet-style template outputs (best-fit amplitude, morphologic age, orientation, and template SNR); signed Steger sub-pixel ridge/valley responses and Frangi Hessian-line measures over 2\u201320 m scales; the existing cultural-feature mask only after its provenance, alignment, and availability are verified. Aggregate physical channel summaries to the competition's 100 m cells.",
+   "signature": "A coherent scarp cross-profile fit that allows finite initial and far-field slopes, co-located with ridge/valley responses persisting across neighboring physical scales and aligned along a trace. Template amplitude, morphologic age, orientation, and SNR must be computed by the cited template method rather than approximated by ratios or robust z-scores.",
+   "why_off_catalogue": "An expert-labelled new fault may preserve a subtle surface scarp omitted from the public compilation. Native DEM evidence can preserve profile shape and continuity that are diluted by coarser aggregation. This is a geological rationale to test, not an observed gain.",
+   "named_mimic": "Fluvial terrace riser. Also test natural channel banks, road/canal embankments, landslide headscarps, shoreline risers, and DEM seams.",
+   "differs_from_repo": "The present H66 code decodes owner-described 100 m stack proxies; it does not implement the actual Scarplet template fit or footprint-wide native Steger/Frangi scale sweep. Sibling owner reports describe LiDAR scarp channels and thinning, so the joined slope-aware template plus signed cross-scale line persistence is a candidate distinction, not a verified novelty claim. The full raster registry is unavailable.",
+   "cost": "Very high: tiled DEM/projection and edge handling, multi-orientation and multiscale operators, mask validation, aggregation, per-feature leakage tests, segment-blocked holdout/CI, full-registry scans, and shared-tool corrections. Runtime and storage are unknown until exact tiles are inventoried.",
+   "expected_gain": "Highest qualitative prior in this ranking because it combines two complementary physical measurements; sign and size are unknown. Not a DTI projection.",
+   "data_status": "Blocked. Official competition rasters, tile list, shared cache, and existing cultural mask are absent. USGS 3DEP 1 m project DEMs are public domain in principle, but exact study-area coverage and compatibility are unverified (S04, S05, S07).",
+   "validation": "NOT RUN. This is the lead to review before implementation. Do not emit a candidate until authorized data, corrected shared holdout/writer, complete registry, independent scientific sign-offs, and budget are available.",
+   "source_ids": [
+    "S02",
+    "S04",
+    "S07",
+    "S09",
+    "S10",
+    "S11",
+    "S12"
+   ]
+  },
+  {
+   "id": "LIDAR-02",
+   "rank": 2,
+   "lane": "native-resolution LiDAR scarp channels",
+   "title": "Slope-aware scarp-template channels alone",
+   "layers": "The same authorized native DEM and shared cache; a template search over scarp orientation and morphologic age that estimates amplitude and template SNR while allowing nonzero regional slopes; aggregate amplitude, age, orientation, and SNR summaries to 100 m.",
+   "signature": "Consistent cross-profile curvature/step fit with a stable orientation and plausible along-trace amplitude despite a dipping surface and unequal adjacent slopes.",
+   "why_off_catalogue": "Small or gently dipping scarps may be missed by regional mapping and weakened by coarse summaries while remaining present in bare-earth topography.",
+   "named_mimic": "Road-cut or irrigation-canal bank; terrace risers and landslide scarps are additional controls.",
+   "differs_from_repo": "No actual template search is implemented in this checkout. The legacy fields named amplitude/SNR/relative age are proxies, not Scarplet outputs. Sare and Hilley establish a relevant published method, not novelty or competition benefit for this implementation. Registry-wide uniqueness remains unknown.",
+   "cost": "High: method-faithful template implementation, orientation/age calibration, tile boundaries, visible-fault-only feature construction, feature-alone canaries, blocked validation, and registry checks.",
+   "expected_gain": "High qualitative prior for slope-tolerant scarp signatures; size and direction are unmeasured. No score projection.",
+   "data_status": "Blocked by the same missing authorized DEM tiles, cache, mask, and exact grid/reference files as LIDAR-01 (S04, S05, S07).",
+   "validation": "NOT RUN. Evaluate this as an ablation against a mass-matched baseline on the frozen spatial holdout before combining it with line channels.",
+   "source_ids": [
+    "S02",
+    "S04",
+    "S07",
+    "S09"
+   ]
+  },
+  {
+   "id": "LIDAR-03",
+   "rank": 3,
+   "lane": "native-resolution LiDAR scarp channels",
+   "title": "Signed, scale-persistent Steger ridge/valley and Frangi Hessian channels alone",
+   "layers": "The same native DEM and shared cache; scale-normalized Hessian structure, signed Steger ridge/valley responses, sub-pixel line locations, and orientation at 2\u201320 m; summarize response strength, sign, scale persistence, and orientation coherence at 100 m.",
+   "signature": "A paired, sign-consistent linear relief break persists at adjacent scales and traces a coherent line rather than appearing as an isolated edge at one scale.",
+   "why_off_catalogue": "Native-resolution ridge/valley localization may preserve short or low-relief scarps that a single-scale or 100 m response misses.",
+   "named_mimic": "Natural stream-bank line. Roads, field edges, terrace breaks, and DEM seams are additional controls.",
+   "differs_from_repo": "No footprint-wide Steger sub-pixel or Frangi scale sweep is present. These established line operators are not novel by themselves; owner-maintained sibling reports describe LiDAR thinning and scarp consensus. A complete registry is needed to test the exact signed/persistence surface for duplication or lane drift.",
+   "cost": "High: scale normalization, polarity/sign rules, edge suppression, tile seams, response calibration, feature-alone leakage tests, and full uniqueness/holdout gates.",
+   "expected_gain": "Moderate qualitative prior with substantial non-fault mimic risk; sign and size are unknown. No DTI projection.",
+   "data_status": "Blocked by missing authorized DEM/cache; public availability of USGS 3DEP does not prove exact tile coverage or compatibility (S05, S07, S08).",
+   "validation": "NOT RUN. Test each signed response alone before any combination; apply the AUC leakage stop and same-fold mass-matched comparison.",
+   "source_ids": [
+    "S02",
+    "S04",
+    "S07",
+    "S10",
+    "S11",
+    "S12"
+   ]
+  },
+  {
+   "id": "LIDAR-04",
+   "rank": 4,
+   "lane": "native-resolution LiDAR scarp channels",
+   "title": "Ordered cross-profile polarity and along-strike continuity",
+   "layers": "The same native DEM and verified existing mask; sampled cross-profiles recording paired slope breaks, polarity, width, local relief, orientation, and along-strike persistence over 2\u201320 m; aggregate profile fractions and continuity to 100 m.",
+   "signature": "Repeated profiles with consistent step polarity and crest/toe ordering along a trace, rather than one isolated edge or a chain of unrelated line responses.",
+   "why_off_catalogue": "A real fault scarp may be below regional-map inclusion criteria but retain repeated, similarly oriented cross-profile geometry along a trace.",
+   "named_mimic": "Fluvial terrace edge; road/canal banks and landslide headscarps can also create ordered breaks.",
+   "differs_from_repo": "This is a proposed profile-order/continuity ablation inside the same LiDAR lane, not evidence of a separate lane. Existing owner reports describe scarp channels/consensus, and complete registry surfaces are not available; uniqueness is unverified.",
+   "cost": "Medium-high: profile extraction is tractable, but polarity handling, continuity thresholds, mimic controls, aggregation, ablation, holdout, and registry checks remain necessary.",
+   "expected_gain": "Lower qualitative prior than the first three; may improve precision if ordered profiles separate faults from mimics, but may discard discontinuous real scarps. Unquantified.",
+   "data_status": "Blocked by missing authorized DEM/cache and existing mask; exact coverage/alignment is not established (S05, S07, S08).",
+   "validation": "NOT RUN. Prespecify profile/persistence thresholds, test each feature alone, then use the same segment-blocked holdout and uniqueness gates.",
+   "source_ids": [
+    "S02",
+    "S04",
+    "S07"
+   ]
+  },
+  {
+   "id": "AC68-H1",
+   "rank": 5,
+   "lane": "auto-context stacked refinement (Tu CVPR 2008)",
+   "title": "Stacked auto-context: stage-2/3 models consume stage-1 probabilities sampled along and across the local structure-tensor orientation",
+   "layers": "The 19 DrivenData feature bands, 6 derived detrended-elevation gradient channels, 11 2 m lidar scarp channels (downface/upface/step), 8 GeoDAWN radiometric and magnetic channels (K, Th, U, TC, TMI, TMI horizontal gradient, isostatic residual gravity), the full 45-channel cached stack, and the visible-fault catalogue.",
+   "signature": "A second and third classifier whose inputs are the previous stage's probability field resampled at +/-1,2,3,5,8,12,15 px along and across the local orientation, oriented box means at half-widths 2/4 and 4/8, two isotropic Gaussian smooths (sigma 2 and 8), the 21 raw gradient/tilt/scarp channels, and the 11 catalogue-context features recomputed with the target block's labels masked.",
+   "why_off_catalogue": "A per-pixel model fires on isolated anomalies. The stacked model fires where an anomaly continues past the end of a mapped trace, which is exactly where an unmapped splay or a stepover strand lives. This is the first supervised stacked model in the registry; every prior member emits dots from a geometric detector.",
+   "expected": "Direction and magnitude unmeasured before this run. The preregistered gate is that stage 2 beats stage 1 on outer blocks by more than 2 standard errors, including on pixels more than 1 km from any mapped fault.",
+   "implementation": "Implemented in src/gems68/blocks.py, src/gems68/features.py and scripts/run_autocontext.py.",
+   "cost": "Low: the 45-channel stack was already cached; about 5 minutes per holdout fold on 2 CPU cores.",
+   "data_needed": "None beyond the cached stack and the bundled catalogue.",
+   "status": "implemented and gated"
+  },
+  {
+   "id": "AC68-H2",
+   "rank": 6,
+   "lane": "native-resolution LiDAR scarp channels",
+   "title": "Across-strike scarp polarity and asymmetry from lidar downface/upface/step",
+   "layers": "downface_max, upface_max, step_max (2 m lidar aggregated to 100 m), det_elev, det_elev_slope.",
+   "signature": "The signed asymmetry of the scarp cross-profile: a normal fault drops the hanging wall, so the steep face and the fractured damage zone sit on opposite sides of the trace. An erosional escarpment has no such asymmetry.",
+   "why_off_catalogue": "The catalogue maps the trace, not the damage zone. Where the trace is unmapped but the damage zone is expressed in the lidar, the asymmetry still points at the fault.",
+   "expected": "Direction and magnitude unmeasured. No prior experiment in the registry used scarp polarity; all prior lidar work used scarp magnitude, which discards the sign.",
+   "implementation": "Not implemented. The channels are already present in the cached stack, so only a feature and a stacking change is needed.",
+   "cost": "Low.",
+   "data_needed": "None beyond the cached stack.",
+   "status": "queued"
+  },
+  {
+   "id": "AC68-H3",
+   "rank": 7,
+   "lane": "radiometric alteration halo",
+   "title": "Potassic/argillic alteration halo in the GeoDAWN radiometric ratios ThK, UK and UTh",
+   "layers": "GeoDAWN K, Th, U, TC and the contractor ratios ThK, UK, UTh (doi:10.5066/P93LGLVQ).",
+   "signature": "Alteration haloes around a geothermal system raise K and depress Th and U, so the ratios move even where the absolute counts are dominated by lithology.",
+   "why_off_catalogue": "The catalogue maps faults, not alteration. A fault that carries a hydrothermal halo but no topographic scarp is invisible to every scarp-based detector in this family and visible here.",
+   "expected": "Direction and magnitude unmeasured. This is a geological rather than a geomorphological argument and the alteration literature must be checked before it is trusted.",
+   "implementation": "Not implemented. The ratio bands are already in the cached stack but have never been used as a habitat prior.",
+   "cost": "Low, but needs literature review.",
+   "data_needed": "None beyond the cached stack.",
+   "status": "queued"
+  },
+  {
+   "id": "AC68-H4",
+   "rank": 8,
+   "lane": "echelon spacing",
+   "title": "Regular spacing of en-echelon Riedel shears as a periodicity prior",
+   "layers": "tmi_hg, tc, mag_gx, mag_gy, iso_grav_anom_hg, plus the mapped catalogue.",
+   "signature": "A quasi-periodic pattern in the magnetic horizontal gradient along the local orientation, whose wavelength is set by the brittle layer thickness rather than by the fault length.",
+   "why_off_catalogue": "Individual short Riedel shears are below the mapping resolution of the published catalogue, but their spacing is a regional quantity that survives aggregation.",
+   "expected": "Direction and magnitude unmeasured. No prior experiment in the registry used a periodicity statistic; all prior work was edge or ridge detection.",
+   "implementation": "Not implemented. Needs an autocorrelation or FFT feature along the local orientation.",
+   "cost": "Medium.",
+   "data_needed": "None beyond the cached stack.",
+   "status": "queued"
+  },
+  {
+   "id": "AC68-H5",
+   "rank": 9,
+   "lane": "seismicity depth clustering",
+   "title": "Hypocentre depth clustering as a 3-D constraint that projects a dipping fault back to its surface trace",
+   "layers": "deq_n100a15, ieq_n100a15, depth_to_base_surf, cond_surf.",
+   "signature": "A depth-clustered seismicity cloud whose plan-view centroid is offset from the mapped trace by the fault dip; the offset direction and magnitude carry the dip.",
+   "why_off_catalogue": "The catalogue is a map of the surface trace. A dipping fault whose surface expression is hidden by alluvium still has a seismicity centroid that can be projected back to the surface along the dip.",
+   "expected": "Direction and magnitude unmeasured, and the direction is not tested because the run is blocked.",
+   "implementation": "Not implemented.",
+   "cost": "High.",
+   "data_needed": "USGS ANSS Comprehensive Catalog hypocentre depths via the USGS FDSN event API. Not obtainable from this sandbox: earthquake.usgs.gov is outside the network allow-list.",
+   "status": "BLOCKED \u2014 external host unreachable in this session"
+  }
+ ]
+}

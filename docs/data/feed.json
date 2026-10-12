@@ -1,0 +1,120 @@
+{
+ "generated_utc": "2026-10-12T03:28:09Z",
+ "site": "GEMSDOE68",
+ "lane": "auto-context stacked refinement (Tu, CVPR 2008)",
+ "status": "promote-with-caveats",
+ "submission": "GEMSDOE68-AC-stack2",
+ "download": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
+ "sha256": "cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf",
+ "holdout_dti": {
+  "stage1": 0.13014032809345344,
+  "stage2": 0.19044851256926598,
+  "stage3": 0.18684342719137767
+ },
+ "gate": {
+  "all_pixels": {
+   "stage2_vs_stage1": {
+    "mean_delta": 0.06065845612980394,
+    "se": 0.007049341494211312,
+    "n_blocks": 4,
+    "t_stat": 8.604840066212521,
+    "passes_gt_2se": true,
+    "per_block": [
+     0.05895045859940877,
+     0.07961876226513459,
+     0.058554841425332266,
+     0.04550976222934011
+    ]
+   },
+   "stage3_vs_stage1": {
+    "mean_delta": 0.05738258311861622,
+    "se": 0.010058061945947203,
+    "n_blocks": 4,
+    "t_stat": 5.705133198323358,
+    "passes_gt_2se": true,
+    "per_block": [
+     0.04877385707627764,
+     0.087275997154736,
+     0.04359938072003772,
+     0.04988109752341355
+    ]
+   },
+   "stage3_vs_stage2": {
+    "mean_delta": -0.003275873011187709,
+    "se": 0.00549276392124397,
+    "n_blocks": 4,
+    "t_stat": -0.5963979261001641,
+    "passes_gt_2se": false,
+    "per_block": [
+     -0.010176601523131129,
+     0.007657234889601405,
+     -0.014955460705294549,
+     0.004371335294073436
+    ]
+   },
+   "stage_means": {
+    "stage1": 0.1294800022277699,
+    "stage2": 0.19013845835757381,
+    "stage3": 0.18686258534638608
+   }
+  },
+  "far_gt_1km": {
+   "stage2_vs_stage1": {
+    "mean_delta": 0.007405528560726249,
+    "se": 0.003761553568962731,
+    "n_blocks": 4,
+    "t_stat": 1.968742017083214,
+    "passes_gt_2se": false,
+    "per_block": [
+     0.005884556076854723,
+     0.018356591474399074,
+     0.001447707414073334,
+     0.003933259277577864
+    ]
+   },
+   "stage3_vs_stage1": {
+    "mean_delta": 0.008361746412424936,
+    "se": 0.004444319766547876,
+    "n_blocks": 4,
+    "t_stat": 1.8814457221020169,
+    "passes_gt_2se": false,
+    "per_block": [
+     0.004469718512758764,
+     0.021482559425315934,
+     0.0018585863179894737,
+     0.005636121393635575
+    ]
+   },
+   "stage3_vs_stage2": {
+    "mean_delta": 0.0009562178516986887,
+    "se": 0.0009654269997991912,
+    "n_blocks": 4,
+    "t_stat": 0.9904610622010592,
+    "passes_gt_2se": false,
+    "per_block": [
+     -0.0014148375640959587,
+     0.003125967950916863,
+     0.0004108789039161398,
+     0.0017028621160577106
+    ]
+   },
+   "stage_means": {
+    "stage1": 0.002398362899107998,
+    "stage2": 0.009803891459834246,
+    "stage3": 0.010760109311532935
+   }
+  }
+ },
+ "dot_count": 20000,
+ "sources": [
+  "https://www.drivendata.org/competitions/306/competition-doe-gems/",
+  "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+  "https://docs.nlr.gov/docs/fy26osti/96647.pdf",
+  "https://github.com/drivendataorg/gems-prize-reference-solution",
+  "https://doi.org/10.1109/CVPR.2008.4587436",
+  "https://pages.ucsd.edu/~ztu/publication/pami_autocontext.pdf",
+  "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+  "https://gbcge.org/current-projects/ingenious/",
+  "https://epsg.io/32611"
+ ]
+}

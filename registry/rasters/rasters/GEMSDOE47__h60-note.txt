@@ -1,0 +1,11 @@
+H60 local scientific result note — all-finite range diagnostic; NOT a portal submission note
+
+DO NOT UPLOAD THIS TIFF OR ITS ZIP AS PART OF THIS REVIEW. H60 passed a local preregistered scientific promotion gate, but its all-finite encoding stores zero outside the footprint and fails the published null/NaN-outside wording. Organizer acceptance of either encoding is untested. No upload, score request, final selection, or competition slot use was authorized or performed in this review.
+
+This historical builder-era diagnostic is gems47-h60-lidarscarp-s2p0-20261007-allfinite.tif (SHA-256 4ee074230a305fce6768012fc33380bf196c89170e70050a77cf4a44d74ef14c; 298,994 bytes). It has one float32 band, EPSG:32611, width 3292, height 3730, 100 m resolution, 37,654 unit dots, all cells finite and in [0,1], no NoData tag, and finite zero outside the footprint. Those are local observations; they do not meet the published outside-null/NaN requirement.
+
+A separate H60 NaN-outside sibling is available for local format inspection only: gems47-h60-lidarscarp-s2p0-20261007-nanoutside.tif (SHA-256 d75ab9e282422d9592bc835c5cf719b22e6c564730de1f5fc42b57fc5bac2c01; 351,392 bytes). It has NaN NoData, 5,167,373 finite valid-mask cells, and 7,111,787 NaNs outside. It matches the published outside convention on local read-back, not organizer acceptance.
+
+Historical scientific metrics (public-proxy only): H60 selected spacing 2.0 px / 200 m; primary off-catalogue lidar-peak pooled DTI 0.287891 (circular/optimistic instrument); independent SGMC off-catalogue pooled DTI 0.193813; conditional split-conformal lower-bound estimate 0.0989005 at rank 20/22, with unverified block-score exchangeability. These are not hidden-label, private, leaderboard, or organizer scores.
+
+For current state and exact-byte interpretation, see ../data/current-artifact.json and ../data/h60-encoding-audit.json. Name for a separately authorized future attempt: GEMSDOE47-H60-lidarscarp-s2p0-20261007. Future-only optional Note: h60 lidar-scarp d2p0 conformal90. Neither is permission to upload.

@@ -1,0 +1,54 @@
+# Competition data is login-gated and must never be committed.
+/data/
+/cache/
+/.cache/
+
+# Rasters are ignored everywhere EXCEPT the two places they must be tracked:
+#   docs/downloads/  the submission itself, which the whole point is to publish
+#   registry/rasters/ the duplicate-gate corpus the lane check runs against
+*.tif
+*.tiff
+!docs/downloads/*.tif
+!docs/downloads/*.tiff
+!registry/rasters/**/*.tif
+!registry/rasters/**/*.tiff
+*.zip
+!docs/downloads/*.zip
+
+# Generated/model outputs stay local.
+/outputs/
+/runs/
+/checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npy
+*.npz
+
+# Local environments, credentials and caches.
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+__pycache__/
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
+.cache/
+.coverage
+htmlcov/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.store
+
+# --- from the shared template ---
+# The registry rasters and audited artifacts are INTENTIONALLY tracked: they are the
+# duplicate-gate corpus and the audit trail. They are already in the index, so these
+# patterns only stop NEW stray rasters from being added by accident.

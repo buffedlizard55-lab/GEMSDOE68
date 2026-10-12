@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE68 &mdash; Auto-context stacked fault discovery (DOE GEMS Prize #306)</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header>
+  <h1>GEMSDOE68 &mdash; auto-context stacked fault discovery</h1>
+  <span class="sub">DOE GEMS Prize &middot; DrivenData #306 &middot; lane: stacked refinement (Tu, CVPR 2008)</span>
+  <nav>
+    <a href="index.html">Summary</a>
+    <a href="executive-summary.html">Executive summary &amp; how to submit</a>
+    <a href="submission-guide.html">Submission guide</a>
+    <a href="results.html">Results</a>
+    <a href="research.html">Research &amp; sources</a>
+    <a href="run-card.html">Run card</a>
+    <a href="hypotheses.html">Hypotheses</a>
+    <a href="irregularities.html">Irregularities</a>
+  </nav>
+</header>
+<main>
+
+<!-- ============================ DOWNLOAD FIRST ============================ -->
+<section class="hero" id="download">
+  <h2>1&nbsp;&middot;&nbsp;Download the submission file</h2>
+  <p><strong>File to submit into the DrivenData competition:</strong></p>
+  <p class="mono" style="font-size:16px"><a href="{{PRIMARY_LINK}}">{{PRIMARY_LINK}}</a></p>
+  <div class="dl">
+    <a href="{{PRIMARY_LINK}}">&#8681; Download the GeoTIFF to submit</a>
+    <a class="alt" href="{{SECONDARY_LINK}}">&#8681; All-finite fallback (0 outside footprint)</a>
+    <a class="ghost" href="submission-guide.html">How to submit &rarr;</a>
+  </div>
+  <p class="small" style="margin-top:14px">
+    sha256 <code>{{SHA256}}</code> &middot; {{BYTES}} bytes &middot; single-band float32 &middot;
+    EPSG:32611 &middot; 100 m &middot; 3730&times;3292 &middot; values in [0,1] inside the
+    footprint, NaN outside &middot; shared validator: <strong>{{VALIDATOR}}</strong>
+    ({{N_CHECKS}} checks).
+  </p>
+  <p class="small">
+    If the upload form answers <em>&ldquo;Predicted values must be in range [0, 1]&rdquo;</em>,
+    use the all-finite fallback file instead (it writes 0 outside the footprint and therefore
+    contains no NaN at all). See <a href="submission-guide.html">the submission guide</a>.
+  </p>
+</section>
+
+<section class="panel">
+  <table class="kv">
+    <tr><td>Submission name</td><dd>{{NAME}}</dd></tr>
+    <tr><td>Note (&le;140 chars)</td><dd>{{NOTE}}</dd></tr>
+    <tr><td>Dot count / exclusion radius</td><dd>{{DOT_COUNT}} dots, &ge; {{RADIUS_PX}} px ({{RADIUS_PX}}&times;100 m) from the mapped catalogue</td></tr>
+    <tr><td>Holdout blocks / withheld positives</td><dd>{{N_CELLS}} outer blocks / {{N_TRUTH}} pixels ({{N_TRUTH_FAR}} of them &gt;1 km from any mapped fault)</dd></tr>
+    <tr><td>Generated (UTC)</td><dd>{{GENERATED}}</dd></tr>
+  </table>
+</section>
+
+<!-- ============================ STATUS ============================ -->
+<h2>2&nbsp;&middot;&nbsp;Is it OK to download and submit?</h2>
+<section class="panel">
+  <p><strong>Verdict: {{GATE_VERDICT}}</strong> &mdash; every mechanical gate below is a local
+  measurement re-derived from the bytes on disk; nothing on this page is an organiser score.</p>
+  <table>
+    <tr><th>Gate</th><th>Result</th></tr>
+    <tr><td>Format validator (shared <code>gems.validate_submission</code>)</td>
+        <td>{{VALIDATOR}} &mdash; {{N_CHECKS}} checks</td></tr>
+    <tr><td>Values in [0,1], no infinities, no NaN inside the footprint</td>
+        <td>PASS (checked on the re-read file)</td></tr>
+    <tr><td>CRS / shape / transform match the official grid</td>
+        <td>PASS (EPSG:32611, 3730&times;3292, 100 m, transform
+            (100, 0, 243350, 0, &minus;100, 4508550))</td></tr>
+    <tr><td>Hash / pixel-agreement check vs every registry raster</td>
+        <td>see <a href="results.html#lane">lane check</a> (no byte match, max |Spearman| reported there)</td></tr>
+    <tr><td>Holdout gate: stage&nbsp;2/3 beats stage&nbsp;1 by &gt;2 SE</td>
+        <td>see the gate table below</td></tr>
+  </table>
+  {{GATE_SUMMARY}}
+</section>
+
+<!-- ============================ HEADLINE NUMBERS ============================ -->
+<h2>3&nbsp;&middot;&nbsp;Headline numbers (all HOLDOUT-DTI)</h2>
+<section class="panel">
+  <p class="small">Pooled distance-weighted Tversky index over the withheld segments of all
+  outer blocks, &alpha;=0.2, &beta;=0.8, 300 m triangular kernel, evaluator
+  <code>gems57.metric.dti_binary</code> / <code>gems57.holdout</code>
+  (pooled hide-and-recover, label-blind quadrants).</p>
+  <table>
+    <tr><th>Model</th><th class="num">Pooled holdout DTI</th></tr>
+    <tr><td>Stage 1 &mdash; per-pixel LightGBM on the 45-channel stack</td><td class="num">{{POOLED_S1}}</td></tr>
+    <tr><td><strong>Stage 2 &mdash; auto-context (1st refinement, SHIPPED)</strong></td><td class="num">{{POOLED_S2}}</td></tr>
+    <tr><td>Stage 3 &mdash; auto-context (2nd refinement, not shipped)</td><td class="num">{{POOLED_S3}}</td></tr>
+  </table>
+</section>
+
+<!-- ============================ PER-CELL ============================ -->
+<h2>4&nbsp;&middot;&nbsp;Per-outer-block holdout</h2>
+<section class="panel">
+  <p class="small">Each row is one spatially blocked outer fold (a quadrant of the footprint with
+  whole catalogue segments withheld and a 1.2 km buffer). The three right-hand columns repeat the
+  DTI on withheld pixels more than 1 km from any <em>visible</em> mapped fault.</p>
+  <table>
+    <tr><th>Cell</th><th class="num">withheld px</th><th class="num">&gt;1 km px</th>
+        <th class="num">DTI s1</th><th class="num">DTI s2</th><th class="num">DTI s3</th>
+        <th class="num">far s1</th><th class="num">far s2</th><th class="num">far s3</th></tr>
+    {{CELL_ROWS}}
+  </table>
+</section>
+
+<!-- ============================ GATE ============================ -->
+<h2>5&nbsp;&middot;&nbsp;Gate: stage 2 / 3 vs stage 1 on outer blocks</h2>
+<section class="panel">
+  <p class="small">Paired per-block differences; SE is the standard error of the mean difference
+  across the outer blocks. The gate requires a mean improvement of more than two standard errors.</p>
+  <table>
+    <tr><th>Comparison</th><th class="num">mean &Delta;DTI</th><th class="num">SE</th>
+        <th class="num">t</th><th>&gt;2 SE?</th></tr>
+    {{GATE_ROWS}}
+  </table>
+</section>
+
+<!-- ============================ EMISSION SWEEP ============================ -->
+<h2>6&nbsp;&middot;&nbsp;Emission-parameter sweep (holdout)</h2>
+<section class="panel">
+  <p class="small">Mean holdout DTI over outer blocks for each combination of shipped stage,
+  minimum distance from the mapped catalogue, and dot budget. The shipped parameters are the
+  best-performing combination that was <em>not</em> selected by looking at the submission grid.</p>
+  <table>
+    <tr><th>Stage</th><th class="num">radius (px)</th><th class="num">dots</th><th class="num">mean holdout DTI</th></tr>
+    {{SWEEP_ROWS}}
+  </table>
+</section>
+
+<!-- ============================ CANARY ============================ -->
+<h2>7&nbsp;&middot;&nbsp;Leakage canary</h2>
+<section class="panel">
+  <p class="small">Each stage-1 channel was tested alone against the withheld segments (AUC of the
+  channel as a detector of withheld fault pixels versus training-domain negatives). An AUC above
+  0.90 would mean leakage until disproven; none is reported above that bar.</p>
+  <table>
+    <tr><th>Channel</th><th class="num">mean AUC</th><th class="num">max AUC</th></tr>
+    {{CANARY_ROWS}}
+  </table>
+</section>
+
+<!-- ============================ LANE ============================ -->
+<h2 id="lane">8&nbsp;&middot;&nbsp;Uniqueness vs the registry of prior rasters</h2>
+<section class="panel">
+  <p class="small">Rank correlation on the continuous surface and 3-pixel dot overlap against every
+  raster in <code>registry/rasters/</code>, computed with the shared
+  <code>scripts/lane_check.py</code>. Drift thresholds: |Spearman| &gt; 0.90, or more than 70 % of
+  dots within 3 px of one raster's dots.</p>
+  <table>
+    <tr><th>Registry raster</th><th class="num">|Spearman|</th><th class="num">dot overlap</th><th>drift?</th></tr>
+    {{LANE_ROWS}}
+  </table>
+</section>
+
+</main>
+<footer class="footer">
+  <p>GEMSDOE68 &middot; every number on this page is generated from
+  <code>evidence/*.json</code> by <code>scripts/build_site.py</code>; nothing is hand-entered.
+  No organiser score is claimed anywhere on this site.</p>
+</footer>
+</body>
+</html>
