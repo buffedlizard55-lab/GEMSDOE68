@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hypotheses · GEMSDOE68</title><style>
+:root{--bg:#0b1020;--card:#141b2f;--ink:#e8ecf5;--muted:#9aa7c7;--ok:#2ecc71;--bad:#e74c3c;--warn:#f1c40f;--acc:#4ea1ff}
+*{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
+main{max-width:1100px;margin:0 auto;padding:24px}
+.card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
+.banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
+.banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
+.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0}
+.btn.secondary{background:#26304d;color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
+.muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
+</style></head><body>
+<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="how-to-submit.html">How to submit</a> <a href="hypotheses.html" style=color:#fff>Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
+<main><div class=card><h1>Candidate hypotheses not yet tried in the GEMSDOE family (ranked)</h1>
+<p>Each entry names the layer(s), the physical signature, why it should catch a fault <strong>missing</strong> from</p>
+<p>the USGS/INGENIOUS catalogue rather than one already in it, how it differs from what the 60+</p>
+<p>sibling sites implemented (<code>registry/score_ledger.csv</code>), and the data needed. Ranking is by expected</p>
+<p>HOLDOUT-DTI gain per unit of implementation cost — a judgement, not a measurement, except where a</p>
+<p>measurement is cited. Only H68-1 is in this lane; it was validated on the blocked holdout</p>
+<p>(<code>evidence/exp1_autocontext.json</code>) before any download was offered.</p>
+<table>
+<tr><th>rank</th><th>id</th><th>layers</th><th>signature</th><th>why off-catalogue</th><th>novelty vs registry</th><th>data</th><th>exp. gain</th><th>cost</th></tr>
+<tr><td>1</td><td><strong>H68-1 Auto-context continuity/parallelism</strong></td><td>all 19 bands + det_elev Hessian ridge/tilt/gradient + stage-1 probability map</td><td>stage-1 probability sampled ±1–15 px <em>along and across local strike</em>, anisotropy index, multi-scale smooths, visible-catalogue distance/strike/density</td><td>unmapped faults are mostly <strong>continuations, splays and parallel strands</strong> of mapped ones (compilation gaps, step-overs, antithetic strands); a per-pixel model cannot see "on-strike between two strong responses", a context stack can</td><td>no sibling used orientation-sampled probability context with nested blocked CV; prior "two-stage" sites (h46, h53) were cascade filters on wide masks</td><td>none new</td><td>medium (+0.01–0.03 holdout at matched mass if continuity is learnable; <strong>measured below</strong>)</td><td>low–medium (done)</td></tr>
+<tr><td>2</td><td>H68-2 Footwall-dip asymmetry of range fronts</td><td>det_elev, det_elev_slope, 1 m LiDAR (3DEP) where available</td><td>Basin-and-Range normal faults sit at the base of a <strong>steep, planar footwall facet</strong> with a gentle hanging-wall fan: a one-sided slope step with facet aspect opposite to basin dip. Signature = signed slope asymmetry across a 300–800 m window oriented perpendicular to local strike</td><td>the catalogue stops where young alluvium buries the trace; the <em>facet/piedmont boundary</em> continues and marks the buried range-front fault ("piedmont fault" class)</td><td>sibling scarp filters were symmetric ridge/curvature responses, not footwall/hanging-wall asymmetry</td><td>1 m DEM links (competition-provided, USGS 3DEP, free) — obtainable from apps.nationalmap.gov but <strong>not reachable from this sandbox</strong></td><td>medium</td><td>medium</td></tr>
+<tr><td>3</td><td>H68-3 Magnetic-source edge <em>depth-consistency</em> with topography</td><td>rtp, tmi_hg, tmi_vg, tc (tilt), det_elev</td><td>tilt-depth: for a vertical contact the horizontal distance between the tilt-angle 0° and ±45° contours equals source depth (Salem et al. 2007, The Leading Edge 26:1502). A fault that offsets basement produces a tilt-depth <strong>step</strong> collocated with a topographic step; coincidence of the two within 300 m while the catalogue is absent is the target</td><td>buried faults under basin fill have no surface scarp but do offset magnetic basement; the catalogue is surface-mapped</td><td>sibling "Euler" lanes (h8, h38, h45) used Euler deconvolution clusters, not tilt-depth coincidence with topography</td><td>none new</td><td>low–medium</td><td>medium</td></tr>
+<tr><td>4</td><td>H68-4 Radiometric K/Th alteration lineaments</td><td>GeoDAWN radiometrics (K, eTh, eU; mirrored as <code>external/geodawn_rad_u8.tif</code>)</td><td>hydrothermal potassic alteration and K-leaching along fluid-conducting faults produce <strong>linear K/eTh anomalies</strong> elongated along strike; target = oriented line response in K/eTh ratio coherent with the local structural strike field</td><td>records <em>fluid pathways</em>, which is what the geothermal panel maps; independent of topography so immune to burial</td><td>h15 "conj_alteration_mag" used magnetics, r11f/r12 used radiometric <em>fusion</em> with scarps (not oriented K/eTh ratio lineaments)</td><td>GeoDAWN rad (USGS, public domain; mirrored)</td><td>low–medium</td><td>low</td></tr>
+<tr><td>5</td><td>H68-5 Post-2020 surface-rupture context (Monte Cristo Range)</td><td>ComCat relocated seismicity, published rupture maps</td><td>the Mw 6.5 2020 rupture lies inside the footprint on largely unmapped parts of the Candelaria system (Koehler et al. 2021, doi:10.1785/0220200371)</td><td>a ruptured-but-unmapped fault is the definition of hidden truth</td><td>h60-1 was proposed in GEMSDOE32 but never built</td><td>USGS ComCat (free, official; <strong>not reachable from this sandbox</strong>), NBMG rupture map</td><td>high locally, tiny area</td><td>high (external fetch)</td></tr>
+</table>
+<p><strong>Validation status.</strong> H68-1 is validated in <code>evidence/exp1_autocontext.json</code> (HOLDOUT-DTI,</p>
+<p>evaluator <code>gems57-pooled-hide-v2</code>, 11,321 withheld positives, paired 95 % CI) — see the run card in</p>
+<p><code>evidence/run_card.json</code> and the executive summary for the verdict. H68-2/3/4 can be validated with</p>
+<p>data already mirrored (H68-4) or already in the stack (H68-3); H68-2 and H68-5 need external fetches</p>
+<p>from hosts this sandbox cannot reach (apps.nationalmap.gov, earthquake.usgs.gov) and are therefore</p>
+<p>proposed as <em>next-session</em> items, not as viable-today.</p>
+<p><strong>Named non-fault processes that could mimic each signature</strong> (for the run card): H68-1 — any</p>
+<p>linear feature the stage-1 model already likes (roads, canals, shoreline terraces, lithologic</p>
+<p>contacts) is <em>reinforced</em> by continuity; H68-2 — fluvial terrace risers and pediment edges;</p>
+<p>H68-3 — intrusive contacts and dike swarms; H68-4 — lithologic K contrasts in volcanic flows and</p>
+<p>playa evaporites; H68-5 — none (direct observation), but positional error of the rupture map.</p></div></main></body></html>
