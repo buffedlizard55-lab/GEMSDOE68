@@ -2,7 +2,7 @@
  "generated_utc": "2026-10-12T03:28:09Z",
  "site": "GEMSDOE68",
  "lane": "auto-context stacked refinement (Tu, CVPR 2008)",
- "status": "promote-with-caveats",
+ "status": "negative",
  "submission": "GEMSDOE68-AC-stack2",
  "download": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
  "sha256": "cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf",
