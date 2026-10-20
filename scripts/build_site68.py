@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Build the unified GEMSDOE68 site from evidence/run_card_exp3.json.
+"""SUPERSEDED 2026-10-20 at merge of PR #13: main's canonical site builder is
+scripts/build_site_exp4.py (stratified-spacing candidate). Do NOT run this
+builder on main; it is retained as the record of how PR #13's parallel site
+was generated. Original docstring follows.
+
+Build the unified GEMSDOE68 site from evidence/run_card_exp3.json.
 
 Canonical as of 2026-10-20 (session arena/738dbc78).  The older builders
 (scripts/build_site.py, scripts/lane68_build_site.py) generated the two
@@ -294,7 +299,7 @@ def build_runcard(card: dict) -> str:
 
 
 def main() -> int:
-    cur = EV / "run_card_current.json"
+    cur = EV / "run_card_exp4_ext738.json"
     card = json.loads((cur if cur.exists() else EV / "run_card_exp3.json").read_text())
     (DOCS / "index.html").write_text(page("Executive summary — download & verdict", build_index(card), "index.html"))
     (DOCS / "executive-summary.html").write_text(page("Executive summary — how to submit", build_exec(card), "index.html"))
@@ -318,7 +323,7 @@ def main() -> int:
     feed = dict(generated_utc=card["generated_utc"], site="GEMSDOE68", lane=card["lane"],
                 status=card["verdict"], download_cleared=card["download_cleared"],
                 submission=card["submission_name"], sha256=card["raster"]["primary_sha256"],
-                evidence_class="HOLDOUT-DTI", run_card="evidence/run_card_current.json")
+                evidence_class="HOLDOUT-DTI", run_card="evidence/run_card_exp4_ext738.json")
     (DOCS / "lane68" / "data" / "feed.json").write_text(json.dumps(feed, indent=1))
     (DOCS / "lane68" / "index.html").write_text(redirect("../index.html", "GEMSDOE68 home page"))
     (DOCS / "lane68" / "executive-summary.html").write_text(redirect("../executive-summary.html", "executive summary"))

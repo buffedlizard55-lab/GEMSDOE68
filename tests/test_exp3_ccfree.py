@@ -2,7 +2,7 @@
 not zeroed, and the default path must be byte-for-byte the old behaviour."""
 import numpy as np
 
-from gems68 import autocontext as AC
+from gems68 import autocontext_738 as AC
 from gems68 import features as F
 
 
@@ -23,7 +23,7 @@ def test_lane_stage1_names_width_guard():
     # AC68-N2: an enriched stage-1 matrix must be labelled with matching names
     import pytest
 
-    from gems68.experiment import Lane
+    from gems68.experiment_738 import Lane
 
     class _Grid:
         footprint = np.ones((8, 8), bool)

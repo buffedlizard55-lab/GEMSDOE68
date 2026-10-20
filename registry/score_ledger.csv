@@ -88,3 +88,4 @@ GEMSDOE52,h97b-candidate,,UNSCORED,
 GEMSDOE63,cvarlw-thin-s3p17-54864-20261011T220606Z-c58f60c4-zeros,,UNSCORED,
 GEMSDOE64,h64-lidar-scarp-cv-20261011T220000Z,,UNSCORED,
 GEMSDOE65,sar-em-propensity-half-20261011T223500Z-5e4660cd-zeros,,UNSCORED,
+GEMSDOE68,gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros,,UNSCORED,Exp-4 H68-G stratified spacing; holdout-gated promote 2026-10-20 (evidence/run_card_exp4.json); sha256 8e69b8877c88ed56

@@ -1,0 +1,9 @@
+{
+  "card": "evidence/run_card_exp4_ext738.json",
+  "candidate": "gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros",
+  "original_verdict_at_branch_point": "promote-with-caveats (vs Exp2 holdout best known at 06fc4f3)",
+  "post_merge_disposition": "NOT PROMOTED - superseded",
+  "reason": "While PR #13 ran from branch point 06fc4f3, parallel sessions merged stronger candidates on the identical instrument (gems57-pooled-hide-v2, 11,321 withheld px): stratified-spacing stage-3 HOLDOUT-DTI 0.1316/far 0.1018 (CLEARED on main) and bagged external-channel stage-3 0.1219/far 0.0871 on a fresh eval seed (42). This candidate measures 0.1189/far 0.0756 and therefore does not beat the current holdout best; per the standing brief no slot should be spent on it. Retained as a measured ablation (external stage-1 channels give a small real gain) and as a near-catalogue alternative for the human selector.",
+  "overlaps": "evidence/parallel_overlap_pr13.json",
+  "canonical_candidate_on_main": "evidence/run_card_exp4.json (gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros)"
+}

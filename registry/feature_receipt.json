@@ -192,7 +192,7 @@
       "p95": 25.33356285095215
     }
   ],
-  "seconds": 60.0,
+  "seconds": 60.3,
   "source_sha256": {
     "training_features.tif": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
     "existing_faults.tif": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",

@@ -1,133 +1,271 @@
-"""Auto-context stacked refinement (Tu, CVPR 2008; Tu & Bai, TPAMI 2010).
+"""Auto-context stacked refinement (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436;
+TPAMI 2010, doi:10.1109/TPAMI.2009.186).
 
-Stage 1: LightGBM on the raw + physics channels -> probability map p1, always
-         produced OUT-OF-FOLD from spatially blocked (quadrant) folds with a
-         ``BUFFER_PX`` training exclusion band around the target block.
-Stage k: LightGBM on
-           (a) p_{k-1} sampled at +-1..15 px offsets ALONG and ACROSS the local
-               orientation of p_{k-1} (structure tensor),
-           (b) multi-scale isotropic smooths of p_{k-1} (sigma 2, 5, 10 px) and
-               anisotropic along/across means (anisotropy index),
-           (c) the raw gradient / tilt / scarp channels,
-           (d) catalogue-context features computed from the VISIBLE catalogue
-               with the target block's labels masked (distance, strike, density).
-         Iterated twice (stage 2 and stage 3).
+Stage-2 and Stage-3 feature construction on the footprint:
 
-Labels are PU: positives = visible catalogue pixels; "negatives" = everything
-else in the footprint (unlabelled), subsampled.  The hide-and-recover truth is
-never used for training.
+* ``p_self`` -- Stage-(k-1) out-of-fold probability at x
+* ``p_along+d``, ``p_along-d`` for d in (1, 2, 3, 5, 8, 12, 15) px along local strike
+* ``p_across+d``, ``p_across-d`` for d in (1, 2, 3, 5, 8, 12, 15) px across local strike
+* multi-scale smooths of ``p_{k-1}``: isotropic sigma in (1.5, 3, 5) px (dropping
+  the blob-inducing sigma=10 px smooth per IR-68-BLOB-01) and anisotropic
+  (L_along, W_across) in ((3, 1), (6, 1.5), (12, 2), (15, 3)) px
+* 1D curvilinear ridge-vs-blob contrast features (IR-68-BLOB-01 fix):
+  ``p_aniso_contrast_6``, ``p_aniso_contrast_12``, ``p_ridge_convexity_3``,
+  ``p_along_bridge``, ``p_echelon_side``
+* raw gradient / tilt / 2 m LiDAR scarp / GeoDAWN extension channels from ``features.py``
+* catalogue-context features computed with the target block's labels masked
+
+Every probability fed into Stage 2 / Stage 3 is strictly out-of-fold.
 """
 from __future__ import annotations
 
+from dataclasses import dataclass as _dataclass
+
 import numpy as np
-import lightgbm as lgb
 from scipy import ndimage as ndi
 
-from . import features as F
+from .features import CAT_CONTEXT_NAMES, GRAD_BAND_NAMES, PhysicalFeatures
 
-BUFFER_PX = 12            # training exclusion band around the target block (1.2 km)
-OFFSETS = (1, 3, 7, 15)   # px, sampled along and across local orientation
-NEG_PER_POS = 8           # negative subsample ratio for LightGBM
-MAX_TRAIN_ROWS = 400_000
+OFFSETS_PX = (1, 2, 3, 5, 8, 12, 15)
+ISO_SIGMAS = (1.5, 3.0, 5.0)
+ANISO_SCALES = ((3, 1.0), (6, 1.5), (12, 2.0), (15, 3.0))
 
-LGB_PARAMS = dict(objective="binary", learning_rate=0.05, num_leaves=31,
-                  min_data_in_leaf=200, feature_fraction=0.8, bagging_fraction=0.8,
-                  bagging_freq=1, lambda_l2=1.0, num_threads=2, verbose=-1, seed=68)
-N_ROUNDS = 220
+RIDGE_CONTRAST_NAMES = [
+    "p_aniso_contrast_6",
+    "p_aniso_contrast_12",
+    "p_ridge_convexity_3",
+    "p_along_bridge",
+    "p_echelon_side",
+]
+
+LGB_PARAMS = dict(
+    objective="binary",
+    metric="binary_logloss",
+    boosting_type="gbdt",
+    num_leaves=63,
+    max_depth=7,
+    learning_rate=0.07,
+    min_data_in_leaf=200,
+    feature_fraction=0.75,
+    bagging_fraction=0.8,
+    bagging_freq=1,
+    lambda_l2=5.0,
+    verbose=-1,
+    n_jobs=2,
+    seed=2026068,
+)
+N_ROUNDS = 180
+NEG_PER_POS = 8
 
 
-def context_names(include_catalogue: bool = True) -> list[str]:
-    """Stage>=2 feature names.  ``include_catalogue=False`` drops the five
-    catalogue-context columns (experiment AC68-N1, far-robust ablation): the
-    matching design matrix is produced by passing ``ctx=[]`` to
-    :func:`context_matrix`, so the columns are absent rather than zeroed."""
-    names = []
-    for d in OFFSETS:
-        names += [f"p_along+{d}", f"p_along-{d}", f"p_across+{d}", f"p_across-{d}"]
-    names += ["p_self", "p_sm2", "p_sm5", "p_sm10", "p_along_mean", "p_across_mean", "p_aniso",
-              "ori_coh"]
-    names += F.PHYSICS_NAMES
-    if include_catalogue:
-        names += F.CONTEXT_NAMES
+def stage2_feature_names() -> list[str]:
+    names = ["p_self"]
+    for d in OFFSETS_PX:
+        names.extend([f"p_along+{d}", f"p_along-{d}", f"p_across+{d}", f"p_across-{d}"])
+    for s in ISO_SIGMAS:
+        names.append(f"p_sm{str(s).replace('.0', '').replace('.', '_')}")
+    for la, wc in ANISO_SCALES:
+        names.append(f"p_aniso_L{la}_W{str(wc).replace('.0', '').replace('.', '_')}")
+    names.extend(RIDGE_CONTRAST_NAMES)
+    names.extend(GRAD_BAND_NAMES)
+    names.extend(CAT_CONTEXT_NAMES)
     return names
 
 
-def _sample(pmap: np.ndarray, yy: np.ndarray, xx: np.ndarray, dy: np.ndarray, dx: np.ndarray):
+def precompute_iso_smooths(pmap: np.ndarray) -> dict[float, np.ndarray]:
+    """Precompute isotropic Gaussian smooths of ``pmap`` once for all sigmas needed."""
+    sigmas = sorted({*ISO_SIGMAS, *(wc for _, wc in ANISO_SCALES)})
+    return {
+        float(s): ndi.gaussian_filter(pmap, sigma=float(s), mode="constant", cval=0.0).astype(np.float32)
+        for s in sigmas
+    }
+
+
+def _sample_offsets(
+    pmap: np.ndarray,
+    rows: np.ndarray,
+    cols: np.ndarray,
+    ay: np.ndarray,
+    ax: np.ndarray,
+) -> np.ndarray:
+    """Sample pmap at +-d along (ay, ax) and across (-ax, ay) for d in OFFSETS_PX."""
     h, w = pmap.shape
-    y = np.clip(yy + dy, 0, h - 1)
-    x = np.clip(xx + dx, 0, w - 1)
-    return ndi.map_coordinates(pmap, [y, x], order=1, mode="nearest").astype(np.float32)
-
-
-def context_matrix(pmap: np.ndarray, footprint: np.ndarray, phys: list[np.ndarray],
-                   ctx: list[np.ndarray], out: np.ndarray | None = None) -> np.ndarray:
-    """Build the stage-k design matrix (rows = footprint pixels, row-major)."""
-    pmap = np.nan_to_num(pmap.astype(np.float32), nan=0.0)
-    yy, xx = np.nonzero(footprint)
-    yy = yy.astype(np.float32); xx = xx.astype(np.float32)
-    _, _, coh, theta = F.orientation_field(pmap, 1.5, 4.0)
-    th = theta[footprint]
-    ay, ax = np.sin(th), np.cos(th)          # along-line unit vector (row, col)
-    cy, cx = -ax, ay                         # across-line unit vector
-    cols = []
-    along_acc = np.zeros(len(yy), np.float32); across_acc = np.zeros(len(yy), np.float32)
-    for d in OFFSETS:
-        pa_p = _sample(pmap, yy, xx, d * ay, d * ax)
-        pa_m = _sample(pmap, yy, xx, -d * ay, -d * ax)
-        pc_p = _sample(pmap, yy, xx, d * cy, d * cx)
-        pc_m = _sample(pmap, yy, xx, -d * cy, -d * cx)
-        cols += [pa_p, pa_m, pc_p, pc_m]
-        along_acc += pa_p + pa_m; across_acc += pc_p + pc_m
-    along_mean = along_acc / (2 * len(OFFSETS)); across_mean = across_acc / (2 * len(OFFSETS))
-    cols.append(pmap[footprint])
-    for s in (2, 5, 10):
-        cols.append(ndi.gaussian_filter(pmap, s)[footprint])
-    cols += [along_mean, across_mean, (along_mean - across_mean) / (along_mean + across_mean + 1e-3),
-             coh[footprint]]
-    cols += [c if c.ndim == 1 else c[footprint] for c in phys]
-    cols += [c if c.ndim == 1 else c[footprint] for c in ctx]
-    if out is None:
-        out = np.empty((len(yy), len(cols)), np.float32)
-    for j, c in enumerate(cols):
-        out[:, j] = c
+    ay_f = ay[rows, cols]
+    ax_f = ax[rows, cols]
+    cy_f = -ax_f
+    cx_f = ay_f
+    out = np.empty((rows.size, 4 * len(OFFSETS_PX)), dtype=np.float32)
+    col = 0
+    for d in OFFSETS_PX:
+        for vy, vx in ((ay_f, ax_f), (-ay_f, -ax_f), (cy_f, cx_f), (-cy_f, -cx_f)):
+            ry = np.clip(np.rint(rows + d * vy).astype(np.int32), 0, h - 1)
+            rx = np.clip(np.rint(cols + d * vx).astype(np.int32), 0, w - 1)
+            out[:, col] = pmap[ry, rx]
+            col += 1
     return out
 
 
-def fit_predict(X: np.ndarray, y: np.ndarray, train_idx: np.ndarray, pred_idx: np.ndarray,
-                rng: np.random.Generator, feature_names=None) -> tuple[np.ndarray, lgb.Booster]:
-    """Train on a PU-subsampled training set and predict ``pred_idx`` rows."""
-    pos = train_idx[y[train_idx] == 1]
-    neg = train_idx[y[train_idx] == 0]
-    n_neg = min(len(neg), max(NEG_PER_POS * len(pos), 50_000), MAX_TRAIN_ROWS - len(pos))
-    neg = rng.choice(neg, size=n_neg, replace=False)
-    rows = np.concatenate([pos, neg])
-    ds = lgb.Dataset(X[rows], label=y[rows], feature_name=feature_names, free_raw_data=True)
-    booster = lgb.train(LGB_PARAMS, ds, num_boost_round=N_ROUNDS)
-    out = np.empty(len(pred_idx), np.float32)
-    for s in range(0, len(pred_idx), 1_000_000):
-        sl = pred_idx[s:s + 1_000_000]
-        out[s:s + len(sl)] = booster.predict(X[sl], num_threads=2)
-    return out, booster
+def _anisotropic_smooths_from_cache(
+    iso_cache: dict[float, np.ndarray],
+    rows: np.ndarray,
+    cols: np.ndarray,
+    ay: np.ndarray,
+    ax: np.ndarray,
+) -> np.ndarray:
+    """Multi-scale isotropic + locally-oriented anisotropic smooths at ``(rows, cols)``."""
+    first_map = next(iter(iso_cache.values()))
+    h, w = first_map.shape
+    ay_f = ay[rows, cols]
+    ax_f = ax[rows, cols]
+    out = np.empty((rows.size, len(ISO_SIGMAS) + len(ANISO_SCALES)), dtype=np.float32)
+    c = 0
+    for s in ISO_SIGMAS:
+        out[:, c] = iso_cache[float(s)][rows, cols]
+        c += 1
+    for la, wc in ANISO_SCALES:
+        base = iso_cache[float(wc)]
+        acc = base[rows, cols].copy()
+        steps = (-la, -la // 2, la // 2, la)
+        for t in steps:
+            ry = np.clip(np.rint(rows + t * ay_f).astype(np.int32), 0, h - 1)
+            rx = np.clip(np.rint(cols + t * ax_f).astype(np.int32), 0, w - 1)
+            acc += base[ry, rx]
+        out[:, c] = acc * (1.0 / (1 + len(steps)))
+        c += 1
+    return out
 
 
-def blocked_oof(X: np.ndarray, y: np.ndarray, block_of_row: np.ndarray, dist_to_block: dict,
-                rows_allowed: np.ndarray, blocks: list[int], rng, feature_names=None):
-    """Out-of-fold predictions over ``blocks``: for each block b, train on allowed rows
-    in other blocks that lie > BUFFER_PX from b, predict rows in b.  Returns a
-    full-length vector (NaN where not predicted) and per-block gain tables."""
-    oof = np.full(len(y), np.nan, np.float32)
-    gains = {}
-    for b in blocks:
-        pred_idx = np.flatnonzero((block_of_row == b) & rows_allowed)
-        tr = np.flatnonzero(rows_allowed & (block_of_row != b) & np.isin(block_of_row, blocks)
-                            & (dist_to_block[b] > BUFFER_PX))
-        p, booster = fit_predict(X, y, tr, pred_idx, rng, feature_names)
-        oof[pred_idx] = p
-        gains[b] = dict(zip(booster.feature_name(), booster.feature_importance("gain").tolist()))
-    return oof, gains
+def context_matrix_rows(
+    pmap: np.ndarray,
+    iso_cache: dict[float, np.ndarray],
+    fp_idx: np.ndarray,
+    fp_rows: np.ndarray,
+    fp_cols: np.ndarray,
+    phys: PhysicalFeatures,
+    cat_cols: list[np.ndarray],
+) -> np.ndarray:
+    """Assemble Stage-2 / Stage-3 features ONLY for the requested footprint indices ``fp_idx``."""
+    rows = fp_rows[fp_idx]
+    cols = fp_cols[fp_idx]
+    n_off = 4 * len(OFFSETS_PX)
+    n_sm = len(ISO_SIGMAS) + len(ANISO_SCALES)
+    n_rc = len(RIDGE_CONTRAST_NAMES)
+    n_gr = len(phys.grad_idx)
+    n_cat = len(cat_cols)
+    total = 1 + n_off + n_sm + n_rc + n_gr + n_cat
+    out = np.empty((fp_idx.size, total), dtype=np.float32)
+
+    p_self = pmap[rows, cols]
+    out[:, 0] = p_self
+    offs = _sample_offsets(pmap, rows, cols, phys.ay, phys.ax)
+    out[:, 1 : 1 + n_off] = offs
+    sms = _anisotropic_smooths_from_cache(iso_cache, rows, cols, phys.ay, phys.ax)
+    c = 1 + n_off
+    out[:, c : c + n_sm] = sms
+    c += n_sm
+
+    p_sm5 = sms[:, 2]
+    p_aniso_6 = sms[:, 4]
+    p_aniso_12 = sms[:, 5]
+    out[:, c + 0] = p_aniso_6 - p_sm5
+    out[:, c + 1] = p_aniso_12 - p_sm5
+    out[:, c + 2] = p_self - 0.5 * (offs[:, 10] + offs[:, 11])
+    fwd_bridge = np.maximum(np.maximum(offs[:, 8], offs[:, 12]), offs[:, 16])
+    bwd_bridge = np.maximum(np.maximum(offs[:, 9], offs[:, 13]), offs[:, 17])
+    out[:, c + 3] = np.minimum(fwd_bridge, bwd_bridge)
+    out[:, c + 4] = np.maximum(
+        np.maximum(offs[:, 18], offs[:, 19]),
+        np.maximum(offs[:, 22], offs[:, 23]),
+    )
+    c += n_rc
+
+    for j, gcol in enumerate(phys.grad_idx):
+        out[:, c + j] = phys.X1[fp_idx, int(gcol)]
+    c += n_gr
+    for k, col_arr in enumerate(cat_cols):
+        out[:, c + k] = col_arr[fp_idx]
+    return out
+
+
+def context_matrix(
+    pmap: np.ndarray,
+    footprint: np.ndarray,
+    phys: PhysicalFeatures,
+    cat_cols: list[np.ndarray],
+    out: np.ndarray | None = None,
+) -> np.ndarray:
+    """Full-footprint wrapper around :func:`context_matrix_rows`."""
+    fp_rows, fp_cols = np.nonzero(footprint)
+    fp_idx = np.arange(fp_rows.size, dtype=np.int64)
+    iso_cache = precompute_iso_smooths(pmap)
+    res = context_matrix_rows(pmap, iso_cache, fp_idx, fp_rows, fp_cols, phys, cat_cols)
+    if out is not None:
+        out[:] = res
+        return out
+    return res
 
 
 def to_map(vec: np.ndarray, footprint: np.ndarray) -> np.ndarray:
     m = np.zeros(footprint.shape, np.float32)
     m[footprint] = np.nan_to_num(vec, nan=0.0)
     return m
+
+
+@_dataclass(frozen=True)
+class FoldSpec:
+    fold_id: int
+    hidden: np.ndarray
+    visible: np.ndarray
+    known: np.ndarray
+    train_mask: np.ndarray
+    n_hidden: int
+
+
+def quadrant_blocks(footprint: np.ndarray) -> np.ndarray:
+    ys, xs = np.nonzero(footprint)
+    out = np.full(footprint.shape, -1, np.int8)
+    if ys.size == 0:
+        return out
+    ym, xm = int(np.median(ys)), int(np.median(xs))
+    out[ys, xs] = ((ys >= ym).astype(np.int8) * 2 + (xs >= xm).astype(np.int8))
+    return out
+
+
+def make_folds(labels: np.ndarray, footprint: np.ndarray, buffer_px: int = 3) -> list[FoldSpec]:
+    """Partition >=3 px connected catalogue components into 4 spatial quadrant folds."""
+    pos = (labels == 1) & footprint
+    quads = quadrant_blocks(footprint)
+    lab, n = ndi.label(pos, structure=np.ones((3, 3), bool))
+    counts = np.bincount(lab.ravel())
+    comp_quad = {}
+    for cid in range(1, n + 1):
+        if counts[cid] < 3:
+            continue
+        ys, xs = np.nonzero(lab == cid)
+        cy, cx = int(np.round(ys.mean())), int(np.round(xs.mean()))
+        q = int(quads[cy, cx])
+        if q < 0:
+            q = int(quads[ys[0], xs[0]])
+        comp_quad[cid] = max(q, 0)
+    folds = []
+    for q in range(4):
+        cids = [cid for cid, cq in comp_quad.items() if cq == q]
+        hidden = np.isin(lab, cids) if cids else np.zeros_like(footprint, dtype=bool)
+        visible = pos & ~hidden
+        buf = (
+            ndi.binary_dilation(hidden, iterations=buffer_px)
+            if hidden.any()
+            else np.zeros_like(footprint, dtype=bool)
+        )
+        train_mask = footprint & ~buf
+        folds.append(
+            FoldSpec(
+                fold_id=q,
+                hidden=hidden,
+                visible=visible,
+                known=visible.copy(),
+                train_mask=train_mask,
+                n_hidden=int(hidden.sum()),
+            )
+        )
+    return folds

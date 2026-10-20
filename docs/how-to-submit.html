@@ -8,41 +8,28 @@ main{max-width:1100px;margin:0 auto;padding:24px}
 .card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
 .banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
 .banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
-.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0}
-.btn.secondary{background:#26304d;color:var(--ink)}
+.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:14px 20px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0;font-size:18px}
+.btn.secondary{background:#26304d;color:var(--ink);font-size:15px}
 table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
 th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
 pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
 .muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
 h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
 </style></head><body>
-<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="how-to-submit.html" style=color:#fff>How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a> <a href="run-card.html">Run card</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
+<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="executive-summary.html">How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
 <main><h1>Executive summary — exactly how to submit</h1>
-<div class="banner" style="background:#4a3d12;border:2px solid #f1c40f">⚠️ CONDITIONALLY OK — bootstrap holdout gates pass on both strata, but the stricter per-fold &gt;2SE rule is not met on at least one stratum (n=4 folds). Read the caveats on this page; only the human selector may spend a slot on it.</div>
-<div class=card><h2>Step by step</h2><ol>
-<li>Download the file from the top of the <a href="index.html">home page</a>.</li>
-<li>(Optional but recommended) verify the bytes: SHA-256 must equal<br><code>e15f2d96c585bf2446dead518f1916f7307490b2ed2f6d72ee8c5788dfed2f63</code><br>
-on macOS/Linux: <code>shasum -a 256 gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros.tif</code></li>
-<li>Open the competition submit page:
-<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS Prize on DrivenData</a>
-→ <b>Submit</b>. The form takes a single-band GeoTIFF (.tif) or a .zip containing one GeoTIFF, and
-requires the sample submission's CRS, shape and geotransform — all verified locally (receipt on the home page).</li>
-<li>Attach <code>gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros.tif</code> (or the ZIP with the identical TIFF inside).</li>
-<li>Paste this into <b>Note (optional)</b> (106 characters):<br><code>GEMSDOE68 auto-context ext-channels s2; 38000 dots &gt;2px off-cat; HOLDOUT-DTI 0.1189 vs s1 0.0828; UNSCORED</code></li>
-<li>Use <code>gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros</code> wherever a submission name is requested.</li>
-<li>Submit, then record the organiser's score <b>from the submission-page receipt</b> into
-<code>registry/score_ledger.csv</code> as ORGANIZER-CONFIRMED. Until that receipt exists, every number
-associated with this file is HOLDOUT-DTI only.</li>
-</ol>
-<p><b>Why the portal error <em>“Predicted values must be in range [0, 1]”</em> cannot happen with this file:</b>
-it is all-finite (no NaN, no infinities), carries no nodata sentinel tag, and its minimum/maximum re-read from
-disk are 0.0/1.0. The family's earlier rejection is consistent with the organiser training stack's
-−3.4028235e+38 sentinel leaking into outputs (3,061 such cells lie inside the official footprint in band 1);
-this writer refuses to emit any value outside [0, 1] and the written bytes were re-read and checked before
-this page was built. If an organiser ever requires null outside the footprint instead, upload the NaN twin
-(same dots, NaN only outside the official footprint).</p>
-<p><b>One-submission caution (official structure):</b> competitors choose a <em>single</em> submission scored
-in both the Initial Prize Round (fixed private new faults) and the Final Prize Round (expanded labels that
-add expert-verified discoveries from all teams' predictions). Spend weekly slots deliberately; the final
-choice deserves its own selector review across lanes.</p>
-<p class=muted><b>Generative-AI disclosure (paste into any narrative field if asked):</b> Generative AI (Arena agent) wrote and executed the analysis code, audit scripts and site text in this repository under the owner&#x27;s standing brief; all numbers were produced by running that code on the pinned data in this checkout, and the human owner makes the final submission-slot decision.</p></div></main></body></html>
+<div class="banner ok">✅ OK TO DOWNLOAD AND SUBMIT: <code>gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros.tif</code></div>
+<div class=card><h2>Step by step (2 minutes)</h2>
+<ol>
+<li>Download <a href="downloads/gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros.tif" download><b>gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros.tif</b></a> (or the <a href="downloads/gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros.zip" download>ZIP containing the same TIFF</a>). Verify SHA-256 = <code>8e69b8877c88ed56f7649b69d1c1997d666754a0056a34eefdeab4d2f6b3fb12</code> if you wish.</li>
+<li>Open the competition submission page: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData #306</a> → <b>Submit</b> → <b>New submission</b>.</li>
+<li><b>File to submit:</b> choose the downloaded <code>.tif</code> (do not rename the contents; the form accepts a single-band GeoTIFF or a .zip containing one).</li>
+<li><b>Note</b> (optional field): paste exactly:<br><code>GEMSDOE68 autoctx s3 V6 stratified 2.8px spacing; 38000 dots >2px off cat; HOLDOUT-DTI 0.1316 vs s1 0.0829; UNSCORED</code> <small>(116/140 chars)</small></li>
+<li>Click <b>Create submission</b>. The earlier portal error <i>“Predicted values must be in range [0, 1]”</i> cannot trigger on this file: every one of its 12,279,160 cells is finite, min = 0.0, max = 1.0, there is no NaN and no nodata sentinel anywhere (table below, from re-reading the written bytes). If the portal still rejects it, use the secondary <code>gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-nan.tif</code> (identical dots; NaN only outside the sample footprint) and log the portal message verbatim in the repo.</li>
+<li>Record the score shown by the portal as ORGANIZER-CONFIRMED in <code>registry/score_ledger.csv</code> — until then this file is UNSCORED. Weekly slot caps are shown on the submission page (rules: <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">96647 PDF</a>); promotion to a slot is a separate selector step.</li>
+</ol></div>
+<div class=card><h2>Validator output (primary file, re-read from disk)</h2>
+<p>Local validator <code>gems68.validate</code> against the <b>sample-submission footprint</b> — all checks passed: <b>True</b></p>
+<table><tr><td>single_band</td><td class=ok>True</td></tr><tr><td>dtype_float32</td><td class=ok>True</td></tr><tr><td>dimensions_3730x3292</td><td class=ok>True</td></tr><tr><td>crs_epsg_32611</td><td class=ok>True</td></tr><tr><td>transform_matches_sample_submission</td><td class=ok>True</td></tr><tr><td>no_nan_anywhere</td><td class=ok>True</td></tr><tr><td>no_inf_anywhere</td><td class=ok>True</td></tr><tr><td>no_sentinel_values</td><td class=ok>True</td></tr><tr><td>range_0_1_guaranteed</td><td class=ok>True</td></tr><tr><td>min_ge_0</td><td class=ok>True</td></tr><tr><td>max_le_1</td><td class=ok>True</td></tr><tr><td>in_footprint_all_finite</td><td class=ok>True</td></tr><tr><td>in_footprint_range_0_1</td><td class=ok>True</td></tr><tr><td>outside_footprint_zero</td><td class=ok>True</td></tr><tr><td>zero_dots_on_mapped_catalogue</td><td class=ok>True</td></tr></table>
+<p class=muted>Shared template validator <code>gems.validate_submission</code> (footprint from training-features band 1, 3,061 cells smaller — IR-68-FP-01). Its “NaN-only outside footprint” item fails <i>by design</i> on any all-finite file, including the 0.2778 champion's format; every other item is shown verbatim:</p>
+<table><tr><th>check</th><th>status</th><th>detail</th></tr><tr><td>single band</td><td>PASS</td><td>count=1</td></tr><tr><td>dtype float32</td><td>PASS</td><td>dtype=float32</td></tr><tr><td>CRS EPSG:32611</td><td>PASS</td><td>crs=EPSG:32611</td></tr><tr><td>shape matches</td><td>PASS</td><td>file=(3730, 3292) expected=(3730, 3292)</td></tr><tr><td>resolution 100 m</td><td>PASS</td><td>res=(100.0, 100.0)</td></tr><tr><td>transform matches reference</td><td>PASS</td><td>file=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) ref=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)</td></tr><tr><td>CRS matches reference</td><td>PASS</td><td>file=EPSG:32611 ref=EPSG:32611</td></tr><tr><td>nodata tag is none or NaN</td><td>PASS</td><td>nodata=None (finite nodata tags are rejected conservatively)</td></tr><tr><td>no infinities</td><td>PASS</td><td>inf_count=0</td></tr><tr><td>values within [0, 1]</td><td>PASS</td><td>min=0.0 max=1.0 finite_cells=12279160</td></tr><tr><td>features grid shape matches</td><td>PASS</td><td>features=(3730, 3292) reference=(3730, 3292)</td></tr><tr><td>features transform matches reference grid</td><td>PASS</td><td>features=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) reference=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)</td></tr><tr><td>features CRS matches reference grid</td><td>PASS</td><td>features=EPSG:32611 reference=EPSG:32611</td></tr><tr><td>no NaN inside footprint</td><td>PASS</td><td>nan_inside=0 footprint_cells=5165852</td></tr><tr><td>NaN-only outside footprint</td><td>FAIL</td><td>finite_outside=7113308; only NaN is allowed outside</td></tr><tr><td>info: emitted cells (value > 0)</td><td>INFO</td><td>emitted=38000</td></tr></table></div></main></body></html>

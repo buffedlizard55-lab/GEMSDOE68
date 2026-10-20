@@ -1,0 +1,32 @@
+{
+  "run_card_version": 1,
+  "lane": "auto-context stacked refinement (GEMSDOE68 exp3)",
+  "verdict": "negative",
+  "verdict_reason": "pre-registered holdout gate not met",
+  "holdout": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems57-pooled-hide-v2",
+    "withheld_positive_pixels": 11437,
+    "stage": 3,
+    "budget": 38000,
+    "gate": {
+      "dti_stage1": 0.08989205121884228,
+      "dti_cand": 0.11914732473303445,
+      "delta_all": 0.029255273514192173,
+      "ci_all": [
+        0.017961028301148818,
+        0.04000147255044984
+      ],
+      "far_dti_stage1": 0.0673383587659472,
+      "far_dti_cand": 0.07660401928020062,
+      "delta_far": 0.009265660514253427,
+      "ci_far": [
+        -0.002195754658543358,
+        0.020225626521851146
+      ],
+      "passes": false
+    }
+  },
+  "organizer_confirmed_score": null,
+  "built_utc": "20261020T190813Z"
+}

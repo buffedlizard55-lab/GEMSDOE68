@@ -92,3 +92,60 @@ def buffered_component_draw(grid, seed=20, hide_frac=0.20, buffer_px=3, boundary
                            "split_version": "buffered-whole-components-loqo-v2"})
              for i in range(4)]
     return folds, quad
+
+
+def paired_block_bootstrap(
+    terms_by_arm: dict[str, np.ndarray],
+    candidate: str,
+    control: str,
+    draws: int = 1000,
+    seed: int = 520810,
+) -> dict:
+    """Paired 20 km physical spatial-cluster percentile bootstrap (via gems57.evaluate_holdout)."""
+    from gems57.evaluate_holdout import VERSION, from_terms
+
+    a_cand = np.asarray(terms_by_arm[candidate], dtype=np.float64)
+    a_ctrl = np.asarray(terms_by_arm[control], dtype=np.float64)
+    active = (a_cand.sum(axis=1) > 0) | (a_ctrl.sum(axis=1) > 0)
+    ac = a_cand[active]
+    ar = a_ctrl[active]
+    nb = int(active.sum())
+    c_dti = float(from_terms(ac.sum(axis=0)))
+    r_dti = float(from_terms(ar.sum(axis=0)))
+    delta = c_dti - r_dti
+    n_pos = int(round(ac[:, 3].sum()))
+    if nb < 2:
+        return dict(
+            evidence_class="HOLDOUT-DTI",
+            evaluator_version=VERSION,
+            candidate_dti=c_dti,
+            control_dti=r_dti,
+            delta=delta,
+            ci95=[delta, delta],
+            ci95_excludes_zero=bool(delta > 0),
+            withheld_positive_pixels=n_pos,
+            n_spatial_clusters=nb,
+            bootstrap_draws=draws,
+        )
+    rng = np.random.default_rng(seed)
+    picks = rng.integers(0, nb, size=(draws, nb))
+    boot_c = from_terms(ac[picks].sum(axis=1))
+    boot_r = from_terms(ar[picks].sum(axis=1))
+    boot_d = boot_c - boot_r
+    lo, hi = [float(x) for x in np.quantile(boot_d, [0.025, 0.975])]
+    se_boot = float(np.std(boot_d, ddof=1))
+    return dict(
+        evidence_class="HOLDOUT-DTI",
+        evaluator_version=VERSION,
+        candidate_dti=c_dti,
+        control_dti=r_dti,
+        delta=delta,
+        se_cluster_boot=se_boot,
+        z_cluster_boot=float(delta / se_boot) if se_boot > 0 else 0.0,
+        ci95=[lo, hi],
+        ci95_excludes_zero=bool(lo > 0.0),
+        withheld_positive_pixels=n_pos,
+        n_spatial_clusters=nb,
+        bootstrap_draws=draws,
+    )
+

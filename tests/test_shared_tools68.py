@@ -95,8 +95,9 @@ def _grid(tmp_path):
 
     path = tmp_path / "ref.tif"
     arr = np.zeros((20, 25), np.float32)
+    arr[0, 0] = -1.0                          # outside the footprint (labels-style nodata)
     with rasterio.open(path, "w", driver="GTiff", height=20, width=25, count=1,
-                       dtype="float32", crs="EPSG:32611",
+                       dtype="float32", crs="EPSG:32611", nodata=-1.0,
                        transform=from_origin(500000, 4000000, 100, 100)) as dst:
         dst.write(arr, 1)
     feats = tmp_path / "features.tif"
@@ -129,8 +130,8 @@ def test_writer_rejects_nan_inside_footprint(tmp_path):
 
 def test_writer_round_trip_passes_the_validator(tmp_path):
     ref, feats = _grid(tmp_path)
-    # the footprint the validator derives is "features band 1 is finite and above
-    # the nodata sentinel", so the test footprint must match it exactly
+    # the validator derives the official footprint from the reference raster
+    # (finite, not nodata); _grid marks [0,0] nodata=-1 in both ref and features
     fp = np.ones((20, 25), bool)
     fp[0, 0] = False
     pred = np.zeros((20, 25))
@@ -203,3 +204,22 @@ def test_holdout_masks_visible_faults_and_hides_whole_segments():
         assert (hidden & visible).sum() == 0
     # withholding must actually remove a meaningful share of the catalogue
     assert seen_hidden > 0.15 * int(cat.sum())
+
+
+def test_footprint_from_reference_excludes_nodata(tmp_path):
+    """Shared-validator fix (2026-10-20): official footprint comes from the
+    reference raster (nodata excluded), not the features band-1 finite mask."""
+    import numpy as np
+    import rasterio
+    from affine import Affine
+    from gems.validate_submission import footprint_from_reference
+
+    a = np.array([[0, 1, -1], [1, -1, 0]], dtype=np.int16)
+    p = tmp_path / "labels.tif"
+    with rasterio.open(p, "w", driver="GTiff", height=2, width=3, count=1,
+                       dtype="int16", crs="EPSG:32611", transform=Affine(100, 0, 0, 0, -100, 0),
+                       nodata=-1) as ds:
+        ds.write(a, 1)
+    fp = footprint_from_reference(p)
+    assert fp.tolist() == [[True, True, False], [True, False, True]]
+    assert int(fp.sum()) == 4

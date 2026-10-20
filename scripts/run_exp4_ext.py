@@ -22,8 +22,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 import run_exp2 as R2  # noqa: E402
-from gems68 import autocontext as AC, emission as E, evaluate_holdout as EH, grid as G  # noqa: E402
-from gems68.experiment import Lane, log  # noqa: E402
+from gems68 import autocontext_738 as AC, emission as E, evaluate_holdout as EH, grid as G  # noqa: E402
+from gems68.experiment_738 import Lane, log  # noqa: E402
 from gems68.holdout import quadrant_ids  # noqa: E402
 
 CACHE = ROOT / ".cache" / "exp4_ext"

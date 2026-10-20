@@ -31,6 +31,12 @@ break-even credit is 0.0556.
 GEMSDOE32 `docs/downloads/`): float32, EPSG:32611, 3730×3292, 100 m, **binary** — 37,654 pixels at
 1.0, everything else 0.0 (zeros outside the footprint, no NaN). 0 dots on the catalogue; every dot
 ≥ 3 px (300 m) from the nearest mapped fault.
+*[Correction, 2026-10-20, measured-here: minimum dot-to-catalogue distance is 2.236 px (√5);
+5.8 % of dots lie in (2, 3] px, median 19.6 px. The "≥ 3 px" claim above is superseded — see
+`evidence/raster_audit_20261020.json` / IR-68-CHAMP-01. Also measured 2026-10-20: champion dots are
+exactly contained in the d2.8 and h19-5 registry rasters (the ladder is real), and in
+`anderson-geothermal-pinn` (38,854 dots, OWNER-REPORTED 0.2750), whose 1,200 extra dots therefore
+net-cost ≈ −0.0028 — direct evidence for the marginal bar (★★).]*
 
 **[owner-report]** It is the last rung of a nested mass-pruning ladder on one field, H19-5
 ("topo-geophys multi-line corroborated", 19GEMSDOE):
