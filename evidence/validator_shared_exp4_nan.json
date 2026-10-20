@@ -1,0 +1,94 @@
+{
+  "file": "docs/downloads/gems68-autoctx4-ext-bagged-25000dots-20261020T200722Z-3d070595-nan.tif",
+  "sha256": "521356faa952f29aaf0c56cea425818eaa6b072073cdd737dc1e7dcf3bd5c88f",
+  "passed": true,
+  "has_failures": false,
+  "checks": [
+    {
+      "check": "single band",
+      "status": "PASS",
+      "detail": "count=1"
+    },
+    {
+      "check": "dtype float32",
+      "status": "PASS",
+      "detail": "dtype=float32"
+    },
+    {
+      "check": "CRS EPSG:32611",
+      "status": "PASS",
+      "detail": "crs=EPSG:32611"
+    },
+    {
+      "check": "shape matches",
+      "status": "PASS",
+      "detail": "file=(3730, 3292) expected=(3730, 3292)"
+    },
+    {
+      "check": "resolution 100 m",
+      "status": "PASS",
+      "detail": "res=(100.0, 100.0)"
+    },
+    {
+      "check": "transform matches reference",
+      "status": "PASS",
+      "detail": "file=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) ref=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+    },
+    {
+      "check": "CRS matches reference",
+      "status": "PASS",
+      "detail": "file=EPSG:32611 ref=EPSG:32611"
+    },
+    {
+      "check": "nodata tag is none or NaN",
+      "status": "PASS",
+      "detail": "nodata=nan (finite nodata tags are rejected conservatively)"
+    },
+    {
+      "check": "no infinities",
+      "status": "PASS",
+      "detail": "inf_count=0"
+    },
+    {
+      "check": "values within [0, 1]",
+      "status": "PASS",
+      "detail": "min=0.0 max=1.0 finite_cells=5167373"
+    },
+    {
+      "check": "info: features band-1 mask vs official footprint",
+      "status": "INFO",
+      "detail": "symmetric_difference=4601 cells (features=5165852 official=5167373); footprint checks below use the official (reference) mask"
+    },
+    {
+      "check": "features grid shape matches",
+      "status": "PASS",
+      "detail": "features=(3730, 3292) reference=(3730, 3292)"
+    },
+    {
+      "check": "features transform matches reference grid",
+      "status": "PASS",
+      "detail": "features=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) reference=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+    },
+    {
+      "check": "features CRS matches reference grid",
+      "status": "PASS",
+      "detail": "features=EPSG:32611 reference=EPSG:32611"
+    },
+    {
+      "check": "no NaN inside footprint",
+      "status": "PASS",
+      "detail": "nan_inside=0 footprint_cells=5167373"
+    },
+    {
+      "check": "NaN-only outside footprint",
+      "status": "PASS",
+      "detail": "finite_outside=0; only NaN is allowed outside"
+    },
+    {
+      "check": "info: emitted cells (value > 0)",
+      "status": "INFO",
+      "detail": "emitted=25000"
+    }
+  ],
+  "skipped_checks_mean_unverified": false
+}

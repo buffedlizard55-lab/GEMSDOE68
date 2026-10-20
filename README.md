@@ -183,3 +183,18 @@ Measured in this checkout: all four core files match their pinned sha256 exactly
 ```bash
 PYTHONPATH=src python -m pytest tests -q     # 46 passed, 7 skipped (2026-10-20, incl. Exp-3/4 emission tests)
 ```
+
+### Parallel session note (2026-10-20, PR #12): a second gated candidate
+
+A parallel session pre-registered and ran two fresh-seed experiments
+(Ext channels = LiDAR scarp + radiometrics, offsets ±1,2,3,5,8,12,15 px, 2-seed bagging):
+Exp 3 (seed 31, stage 3 @ 38,000) **failed** the >1 km gate; Exp 4 (seed 42, stage 3 @ 25,000)
+**passed** both strata (HOLDOUT-DTI 0.1219 vs 0.0711; far 0.0871 vs 0.0623 — see
+`evidence/run_card_exp4_seed42.json`, page `docs/exp4-seed42.html`). Its raster
+`gems68-autoctx4-ext-bagged-25000dots-20261020T200722Z-3d070595-zeros.tif`
+(sha256 `99e00aa5…`) overlaps the root page's PR #11 candidate by 54.0 % of dots within 3 px.
+**Two gated candidates now exist; the selector step must pick one (IR-68-PARALLEL-01).**
+The producing code is frozen at `src/gems68/autocontext_bagged.py` / `experiment_bagged.py`
+(canonical pipeline = PR #11's `autocontext.py`). That session also fixed the shared
+`gems.validate_submission` footprint (official reference mask 5,167,373, not features band-1's
+5,165,852) — kept in this merge; report upstream.
