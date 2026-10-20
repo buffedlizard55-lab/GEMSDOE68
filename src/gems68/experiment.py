@@ -33,7 +33,18 @@ def log(*a):
 
 class Lane:
     def __init__(self, grid, X1: np.ndarray, phys: list[np.ndarray], quad_map: np.ndarray,
-                 eval_seed: int = 20, train_seeds=(20, 21, 22), rng_seed: int = 68):
+                 eval_seed: int = 20, train_seeds=(20, 21, 22), rng_seed: int = 68,
+                 catalogue_context: bool = True, stage1_names: list[str] | None = None):
+        """``catalogue_context=False`` runs the AC68-N1 far-robust ablation:
+        stage>=2 receives no catalogue-derived features at all (columns are
+        absent from the design matrix, not zeroed).  Stage 1 is unchanged --
+        it never used catalogue-derived inputs.  ``stage1_names`` (AC68-N2)
+        labels an externally-enriched stage-1 matrix whose width differs
+        from the default 26 columns; it must match ``X1.shape[1]``."""
+        self.names1 = list(stage1_names) if stage1_names is not None else list(F.STAGE1_NAMES)
+        if X1.ndim != 2 or X1.shape[1] != len(self.names1):
+            raise ValueError(f"X1 shape {getattr(X1, 'shape', None)} does not match "
+                             f"{len(self.names1)} stage-1 feature names")
         self.g = grid
         self.fp = grid.footprint
         self.X1 = X1
@@ -42,12 +53,14 @@ class Lane:
         self.q = quad_map[self.fp]
         self.N = len(self.q)
         self.rng = np.random.default_rng(rng_seed)
-        self.names2 = AC.context_names()
+        self.catalogue_context = bool(catalogue_context)
+        self.names2 = AC.context_names(include_catalogue=self.catalogue_context)
         self.dist_to_block = {b: ndi.distance_transform_edt(quad_map != b)[self.fp] for b in range(4)}
         self.folds, _ = buffered_component_draw(grid, seed=eval_seed)
         self.eval_visible = self.folds[0]["visible"]
         self.y1 = self.eval_visible[self.fp].astype(np.int8)
-        self.eval_ctx = [c[self.fp] for c in F.catalogue_context(self.eval_visible)]
+        self.eval_ctx = ([c[self.fp] for c in F.catalogue_context(self.eval_visible)]
+                         if self.catalogue_context else [])
         # training draws: positives = withheld components, context = that draw's visible
         self.draws = []
         for s in train_seeds:
@@ -55,7 +68,8 @@ class Lane:
             hidden = fs[0]["hidden_all"]
             vis = fs[0]["visible"]
             self.draws.append(dict(seed=s, y=hidden[self.fp].astype(np.int8),
-                                   ctx=[c[self.fp] for c in F.catalogue_context(vis)]))
+                                   ctx=([c[self.fp] for c in F.catalogue_context(vis)]
+                                        if self.catalogue_context else [])))
             log(f"train draw {s}: withheld positives {int(hidden.sum())}")
         self.X2 = np.empty((self.N, len(self.names2)), np.float32)
 
@@ -64,12 +78,12 @@ class Lane:
         """OOF p1 on the training blocks + outer prediction. outer=None -> LOQO over all 4."""
         tq = [b for b in range(4) if b != outer]
         oof, _ = AC.blocked_oof(self.X1, self.y1, self.q, self.dist_to_block,
-                                np.ones(self.N, bool), tq, self.rng, F.STAGE1_NAMES)
+                                np.ones(self.N, bool), tq, self.rng, self.names1)
         imp = None
         if outer is not None:
             pred_idx = np.flatnonzero(self.q == outer)
             tr = np.flatnonzero(np.isin(self.q, tq) & (self.dist_to_block[outer] > AC.BUFFER_PX))
-            p, b = AC.fit_predict(self.X1, self.y1, tr, pred_idx, self.rng, F.STAGE1_NAMES)
+            p, b = AC.fit_predict(self.X1, self.y1, tr, pred_idx, self.rng, self.names1)
             oof[pred_idx] = p
             imp = dict(zip(b.feature_name(), b.feature_importance("gain").tolist()))
         return oof, imp
@@ -138,7 +152,8 @@ class Lane:
         with context from the FULL published catalogue at the final stage."""
         p_prev, _ = self.stage1(None)
         maps = {1: p_prev.copy()}
-        full_ctx = [c[self.fp] for c in F.catalogue_context(self.g.catalogue)]
+        full_ctx = ([c[self.fp] for c in F.catalogue_context(self.g.catalogue)]
+                    if self.catalogue_context else [])
         for k in range(2, n_stages + 1):
             # OOF over all four blocks, context for prediction = full catalogue
             saved = self.eval_ctx

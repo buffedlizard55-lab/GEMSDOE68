@@ -69,12 +69,15 @@ def dot_overlap(dots: np.ndarray, registry: dict, footprint: np.ndarray,
 
 
 def verdict(rhos: dict, overlaps: dict) -> dict:
-    worst_rho = max(rhos.items(), key=lambda kv: kv[1]) if rhos else ("", 0.0)
+    # Protocol rule 1 is a magnitude rule: a strongly *anti*-correlated surface
+    # is the same lane with the sign flipped.  Rank by |rho| (fixed 2026-10-20;
+    # the previous signed max could not flag rho <= -0.90).
+    worst_rho = max(rhos.items(), key=lambda kv: abs(kv[1])) if rhos else ("", 0.0)
     informative = {k: v for k, v in overlaps.items() if v["coverage"] <= COVERAGE_MAX}
     excluded = sorted(k for k in overlaps if k not in informative)
     worst_ov = (max(informative.items(), key=lambda kv: kv[1]["overlap"]) if informative else ("", dict(overlap=0.0)))
     worst_ov = (worst_ov[0], worst_ov[1]["overlap"])
-    dup = worst_rho[1] > RHO_MAX or worst_ov[1] > OVERLAP_MAX
+    dup = abs(worst_rho[1]) > RHO_MAX or worst_ov[1] > OVERLAP_MAX
     return dict(max_rank_corr=worst_rho, max_dot_overlap=worst_ov,
                 thresholds=dict(rank_corr=RHO_MAX, dot_overlap=OVERLAP_MAX, registry_coverage_max=COVERAGE_MAX),
                 excluded_uninformative_rasters=excluded, duplicate=bool(dup))

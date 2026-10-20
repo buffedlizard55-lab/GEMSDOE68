@@ -48,48 +48,61 @@
 
 ---
 
-## Status
+## Status (2026-10-20, session branch `arena/738dbc78-gemsdoe68`)
 
-Two lanes now share this repository.
+**One unified site: [`docs/index.html`](docs/index.html)** (built by `scripts/build_site68.py`
+from [`evidence/run_card_current.json`](evidence/run_card_current.json) only). The two archived
+lane sites contradicted each other (IR-32); `docs/lane68/` now redirects here and every old
+run-card address serves the same current card.
 
-**The repository site is [`docs/index.html`](docs/index.html)** — it links to both.
+**⚠️ CONDITIONALLY OK TO DOWNLOAD — verdict `promote-with-caveats`.** This session's unique
+candidate is
+[`gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros.tif`](docs/downloads/gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros.tif)
+(sha256 `e15f2d96c585bf2446dead518f1916f7307490b2ed2f6d72ee8c5788dfed2f63`): auto-context
+stage 2 at 38,000 dots with stage 1 enriched by 20 external channels (2 m lidar scarp aggregates
++ coverage flag, GeoDAWN radiometric/extension percentile ranks; Exp4 / hypothesis AC68-N2).
 
-**This session's lane (GEMSDOE68 / lane 68) is at
-[`docs/lane68/index.html`](docs/lane68/index.html)**, with a one-click download of the submission
-GeoTIFF at the very top of the page and a step-by-step
-[`docs/lane68/executive-summary.html`](docs/lane68/executive-summary.html). The canonical
-machine-readable summary is [`docs/lane68/data/run-card.json`](docs/lane68/data/run-card.json),
-written by `scripts/lane68_write_run_card.py`.
-
-**⛔ NO candidate is currently cleared for download (2026-10-20 audit, IR-30/IR-31).** The preregistered gate is NOT met: the >1 km stratum gave t = 1.97 (required > 2 SE) and the literal 3-px lane-drift rule fires. Verdict: **negative**, `download_cleared=false`. The raster below is retained only as an auditable negative-result artefact — **do not download or submit it**. The table records the mechanical checks for transparency; they do not override the failed gate.
-
-| gate | result (local measurements unless labelled otherwise) |
+| check (all HOLDOUT-DTI, evaluator `gems57-pooled-hide-v2`, 11,321 withheld positives) | result |
 |---|---|
-| format validator, re-read from disk against `sample_submission.tif` | **PASS** — 16 checks, 0 FAIL, 0 SKIPPED |
-| values in [0,1], no infinities, NaN only outside the official footprint | **PASS** (0 NaN inside 5,165,852 footprint cells) |
-| uniqueness vs `registry/rasters/` (60 rasters) | no exact byte match; max \|Spearman\| = 0.054. The literal 3-px rule fires on **one** dense raster (311,617 dots); the density-null mean is 0.958 but the observed 0.9948 exceeds it by 27.2 SD, so under the literal rule the flag stands as LANE DRIFT — recorded as IR-28/IR-31 |
-| holdout gate (stage 2/3 vs stage 1, > 2 SE, BOTH strata required) | **FAIL — verdict negative.** All-pixel PASS (+0.0607, SE 0.0070, t = 8.60) but **>1 km stratum NOT MET** (+0.0074, SE 0.0038, t = 1.97; 1,330 withheld far pixels). Download withheld per protocol. |
-| leakage canary (single-channel AUC on withheld segments) | **PASS** — highest AUC 0.611, limit 0.90 |
-| ORGANIZER-CONFIRMED score | **not claimed** — the scored truth is login-walled |
+| pooled DTI, stage 1 → candidate | 0.0828 → **0.1189** (Δ +0.0361, 95% CI [+0.0258, +0.0475]) |
+| pooled DTI > 1 km from any mapped fault (4,832 withheld) | 0.0644 → **0.0756** (Δ +0.0112, 95% CI [+0.0007, +0.0218]) |
+| per-fold > 2 SE rule (n = 4 outer folds) | all-pixel t = 3.85 ✅; **far t = 1.53 ❌** — this is the caveat; under a strict per-fold reading the charter gate is NOT met |
+| beats previous holdout best (Exp2, same budget/stage) | yes on point estimates (0.1189 vs 0.1165; far 0.0756 vs 0.0711) — a small margin, no paired CI vs Exp2 available |
+| leakage canary (46 stage-1 + 38 stage≥2 columns) | clean; max single-feature AUC 0.831 < 0.90 |
+| uniqueness vs 60 registry rasters + all prior download candidates | no byte match; max \|Spearman\| = 0.130 (sampled surface); worst 3-px dot overlap (Euclidean) 0.183 vs the archived stage-3 sibling (336/38,000 exact-shared dots) |
+| format | float32 EPSG:32611 100 m; primary file all-finite in [0,1] with `nodata=None` (portal "[0,1]" rejection impossible); NaN twin passes the shared validator against the official sample footprint |
+| ORGANIZER-CONFIRMED score | **none exists for any raster in this repo** |
 
-Headline HOLDOUT-DTI (pooled, α = 0.2, β = 0.8, 300 m triangular, evaluator
-`gems57.metric.dti_binary` / `gems57.holdout`, 11,318 withheld positive pixels):
-stage 1 **0.1301**, stage 2 **0.1904**, stage 3 0.1868. Stage 2 is the shipped model.
+Slot choice remains the human selector's. Full receipts:
+[`evidence/run_card_exp4.json`](evidence/run_card_exp4.json),
+[`evidence/exp4_decision.json`](evidence/exp4_decision.json).
 
-The submission name is `GEMSDOE68-AC-stack2`, the note (98 characters) is
-*"GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage2, r=3px, 20000 dots;
-holdout-gated"*, and the emission parameters (stage 2, 3 px catalogue exclusion, 20,000 dots) come
-from the holdout sweep, not from the submission grid. Two files ship: `-nan` (primary, passes all
-16 validator checks) and `-zeros` (all-finite fallback, for a NaN-blind range check on the upload
-form).
+**Exp3 (AC68-N1, catalogue-context-free) — NEGATIVE, no file built.** Removing all catalogue-context
+features passed its own-stage gates at 25 k dots but scored HOLDOUT-DTI 0.0770 vs Exp2's 0.1181:
+catalogue context is load-bearing (`cat_dist` ≈ 41 % of stage-2 gain). See
+`evidence/exp3_autocontext_ccfree.json` and IR-38.
 
-**No ORGANIZER-CONFIRMED score is claimed for either lane.** Every number above is a local
-HOLDOUT-DTI.
+**Prior-session files in `docs/downloads/` are audit artefacts, not offers.** Two are invalid as
+shipped (IR-33: stack3 "-zeros" is byte-equivalent to "-nan" with 3,061 NaN inside the official
+footprint; `gemsdoe68-autocontext-s2` has 89 dots outside the footprint). The Exp2 stage-3 sibling
+file remains the strongest *exploratory* alternative (median dot 51 px from the catalogue vs this
+candidate's 8 px) — the selector should weigh near- vs off-catalogue placement explicitly.
+
+**Champion attribution audit.** The brief's "0.2778" for `h33-h33-2-b2` is owner-reported only:
+the GEMSDOE32 site the file comes from calls the same bytes UNSCORED with a *projected* 0.2747.
+Full line-by-line account: [`knowledge/03_why_02778_rechecked_2026-10-20.md`](knowledge/03_why_02778_rechecked_2026-10-20.md).
+
+To reproduce this session end-to-end (hash-pinned data restore → Exp3/Exp4 → build → site):
+`scripts/restore_data.py` (groups `core`, `external`; plus the three sidecar JSONs listed in
+`evidence/restore68_external_sidecars.json`), then `scripts/build_features.py`,
+`scripts/run_exp3_ccfree.py`, `scripts/build_features_ext.py`, `scripts/run_exp4_ext.py`,
+`scripts/exp4_decision.py`, `scripts/build_exp4_submission.py`, `scripts/build_site68.py`.
 
 ## Layout
 
 ```
-src/gems/          shared writer / validator / metric / release gate (vendored, unmodified)
+src/gems/          shared writer / validator / metric / release gate (vendored; validator gained
+                   an optional sample-footprint source 2026-10-20, IR-34)
 src/gems57/        shared hide-and-recover evaluator: holdout, metric, spatial folds (vendored)
 src/gems68/        blocks.py, catalogue_context.py, channel_stack.py  -> lane 68 (this session)
                    features.py, grid.py, autocontext.py, emission.py, ... -> the sibling lane
@@ -134,10 +147,10 @@ tests/             pytest suite
    footprint) so every label is used and every probability is still out-of-fold; the emission
    parameters (catalogue exclusion radius, dot budget) come from the holdout sweep; the file is
    written by the shared `gems.submission_writer` and validated by the shared
-   `gems.validate_submission`. The footprint written is the *official* one derived from band 1 of
-   `training_features.tif`, which is 3,061 cells smaller than the cached stack's own footprint; the
-   1,540 official-only cells receive 0 rather than NaN, because NaN inside the official footprint
-   is a validator failure.
+   `gems.validate_submission`. The official footprint is the finite-cell mask of `sample_submission.tif` (5,167,373 cells). The
+   lane68 release historically derived it from band 1 of `training_features.tif` (5,165,852 cells),
+   which put 3,061 NaN inside the official footprint (IR-33/IR-34); the shared validator now accepts
+   an explicit `footprint_path`, and the current build validates against the sample footprint.
 
 ## Data placement
 
@@ -191,5 +204,5 @@ Measured in this checkout: all four core files match their pinned sha256 exactly
 ## Tests
 
 ```bash
-PYTHONPATH=src python -m pytest tests -q     # 37 passed, 8 skipped (both lanes)
+PYTHONPATH=src python -m pytest tests -q     # 46 passed, 7 skipped (2026-10-20)
 ```

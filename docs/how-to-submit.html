@@ -16,21 +16,33 @@ pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
 .muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
 h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
 </style></head><body>
-<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="how-to-submit.html" style=color:#fff>How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
-<main>
-<h1>How to make a submission (step by step)</h1>
-<div class=card>
-<ol>
-<li>Download the primary file: <a class=btn href="downloads/gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.tif" download>⬇ gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.tif</a> (or the <a href="downloads/gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.zip">ZIP</a> containing only that TIFF). Verify its SHA-256 matches <code>3495c83f82b723d84dea1e99adbe5fbd94e46133cf5f3deb9fe310b42135bc59</code>.</li>
-<li>Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">the competition's submission page</a> (login required) and click <b>New submission</b>.</li>
-<li><b>File to submit</b>: choose the downloaded <code>.tif</code> (or <code>.zip</code>). The form accepts a single-band GeoTIFF matching the sample's CRS (EPSG:32611), shape (3730×3292) and geotransform.</li>
-<li><b>Note</b> (optional, ≤140 characters): paste <code>GEMSDOE68 auto-context s3 hide-draw; 38000 dots &gt;2px off catalogue; HOLDOUT-DTI 0.1189 vs s1 0.0816; UNSCORED</code></li>
-<li>Submit. Copy the score from the receipt into <code>registry/score_ledger.csv</code> tagged <b>ORGANIZER-CONFIRMED</b> with the exact file name and SHA-256.</li>
+<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="how-to-submit.html" style=color:#fff>How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a> <a href="run-card.html">Run card</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
+<main><h1>Executive summary — exactly how to submit</h1>
+<div class="banner" style="background:#4a3d12;border:2px solid #f1c40f">⚠️ CONDITIONALLY OK — bootstrap holdout gates pass on both strata, but the stricter per-fold &gt;2SE rule is not met on at least one stratum (n=4 folds). Read the caveats on this page; only the human selector may spend a slot on it.</div>
+<div class=card><h2>Step by step</h2><ol>
+<li>Download the file from the top of the <a href="index.html">home page</a>.</li>
+<li>(Optional but recommended) verify the bytes: SHA-256 must equal<br><code>e15f2d96c585bf2446dead518f1916f7307490b2ed2f6d72ee8c5788dfed2f63</code><br>
+on macOS/Linux: <code>shasum -a 256 gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros.tif</code></li>
+<li>Open the competition submit page:
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DOE GEMS Prize on DrivenData</a>
+→ <b>Submit</b>. The form takes a single-band GeoTIFF (.tif) or a .zip containing one GeoTIFF, and
+requires the sample submission's CRS, shape and geotransform — all verified locally (receipt on the home page).</li>
+<li>Attach <code>gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros.tif</code> (or the ZIP with the identical TIFF inside).</li>
+<li>Paste this into <b>Note (optional)</b> (106 characters):<br><code>GEMSDOE68 auto-context ext-channels s2; 38000 dots &gt;2px off-cat; HOLDOUT-DTI 0.1189 vs s1 0.0828; UNSCORED</code></li>
+<li>Use <code>gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros</code> wherever a submission name is requested.</li>
+<li>Submit, then record the organiser's score <b>from the submission-page receipt</b> into
+<code>registry/score_ledger.csv</code> as ORGANIZER-CONFIRMED. Until that receipt exists, every number
+associated with this file is HOLDOUT-DTI only.</li>
 </ol>
-<h2>About the earlier "Predicted values must be in range [0, 1]" error</h2>
-<p>The primary file here is <b>all-finite</b>: 0.0 outside the footprint, values exactly 0.0 or 1.0 inside, no NaN, no nodata tag, no sentinel. The family's champion (0.2778) was uploaded in this "zeros" form. A NaN-outside variant is also published (the public spec permits NaN outside the footprint and several NaN-variants scored in the ledger), but if the portal rejects it for range, use the zeros file. The local validator re-reads the bytes on disk and checks: single band, float32, 3730×3292, EPSG:32611, pinned transform, no NaN/inf anywhere, min ≥ 0, max ≤ 1, zero positive pixels outside the footprint, zero positive pixels on the mapped catalogue.</p>
-<h2>Rules you should know</h2>
-<ul><li>Weekly submission cap is shown on the submission page; promotion to a slot is a separate selector decision (<a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">rules PDF 96647</a>).</li>
-<li>Metric: distance-weighted Tversky index, α = 0.2 (FP), β = 0.8 (FN), 300 m triangular kernel (<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">problem description</a>).</li>
-<li>Known/mapped faults are excluded from scoring; the truth is new faults mapped by the expert panel.</li></ul>
-</div></main></body></html>
+<p><b>Why the portal error <em>“Predicted values must be in range [0, 1]”</em> cannot happen with this file:</b>
+it is all-finite (no NaN, no infinities), carries no nodata sentinel tag, and its minimum/maximum re-read from
+disk are 0.0/1.0. The family's earlier rejection is consistent with the organiser training stack's
+−3.4028235e+38 sentinel leaking into outputs (3,061 such cells lie inside the official footprint in band 1);
+this writer refuses to emit any value outside [0, 1] and the written bytes were re-read and checked before
+this page was built. If an organiser ever requires null outside the footprint instead, upload the NaN twin
+(same dots, NaN only outside the official footprint).</p>
+<p><b>One-submission caution (official structure):</b> competitors choose a <em>single</em> submission scored
+in both the Initial Prize Round (fixed private new faults) and the Final Prize Round (expanded labels that
+add expert-verified discoveries from all teams' predictions). Spend weekly slots deliberately; the final
+choice deserves its own selector review across lanes.</p>
+<p class=muted><b>Generative-AI disclosure (paste into any narrative field if asked):</b> Generative AI (Arena agent) wrote and executed the analysis code, audit scripts and site text in this repository under the owner&#x27;s standing brief; all numbers were produced by running that code on the pinned data in this checkout, and the human owner makes the final submission-slot decision.</p></div></main></body></html>

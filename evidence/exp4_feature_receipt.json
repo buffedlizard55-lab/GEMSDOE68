@@ -1,0 +1,245 @@
+{
+ "experiment": "exp4 AC68-N2 stage-1 external enrichment",
+ "n_footprint": 5167373,
+ "n_catalogue": 60988,
+ "stage1_names": [
+  "mag_anom",
+  "rtp",
+  "tmi_hg",
+  "geod_2ndinv",
+  "iso_grav_anom_slope",
+  "tc",
+  "geod_shearrate",
+  "geod_dilaterate",
+  "tmi_vg",
+  "deq_n100a15",
+  "iso_grav_anom_vg",
+  "det_elev",
+  "iso_grav_anom",
+  "tmi",
+  "depth_to_base_surf",
+  "ieq_n100a15",
+  "cond_surf",
+  "iso_grav_anom_hg",
+  "det_elev_slope",
+  "elev_grad",
+  "elev_lap",
+  "elev_ridge_s1",
+  "elev_ridge_s2",
+  "elev_tilt",
+  "rtp_ridge_s2",
+  "grav_ridge_s2",
+  "ex_max",
+  "ex_mean",
+  "step_max",
+  "lapneg_max",
+  "lappos_max",
+  "downface_max",
+  "upface_max",
+  "cross_max",
+  "relief",
+  "coh100",
+  "strike",
+  "lidar_valid",
+  "rad_K",
+  "rad_Th",
+  "rad_U",
+  "rad_TC",
+  "ext_ThK",
+  "ext_UK",
+  "ext_UTh",
+  "ext_TMI_up150"
+ ],
+ "external_names": [
+  "ex_max",
+  "ex_mean",
+  "step_max",
+  "lapneg_max",
+  "lappos_max",
+  "downface_max",
+  "upface_max",
+  "cross_max",
+  "relief",
+  "coh100",
+  "strike",
+  "lidar_valid",
+  "rad_K",
+  "rad_Th",
+  "rad_U",
+  "rad_TC",
+  "ext_ThK",
+  "ext_UK",
+  "ext_UTh",
+  "ext_TMI_up150"
+ ],
+ "channel_stats": [
+  {
+   "channel": "ex_max",
+   "finite_in_footprint": 3893184,
+   "coverage": 0.753416484546403,
+   "median_fill": 0.13429227471351624,
+   "p05": 0.014531278051435947,
+   "p95": 0.6329824924468994
+  },
+  {
+   "channel": "ex_mean",
+   "finite_in_footprint": 3893184,
+   "coverage": 0.753416484546403,
+   "median_fill": 0.019646288827061653,
+   "p05": 0.0018600038019940257,
+   "p95": 0.1489909589290619
+  },
+  {
+   "channel": "step_max",
+   "finite_in_footprint": 3893184,
+   "coverage": 0.753416484546403,
+   "median_fill": 0.05395560339093208,
+   "p05": 0.0022320044226944447,
+   "p95": 0.35341623425483704
+  },
+  {
+   "channel": "lapneg_max",
+   "finite_in_footprint": 3893184,
+   "coverage": 0.753416484546403,
+   "median_fill": 0.004129983484745026,
+   "p05": 0.0002797755878418684,
+   "p95": 0.02768382988870144
+  },
+  {
+   "channel": "lappos_max",
+   "finite_in_footprint": 3893184,
+   "coverage": 0.753416484546403,
+   "median_fill": 0.004129983484745026,
+   "p05": 0.00025110054411925375,
+   "p95": 0.028272833675146103
+  },
+  {
+   "channel": "downface_max",
+   "finite_in_footprint": 3207200,
+   "coverage": 0.6206635363849291,
+   "median_fill": 0.057675618678331375,
+   "p05": 0.003968007862567902,
+   "p95": 0.28668856620788574
+  },
+  {
+   "channel": "upface_max",
+   "finite_in_footprint": 3207200,
+   "coverage": 0.6206635363849291,
+   "median_fill": 0.04191208630800247,
+   "p05": 0.003487507114186883,
+   "p95": 0.27418002486228943
+  },
+  {
+   "channel": "cross_max",
+   "finite_in_footprint": 3207200,
+   "coverage": 0.6206635363849291,
+   "median_fill": 0.09920019656419754,
+   "p05": 0.009687518700957298,
+   "p95": 0.4322803318500519
+  },
+  {
+   "channel": "relief",
+   "finite_in_footprint": 3893184,
+   "coverage": 0.753416484546403,
+   "median_fill": 8.59786605834961,
+   "p05": 0.37665078043937683,
+   "p95": 59.37596893310547
+  },
+  {
+   "channel": "coh100",
+   "finite_in_footprint": 3882902,
+   "coverage": 0.7514266920541637,
+   "median_fill": 0.665354311466217,
+   "p05": 0.18897637724876404,
+   "p95": 0.9291338324546814
+  },
+  {
+   "channel": "strike",
+   "finite_in_footprint": 3893184,
+   "coverage": 0.753416484546403,
+   "median_fill": 88.58267974853516,
+   "p05": 8.503936767578125,
+   "p95": 170.7873992919922
+  },
+  {
+   "channel": "lidar_valid",
+   "finite_in_footprint": 5167373,
+   "coverage": 1.0,
+   "median_fill": 1.0,
+   "p05": 0.0,
+   "p95": 1.0
+  },
+  {
+   "channel": "rad_K",
+   "finite_in_footprint": 5166085,
+   "coverage": 0.9997507437531604,
+   "median_fill": 0.4921259880065918,
+   "p05": 0.15354330837726593,
+   "p95": 0.8149606585502625
+  },
+  {
+   "channel": "rad_Th",
+   "finite_in_footprint": 5166085,
+   "coverage": 0.9997507437531604,
+   "median_fill": 0.4921259880065918,
+   "p05": 0.21653543412685394,
+   "p95": 0.8149606585502625
+  },
+  {
+   "channel": "rad_U",
+   "finite_in_footprint": 5166085,
+   "coverage": 0.9997507437531604,
+   "median_fill": 0.4448818862438202,
+   "p05": 0.15748031437397003,
+   "p95": 0.7952755689620972
+  },
+  {
+   "channel": "rad_TC",
+   "finite_in_footprint": 5166085,
+   "coverage": 0.9997507437531604,
+   "median_fill": 0.5039370059967041,
+   "p05": 0.19291338324546814,
+   "p95": 0.834645688533783
+  },
+  {
+   "channel": "ext_ThK",
+   "finite_in_footprint": 5166085,
+   "coverage": 0.9997507437531604,
+   "median_fill": 0.4763779640197754,
+   "p05": 0.20866142213344574,
+   "p95": 0.7952755689620972
+  },
+  {
+   "channel": "ext_UK",
+   "finite_in_footprint": 5166085,
+   "coverage": 0.9997507437531604,
+   "median_fill": 0.3818897604942322,
+   "p05": 0.11417322605848312,
+   "p95": 0.7401574850082397
+  },
+  {
+   "channel": "ext_UTh",
+   "finite_in_footprint": 5166085,
+   "coverage": 0.9997507437531604,
+   "median_fill": 0.26377952098846436,
+   "p05": 0.07086614519357681,
+   "p95": 0.5590550899505615
+  },
+  {
+   "channel": "ext_TMI_up150",
+   "finite_in_footprint": 5164312,
+   "coverage": 0.9994076293698946,
+   "median_fill": 0.3937007784843445,
+   "p05": 0.16535432636737823,
+   "p95": 0.7283464670181274
+  }
+ ],
+ "seconds": 40.3,
+ "source_sha256": {
+  "lidar_scarp_features_u8.tif": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568",
+  "geodawn_rad_u8.tif": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682",
+  "geodawn_extensions_u8.tif": "a35a9c6d2a14786f4dab85481ee59769213072f5dab5b2535ea82ae4d9bb7d9b"
+ },
+ "excluded": "derived_sgmc_faults_100m_u8.tif (catalogue derivative - leakage)",
+ "x1_ext_bytes": 950796760
+}

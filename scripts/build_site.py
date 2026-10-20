@@ -33,7 +33,7 @@ h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var
 NAV = [("index.html", "Executive summary"), ("how-to-submit.html", "How to submit"),
        ("hypotheses.html", "Hypotheses"), ("experiments.html", "Experiments"),
        ("knowledge.html", "Why 0.2778"), ("sources.html", "Sources"), ("irregularities.html", "Irregularities"),
-       ("leaderboard.html", "Score ledger")]
+       ("leaderboard.html", "Score ledger"), ("run-card.html", "Run card")]
 
 
 def page(title: str, body: str, active: str) -> str:

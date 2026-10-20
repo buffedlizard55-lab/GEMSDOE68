@@ -31,7 +31,17 @@ def _same_transform(a, b, tolerance: float = 1e-6) -> bool:
 
 
 def footprint_from_features(features_path: str | Path, shape_hw=None) -> np.ndarray:
-    """Footprint = cells whose first feature band is finite and above the nodata sentinel."""
+    """Footprint = cells whose first feature band is finite and above the nodata sentinel.
+
+    NOTE (GEMSDOE68, measured 2026-10-20): on the real organiser stack this
+    band-1 footprint has 5,165,852 cells, while the official
+    ``sample_submission.tif`` footprint (finite cells) has 5,167,373.  The
+    3,061-cell difference inside the official footprint is band-1 sentinel
+    (-3.4e38) holes.  Prefer :func:`footprint_from_sample` via the
+    ``footprint_path`` argument of :func:`validate` whenever a sample /
+    template raster is available; this band-1 fallback is kept only for
+    backwards compatibility.
+    """
     import rasterio
 
     with rasterio.open(features_path) as src:
@@ -42,8 +52,21 @@ def footprint_from_features(features_path: str | Path, shape_hw=None) -> np.ndar
     return fp
 
 
+def footprint_from_sample(sample_path: str | Path, shape_hw=None) -> np.ndarray:
+    """Official footprint = finite cells of sample_submission.tif (NaN outside)."""
+    import rasterio
+
+    with rasterio.open(sample_path) as src:
+        band = src.read(1).astype(np.float64)
+    fp = np.isfinite(band)
+    if shape_hw is not None and fp.shape != tuple(shape_hw):
+        raise ValueError(f"sample shape {fp.shape} != expected {shape_hw}")
+    return fp
+
+
 def validate(path: str | Path, reference_path: str | Path | None = None,
-             features_path: str | Path | None = None) -> dict:
+             features_path: str | Path | None = None,
+             footprint_path: str | Path | None = None) -> dict:
     import rasterio
 
     path = Path(path)
@@ -133,13 +156,34 @@ def validate(path: str | Path, reference_path: str | Path | None = None,
             checks.append(_check("features/reference alignment verified", False,
                                  "SKIPPED: no official reference raster supplied", status="SKIPPED"))
 
+        # An explicit official footprint (sample/template) takes precedence
+        # over the band-1-derived footprint even when a features raster was
+        # also supplied for the grid-alignment checks above.
+        fp_source = "training band-1 finite cells"
+        if footprint_path is not None:
+            fp = footprint_from_sample(footprint_path)
+            fp_source = f"sample/template finite cells: {footprint_path}"
         if fp.shape != arr.shape:
             checks.append(_check("footprint shape matches candidate", False,
                                  f"footprint={fp.shape} candidate={arr.shape}"))
         else:
             nan_inside = int((~finite & fp).sum())
             checks.append(_check("no NaN inside footprint", nan_inside == 0,
-                                 f"nan_inside={nan_inside} footprint_cells={int(fp.sum())}"))
+                                 f"nan_inside={nan_inside} footprint_cells={int(fp.sum())} "
+                                 f"footprint_source={fp_source}"))
+            outside_finite = int((finite & ~fp).sum())
+            checks.append(_check("NaN-only outside footprint", outside_finite == 0,
+                                 f"finite_outside={outside_finite}; only NaN is allowed outside"))
+    elif footprint_path is not None:
+        fp = footprint_from_sample(footprint_path)
+        if fp.shape != arr.shape:
+            checks.append(_check("footprint shape matches candidate", False,
+                                 f"footprint={fp.shape} candidate={arr.shape}"))
+        else:
+            nan_inside = int((~finite & fp).sum())
+            checks.append(_check("no NaN inside footprint", nan_inside == 0,
+                                 f"nan_inside={nan_inside} footprint_cells={int(fp.sum())} "
+                                 f"footprint_source=sample/template finite cells: {footprint_path}"))
             outside_finite = int((finite & ~fp).sum())
             checks.append(_check("NaN-only outside footprint", outside_finite == 0,
                                  f"finite_outside={outside_finite}; only NaN is allowed outside"))
@@ -162,8 +206,9 @@ def main(argv=None) -> int:
     ap.add_argument("file")
     ap.add_argument("--reference", help="labels.tif (or any file with the official grid)")
     ap.add_argument("--features", help="training features raster, for the footprint check")
+    ap.add_argument("--footprint", help="sample_submission.tif: official footprint = its finite cells")
     args = ap.parse_args(argv)
-    report = validate(args.file, args.reference, args.features)
+    report = validate(args.file, args.reference, args.features, footprint_path=args.footprint)
     print(json.dumps(report, indent=2))
     return 0 if report["passed"] else 1
 

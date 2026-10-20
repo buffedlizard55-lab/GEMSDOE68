@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Run card · GEMSDOE68</title><style>
+:root{--bg:#0b1020;--card:#141b2f;--ink:#e8ecf5;--muted:#9aa7c7;--ok:#2ecc71;--bad:#e74c3c;--warn:#f1c40f;--acc:#4ea1ff}
+*{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
+main{max-width:1100px;margin:0 auto;padding:24px}
+.card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
+.banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
+.banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
+.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0}
+.btn.secondary{background:#26304d;color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
+.muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
+</style></head><body>
+<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="how-to-submit.html">How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a> <a href="run-card.html" style=color:#fff>Run card</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
+<main><h1>Run card — gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros</h1>
+<div class="banner" style="background:#4a3d12;border:2px solid #f1c40f">⚠️ CONDITIONALLY OK — bootstrap holdout gates pass on both strata, but the stricter per-fold &gt;2SE rule is not met on at least one stratum (n=4 folds). Read the caveats on this page; only the human selector may spend a slot on it.</div>
+<div class=card><p>Machine-readable card: <a href="downloads/gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-runcard.json">downloads/gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-runcard.json</a>
+(= <code>evidence/run_card_current.json</code> in the repo). Generated 20261020T203735Z.</p>
+<table>
+<tr><th>Verdict</th><td><b>promote-with-caveats</b> — bootstrap gates pass on both strata and the candidate beats the previous holdout best point estimate, BUT the n=4 per-fold &gt;2SE rule fails on the far stratum (t=1.53) and the far bootstrap lower bound is only +0.0007; treat as conditional, selector decides</td></tr>
+<tr><th>Download instruction</th><td>CONDITIONAL: read caveats; only the human selector may spend a slot</td></tr>
+<tr><th>Lane</th><td>auto-context stacked refinement (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436)</td></tr>
+<tr><th>Hypothesis</th><td>AC68-N2: enriching stage 1 with fold-invariant external channels (2 m lidar scarp aggregates + coverage, GeoDAWN radiometric/extension percentile ranks) improves first-stage ranking enough that unchanged auto-context stages beat the previous holdout best at matched mass.</td></tr>
+<tr><th>Mechanism</th><td>stage 1 LightGBM on 19 organiser bands + 7 physics + 20 external channels; stages 2/3 add orientation-sampled previous probabilities (+-1,3,7,15 px), smooths, anisotropy/coherence, physics and visible-catalogue context; hide-draw labels; final maps are LOQO out-of-fold for every pixel.</td></tr>
+<tr><th>Named non-fault mimic</th><td>Erosional terrace risers and range-front escarpments (the lidar scarp channels respond to any sharp step) and lithologic potassium contrasts in volcanic flows (radiometric ranks); roads/channels also create 2 m steps.</td></tr>
+<tr><th>HOLDOUT-DTI (all)</th><td>stage 1 0.0828 → candidate 0.1189; Δ 0.0361 95% CI [0.0258, 0.0475]; 11321 withheld positives; evaluator gems57-pooled-hide-v2</td></tr>
+<tr><th>HOLDOUT-DTI (&gt;1 km)</th><td>stage 1 0.0644 → candidate 0.0756; Δ 0.0112 95% CI [0.0007, 0.0218]; 4832 withheld positives</td></tr>
+<tr><th>Per-fold gate (n=4)</th><td>all t=3.85 (pass), far t=1.53 (FAIL)</td></tr>
+<tr><th>Canary</th><td>max single-feature AUC 0.8311 (limit 0.90); flags: []</td></tr>
+<tr><th>Uniqueness vs 60 registry rasters</th><td>max |Spearman| 0.1301; max informative 3-px dot overlap 0.3475; exact byte matches: []</td></tr>
+<tr><th>Primary raster</th><td><code>gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros.tif</code> sha256 <code>e15f2d96c585bf2446dead518f1916f7307490b2ed2f6d72ee8c5788dfed2f63</code>; 38000 dots at 1.0; median distance to catalogue 8.0000 px</td></tr>
+<tr><th>Submission name</th><td><code>gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros</code></td></tr>
+<tr><th>Note (106 chars)</th><td>GEMSDOE68 auto-context ext-channels s2; 38000 dots &gt;2px off-cat; HOLDOUT-DTI 0.1189 vs s1 0.0828; UNSCORED</td></tr>
+<tr><th>Organiser-confirmed score</th><td>none — every number above is HOLDOUT-DTI</td></tr>
+</table>
+<h3>Limitations</h3><ul><li>No ORGANIZER-CONFIRMED score exists for this raster; every DTI here is HOLDOUT-DTI.</li><li>Holdout truth is withheld catalogue components, not the panel&#x27;s unmapped faults.</li><li>Lidar coverage is ~75% of the footprint (sidecar-measured); uncovered cells carry median-filled scarp channels plus the lidar_valid flag.</li><li>Radiometric/extension bytes are percentile ranks, not physical units.</li><li>Registry completeness is limited to the 60 rasters in registry/rasters/ plus prior candidates in docs/downloads/.</li><li>Area-fill (blob) risk IR-68-BLOB-01 remains open: median dot distance to the catalogue is reported in raster.median_dist_to_catalogue_px for selector review.</li></ul>
+<h3>AI disclosure</h3><p>Generative AI (Arena agent) wrote and executed the analysis code, audit scripts and site text in this repository under the owner&#x27;s standing brief; all numbers were produced by running that code on the pinned data in this checkout, and the human owner makes the final submission-slot decision.</p></div></main></body></html>

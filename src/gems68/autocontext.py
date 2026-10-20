@@ -36,14 +36,19 @@ LGB_PARAMS = dict(objective="binary", learning_rate=0.05, num_leaves=31,
 N_ROUNDS = 220
 
 
-def context_names() -> list[str]:
+def context_names(include_catalogue: bool = True) -> list[str]:
+    """Stage>=2 feature names.  ``include_catalogue=False`` drops the five
+    catalogue-context columns (experiment AC68-N1, far-robust ablation): the
+    matching design matrix is produced by passing ``ctx=[]`` to
+    :func:`context_matrix`, so the columns are absent rather than zeroed."""
     names = []
     for d in OFFSETS:
         names += [f"p_along+{d}", f"p_along-{d}", f"p_across+{d}", f"p_across-{d}"]
     names += ["p_self", "p_sm2", "p_sm5", "p_sm10", "p_along_mean", "p_across_mean", "p_aniso",
               "ori_coh"]
     names += F.PHYSICS_NAMES
-    names += F.CONTEXT_NAMES
+    if include_catalogue:
+        names += F.CONTEXT_NAMES
     return names
 
 

@@ -1,176 +1,518 @@
 {
- "schema": "gemsdoe68-run-card/1",
- "generated_utc": "2026-10-12T03:28:09Z",
+ "schema": "gemsdoe68-run-card/2",
+ "generated_utc": "20261020T203735Z",
  "lane": "auto-context stacked refinement (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436)",
- "hypothesis": "A second classifier trained on the first classifier's probability maps plus the raw channels can recover withheld fault segments better than the per-pixel model alone, because the stacked features expose continuity, parallelism and en-echelon spacing that a per-pixel model cannot see.",
- "mechanism": "Stage 1 LightGBM scores every 100 m cell from 44 fold-invariant channels plus 11 catalogue-context features derived only from the visible faults. Stage 2/3 LightGBM adds stage-n probabilities sampled at +/-1,2,3,5,8,12,15 px along and across the local structure-tensor orientation, oriented box means at several half-widths (multi-scale anisotropic smooths), two isotropic smooths, the 21 raw gradient/tilt/scarp channels and the 11 catalogue-context features recomputed with the target block's labels masked. Out-of-fold probabilities come from 4 inner spatial blocks inside each outer training domain (600 m buffer); the outer folds are 4 label-blind quadrants with whole catalogue segments withheld inside a 1.2 km eroded domain.",
- "named_non_fault_process_that_could_mimic_it": "Range-front and basin-margin escarpments: the same detrended-elevation gradient, Laplacian and lidar scarp channels respond to a downhill-facing erosional escarpment or a terraced alluvial margin as they do to a fault scarp, and a stacked model that rewards local continuity will happily connect them into long lineaments.",
+ "hypothesis": "AC68-N2: enriching stage 1 with fold-invariant external channels (2 m lidar scarp aggregates + coverage, GeoDAWN radiometric/extension percentile ranks) improves first-stage ranking enough that unchanged auto-context stages beat the previous holdout best at matched mass.",
+ "mechanism": "stage 1 LightGBM on 19 organiser bands + 7 physics + 20 external channels; stages 2/3 add orientation-sampled previous probabilities (+-1,3,7,15 px), smooths, anisotropy/coherence, physics and visible-catalogue context; hide-draw labels; final maps are LOQO out-of-fold for every pixel.",
+ "named_non_fault_process_that_could_mimic_it": "Erosional terrace risers and range-front escarpments (the lidar scarp channels respond to any sharp step) and lithologic potassium contrasts in volcanic flows (radiometric ranks); roads/channels also create 2 m steps.",
  "holdout_dti": {
   "evidence_class": "HOLDOUT-DTI",
-  "evaluator": "gems57.metric.dti_binary / gems57.holdout (pooled hide-and-recover)",
-  "evaluator_version": "gems57-pooled-hide-v2 / gems57.metric.dti_binary",
-  "alpha": 0.2,
-  "beta": 0.8,
-  "triangular_radius_m": 300.0,
-  "outer_buffer_px": 12,
-  "inner_buffer_px": 6,
-  "withheld_positive_pixels": 11318,
-  "withheld_positive_pixels_far_gt_1km": 1330,
-  "pooled": {
-   "stage1": 0.13014032809345344,
-   "stage2": 0.19044851256926598,
-   "stage3": 0.18684342719137767
+  "evaluator_version": "gems57-pooled-hide-v2",
+  "protocol": "pooled DTI alpha=0.2 beta=0.8, 300 m triangular kernel; whole-component hide-and-recover (buffered-whole-components-loqo-v2, eval seed 20)",
+  "withheld_positive_pixels": 11321,
+  "stage": 2,
+  "budget": 38000,
+  "pooled_all": {
+   "stage1": 0.08283722759046591,
+   "candidate": 0.11890243249305248,
+   "delta": 0.036065204902586565,
+   "ci95_delta": [
+    0.02575161244345468,
+    0.047465090776498485
+   ]
   },
-  "gate_all_pixels": {
-   "stage2_vs_stage1": {
-    "mean_delta": 0.06065845612980394,
-    "se": 0.007049341494211312,
-    "t_stat": 8.604840066212521,
+  "pooled_far_gt_1km": {
+   "stage1": 0.06443436246206853,
+   "candidate": 0.07564525092717861,
+   "delta": 0.011210888465110078,
+   "ci95_delta": [
+    0.0006855465652749093,
+    0.02182232175536785
+   ],
+   "withheld_positive_pixels_far": 4832
+  },
+  "bootstrap_gate_both_strata": true,
+  "per_fold_gate": {
+   "all": {
+    "per_fold_deltas": [
+     0.042964845049159366,
+     0.015136647754994778,
+     0.05649521088284641,
+     0.026034806080079506
+    ],
+    "mean_delta": 0.035157877441770014,
+    "se": 0.009130126919707502,
+    "t_stat": 3.85075451315811,
     "passes_gt_2se": true,
-    "n_blocks": 4
+    "n_folds": 4
    },
-   "stage3_vs_stage1": {
-    "mean_delta": 0.05738258311861622,
-    "se": 0.010058061945947203,
-    "t_stat": 5.705133198323358,
-    "passes_gt_2se": true,
-    "n_blocks": 4
-   },
-   "stage3_vs_stage2": {
-    "mean_delta": -0.003275873011187709,
-    "se": 0.00549276392124397,
-    "t_stat": -0.5963979261001641,
+   "far": {
+    "per_fold_deltas": [
+     0.03149824354596337,
+     -0.0015005591216315367,
+     0.0008424222807058152,
+     0.015941290461026256
+    ],
+    "mean_delta": 0.011695349291515975,
+    "se": 0.007649077617693074,
+    "t_stat": 1.5289881834201124,
     "passes_gt_2se": false,
-    "n_blocks": 4
+    "n_folds": 4
    }
   },
-  "gate_far_gt_1km": {
-   "stage2_vs_stage1": {
-    "mean_delta": 0.007405528560726249,
-    "se": 0.003761553568962731,
-    "t_stat": 1.968742017083214,
-    "passes_gt_2se": false,
-    "n_blocks": 4
-   },
-   "stage3_vs_stage1": {
-    "mean_delta": 0.008361746412424936,
-    "se": 0.004444319766547876,
-    "t_stat": 1.8814457221020169,
-    "passes_gt_2se": false,
-    "n_blocks": 4
-   },
-   "stage3_vs_stage2": {
-    "mean_delta": 0.0009562178516986887,
-    "se": 0.0009654269997991912,
-    "t_stat": 0.9904610622010592,
-    "passes_gt_2se": false,
-    "n_blocks": 4
-   }
+  "beats_previous_holdout_best": {
+   "comparator": "Exp2 catalogue-context-full, same budget/stage (historical, same instrument)",
+   "exp2_dti": 0.11646999575947209,
+   "exp2_far_dti": 0.0711281829757093,
+   "beats_all": true,
+   "far_difference": 0.004517067951469306
   },
-  "ci95": "not computed for the pooled figure; the protocol CI is the paired physical-spatial-block percentile bootstrap in gems57.evaluate_holdout, which was not invoked for this run"
- },
- "leakage_canary": {
-  "rule": "AUC above 0.90 on a single channel is leakage until disproven",
-  "max_auc_over_channels": 0.6114691972289384,
-  "channels_above_0_90": [],
-  "verdict": "no channel flagged"
+  "canary": {
+   "flags": [],
+   "max_auc_distance_from_0p5": 0.831105773064512,
+   "limit": 0.9,
+   "clean": true
+  },
+  "exp3_ccfree_negative_control": {
+   "tier_under_exp3_preregistration": "promote",
+   "chosen": {
+    "key": "25000_stage3",
+    "stage": 3,
+    "budget": 25000
+   },
+   "promotion_verdict": "negative",
+   "reason": "AC68-N1 does not beat the current holdout best (Exp2) at any budget (best CC-free candidate 0.0770 vs 0.1181 at 25k); per the standing brief a slot must not be spent on it. Retained as a scientific ablation result."
+  },
+  "decision_file": "evidence/exp4_decision.json",
+  "experiment_file": "evidence/exp4_autocontext_ext.json"
  },
  "correlation_overlap_vs_registry": {
-  "registry_dir": "registry/rasters",
-  "n_registry_rasters": 60,
-  "max_abs_spearman": 0.054202370983053055,
-  "max_dot_overlap_3px": 0.9948,
-  "exact_byte_matches": [],
-  "drift_limit_spearman": 0.9,
-  "drift_limit_dot_overlap": 0.7,
-  "literal_verdict": "LANE DRIFT - log duplicate and stop",
-  "rasters_flagged_by_literal_rule": [
+  "registry_dir": "registry/rasters/rasters",
+  "n_registry": 60,
+  "max_abs_spearman_surface": [
+   "57GEMSDOE__faultzone-anatomy-60000px-prev.tif",
+   0.13011308455784687
+  ],
+  "max_informative_dot_overlap_3px": [
+   "19GEMSDOE__h19-4-multiline-corroborated.tif",
+   0.3474736842105263
+  ],
+  "thresholds": {
+   "rank_corr": 0.9,
+   "dot_overlap": 0.7,
+   "registry_coverage_max": 0.7
+  },
+  "excluded_uninformative_rasters": [
    "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif"
   ],
-  "flagged_detail": [
-   {
-    "registry": "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
-    "absolute_spearman_rho": 0.004185879666281769,
-    "candidate_dots_within_3px": 0.9948,
-    "registry_dots": 311617,
-    "exact_duplicate": false
-   }
+  "literal_overlap_gt_0p70_rasters": [
+   "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif"
   ],
-  "density_null_control": {
-   "candidate": "GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
-   "registry": "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
-   "candidate_dots": 20000,
-   "registry_dots": 311617,
-   "registry_dot_density_per_1000_cells": 25.3777,
-   "observed_overlap_within_3px": 0.9948,
-   "overlap_limit": 0.7,
-   "literal_rule_fires": true,
-   "null_draws": 100,
-   "null_mean_overlap": 0.958387,
-   "null_sd_overlap": 0.0013380885620914668,
-   "null_p95_overlap": 0.960265,
-   "observed_minus_null_sd": 27.212698046746304,
-   "interpretation": "the observed overlap exceeds the random-null level; treat as genuine overlap"
+  "champion_overlap": {
+   "name": "GEMSDOE32__h33-2-b2-zeros.tif",
+   "overlap": 0.2828421052631579,
+   "coverage": 0.15085344139081888,
+   "lift": 1.8749463231030539,
+   "n_registry_dots": 37654
   },
-  "interpretation": "The literal rule fires on exactly one registry raster, gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif, which carries 311617 dots (25.4 dots per 1000 footprint cells). The density-null control draws 100 random 20000-dot sets from the same eligible region and scores them with the same rule: the null overlap is 0.958 +- 0.001, so 95.8% of ANY dot set, related or not, lands within 3 px of that raster's dots. The observed 0.9948 is 3.6 percentage points above that baseline, and the rank correlation with that raster is 0.004. No registry raster is an exact pixel duplicate. The rule is therefore degenerate against this one dense raster and its firing is a density artefact, not duplication. Recorded as IR-28 and shipped with that caveat rather than silently passed."
+  "overlap_vs_prior_download_candidates": {
+   "GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif": {
+    "overlap": 0.05739473684210526,
+    "coverage": 0.02976038308053241,
+    "lift": 1.9285617623534461,
+    "n_registry_dots": 20000
+   },
+   "GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif": {
+    "overlap": 0.05739473684210526,
+    "coverage": 0.02976038308053241,
+    "lift": 1.9285617623534461,
+    "n_registry_dots": 20000
+   },
+   "GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif": {
+    "overlap": 0.1553157894736842,
+    "coverage": 0.05782783631063598,
+    "lift": 2.6858308970677807,
+    "n_registry_dots": 32000
+   },
+   "GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif": {
+    "overlap": 0.1553157894736842,
+    "coverage": 0.05782783631063598,
+    "lift": 2.6858308970677807,
+    "n_registry_dots": 32000
+   },
+   "gems68-autoctx-40000-20261012T014104Z-nan.tif": {
+    "overlap": 0.05636842105263158,
+    "coverage": 0.07138927265362884,
+    "lift": 0.7895923148863498,
+    "n_registry_dots": 40000
+   },
+   "gems68-autoctx-40000-20261012T014104Z-zeros.tif": {
+    "overlap": 0.05636842105263158,
+    "coverage": 0.07138927265362884,
+    "lift": 0.7895923148863498,
+    "n_registry_dots": 40000
+   },
+   "gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-nan.tif": {
+    "overlap": 0.18328947368421053,
+    "coverage": 0.1793841861232003,
+    "lift": 1.0217705230623177,
+    "n_registry_dots": 38000
+   },
+   "gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.tif": {
+    "overlap": 0.18328947368421053,
+    "coverage": 0.1793841861232003,
+    "lift": 1.0217705230623177,
+    "n_registry_dots": 38000
+   },
+   "gemsdoe68-autocontext-s2-20261012T014136Z-nan.tif": {
+    "overlap": 0.10928947368421052,
+    "coverage": 0.11960158478979552,
+    "lift": 0.9137794777242381,
+    "n_registry_dots": 35707
+   },
+   "gemsdoe68-autocontext-s2-20261012T014136Z-zeros.tif": {
+    "overlap": 0.10928947368421052,
+    "coverage": 0.11960158478979552,
+    "lift": 0.9137794777242381,
+    "n_registry_dots": 35707
+   }
+  },
+  "exact_byte_matches": [],
+  "informative_duplicate": false,
+  "literal_note": "Literal >70% 3-px overlap is reported for every raster; it also fires for the family champion vs the 311,617-dot buried-step raster (0.9873, Pass-1 measured; halo ~96% of footprint). Informative verdict uses the pre-existing IR-68-UNIQ-01 coverage rule."
  },
  "raster": {
-  "primary_path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
-  "primary_sha256": "cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf",
-  "primary_bytes": 291557,
-  "fallback_path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif",
-  "fallback_sha256": "7175e1681ed2878cccaca89c6945700a043434118a31e4fe5ab4b0e557451260",
-  "dot_count": 20000,
-  "emission_radius_px": 3,
-  "emission_budget": 20000
+  "primary_path": "docs/downloads/gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros.tif",
+  "primary_sha256": "e15f2d96c585bf2446dead518f1916f7307490b2ed2f6d72ee8c5788dfed2f63",
+  "primary_bytes": 153212,
+  "primary_kind": "all-finite, 0 outside footprint, nodata=None",
+  "nan_twin_path": "docs/downloads/gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-nan.tif",
+  "nan_twin_sha256": "5c5c1784c615c807423479d497a3ca1faa1607dbc11aa413b05b96801629c427",
+  "zip": "gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros.zip",
+  "zip_sha256": "3b7bb93c056113b96debb533db102444e3bfb10b1fa115d92cd751560b6111b4",
+  "dot_count": 38000,
+  "value": 1.0,
+  "exclude_px": 2.0,
+  "nms": 5,
+  "min_dist_to_catalogue_px": 3.1622776601683795,
+  "median_dist_to_catalogue_px": 8.0,
+  "frac_dots_farther_than_1km": 0.4361578947368421,
+  "dist_to_catalogue_px_percentiles": {
+   "p10": 3.605551275463989,
+   "p50": 8.0,
+   "p90": 25.0
+  },
+  "overlap_metric_note": "U.dot_overlap uses Euclidean distance <=3 px; a Chebyshev (3x dilation) reading is looser. Worst prior candidate (sibling stage-3 file): Euclidean 0.183, Chebyshev 0.251, exact-shared dots 336/38000 (independently recomputed 2026-10-20)."
  },
  "validator_output": {
-  "tool": "gems.validate_submission (shared, unmodified)",
-  "passed": true,
-  "n_checks": 16,
-  "failures": [],
-  "skipped": []
+  "gems68_validate_primary_zeros": {
+   "file": "/home/user/GEMSDOE68/docs/downloads/gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros.tif",
+   "bytes": 153212,
+   "sha256": "e15f2d96c585bf2446dead518f1916f7307490b2ed2f6d72ee8c5788dfed2f63",
+   "meta": {
+    "crs": "EPSG:32611",
+    "shape": [
+     3730,
+     3292
+    ],
+    "dtype": "float32",
+    "count": 1,
+    "nodata": null,
+    "transform": [
+     100.0,
+     0.0,
+     243350.0,
+     0.0,
+     -100.0,
+     4508550.0
+    ],
+    "profile_compress": "deflate"
+   },
+   "band_description": [
+    "predicted_new_fault_probability"
+   ],
+   "n_finite": 12279160,
+   "n_nan": 0,
+   "n_infinite": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "mean": 0.0030946743208914995,
+   "emitted_positive_pixels": 38000,
+   "checks": {
+    "single_band": true,
+    "dtype_float32": true,
+    "dimensions_3730x3292": true,
+    "crs_epsg_32611": true,
+    "transform_matches_sample_submission": true,
+    "no_nan_anywhere": true,
+    "no_inf_anywhere": true,
+    "no_sentinel_values": true,
+    "range_0_1_guaranteed": true,
+    "min_ge_0": true,
+    "max_le_1": true,
+    "in_footprint_all_finite": true,
+    "in_footprint_range_0_1": true,
+    "outside_footprint_zero": true,
+    "zero_dots_on_mapped_catalogue": true
+   },
+   "all_checks_passed": true,
+   "validation_class": "local format/range preflight; not organizer acceptance or uniqueness clearance",
+   "on_catalogue_positive_pixels": 0,
+   "in_footprint_positive_pixels": 38000,
+   "footprint_fraction": 0.007353833369489681
+  },
+  "gems68_validate_nan_twin": {
+   "file": "/home/user/GEMSDOE68/docs/downloads/gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-nan.tif",
+   "bytes": 225346,
+   "sha256": "5c5c1784c615c807423479d497a3ca1faa1607dbc11aa413b05b96801629c427",
+   "meta": {
+    "crs": "EPSG:32611",
+    "shape": [
+     3730,
+     3292
+    ],
+    "dtype": "float32",
+    "count": 1,
+    "nodata": NaN,
+    "transform": [
+     100.0,
+     0.0,
+     243350.0,
+     0.0,
+     -100.0,
+     4508550.0
+    ],
+    "profile_compress": "deflate"
+   },
+   "band_description": [
+    "predicted_new_fault_probability"
+   ],
+   "n_finite": 5167373,
+   "n_nan": 7111787,
+   "n_infinite": 0,
+   "min": 0.0,
+   "max": 1.0,
+   "mean": 0.00735383341088891,
+   "emitted_positive_pixels": 38000,
+   "checks": {
+    "single_band": true,
+    "dtype_float32": true,
+    "dimensions_3730x3292": true,
+    "crs_epsg_32611": true,
+    "transform_matches_sample_submission": true,
+    "no_nan_anywhere": false,
+    "no_inf_anywhere": true,
+    "no_sentinel_values": true,
+    "range_0_1_guaranteed": true,
+    "min_ge_0": true,
+    "max_le_1": true,
+    "in_footprint_all_finite": true,
+    "in_footprint_range_0_1": true,
+    "outside_footprint_zero": false,
+    "zero_dots_on_mapped_catalogue": true
+   },
+   "all_checks_passed": false,
+   "validation_class": "local format/range preflight; not organizer acceptance or uniqueness clearance",
+   "on_catalogue_positive_pixels": 0,
+   "in_footprint_positive_pixels": 38000,
+   "footprint_fraction": 0.007353833369489681
+  },
+  "gems_validate_submission_primary_zeros": {
+   "file": "/home/user/GEMSDOE68/docs/downloads/gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros.tif",
+   "sha256": "e15f2d96c585bf2446dead518f1916f7307490b2ed2f6d72ee8c5788dfed2f63",
+   "passed": false,
+   "has_failures": true,
+   "checks": [
+    {
+     "check": "single band",
+     "status": "PASS",
+     "detail": "count=1"
+    },
+    {
+     "check": "dtype float32",
+     "status": "PASS",
+     "detail": "dtype=float32"
+    },
+    {
+     "check": "CRS EPSG:32611",
+     "status": "PASS",
+     "detail": "crs=EPSG:32611"
+    },
+    {
+     "check": "shape matches",
+     "status": "PASS",
+     "detail": "file=(3730, 3292) expected=(3730, 3292)"
+    },
+    {
+     "check": "resolution 100 m",
+     "status": "PASS",
+     "detail": "res=(100.0, 100.0)"
+    },
+    {
+     "check": "transform matches reference",
+     "status": "PASS",
+     "detail": "file=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) ref=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+    },
+    {
+     "check": "CRS matches reference",
+     "status": "PASS",
+     "detail": "file=EPSG:32611 ref=EPSG:32611"
+    },
+    {
+     "check": "nodata tag is none or NaN",
+     "status": "PASS",
+     "detail": "nodata=None (finite nodata tags are rejected conservatively)"
+    },
+    {
+     "check": "no infinities",
+     "status": "PASS",
+     "detail": "inf_count=0"
+    },
+    {
+     "check": "values within [0, 1]",
+     "status": "PASS",
+     "detail": "min=0.0 max=1.0 finite_cells=12279160"
+    },
+    {
+     "check": "features grid shape matches",
+     "status": "PASS",
+     "detail": "features=(3730, 3292) reference=(3730, 3292)"
+    },
+    {
+     "check": "features transform matches reference grid",
+     "status": "PASS",
+     "detail": "features=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) reference=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+    },
+    {
+     "check": "features CRS matches reference grid",
+     "status": "PASS",
+     "detail": "features=EPSG:32611 reference=EPSG:32611"
+    },
+    {
+     "check": "no NaN inside footprint",
+     "status": "PASS",
+     "detail": "nan_inside=0 footprint_cells=5167373 footprint_source=sample/template finite cells: /home/user/GEMSDOE68/.cache/gems_data/sample_submission.tif"
+    },
+    {
+     "check": "NaN-only outside footprint",
+     "status": "FAIL",
+     "detail": "finite_outside=7111787; only NaN is allowed outside"
+    },
+    {
+     "check": "info: emitted cells (value > 0)",
+     "status": "INFO",
+     "detail": "emitted=38000"
+    }
+   ],
+   "skipped_checks_mean_unverified": false
+  },
+  "gems_validate_submission_nan_twin": {
+   "file": "/home/user/GEMSDOE68/docs/downloads/gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-nan.tif",
+   "sha256": "5c5c1784c615c807423479d497a3ca1faa1607dbc11aa413b05b96801629c427",
+   "passed": true,
+   "has_failures": false,
+   "checks": [
+    {
+     "check": "single band",
+     "status": "PASS",
+     "detail": "count=1"
+    },
+    {
+     "check": "dtype float32",
+     "status": "PASS",
+     "detail": "dtype=float32"
+    },
+    {
+     "check": "CRS EPSG:32611",
+     "status": "PASS",
+     "detail": "crs=EPSG:32611"
+    },
+    {
+     "check": "shape matches",
+     "status": "PASS",
+     "detail": "file=(3730, 3292) expected=(3730, 3292)"
+    },
+    {
+     "check": "resolution 100 m",
+     "status": "PASS",
+     "detail": "res=(100.0, 100.0)"
+    },
+    {
+     "check": "transform matches reference",
+     "status": "PASS",
+     "detail": "file=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) ref=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+    },
+    {
+     "check": "CRS matches reference",
+     "status": "PASS",
+     "detail": "file=EPSG:32611 ref=EPSG:32611"
+    },
+    {
+     "check": "nodata tag is none or NaN",
+     "status": "PASS",
+     "detail": "nodata=nan (finite nodata tags are rejected conservatively)"
+    },
+    {
+     "check": "no infinities",
+     "status": "PASS",
+     "detail": "inf_count=0"
+    },
+    {
+     "check": "values within [0, 1]",
+     "status": "PASS",
+     "detail": "min=0.0 max=1.0 finite_cells=5167373"
+    },
+    {
+     "check": "features grid shape matches",
+     "status": "PASS",
+     "detail": "features=(3730, 3292) reference=(3730, 3292)"
+    },
+    {
+     "check": "features transform matches reference grid",
+     "status": "PASS",
+     "detail": "features=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) reference=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+    },
+    {
+     "check": "features CRS matches reference grid",
+     "status": "PASS",
+     "detail": "features=EPSG:32611 reference=EPSG:32611"
+    },
+    {
+     "check": "no NaN inside footprint",
+     "status": "PASS",
+     "detail": "nan_inside=0 footprint_cells=5167373 footprint_source=sample/template finite cells: /home/user/GEMSDOE68/.cache/gems_data/sample_submission.tif"
+    },
+    {
+     "check": "NaN-only outside footprint",
+     "status": "PASS",
+     "detail": "finite_outside=0; only NaN is allowed outside"
+    },
+    {
+     "check": "info: emitted cells (value > 0)",
+     "status": "INFO",
+     "detail": "emitted=38000"
+    }
+   ],
+   "skipped_checks_mean_unverified": false
+  },
+  "interpretation": "zeros primary is all-finite in [0,1] (portal range rejection impossible) and fails only the converse NaN-only-outside policy check by construction; the NaN twin passes the official-footprint validator. Full receipts kept verbatim."
  },
- "submission_name": "GEMSDOE68-AC-stack2",
- "note": "GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage2, r=3px, 20000 dots; holdout-gated",
- "note_chars": 98,
+ "submission_name": "gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros",
+ "note": "GEMSDOE68 auto-context ext-channels s2; 38000 dots >2px off-cat; HOLDOUT-DTI 0.1189 vs s1 0.0828; UNSCORED",
+ "note_chars": 106,
  "verdict": "promote-with-caveats",
+ "verdict_reason": "bootstrap gates pass on both strata and the candidate beats the previous holdout best point estimate, BUT the n=4 per-fold >2SE rule fails on the far stratum (t=1.53) and the far bootstrap lower bound is only +0.0007; treat as conditional, selector decides",
+ "download_cleared": true,
+ "download_instruction": "CONDITIONAL: read caveats; only the human selector may spend a slot",
+ "organizer_confirmed_score": null,
+ "ai_disclosure": "Generative AI (Arena agent) wrote and executed the analysis code, audit scripts and site text in this repository under the owner's standing brief; all numbers were produced by running that code on the pinned data in this checkout, and the human owner makes the final submission-slot decision.",
  "limitations": [
-  "The scored truth is login-walled; no ORGANIZER-CONFIRMED score exists for any raster produced in this checkout.",
-  "The holdout truth is the withheld catalogue itself, so it measures recovery of mapped faults, not discovery of genuinely unmapped ones.",
-  "The registry of prior rasters is the one committed in registry/rasters; completeness is not certified by the organisers.",
-  "The 3-px dot-overlap rule is degenerate for this family: the footprint contains cells that lie within 3 px of some registry raster's dots almost everywhere, so the rule is reported as measured and interpreted with that caveat rather than silently passed."
+  "No ORGANIZER-CONFIRMED score exists for this raster; every DTI here is HOLDOUT-DTI.",
+  "Holdout truth is withheld catalogue components, not the panel's unmapped faults.",
+  "Lidar coverage is ~75% of the footprint (sidecar-measured); uncovered cells carry median-filled scarp channels plus the lidar_valid flag.",
+  "Radiometric/extension bytes are percentile ranks, not physical units.",
+  "Registry completeness is limited to the 60 rasters in registry/rasters/ plus prior candidates in docs/downloads/.",
+  "Area-fill (blob) risk IR-68-BLOB-01 remains open: median dot distance to the catalogue is reported in raster.median_dist_to_catalogue_px for selector review."
  ],
- "budget": {
-  "experiments_run": 1,
-  "limit_experiments": 3,
-  "limit_hours": 2,
-  "note": "one holdout experiment (4 outer folds x 4 inner blocks) plus one release run"
- },
- "submission_note_tag": "GEMSDOE68-AC-stack2-nan",
- "receipt": {
-  "file": "GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
-  "sha256": "cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf",
-  "shape_hw": [
-   3730,
-   3292
-  ],
-  "crs": "EPSG:32611",
-  "footprint_cells": 5165852,
-  "emitted_cells_gt0": 20000,
-  "min_inside": 0.0,
-  "max_inside": 1.0,
-  "nan_inside": 0,
-  "nan_outside_count": 7113308,
-  "receipt_kind": "local receipt written by submission_writer; NOT an organiser receipt"
- },
- "gate_all_pixels_met": true,
- "gate_far_gt_1km_met": false,
- "leakage_canary_clean": true,
- "validator_passed": true,
- "caveats": [
-  "The preregistered gate is met on the all-pixel stratum (stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60, positive on all 4 outer blocks) and narrowly MISSED on the >1 km stratum (mean +0.0074, SE 0.0038, t = 1.97, required > 2.0, positive on all 4 blocks). The far stratum is underpowered: only a minority of the 1925-3780 withheld pixels per fold are more than 1 km from a visible mapped fault, and the far DTI itself is ~0.01 because a 20000-dot budget over 5.16 M footprint cells almost never lands within 300 m of a sparse far pixel.",
-  "The literal duplicate rule fires on one dense registry raster (311617 dots); the density-null control shows 95.8% of any random dot set would also fire it. Recorded as IR-28.",
-  "No ORGANIZER-CONFIRMED score exists; every DTI here is a local HOLDOUT-DTI."
- ]
+ "seconds": 90.4
 }
