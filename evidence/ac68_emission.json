@@ -1,39 +1,39 @@
 {
- "generated_utc": "2026-10-12T04:20:57Z",
+ "generated_utc": "2026-10-20T18:25:58Z",
  "lane": "auto-context stacked refinement",
  "emission_params": {
-  "stage": "stage2",
+  "stage": "stage3",
   "radius_px": 3,
-  "budget": 20000
+  "budget": 32000
  },
- "dot_count": 20000,
+ "dot_count": 32000,
  "footprint_cells": 5164312,
  "catalogue_cells": 60988,
- "mean_prob_under_dots": 0.7132660746574402,
- "mean_prob_all": 0.1519828587770462,
+ "mean_prob_under_dots": 0.774236798286438,
+ "mean_prob_all": 0.24453184008598328,
  "n_training_rows": 243858,
  "n_positives": 60894,
  "files": {
   "nan": {
-   "path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
-   "sha256": "cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf",
-   "bytes": 291557,
-   "emitted_cells": 20000,
+   "path": "docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif",
+   "sha256": "ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47",
+   "bytes": 322971,
+   "emitted_cells": 32000,
    "validator_passed": true,
    "validator_failures": [],
    "validator_skipped": [],
    "n_checks": 16
   },
   "zeros": {
-   "path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif",
-   "sha256": "7175e1681ed2878cccaca89c6945700a043434118a31e4fe5ab4b0e557451260",
-   "bytes": 291559,
-   "emitted_cells": 20000,
+   "path": "docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif",
+   "sha256": "712ef781e870a9d5cb42142bd72490dfc39cdb2b23cf4f6087d9dcc40d4ec194",
+   "bytes": 322973,
+   "emitted_cells": 32000,
    "validator_passed": true,
    "validator_failures": [],
    "validator_skipped": [],
    "n_checks": 16
   }
  },
- "elapsed_s": 312.9
+ "elapsed_s": 250.9
 }

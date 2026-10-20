@@ -1,120 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to Submit — GEMSDOE68</title>
-    <style>
-        :root { --primary: #1a5276; --accent: #e67e22; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #333; line-height: 1.6; }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        header { background: var(--primary); color: #fff; padding: 24px 0; text-align: center; }
-        header h1 { font-size: 1.5rem; }
-        .step { background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 20px; margin: 16px 0; }
-        .step h3 { color: var(--primary); margin-bottom: 8px; }
-        .step .num { display: inline-block; background: var(--accent); color: #fff; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-weight: 700; margin-right: 8px; }
-        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 0.85rem; }
-        pre { background: #f4f4f4; padding: 12px; border-radius: 4px; overflow-x: auto; font-size: 0.82rem; margin: 8px 0; }
-        .warning { background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 16px; margin: 16px 0; }
-        .warning h4 { color: #856404; }
-        a { color: var(--primary); }
-        nav { background: #2c3e50; padding: 8px 0; }
-        nav a { color: #ecf0f1; text-decoration: none; padding: 6px 16px; font-size: 0.9rem; }
-        nav a:hover { background: #34495e; border-radius: 4px; }
-    </style>
-</head>
-<body>
-
-<header>
-    <div class="container">
-        <h1>Executive Summary: How to Submit to the GEMS Prize</h1>
-    </div>
-</header>
-
-<nav>
-    <div class="container">
-        <a href="index.html">← Back to Download</a>
-        <a href="index.html#method">Method</a>
-        <a href="index.html#validation">Validation</a>
-    </div>
-</nav>
-
-<div class="container">
-
-<div class="warning">
-    <h4>⚠️ Common Error: "Predicted values must be in range [0, 1]"</h4>
-    <p>This error occurs when:</p>
-    <ul style="margin-left: 20px;">
-        <li><strong>Mechanism 1:</strong> The training_features.tif nodata sentinel (-3.4028234663852886e+38) is passed through unchanged</li>
-        <li><strong>Mechanism 2:</strong> A raster carrying nodata=NaN with NaN cells outside the footprint</li>
-    </ul>
-    <p><strong>Fix:</strong> Our submission is all-finite float32, every value in [0, 1], no nodata tag, zeros outside the footprint. It will not trigger this error.</p>
-</div>
-
-<div class="step">
-    <h3><span class="num">1</span> Download the Submission File</h3>
-    <p>Click the download button on the <a href="index.html#download">main page</a>. You'll get a file named:</p>
-    <pre>gemsdoe68-autocontext-s2-20261012T014136Z-zeros.tif</pre>
-    <p>This is a single-band float32 GeoTIFF matching the competition's required format exactly.</p>
-</div>
-
-<div class="step">
-    <h3><span class="num">2</span> Go to the DrivenData Submission Page</h3>
-    <p>Navigate to: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">DrivenData GEMS Prize → Submit</a></p>
-    <p>Click the "Submit" or "New Submission" button.</p>
-</div>
-
-<div class="step">
-    <h3><span class="num">3</span> Upload the File</h3>
-    <p>In the "File to submit" field, select the downloaded <code>.tif</code> file.</p>
-    <p>The portal expects:</p>
-    <ul style="margin-left: 20px;">
-        <li>Single-band GeoTIFF (.tif) or .zip containing one GeoTIFF</li>
-        <li>CRS: EPSG:32611 (UTM Zone 11N)</li>
-        <li>Shape: 3730 × 3292</li>
-        <li>Resolution: 100 m</li>
-        <li>Values: float32 in [0, 1]</li>
-    </ul>
-</div>
-
-<div class="step">
-    <h3><span class="num">4</span> Fill in the Note Field</h3>
-    <p>In the "Note (optional)" field, paste:</p>
-    <pre>GEMSDOE68-autocontext-s2</pre>
-    <p>Or use the full note for detailed tracking:</p>
-    <pre>Auto-context physics 35707px sha256:753b55a678a4a7e7 UNSCORED</pre>
-    <p>This helps you identify the submission later in the leaderboard.</p>
-</div>
-
-<div class="step">
-    <h3><span class="num">5</span> Submit and Verify</h3>
-    <p>Click "Create" or "Submit". The portal will validate the file format. If it passes, you'll see it appear on the leaderboard after scoring completes.</p>
-    <p><strong>Expected submission name:</strong> <code>GEMSDOE68-autocontext-s2</code></p>
-</div>
-
-<div class="step">
-    <h3>Format Verification Summary</h3>
-    <table style="width:100%; border-collapse:collapse;">
-        <tr style="border-bottom:1px solid #eee;"><td style="padding:6px;">Dtype</td><td>float32 ✓</td></tr>
-        <tr style="border-bottom:1px solid #eee;"><td style="padding:6px;">CRS</td><td>EPSG:32611 ✓</td></tr>
-        <tr style="border-bottom:1px solid #eee;"><td style="padding:6px;">Shape</td><td>3730 × 3292 ✓</td></tr>
-        <tr style="border-bottom:1px solid #eee;"><td style="padding:6px;">Resolution</td><td>100 m ✓</td></tr>
-        <tr style="border-bottom:1px solid #eee;"><td style="padding:6px;">Values</td><td>All in [0, 1] ✓</td></tr>
-        <tr style="border-bottom:1px solid #eee;"><td style="padding:6px;">NaN handling</td><td>Zero outside footprint, no NaN ✓</td></tr>
-        <tr style="border-bottom:1px solid #eee;"><td style="padding:6px;">Bands</td><td>Single band ✓</td></tr>
-        <tr><td style="padding:6px;">SHA-256</td><td><code>753b55a678a4a7e7...</code></td></tr>
-    </table>
-</div>
-
-<div class="step">
-    <h3>Alternative: NaN-Outside Variant</h3>
-    <p>If the portal rejects the zeros variant (unlikely), use the NaN-outside twin instead:</p>
-    <pre>gemsdoe68-autocontext-s2-20261012T014136Z-nan.tif</pre>
-    <p>This file has identical values inside the footprint but uses NaN outside — which is the competition's own sample submission format.</p>
-</div>
-
-</div>
-
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to submit · GEMSDOE68</title><style>
+:root{--bg:#0b1020;--card:#141b2f;--ink:#e8ecf5;--muted:#9aa7c7;--ok:#2ecc71;--bad:#e74c3c;--warn:#f1c40f;--acc:#4ea1ff}
+*{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
+main{max-width:1100px;margin:0 auto;padding:24px}
+.card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
+.banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
+.banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
+.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:14px 20px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0;font-size:18px}
+.btn.secondary{background:#26304d;color:var(--ink);font-size:15px}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
+.muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
+</style></head><body>
+<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="executive-summary.html">How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
+<main><h1>Executive summary — exactly how to submit</h1>
+<div class="banner ok">✅ OK TO DOWNLOAD AND SUBMIT: <code>gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros.tif</code></div>
+<div class=card><h2>Step by step (2 minutes)</h2>
+<ol>
+<li>Download <a href="downloads/gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros.tif" download><b>gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros.tif</b></a> (or the <a href="downloads/gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros.zip" download>ZIP containing the same TIFF</a>). Verify SHA-256 = <code>8e69b8877c88ed56f7649b69d1c1997d666754a0056a34eefdeab4d2f6b3fb12</code> if you wish.</li>
+<li>Open the competition submission page: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData #306</a> → <b>Submit</b> → <b>New submission</b>.</li>
+<li><b>File to submit:</b> choose the downloaded <code>.tif</code> (do not rename the contents; the form accepts a single-band GeoTIFF or a .zip containing one).</li>
+<li><b>Note</b> (optional field): paste exactly:<br><code>GEMSDOE68 autoctx s3 V6 stratified 2.8px spacing; 38000 dots >2px off cat; HOLDOUT-DTI 0.1316 vs s1 0.0829; UNSCORED</code> <small>(116/140 chars)</small></li>
+<li>Click <b>Create submission</b>. The earlier portal error <i>“Predicted values must be in range [0, 1]”</i> cannot trigger on this file: every one of its 12,279,160 cells is finite, min = 0.0, max = 1.0, there is no NaN and no nodata sentinel anywhere (table below, from re-reading the written bytes). If the portal still rejects it, use the secondary <code>gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-nan.tif</code> (identical dots; NaN only outside the sample footprint) and log the portal message verbatim in the repo.</li>
+<li>Record the score shown by the portal as ORGANIZER-CONFIRMED in <code>registry/score_ledger.csv</code> — until then this file is UNSCORED. Weekly slot caps are shown on the submission page (rules: <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">96647 PDF</a>); promotion to a slot is a separate selector step.</li>
+</ol></div>
+<div class=card><h2>Validator output (primary file, re-read from disk)</h2>
+<p>Local validator <code>gems68.validate</code> against the <b>sample-submission footprint</b> — all checks passed: <b>True</b></p>
+<table><tr><td>single_band</td><td class=ok>True</td></tr><tr><td>dtype_float32</td><td class=ok>True</td></tr><tr><td>dimensions_3730x3292</td><td class=ok>True</td></tr><tr><td>crs_epsg_32611</td><td class=ok>True</td></tr><tr><td>transform_matches_sample_submission</td><td class=ok>True</td></tr><tr><td>no_nan_anywhere</td><td class=ok>True</td></tr><tr><td>no_inf_anywhere</td><td class=ok>True</td></tr><tr><td>no_sentinel_values</td><td class=ok>True</td></tr><tr><td>range_0_1_guaranteed</td><td class=ok>True</td></tr><tr><td>min_ge_0</td><td class=ok>True</td></tr><tr><td>max_le_1</td><td class=ok>True</td></tr><tr><td>in_footprint_all_finite</td><td class=ok>True</td></tr><tr><td>in_footprint_range_0_1</td><td class=ok>True</td></tr><tr><td>outside_footprint_zero</td><td class=ok>True</td></tr><tr><td>zero_dots_on_mapped_catalogue</td><td class=ok>True</td></tr></table>
+<p class=muted>Shared template validator <code>gems.validate_submission</code> (footprint from training-features band 1, 3,061 cells smaller — IR-68-FP-01). Its “NaN-only outside footprint” item fails <i>by design</i> on any all-finite file, including the 0.2778 champion's format; every other item is shown verbatim:</p>
+<table><tr><th>check</th><th>status</th><th>detail</th></tr><tr><td>single band</td><td>PASS</td><td>count=1</td></tr><tr><td>dtype float32</td><td>PASS</td><td>dtype=float32</td></tr><tr><td>CRS EPSG:32611</td><td>PASS</td><td>crs=EPSG:32611</td></tr><tr><td>shape matches</td><td>PASS</td><td>file=(3730, 3292) expected=(3730, 3292)</td></tr><tr><td>resolution 100 m</td><td>PASS</td><td>res=(100.0, 100.0)</td></tr><tr><td>transform matches reference</td><td>PASS</td><td>file=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) ref=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)</td></tr><tr><td>CRS matches reference</td><td>PASS</td><td>file=EPSG:32611 ref=EPSG:32611</td></tr><tr><td>nodata tag is none or NaN</td><td>PASS</td><td>nodata=None (finite nodata tags are rejected conservatively)</td></tr><tr><td>no infinities</td><td>PASS</td><td>inf_count=0</td></tr><tr><td>values within [0, 1]</td><td>PASS</td><td>min=0.0 max=1.0 finite_cells=12279160</td></tr><tr><td>features grid shape matches</td><td>PASS</td><td>features=(3730, 3292) reference=(3730, 3292)</td></tr><tr><td>features transform matches reference grid</td><td>PASS</td><td>features=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) reference=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)</td></tr><tr><td>features CRS matches reference grid</td><td>PASS</td><td>features=EPSG:32611 reference=EPSG:32611</td></tr><tr><td>no NaN inside footprint</td><td>PASS</td><td>nan_inside=0 footprint_cells=5165852</td></tr><tr><td>NaN-only outside footprint</td><td>FAIL</td><td>finite_outside=7113308; only NaN is allowed outside</td></tr><tr><td>info: emitted cells (value > 0)</td><td>INFO</td><td>emitted=38000</td></tr></table></div></main></body></html>

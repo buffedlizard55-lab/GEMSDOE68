@@ -112,14 +112,14 @@
    "observed_minus_null_sd": 27.212698046746304,
    "interpretation": "the observed overlap exceeds the random-null level; treat as genuine overlap"
   },
-  "interpretation": "The literal rule fires on exactly one registry raster, gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif, which carries 311617 dots (25.4 dots per 1000 footprint cells). The density-null control draws 100 random 20000-dot sets from the same eligible region and scores them with the same rule: the null overlap is 0.958 +- 0.001, so 95.8% of ANY dot set, related or not, lands within 3 px of that raster's dots. The observed 0.9948 is 3.6 percentage points above that baseline, and the rank correlation with that raster is 0.004. No registry raster is an exact pixel duplicate. The rule is therefore degenerate against this one dense raster and its firing is a density artefact, not duplication. Recorded as IR-28 and shipped with that caveat rather than silently passed."
+  "interpretation": "The literal rule fires on exactly one registry raster, gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif, which carries 311617 dots (25.4 dots per 1000 footprint cells). The density-null control draws 100 random 20000-dot sets from the same eligible region and scores them with the same rule: the null overlap is 0.958 +- 0.001, so 95.8% of ANY dot set, related or not, lands within 3 px of that raster's dots. The observed 0.9948 is 3.6 percentage points above that baseline, and the rank correlation with that raster is 0.004. No registry raster is an exact pixel duplicate. The observed overlap exceeds that null by 27.2 SD, so it cannot be dismissed as a pure density artefact; under the literal protocol rule the flag stands as LANE DRIFT and the verdict is negative (IR-28/IR-31). The low rank correlation is context, not a pass."
  },
  "raster": {
   "primary_path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
   "primary_sha256": "cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf",
   "primary_bytes": 291557,
   "fallback_path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif",
-  "fallback_sha256": "7175e1681ed2878cccaca89c6945700a043434118a31e4fe5ab4b0e557451260",
+  "fallback_sha256": "7412411520cb3f4e1f7ec82f0f9d22bd5b316f721ea0f681de584fc1ea303297",
   "dot_count": 20000,
   "emission_radius_px": 3,
   "emission_budget": 20000
@@ -134,7 +134,7 @@
  "submission_name": "GEMSDOE68-AC-stack2",
  "note": "GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage2, r=3px, 20000 dots; holdout-gated",
  "note_chars": 98,
- "verdict": "promote-with-caveats",
+ "verdict": "negative",
  "limitations": [
   "The scored truth is login-walled; no ORGANIZER-CONFIRMED score exists for any raster produced in this checkout.",
   "The holdout truth is the withheld catalogue itself, so it measures recovery of mapped faults, not discovery of genuinely unmapped ones.",
@@ -168,6 +168,8 @@
  "gate_far_gt_1km_met": false,
  "leakage_canary_clean": true,
  "validator_passed": true,
+ "download_cleared": false,
+ "download_instruction": "DO NOT DOWNLOAD OR SUBMIT \u2014 negative result; gate not met",
  "caveats": [
   "The preregistered gate is met on the all-pixel stratum (stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60, positive on all 4 outer blocks) and narrowly MISSED on the >1 km stratum (mean +0.0074, SE 0.0038, t = 1.97, required > 2.0, positive on all 4 blocks). The far stratum is underpowered: only a minority of the 1925-3780 withheld pixels per fold are more than 1 km from a visible mapped fault, and the far DTI itself is ~0.01 because a 20000-dot budget over 5.16 M footprint cells almost never lands within 300 m of a sparse far pixel.",
   "The literal duplicate rule fires on one dense registry raster (311617 dots); the density-null control shows 95.8% of any random dot set would also fire it. Recorded as IR-28.",

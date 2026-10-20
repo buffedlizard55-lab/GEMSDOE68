@@ -1,0 +1,11 @@
+{
+ "ours": "gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros.tif",
+ "n_ours": 38000,
+ "theirs": "gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.tif",
+ "n_theirs": 35000,
+ "ours_within3px_of_theirs": 0.1108421052631579,
+ "theirs_within3px_of_ours": 0.11314285714285714,
+ "exact_intersection": 571,
+ "binary_spearman_400k": 0.011079532362558781,
+ "note": "Measured 2026-10-20 during merge of PR #11 with main (PR #9). Same lane family, different features/emission; selector must not treat as independent bets if overlap high."
+}

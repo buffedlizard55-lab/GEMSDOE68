@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 
 lgb = pytest.importorskip("lightgbm")
-from gems68 import autocontext as AC  # noqa: E402
+from gems68 import autocontext_bagged as AC  # noqa: E402
 
 
 def test_context_names_follow_offsets(monkeypatch):

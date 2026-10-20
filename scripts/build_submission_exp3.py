@@ -24,8 +24,8 @@ from scipy import ndimage as ndi
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from gems68 import autocontext as AC, emission as E, grid as G, uniqueness as U, validate as V  # noqa: E402
-from gems68.experiment import Lane, log  # noqa: E402
+from gems68 import autocontext_bagged as AC, emission as E, grid as G, uniqueness as U, validate as V  # noqa: E402
+from gems68.experiment_bagged import Lane, log  # noqa: E402
 from gems68.holdout import quadrant_ids  # noqa: E402
 
 AC.OFFSETS = (1, 2, 3, 5, 8, 12, 15)
