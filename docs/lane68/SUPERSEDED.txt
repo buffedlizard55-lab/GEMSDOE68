@@ -1,1 +1,0 @@
-SUPERSEDED 2026-10-20 (Exp-3 session). The lane68 verdict and candidate on these pages are a historical record. The single current verdict is generated from evidence/run_card_exp4.json at the top-level site (docs/index.html). Do not download or submit any lane68 file.

@@ -1,0 +1,58 @@
+{
+  "file": "GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-zeros.tif",
+  "sha256": "b917459305c22145924fa49f3cb3e08b8f3f03caabb03a23e368d8bd6c97c902",
+  "bytes": 809464,
+  "checks": {
+    "single_band": true,
+    "driver_geotiff": {
+      "ok": true,
+      "detail": "GTiff"
+    },
+    "count_1": {
+      "ok": true,
+      "detail": "1"
+    },
+    "dtype_float32": {
+      "ok": true,
+      "detail": "float32"
+    },
+    "crs_EPSG32611": {
+      "ok": true,
+      "detail": "EPSG:32611 != EPSG:32611"
+    },
+    "shape_match": {
+      "ok": true,
+      "detail": "(3730, 3292) != (3730, 3292)"
+    },
+    "transform_match": {
+      "ok": true,
+      "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) != (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+    },
+    "finite_inside_footprint": {
+      "ok": true,
+      "detail": "0 NaN inside footprint"
+    },
+    "outside_footprint_is_zero_or_nan": {
+      "ok": true,
+      "detail": "0 non-zero finite pixels outside the footprint"
+    },
+    "values_in_0_1": {
+      "ok": true,
+      "detail": "min=0.0 max=1.0"
+    },
+    "not_all_zero": {
+      "ok": true,
+      "detail": "raster is entirely zero"
+    },
+    "emitted_pixels": 32000,
+    "finite_pixels": 12279160,
+    "footprint_pixels": 5167373
+  },
+  "failures": [],
+  "validator_ok": true,
+  "generated_utc": "20261020T193000Z",
+  "note": "Fixed footprint: correct official 5167373 px, previously 3061 NaN inside",
+  "previous_file": "GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif",
+  "previous_sha256": "712ef781e870a9d5cb42142bd72490dfc39cdb2b23cf4f6087d9dcc40d4ec194",
+  "fix": "Re-wrote with official sample_submission template; dots unchanged; now passes 16/16"
+}

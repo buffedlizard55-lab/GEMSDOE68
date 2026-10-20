@@ -96,6 +96,15 @@ def main() -> int:
 <p class=muted>These numbers rank methods on withheld <em>catalogue</em> components. The live truth is <em>unmapped</em> faults; they do not predict a leaderboard value (IR-68-PROXY-01, IR-68-SCATTER-01).</p></div>"""
 
     ver = json.loads((EV / "release_verification_exp4.json").read_text()) if (EV / "release_verification_exp4.json").is_file() else None
+    parallel_html = ""
+    par_path = EV / "parallel_candidate_overlap.json"
+    their_card_path = DOCS / "downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-runcard.json"
+    if par_path.is_file() and their_card_path.is_file():
+        par = json.loads(par_path.read_text())
+        tc = json.loads(their_card_path.read_text())
+        th = tc["holdout_dti"]
+        parallel_html = f"""<div class=card><h2>⚠ A second promoted candidate exists in this repo (parallel session, PR #9) — selector must choose</h2>
+<p><code>{tc['submission_name']}</code> — de-blobbed stage-3 auto-context with LiDAR-scarp + 1D ridge-contrast features, 35,000 dots. Its own run card (HOLDOUT-DTI, same evaluator version and split, <i>different feature set and stage-1 baseline, far stratum = 5,150 px vs 4,832 here — numbers are therefore not head-to-head comparable</i>): all {f4(th['all_withheld_pixels']['stage3_dti'])} vs its stage 1 {f4(th['all_withheld_pixels']['stage1_dti'])}; far {f4(th['far_gt_1km_from_mapped_faults']['stage3_dti'])} vs {f4(th['far_gt_1km_from_mapped_faults']['stage1_dti'])}; verdict in its card: {tc.get('verdict')}. Measured overlap between the two rasters (this session, <code>evidence/parallel_candidate_overlap.json</code>): {100*par['ours_within3px_of_theirs']:.1f}% of this page's dots within 3 px of theirs, binary ρ = {par['binary_spearman_400k']:.3f} — genuinely different placements, so they are two distinct bets, not duplicates. Both are UNSCORED. The banner above clears the Exp-4 file; the scarp-ridge file's own downloads and card sit in <code>docs/downloads/</code> for the selector.</p></div>"""
     lane_html = ""
     if cleared:
         lu = card["correlation_overlap_vs_registry"]
@@ -126,6 +135,7 @@ Full per-raster table in <code>evidence/run_card_exp4.json</code>. The one liter
 <p class=muted>DOE GEMS Prize (DrivenData #306) · lane: auto-context stacked refinement (Tu, CVPR 2008) · Exp-4 update {card['generated_utc']} · every number below is generated from <code>evidence/run_card_exp4.json</code> / <code>evidence/exp4_stratified.json</code> / <code>evidence/exp3_ridgecrest.json</code> — none is typed by hand, and none is an organizer-confirmed score.</p>
 {banner}
 {holdout}
+{parallel_html}
 {lane_html}
 {why}
 {audit_html}
@@ -165,11 +175,7 @@ Full per-raster table in <code>evidence/run_card_exp4.json</code>. The one liter
     (DOCS / "how-to-submit.html").write_text(page("How to submit", submit_body))
 
     (DOCS / "runcard.json").write_text(json.dumps(card, indent=1, default=float))
-    (DOCS / "lane68" / "SUPERSEDED.txt").write_text(
-        "SUPERSEDED 2026-10-20 (Exp-3 session). The lane68 verdict and candidate on these "
-        "pages are a historical record. The single current verdict is generated from "
-        "evidence/run_card_exp4.json at the top-level site (docs/index.html). "
-        "Do not download or submit any lane68 file.\n")
+    # lane68/ pages belong to the sibling lane (PR #9 updated them); not touched here.
     print("site rebuilt; cleared =", cleared)
     return 0
 
