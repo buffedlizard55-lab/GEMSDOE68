@@ -25,14 +25,17 @@
 <main>
 
 <!-- ============================ DOWNLOAD FIRST ============================ -->
-<section class="hero" id="download">
-  <h2>1&nbsp;&middot;&nbsp;Download the submission file</h2>
-  <p><strong>File to submit into the DrivenData competition:</strong></p>
-  <p class="mono" style="font-size:16px"><a href="../downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif">../downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif</a></p>
+<section class="hero" id="download" style="border:3px solid #b03a2e">
+  <h2>1&nbsp;&middot;&nbsp;&#9940; DO NOT DOWNLOAD OR SUBMIT &mdash; NEGATIVE RESULT</h2>
+  <p><strong>This candidate is NOT cleared.</strong> The preregistered gate requires stage&nbsp;2
+  to beat stage&nbsp;1 by &gt;2&nbsp;SE <em>including on pixels &gt;1&nbsp;km from any mapped
+  fault</em>; that stratum scored t&nbsp;=&nbsp;1.97 (FAIL), and the literal 3-px lane-drift rule
+  also fires (IR-28/IR-30). Per the parallel-run protocol the download is therefore
+  <strong>not offered</strong>. The raster is retained in <code>docs/downloads/</code> only as an
+  auditable negative-result artefact (filename and sha256 in the run card); do not upload it.
+  When a future candidate passes every gate, its one-click download will appear here.</p>
   <div class="dl">
-    <a href="../downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif">&#8681; Download the GeoTIFF to submit</a>
-    <a class="alt" href="../downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif">&#8681; All-finite fallback (0 outside footprint)</a>
-    <a class="ghost" href="submission-guide.html">How to submit &rarr;</a>
+    <a class="ghost" href="executive-summary.html">Why it is not cleared &amp; how a cleared file will be submitted &rarr;</a>
   </div>
   <p class="small" style="margin-top:14px">
     sha256 <code>cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf</code> &middot; 291557 bytes &middot; single-band float32 &middot;
@@ -60,7 +63,7 @@
 <!-- ============================ STATUS ============================ -->
 <h2>2&nbsp;&middot;&nbsp;Is it OK to download and submit?</h2>
 <section class="panel">
-  <p><strong>Verdict: promote-with-caveats</strong> &mdash; every mechanical gate below is a local
+  <p><strong>Verdict: negative</strong> &mdash; every mechanical gate below is a local
   measurement re-derived from the bytes on disk; nothing on this page is an organiser score.</p>
   <table>
     <tr><th>Gate</th><th>Result</th></tr>
@@ -76,7 +79,7 @@
     <tr><td>Holdout gate: stage&nbsp;2/3 beats stage&nbsp;1 by &gt;2 SE</td>
         <td>see the gate table below</td></tr>
   </table>
-  <h3>Gate results, stated explicitly</h3><ul class="small"><li><strong>All-pixel holdout gate: PASS.</strong> Stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60 (&gt; 2 required), positive on all 4 outer blocks.</li><li><strong>&gt;1 km stratum: NOT MET.</strong> Stage 2 vs stage 1, mean +0.0074, SE 0.0038, t = 1.97 (&gt; 2 required). Positive on all four blocks but short of the threshold; the stratum is underpowered &mdash; only 1330 withheld pixels across all folds are more than 1 km from a visible mapped fault, and a 20,000-dot budget over 5.16 M footprint cells almost never lands within 300 m of one of them.</li><li><strong>Leakage canary: PASS.</strong> Highest single-channel AUC 0.611 against a 0.90 limit; no channel flagged.</li><li><strong>Duplicate rule: fires on one dense registry raster</strong> (311,617 dots). The density-null control shows 0.958 of <em>any</em> random 20,000-dot set would also fire the rule (observed 0.9948), and |Spearman| with that raster is 0.004. The firing is a density artefact, not duplication. Recorded as IR-28 and reported, not hidden.</li><li><strong>No ORGANIZER-CONFIRMED score exists.</strong> The scored truth is login-walled; every number here is a local HOLDOUT-DTI.</li></ul>
+  <h3>Gate results, stated explicitly</h3><ul class="small"><li><strong>All-pixel holdout gate: PASS.</strong> Stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60 (&gt; 2 required), positive on all 4 outer blocks.</li><li><strong>&gt;1 km stratum: NOT MET.</strong> Stage 2 vs stage 1, mean +0.0074, SE 0.0038, t = 1.97 (&gt; 2 required). Positive on all four blocks but short of the threshold; the stratum is underpowered &mdash; only 1330 withheld pixels across all folds are more than 1 km from a visible mapped fault, and a 20,000-dot budget over 5.16 M footprint cells almost never lands within 300 m of one of them.</li><li><strong>Leakage canary: PASS.</strong> Highest single-channel AUC 0.611 against a 0.90 limit; no channel flagged.</li><li><strong>Duplicate rule: fires on one dense registry raster</strong> (311,617 dots). The density-null control shows 0.958 of <em>any</em> random 20,000-dot set would also fire the rule (observed 0.9948), and |Spearman| with that raster is 0.004. The observed overlap exceeds the null by 27.2 SD, so under the literal rule this stands as LANE DRIFT and the verdict is negative (IR-28/IR-31), not a pass.</li><li><strong>No ORGANIZER-CONFIRMED score exists.</strong> The scored truth is login-walled; every number here is a local HOLDOUT-DTI.</li></ul>
 </section>
 
 <!-- ============================ HEADLINE NUMBERS ============================ -->

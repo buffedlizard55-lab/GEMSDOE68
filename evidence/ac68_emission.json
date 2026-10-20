@@ -26,8 +26,8 @@
   },
   "zeros": {
    "path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif",
-   "sha256": "7175e1681ed2878cccaca89c6945700a043434118a31e4fe5ab4b0e557451260",
-   "bytes": 291559,
+   "sha256": "7412411520cb3f4e1f7ec82f0f9d22bd5b316f721ea0f681de584fc1ea303297",
+   "bytes": 210443,
    "emitted_cells": 20000,
    "validator_passed": true,
    "validator_failures": [],
