@@ -1,0 +1,76 @@
+[
+ {
+  "file": "geodawn_extensions.json",
+  "bytes": 8927,
+  "sha256": "56556f24c051043fd7a85587786118f8064624f2ad0604aaa3e6614f1a9f6d2f",
+  "repo": "buffedlizard55-lab/GEMSDOE24",
+  "ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+  "path": "data/external/geodawn_extensions.json",
+  "keys": [
+   "product",
+   "product_sha256",
+   "grid",
+   "channels",
+   "channel_semantics",
+   "doi",
+   "sciencebase_item",
+   "readme",
+   "retrieved_utc",
+   "archives",
+   "archive_member_listing",
+   "priority_rule",
+   "quantisation",
+   "rights",
+   "caveats",
+   "files"
+  ]
+ },
+ {
+  "file": "geodawn_rad.json",
+  "bytes": 7985,
+  "sha256": "d917fd08f89c160d2a0ba91af9c3321c8c8b5677fcdba39b10e684384cbc7488",
+  "repo": "buffedlizard55-lab/GEMSDOE24",
+  "ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+  "path": "data/external/geodawn_rad.json",
+  "keys": [
+   "product",
+   "product_sha256",
+   "grid",
+   "channels",
+   "doi",
+   "sciencebase_item",
+   "retrieved_utc",
+   "archives",
+   "archive_member_listing",
+   "priority_rule",
+   "rights",
+   "quantisation",
+   "caveats",
+   "files"
+  ]
+ },
+ {
+  "file": "lidar_scarp_features.json",
+  "bytes": 3531,
+  "sha256": "9ef0df6e87598a8b0cd52fe821661e5fdb3a00568c5d9b1c5d61fd6b242dcd41",
+  "repo": "buffedlizard55-lab/GEMSDOE24",
+  "ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+  "path": "data/external/lidar_scarp_features.json",
+  "keys": [
+   "product",
+   "bands",
+   "quantisation",
+   "quantisation_rule",
+   "channels_2m",
+   "work_resolution_m",
+   "tiles_total",
+   "tile_status",
+   "grid_cells_with_lidar",
+   "source",
+   "rights",
+   "caveats",
+   "workflow_run",
+   "commit"
+  ]
+ }
+]

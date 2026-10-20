@@ -1,0 +1,27 @@
+{
+  "preregistered_utc": "2026-10-20 (after Exp3 completed, before any Exp4 model was trained)",
+  "experiment_id": "exp4_autocontext_stage1_external_channels",
+  "experiment_number_this_session": "2 of max 3 (protocol budget)",
+  "hypothesis_id": "AC68-N2 (ranked #2 in knowledge/02_new_hypotheses_2026-10-20.md, written before Exp3 ran)",
+  "what_exp3_taught_us_disclosed": "Removing catalogue-context (AC68-N1) collapsed the all-pixel gain (25k s3: 0.0770 CC-free vs 0.1181 CC-full historical) for +0.0008 far. Catalogue-context - above all cat_dist (41% of stage-2 gain) - is load-bearing even >1 km. AC68-N1 is therefore logged NEGATIVE for promotion regardless of its 25k bootstrap pass, because it does not beat the current holdout best. Exp4 restores catalogue context and instead adds information.",
+  "hypothesis": "Adding fold-invariant external channels to STAGE 1 only - 11 two-metre lidar scarp aggregates + lidar coverage flag + 4 GeoDAWN radiometric percentile-rank channels + 4 GeoDAWN extension channels (radiometric ratios as ranks / upward-continued TMI), all decoded by the shared gems68.channel_stack - improves the first-stage ranking enough that the unchanged catalogue-context auto-context stages beat the current holdout best (Exp2 stage3, 0.1189 at 38k) at matched mass.",
+  "mechanism": "Young normal faults have surface scarps: 2 m lidar aggregates (slope-excess, step, signed Laplacian faces, relief, coherence) see them at scales the 100 m organiser bands smooth away; radiometric ranks add a topography-independent alteration/lithology view. Better stage-1 evidence is then propagated by the same orientation-sampled stacking.",
+  "named_non_fault_mimic": "Erosional terrace risers and range-front escarpments (lidar scarp channels respond to any sharp step) and lithologic potassium contrasts in volcanic flows (radiometric ranks).",
+  "single_change_vs_exp2": "Stage-1 design matrix 26 -> 46 columns. Everything else identical: same instrument, seeds, buffers, LightGBM parameters, stages 2/3 feature set (incl. catalogue context), emission rule and budgets.",
+  "explicitly_excluded_external_layer": "derived_sgmc_faults_100m_u8.tif - a catalogue derivative; including it would leak mapped-fault information into stage 1.",
+  "leakage_canary_addition": "In addition to the shared stage>=2 canary, every one of the 46 stage-1 columns is tested alone (AUC, withheld positives vs active negatives); AUC>0.90 blocks promotion.",
+  "decision_rule_fixed_before_the_run": {
+    "candidate_budgets": [25000, 38000, 50000],
+    "clean_promote_requires_ALL": [
+      "bootstrap 95% CI delta(candidate - its own stage 1) > 0 on BOTH strata",
+      "per-fold (n=4) mean delta > 2 SE on BOTH strata",
+      "candidate pooled all-pixel HOLDOUT-DTI strictly exceeds the Exp2 catalogue-context-full candidate at the same budget (25000: 0.1181 stage3 / 0.1155 stage2; 38000: 0.1189 / 0.1165; 50000: 0.1131 / 0.1100) AND candidate far DTI is no more than 0.005 below Exp2's far DTI at that budget/stage",
+      "no canary flag (stage-1 columns or stage>=2 features)",
+      "uniqueness + validator as in Exp3 preregistration"
+    ],
+    "promote_with_caveats_if": "all of the above except the n=4 per-fold t on one stratum",
+    "negative_if": "candidate does not exceed the Exp2 same-budget point estimate, or any bootstrap CI includes 0, or canary flags: log negative, offer no new download, and state plainly that this session produced no candidate better than the archived Exp2 file",
+    "choice_among_passing_arms": "highest pooled all-pixel DTI; ties -> fewer dots, then stage 2"
+  },
+  "data": "external group restored hash-verified this session (evidence/restore68_external_2026-10-20.json); quantisation sidecar JSONs fetched from the same pinned mirror commit and hashed separately"
+}

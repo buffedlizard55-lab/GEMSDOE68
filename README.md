@@ -69,6 +69,18 @@ sha256 `8e69b8877c88ed56f7649b69d1c1997d666754a0056a34eefdeab4d2f6b3fb12`.
 
 > **Parallel candidate (PR #9, merged to main 2026-10-20 while this session ran):** `gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros` — de-blobbed stage-3 + LiDAR scarp/ridge features, promoted by its own session's gates (HOLDOUT-DTI all 0.1233 vs its stage 1 0.0916; far 0.0958 vs 0.0773; different feature set/baseline/far count, not head-to-head comparable). Measured mutual overlap with the Exp-4 file above: 11 % within 3 px, binary ρ = 0.011 (`evidence/parallel_candidate_overlap.json`) — two distinct UNSCORED bets; **the selector chooses**.
 
+> **Parallel candidate (PR #13, merged 2026-10-20; NOT promoted — dominated on the same instrument):**
+> `gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros` — auto-context stage 2 with stage 1
+> enriched by 20 external lidar/GeoDAWN channels. HOLDOUT-DTI all 0.1189 / far 0.0756
+> (`gems57-pooled-hide-v2`, 11,321 withheld px) vs the cleared stratified candidate's 0.1316 / 0.1018,
+> so under the house rule (never spend a slot on an idea that has not beaten the current holdout best)
+> it is **not** offered for submission; retained as a measured ablation plus a near-catalogue
+> alternative (median dot 8 px from the catalogue). The same session's Exp3 (catalogue-context-free)
+> was negative (0.0770 @25k vs 0.1181): catalogue context is load-bearing. Overlaps vs the three
+> parallel candidates: 8.0 % / 13.0 % / 45.2 % of dots within 3 px (Euclidean;
+> `evidence/parallel_overlap_pr13.json`). Run card: `evidence/run_card_exp4_ext738.json`;
+> lane code preserved as `src/gems68/{autocontext,experiment}_738.py`.
+
 - **ORGANIZER-CONFIRMED score: none (UNSCORED).** All sibling/leaderboard scores in this repo are OWNER-REPORTED (`registry/score_ledger.csv`).
 
 **Why 0.2778 won and the beat-it analysis:** `knowledge/01_why_02778_and_can_we_beat_it.md`

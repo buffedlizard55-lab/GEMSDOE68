@@ -1,0 +1,379 @@
+{
+ "preregistration": "evidence/exp3_preregistration.json",
+ "experiment": "evidence/exp3_autocontext_ccfree.json",
+ "canary": {
+  "flags": [],
+  "max_auc_distance_from_0p5": 0.6483084743451135,
+  "limit": 0.9,
+  "clean": true
+ },
+ "arms": {
+  "25000_stage2": {
+   "budget": 25000,
+   "stage": 2,
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems57-pooled-hide-v2",
+   "withheld_positive_pixels": 11321,
+   "dti_stage1": 0.06587235027996328,
+   "dti_candidate": 0.07629158070433774,
+   "delta_all": 0.010419230424374454,
+   "ci95_all": [
+    -6.63684961872617e-05,
+    0.020247592811242575
+   ],
+   "far_dti_stage1": 0.049846767476933354,
+   "far_dti_candidate": 0.06256628369819446,
+   "delta_far": 0.012719516221261107,
+   "ci95_far": [
+    0.0013199043111790185,
+    0.02414111599295615
+   ],
+   "bootstrap_gate_both_strata": false,
+   "per_fold_gate": {
+    "all": {
+     "per_fold_deltas": [
+      0.018081056672496237,
+      0.006017487450375822,
+      0.012908182336944227,
+      0.005909871475773459
+     ],
+     "mean_delta": 0.010729149483897436,
+     "se": 0.002947087872263969,
+     "t_stat": 3.6405936805865395,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    },
+    "far": {
+     "per_fold_deltas": [
+      0.026660857663536427,
+      0.00900696232487977,
+      0.00541833127692061,
+      0.012873900326218851
+     ],
+     "mean_delta": 0.013490012897888915,
+     "se": 0.004646688185975304,
+     "t_stat": 2.903145715394601,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    }
+   },
+   "per_fold_t_gate_both_strata": true,
+   "exp2_ccfull_same_instrument": {
+    "dti_candidate": 0.1155335636723193,
+    "far_dti_candidate": 0.06328110248880181,
+    "delta_all": 0.04966121339235602,
+    "delta_far": 0.013434335011868456,
+    "bootstrap_passes": true
+   },
+   "ccfree_minus_ccfull_all": -0.039241982967981565,
+   "ccfree_minus_ccfull_far": -0.0007148187906073494
+  },
+  "25000_stage3": {
+   "budget": 25000,
+   "stage": 3,
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems57-pooled-hide-v2",
+   "withheld_positive_pixels": 11321,
+   "dti_stage1": 0.06587235027996328,
+   "dti_candidate": 0.07700277994631745,
+   "delta_all": 0.011130429666354164,
+   "ci95_all": [
+    0.0017665693755532662,
+    0.020585125167280467
+   ],
+   "far_dti_stage1": 0.049846767476933354,
+   "far_dti_candidate": 0.06668178336821627,
+   "delta_far": 0.016835015891282917,
+   "ci95_far": [
+    0.004381900683064329,
+    0.028900120462086055
+   ],
+   "bootstrap_gate_both_strata": true,
+   "per_fold_gate": {
+    "all": {
+     "per_fold_deltas": [
+      0.022501066385557808,
+      0.020101813800252985,
+      0.00038241307156109544,
+      0.007799309689221823
+     ],
+     "mean_delta": 0.012696150736648428,
+     "se": 0.005216858919425058,
+     "t_stat": 2.4336772246943665,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    },
+    "far": {
+     "per_fold_deltas": [
+      0.030343139627813338,
+      0.030070243924171486,
+      0.002828431909856835,
+      0.008174756475463285
+     ],
+     "mean_delta": 0.017854142984326235,
+     "se": 0.007214976760270442,
+     "t_stat": 2.4745946629573066,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    }
+   },
+   "per_fold_t_gate_both_strata": true,
+   "exp2_ccfull_same_instrument": {
+    "dti_candidate": 0.11809340813791974,
+    "far_dti_candidate": 0.06589195479860241,
+    "delta_all": 0.05222105785795646,
+    "delta_far": 0.016045187321669055,
+    "bootstrap_passes": true
+   },
+   "ccfree_minus_ccfull_all": -0.041090628191602294,
+   "ccfree_minus_ccfull_far": 0.0007898285696138624
+  },
+  "38000_stage2": {
+   "budget": 38000,
+   "stage": 2,
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems57-pooled-hide-v2",
+   "withheld_positive_pixels": 11321,
+   "dti_stage1": 0.08158204794788744,
+   "dti_candidate": 0.08743051005488034,
+   "delta_all": 0.005848462106992899,
+   "ci95_all": [
+    -0.0025386659342205033,
+    0.014617390773057484
+   ],
+   "far_dti_stage1": 0.05994905595979939,
+   "far_dti_candidate": 0.06658267728566948,
+   "delta_far": 0.006633621325870094,
+   "ci95_far": [
+    -0.003255882657898753,
+    0.015638829847025564
+   ],
+   "bootstrap_gate_both_strata": false,
+   "per_fold_gate": {
+    "all": {
+     "per_fold_deltas": [
+      0.006292397487180579,
+      0.0019000188217521835,
+      0.009053288901294726,
+      0.005366467867988195
+     ],
+     "mean_delta": 0.005653043269553921,
+     "se": 0.0014758546150832267,
+     "t_stat": 3.830352401774434,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    },
+    "far": {
+     "per_fold_deltas": [
+      0.004692157641805729,
+      0.0012444657146498672,
+      0.007558747379462202,
+      0.012547511738178987
+     ],
+     "mean_delta": 0.0065107206185241965,
+     "se": 0.002390638323524645,
+     "t_stat": 2.723423511811312,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    }
+   },
+   "per_fold_t_gate_both_strata": true,
+   "exp2_ccfull_same_instrument": {
+    "dti_candidate": 0.11646999575947209,
+    "far_dti_candidate": 0.0711281829757093,
+    "delta_all": 0.03488794781158465,
+    "delta_far": 0.011179127015909916,
+    "bootstrap_passes": false
+   },
+   "ccfree_minus_ccfull_all": -0.02903948570459175,
+   "ccfree_minus_ccfull_far": -0.004545505690039822
+  },
+  "38000_stage3": {
+   "budget": 38000,
+   "stage": 3,
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems57-pooled-hide-v2",
+   "withheld_positive_pixels": 11321,
+   "dti_stage1": 0.08158204794788744,
+   "dti_candidate": 0.08333912098943544,
+   "delta_all": 0.001757073041547999,
+   "ci95_all": [
+    -0.005966087817955451,
+    0.010857498287514731
+   ],
+   "far_dti_stage1": 0.05994905595979939,
+   "far_dti_candidate": 0.06529372600117854,
+   "delta_far": 0.005344670041379153,
+   "ci95_far": [
+    -0.004316879478965508,
+    0.015098878873249682
+   ],
+   "bootstrap_gate_both_strata": false,
+   "per_fold_gate": {
+    "all": {
+     "per_fold_deltas": [
+      0.009100123738629076,
+      0.009464015699578568,
+      -0.0035779647156096994,
+      -0.004570027655301831
+     ],
+     "mean_delta": 0.0026040367668240284,
+     "se": 0.003861592930867565,
+     "t_stat": 0.6743426387615103,
+     "passes_gt_2se": false,
+     "n_folds": 4
+    },
+    "far": {
+     "per_fold_deltas": [
+      0.010501489601140376,
+      0.01376441308073692,
+      0.0062432990318223025,
+      -0.007809660958587178
+     ],
+     "mean_delta": 0.005674885188778105,
+     "se": 0.0047512511577267975,
+     "t_stat": 1.1943980649284838,
+     "passes_gt_2se": false,
+     "n_folds": 4
+    }
+   },
+   "per_fold_t_gate_both_strata": false,
+   "exp2_ccfull_same_instrument": {
+    "dti_candidate": 0.11891561600822471,
+    "far_dti_candidate": 0.07453983004036545,
+    "delta_all": 0.037333568060337274,
+    "delta_far": 0.014590774080566062,
+    "bootstrap_passes": true
+   },
+   "ccfree_minus_ccfull_all": -0.035576495018789275,
+   "ccfree_minus_ccfull_far": -0.009246104039186909
+  },
+  "50000_stage2": {
+   "budget": 50000,
+   "stage": 2,
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems57-pooled-hide-v2",
+   "withheld_positive_pixels": 11321,
+   "dti_stage1": 0.08640741133236732,
+   "dti_candidate": 0.0887342593426762,
+   "delta_all": 0.002326848010308885,
+   "ci95_all": [
+    -0.005066223651272294,
+    0.01001583954212191
+   ],
+   "far_dti_stage1": 0.06009961895802904,
+   "far_dti_candidate": 0.06438285497129417,
+   "delta_far": 0.004283236013265135,
+   "ci95_far": [
+    -0.003300475382522151,
+    0.012414789904779506
+   ],
+   "bootstrap_gate_both_strata": false,
+   "per_fold_gate": {
+    "all": {
+     "per_fold_deltas": [
+      0.00037397166419557426,
+      -0.0009418629688374563,
+      0.004866350120458635,
+      0.003945564738311633
+     ],
+     "mean_delta": 0.0020610058885320963,
+     "se": 0.0013929831348144088,
+     "t_stat": 1.4795627003816454,
+     "passes_gt_2se": false,
+     "n_folds": 4
+    },
+    "far": {
+     "per_fold_deltas": [
+      0.003073774304082934,
+      0.00214411414532599,
+      0.006870450315982823,
+      0.004769655055096703
+     ],
+     "mean_delta": 0.004214498455122112,
+     "se": 0.0010388303485458555,
+     "t_stat": 4.056965086764674,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    }
+   },
+   "per_fold_t_gate_both_strata": false,
+   "exp2_ccfull_same_instrument": {
+    "dti_candidate": 0.10995554268651521,
+    "far_dti_candidate": 0.06804452088598628,
+    "delta_all": 0.02354813135414789,
+    "delta_far": 0.007944901927957243,
+    "bootstrap_passes": false
+   },
+   "ccfree_minus_ccfull_all": -0.021221283343839006,
+   "ccfree_minus_ccfull_far": -0.0036616659146921082
+  },
+  "50000_stage3": {
+   "budget": 50000,
+   "stage": 3,
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems57-pooled-hide-v2",
+   "withheld_positive_pixels": 11321,
+   "dti_stage1": 0.08640741133236732,
+   "dti_candidate": 0.0875025325659819,
+   "delta_all": 0.0010951212336145766,
+   "ci95_all": [
+    -0.006593835543227003,
+    0.009484130370411055
+   ],
+   "far_dti_stage1": 0.06009961895802904,
+   "far_dti_candidate": 0.06618594245405005,
+   "delta_far": 0.006086323496021007,
+   "ci95_far": [
+    -0.0028877441784256335,
+    0.015958494456437707
+   ],
+   "bootstrap_gate_both_strata": false,
+   "per_fold_gate": {
+    "all": {
+     "per_fold_deltas": [
+      0.004366202539650685,
+      0.006695196721334756,
+      -0.007720505584802487,
+      0.00367672520049743
+     ],
+     "mean_delta": 0.001754404719170096,
+     "se": 0.0032236386631281765,
+     "t_stat": 0.5442311941586049,
+     "passes_gt_2se": false,
+     "n_folds": 4
+    },
+    "far": {
+     "per_fold_deltas": [
+      0.007381222603067596,
+      0.012637185785531094,
+      0.005908462052466659,
+      -0.0019331373558510445
+     ],
+     "mean_delta": 0.005998433271303576,
+     "se": 0.0030125162339114946,
+     "t_stat": 1.9911704387780589,
+     "passes_gt_2se": false,
+     "n_folds": 4
+    }
+   },
+   "per_fold_t_gate_both_strata": false,
+   "exp2_ccfull_same_instrument": {
+    "dti_candidate": 0.113105182814922,
+    "far_dti_candidate": 0.07092391382550277,
+    "delta_all": 0.026697771482554686,
+    "delta_far": 0.01082429486747373,
+    "bootstrap_passes": true
+   },
+   "ccfree_minus_ccfull_all": -0.02560265024894011,
+   "ccfree_minus_ccfull_far": -0.004737971371452723
+  }
+ },
+ "tier_before_uniqueness_and_format": "promote",
+ "chosen": {
+  "key": "25000_stage3",
+  "stage": 3,
+  "budget": 25000
+ },
+ "note": "Uniqueness vs registry and format validation are applied at build time on the actual bytes; this tier can only be downgraded there, never upgraded."
+}

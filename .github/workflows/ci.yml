@@ -9,4 +9,14 @@ jobs:
         with: {python-version: "3.11"}
       - run: pip install -r requirements.txt
       - run: pytest -q tests   # data-dependent tests skip when .cache is absent
-      - run: python -c "import json;c=json.load(open('evidence/run_card.json'));assert c['files']['primary']['validator']['all_checks_passed'];print(c['verdict'])"
+      - name: canonical run card + raster hash
+        run: |
+          python - <<'PYEOF'
+          import hashlib, json
+          c = json.load(open('evidence/run_card_exp4.json'))
+          assert c['verdict'] in ('promote', 'promote-with-caveats', 'negative'), c['verdict']
+          r = c['raster']['primary']
+          h = hashlib.sha256(open('docs/downloads/' + r['name'], 'rb').read()).hexdigest()
+          assert h == r['sha256'], (h, r['sha256'])
+          print('canonical card OK:', c['verdict'], c['submission_name'])
+          PYEOF
