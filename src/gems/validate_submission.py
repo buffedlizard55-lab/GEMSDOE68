@@ -43,9 +43,12 @@ def footprint_from_features(features_path: str | Path, shape_hw=None) -> np.ndar
 
 
 def validate(path: str | Path, reference_path: str | Path | None = None,
-             features_path: str | Path | None = None) -> dict:
+             features_path: str | Path | None = None,
+             outside_policy: str = "nan") -> dict:
     import rasterio
 
+    if outside_policy not in ("nan", "nan-or-zero"):
+        raise ValueError("outside_policy must be 'nan' (published spec) or 'nan-or-zero' (diagnostic)")
     path = Path(path)
     checks: list[dict] = []
     if not path.exists():
@@ -141,8 +144,15 @@ def validate(path: str | Path, reference_path: str | Path | None = None,
             checks.append(_check("no NaN inside footprint", nan_inside == 0,
                                  f"nan_inside={nan_inside} footprint_cells={int(fp.sum())}"))
             outside_finite = int((finite & ~fp).sum())
-            checks.append(_check("NaN-only outside footprint", outside_finite == 0,
-                                 f"finite_outside={outside_finite}; only NaN is allowed outside"))
+            outside_nonzero = int(((arr != 0.0) & finite & ~fp).sum())
+            if outside_policy == "nan":
+                checks.append(_check("NaN-only outside footprint", outside_finite == 0,
+                                     f"finite_outside={outside_finite}; only NaN is allowed outside"))
+            else:
+                checks.append(_check("NaN or zero outside footprint (diagnostic)",
+                                     outside_nonzero == 0,
+                                     f"finite_outside={outside_finite}; nonzero_outside={outside_nonzero}; "
+                                     "this policy is NOT a claim of organizer acceptance"))
     else:
         checks.append(_check("footprint checks", False,
                              "SKIPPED: no features raster supplied", status="SKIPPED"))
@@ -162,8 +172,11 @@ def main(argv=None) -> int:
     ap.add_argument("file")
     ap.add_argument("--reference", help="labels.tif (or any file with the official grid)")
     ap.add_argument("--features", help="training features raster, for the footprint check")
+    ap.add_argument("--outside-policy", choices=("nan", "nan-or-zero"), default="nan",
+                    help="nan = official-spec preflight; nan-or-zero = diagnostic ONLY")
     args = ap.parse_args(argv)
-    report = validate(args.file, args.reference, args.features)
+    report = validate(args.file, args.reference, args.features,
+                      outside_policy=args.outside_policy)
     print(json.dumps(report, indent=2))
     return 0 if report["passed"] else 1
 

@@ -101,18 +101,28 @@ def _json_number(value):
     return float(value) if np.isfinite(value) else None
 
 
-def lane_check(candidate: str | Path, registry: list[str | Path], stage: str = "emitted") -> dict:
+def lane_check(candidate: str | Path, registry: list[str | Path], stage: str = "emitted",
+               *, skip_dot_overlap_for: list[str | Path] | None = None,
+               stop_on_first_drift: bool = False) -> dict:
+    """Compare every supplied raster (or stop early after a literal duplicate).
+
+    A prior *continuous surface* remains eligible for exact/rank comparison,
+    but is not a prior dot-placement submission, so it has no dot overlap rule.
+    """
     if stage not in {"surface", "emitted"}:
         raise ValueError("stage must be 'surface' or 'emitted'")
     a, candidate_meta = _read(candidate)
     dots_a = np.argwhere(np.isfinite(a) & (a > 0)) if stage == "emitted" else None
+    skip_dot = {str(Path(p).resolve()) for p in (skip_dot_overlap_for or [])}
     rows = []
+    candidate_sha = sha256_file(candidate)
     for r in registry:
         b, registry_meta = _read(r)
         _assert_aligned(candidate_meta, registry_meta, r)
         corr = spearman_on_common(a, b)
         agreement, compared_cells = exact_pixel_agreement(a, b)
-        if stage == "emitted":
+        dot_applicable = stage == "emitted" and str(Path(r).resolve()) not in skip_dot
+        if dot_applicable:
             dots_b = np.argwhere(np.isfinite(b) & (b > 0))
             fraction = dot_fraction_near(dots_a, dots_b)
             dot_overlap_drift = np.isfinite(fraction) and fraction > DOT_OVERLAP_LIMIT
@@ -122,11 +132,15 @@ def lane_check(candidate: str | Path, registry: list[str | Path], stage: str = "
             dot_overlap_drift = False
             registry_dot_count = None
         corr_drift = np.isfinite(corr) and abs(corr) > CORR_LIMIT
-        exact_duplicate = np.isfinite(agreement) and agreement == 1.0
+        registry_sha = sha256_file(r)
+        exact_duplicate = (registry_sha == candidate_sha or
+                           (np.isfinite(agreement) and agreement == 1.0))
         drift = bool(corr_drift or dot_overlap_drift or exact_duplicate)
         rows.append({
             "registry": Path(r).name,
-            "sha256": sha256_file(r),
+            "path": str(Path(r)),
+            "sha256": registry_sha,
+            "dot_overlap_applicable": bool(dot_applicable),
             "spearman_rho": _json_number(corr),
             "absolute_spearman_rho": _json_number(abs(corr)) if np.isfinite(corr) else None,
             "exact_pixel_agreement": _json_number(agreement),
@@ -136,9 +150,15 @@ def lane_check(candidate: str | Path, registry: list[str | Path], stage: str = "
             "exact_duplicate": bool(exact_duplicate),
             "drift": drift,
         })
+        if drift and stop_on_first_drift:
+            break
     return {
         "candidate": Path(candidate).name,
-        "candidate_sha256": sha256_file(candidate),
+        "candidate_sha256": candidate_sha,
+        "rasters_supplied": len(registry),
+        "rasters_checked": len(rows),
+        "complete_accessible_scan": len(rows) == len(registry),
+        "stopped_after_duplicate": len(rows) < len(registry),
         "candidate_dots": int(len(dots_a)) if dots_a is not None else None,
         "stage": stage,
         "limits": {"absolute_spearman_rho": CORR_LIMIT, "dots_within_3px": DOT_OVERLAP_LIMIT,
@@ -155,7 +175,8 @@ def _verdict(rows, stage: str) -> str:
         return "LANE DRIFT - log duplicate and stop"
     if any(r["spearman_rho"] is None or r["exact_pixel_agreement"] is None for r in rows):
         return "INCONCLUSIVE - empty or constant comparison; not a pass"
-    if stage == "emitted" and any(r["candidate_dots_within_3px"] is None for r in rows):
+    if stage == "emitted" and any(r["dot_overlap_applicable"] and
+                                  r["candidate_dots_within_3px"] is None for r in rows):
         return "INCONCLUSIVE - no candidate dots to compare; not a pass"
     return "no drift vs supplied registry rasters; completeness not established by this tool"
 

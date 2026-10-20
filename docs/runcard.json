@@ -1,176 +1,1316 @@
 {
- "schema": "gemsdoe68-run-card/1",
- "generated_utc": "2026-10-12T03:28:09Z",
- "lane": "auto-context stacked refinement (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436)",
- "hypothesis": "A second classifier trained on the first classifier's probability maps plus the raw channels can recover withheld fault segments better than the per-pixel model alone, because the stacked features expose continuity, parallelism and en-echelon spacing that a per-pixel model cannot see.",
- "mechanism": "Stage 1 LightGBM scores every 100 m cell from 44 fold-invariant channels plus 11 catalogue-context features derived only from the visible faults. Stage 2/3 LightGBM adds stage-n probabilities sampled at +/-1,2,3,5,8,12,15 px along and across the local structure-tensor orientation, oriented box means at several half-widths (multi-scale anisotropic smooths), two isotropic smooths, the 21 raw gradient/tilt/scarp channels and the 11 catalogue-context features recomputed with the target block's labels masked. Out-of-fold probabilities come from 4 inner spatial blocks inside each outer training domain (600 m buffer); the outer folds are 4 label-blind quadrants with whole catalogue segments withheld inside a 1.2 km eroded domain.",
- "named_non_fault_process_that_could_mimic_it": "Range-front and basin-margin escarpments: the same detrended-elevation gradient, Laplacian and lidar scarp channels respond to a downhill-facing erosional escarpment or a terraced alluvial margin as they do to a fault scarp, and a stacked model that rewards local continuity will happily connect them into long lineaments.",
- "holdout_dti": {
-  "evidence_class": "HOLDOUT-DTI",
-  "evaluator": "gems57.metric.dti_binary / gems57.holdout (pooled hide-and-recover)",
-  "evaluator_version": "gems57-pooled-hide-v2 / gems57.metric.dti_binary",
-  "alpha": 0.2,
-  "beta": 0.8,
-  "triangular_radius_m": 300.0,
-  "outer_buffer_px": 12,
-  "inner_buffer_px": 6,
-  "withheld_positive_pixels": 11318,
-  "withheld_positive_pixels_far_gt_1km": 1330,
-  "pooled": {
-   "stage1": 0.13014032809345344,
-   "stage2": 0.19044851256926598,
-   "stage3": 0.18684342719137767
-  },
-  "gate_all_pixels": {
-   "stage2_vs_stage1": {
-    "mean_delta": 0.06065845612980394,
-    "se": 0.007049341494211312,
-    "t_stat": 8.604840066212521,
-    "passes_gt_2se": true,
-    "n_blocks": 4
-   },
-   "stage3_vs_stage1": {
-    "mean_delta": 0.05738258311861622,
-    "se": 0.010058061945947203,
-    "t_stat": 5.705133198323358,
-    "passes_gt_2se": true,
-    "n_blocks": 4
-   },
-   "stage3_vs_stage2": {
-    "mean_delta": -0.003275873011187709,
-    "se": 0.00549276392124397,
-    "t_stat": -0.5963979261001641,
-    "passes_gt_2se": false,
-    "n_blocks": 4
-   }
-  },
-  "gate_far_gt_1km": {
-   "stage2_vs_stage1": {
-    "mean_delta": 0.007405528560726249,
-    "se": 0.003761553568962731,
-    "t_stat": 1.968742017083214,
-    "passes_gt_2se": false,
-    "n_blocks": 4
-   },
-   "stage3_vs_stage1": {
-    "mean_delta": 0.008361746412424936,
-    "se": 0.004444319766547876,
-    "t_stat": 1.8814457221020169,
-    "passes_gt_2se": false,
-    "n_blocks": 4
-   },
-   "stage3_vs_stage2": {
-    "mean_delta": 0.0009562178516986887,
-    "se": 0.0009654269997991912,
-    "t_stat": 0.9904610622010592,
-    "passes_gt_2se": false,
-    "n_blocks": 4
-   }
-  },
-  "ci95": "not computed for the pooled figure; the protocol CI is the paired physical-spatial-block percentile bootstrap in gems57.evaluate_holdout, which was not invoked for this run"
- },
- "leakage_canary": {
-  "rule": "AUC above 0.90 on a single channel is leakage until disproven",
-  "max_auc_over_channels": 0.6114691972289384,
-  "channels_above_0_90": [],
-  "verdict": "no channel flagged"
- },
- "correlation_overlap_vs_registry": {
-  "registry_dir": "registry/rasters",
-  "n_registry_rasters": 60,
-  "max_abs_spearman": 0.054202370983053055,
-  "max_dot_overlap_3px": 0.9948,
-  "exact_byte_matches": [],
-  "drift_limit_spearman": 0.9,
-  "drift_limit_dot_overlap": 0.7,
-  "literal_verdict": "LANE DRIFT - log duplicate and stop",
-  "rasters_flagged_by_literal_rule": [
-   "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif"
+  "schema_version": "gems68-strict-run-card-v1",
+  "experiment_id": "H68-M1",
+  "created_utc": "2026-10-20T19:01:09Z",
+  "hypothesis": "H68-M1 magnetic-edge-tangent auto-context (preregistered)",
+  "mechanism": "Magnetic-susceptibility discontinuity aligned auto-context may bridge buried faults missed by mapped traces.",
+  "named_non_fault_mimics": [
+    "magnetic lithologic contacts",
+    "east-west airborne-survey striping"
   ],
-  "flagged_detail": [
-   {
-    "registry": "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
-    "absolute_spearman_rho": 0.004185879666281769,
-    "candidate_dots_within_3px": 0.9948,
-    "registry_dots": 311617,
-    "exact_duplicate": false
-   }
-  ],
-  "density_null_control": {
-   "candidate": "GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
-   "registry": "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
-   "candidate_dots": 20000,
-   "registry_dots": 311617,
-   "registry_dot_density_per_1000_cells": 25.3777,
-   "observed_overlap_within_3px": 0.9948,
-   "overlap_limit": 0.7,
-   "literal_rule_fires": true,
-   "null_draws": 100,
-   "null_mean_overlap": 0.958387,
-   "null_sd_overlap": 0.0013380885620914668,
-   "null_p95_overlap": 0.960265,
-   "observed_minus_null_sd": 27.212698046746304,
-   "interpretation": "the observed overlap exceeds the random-null level; treat as genuine overlap"
+  "evidence_class": "HOLDOUT-DTI (not organizer-confirmed)",
+  "holdout_source": "evidence/ac68_m1_holdout.json",
+  "holdout_source_sha256": "0091b22b002832c6731b68b284d03985cae1ebe17fad6b8547892f57217103a4",
+  "evaluator_version": "gems57-pooled-hide-v2.1",
+  "evaluator_hashes": {
+    "evaluate_holdout.py": "a287288bb6fbc6fd5c76474a52e153104af19644b002b870ce8f345937d1d355",
+    "holdout.py": "3d91c74ed863218b1cabdf02ea8152d0ba7b35c6bcab365991cc4ca65e32e53f",
+    "metric.py": "4b10227952378d30cc1a60781cdff6ea58916abadde3af3b14185176c66c13e0",
+    "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
   },
-  "interpretation": "The literal rule fires on exactly one registry raster, gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif, which carries 311617 dots (25.4 dots per 1000 footprint cells). The density-null control draws 100 random 20000-dot sets from the same eligible region and scores them with the same rule: the null overlap is 0.958 +- 0.001, so 95.8% of ANY dot set, related or not, lands within 3 px of that raster's dots. The observed 0.9948 is 3.6 percentage points above that baseline, and the rank correlation with that raster is 0.004. No registry raster is an exact pixel duplicate. The rule is therefore degenerate against this one dense raster and its firing is a density artefact, not duplication. Recorded as IR-28 and shipped with that caveat rather than silently passed."
- },
- "raster": {
-  "primary_path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
-  "primary_sha256": "cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf",
-  "primary_bytes": 291557,
-  "fallback_path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif",
-  "fallback_sha256": "7175e1681ed2878cccaca89c6945700a043434118a31e4fe5ab4b0e557451260",
-  "dot_count": 20000,
-  "emission_radius_px": 3,
-  "emission_budget": 20000
- },
- "validator_output": {
-  "tool": "gems.validate_submission (shared, unmodified)",
-  "passed": true,
-  "n_checks": 16,
-  "failures": [],
-  "skipped": []
- },
- "submission_name": "GEMSDOE68-AC-stack2",
- "note": "GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage2, r=3px, 20000 dots; holdout-gated",
- "note_chars": 98,
- "verdict": "promote-with-caveats",
- "limitations": [
-  "The scored truth is login-walled; no ORGANIZER-CONFIRMED score exists for any raster produced in this checkout.",
-  "The holdout truth is the withheld catalogue itself, so it measures recovery of mapped faults, not discovery of genuinely unmapped ones.",
-  "The registry of prior rasters is the one committed in registry/rasters; completeness is not certified by the organisers.",
-  "The 3-px dot-overlap rule is degenerate for this family: the footprint contains cells that lie within 3 px of some registry raster's dots almost everywhere, so the rule is reported as measured and interpreted with that caveat rather than silently passed."
- ],
- "budget": {
-  "experiments_run": 1,
-  "limit_experiments": 3,
-  "limit_hours": 2,
-  "note": "one holdout experiment (4 outer folds x 4 inner blocks) plus one release run"
- },
- "submission_note_tag": "GEMSDOE68-AC-stack2-nan",
- "receipt": {
-  "file": "GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
-  "sha256": "cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf",
-  "shape_hw": [
-   3730,
-   3292
+  "emitter_version": "gems68-plateau-safe-nms-v2",
+  "emitter_sha256": "653cf8e3934c44e92e5514e2f1a6595a4e343d56d64e65a4761a84cf4082296c",
+  "metric": {
+    "alpha": 0.2,
+    "beta": 0.8,
+    "triangular_radius_m": 300,
+    "spatial_bootstrap_cluster_m": 20000
+  },
+  "split": "gems57.holdout.buffered_component_draw v2, outer quadrant removed from fits and context, 12px outer/6px inner buffers, whole components + 3px feature collar",
+  "outer_blocks": 4,
+  "inner_blocks_per_outer": 4,
+  "withheld_positive_pixels": 11321,
+  "withheld_positive_pixels_far_gt_1km": 4832,
+  "stage_dti": {
+    "stage1": {
+      "value": 0.08115704318087667,
+      "ci95": [
+        0.0695591724083919,
+        0.09332539510178776
+      ],
+      "withheld_positive_pixels": 11321
+    },
+    "stage2": {
+      "value": 0.081385235744475,
+      "ci95": [
+        0.06991665311707503,
+        0.09219089247467846
+      ],
+      "withheld_positive_pixels": 11321
+    },
+    "stage3": {
+      "value": 0.07838900506373706,
+      "ci95": [
+        0.06679605654282125,
+        0.08975942955735845
+      ],
+      "withheld_positive_pixels": 11321
+    }
+  },
+  "stage_dti_far": {
+    "stage1": {
+      "value": 0.06343939511924687,
+      "ci95": [
+        0.04972721526101621,
+        0.07802979502589585
+      ],
+      "withheld_positive_pixels": 4832
+    },
+    "stage2": {
+      "value": 0.06418241381894776,
+      "ci95": [
+        0.05166746500597975,
+        0.07854707011296014
+      ],
+      "withheld_positive_pixels": 4832
+    },
+    "stage3": {
+      "value": 0.060821981471772264,
+      "ci95": [
+        0.0493320735317426,
+        0.07327088069864308
+      ],
+      "withheld_positive_pixels": 4832
+    }
+  },
+  "paired_gate": {
+    "all": {
+      "delta_mean": 0.0004994507366903704,
+      "se": 0.004259288442408663,
+      "bootstrap_paired_delta_ci95": [
+        -0.007573931874672127,
+        0.008147552009155127
+      ],
+      "t_stat": 0.11726154343468857,
+      "n_outer": 4,
+      "per_outer_delta": [
+        0.006211503585308961,
+        -0.010536099379559544,
+        -0.001794490830400286,
+        0.00811688957141235
+      ],
+      "pass": false,
+      "rule": "positive mean > 2 \u00d7 paired outer-block SE"
+    },
+    "far_gt_1km": {
+      "delta_mean": 0.001060624880837479,
+      "se": 0.0027524525265774837,
+      "bootstrap_paired_delta_ci95": [
+        -0.008496043400021793,
+        0.009794324084967703
+      ],
+      "t_stat": 0.3853381195846836,
+      "n_outer": 4,
+      "per_outer_delta": [
+        0.005541631982794525,
+        -0.005375144345995182,
+        -0.0016702848531357367,
+        0.00574629673968631
+      ],
+      "pass": false,
+      "rule": "positive mean > 2 \u00d7 paired outer-block SE"
+    },
+    "scientific_gate_pass": false
+  },
+  "leakage_canary": {
+    "status": "INCOMPLETE \u2014 non-finite channels",
+    "feature_fold_checks_attempted": 644,
+    "max_auc_measurable": 0.6696009362647115,
+    "count_over_0_90": 0,
+    "count_non_finite": 132,
+    "flagged_or_undefined": [
+      {
+        "fold": "NW",
+        "feature": "stage1/ex_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage1/ex_mean",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage1/step_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage1/lapneg_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage1/lappos_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage1/downface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage1/upface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage1/cross_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage1/relief",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage1/coh100",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage1/strike",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage2/ex_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage2/ex_mean",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage2/step_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage2/lapneg_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage2/lappos_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage2/downface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage2/upface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage2/cross_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage2/relief",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage2/coh100",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage2/strike",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage3/ex_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage3/ex_mean",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage3/step_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage3/lapneg_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage3/lappos_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage3/downface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage3/upface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage3/cross_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage3/relief",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage3/coh100",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NW",
+        "feature": "stage3/strike",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage1/ex_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage1/ex_mean",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage1/step_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage1/lapneg_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage1/lappos_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage1/downface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage1/upface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage1/cross_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage1/relief",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage1/coh100",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage1/strike",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage2/ex_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage2/ex_mean",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage2/step_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage2/lapneg_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage2/lappos_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage2/downface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage2/upface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage2/cross_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage2/relief",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage2/coh100",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage2/strike",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage3/ex_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage3/ex_mean",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage3/step_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage3/lapneg_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage3/lappos_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage3/downface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage3/upface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage3/cross_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage3/relief",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage3/coh100",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "NE",
+        "feature": "stage3/strike",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage1/ex_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage1/ex_mean",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage1/step_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage1/lapneg_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage1/lappos_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage1/downface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage1/upface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage1/cross_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage1/relief",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage1/coh100",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage1/strike",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage2/ex_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage2/ex_mean",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage2/step_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage2/lapneg_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage2/lappos_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage2/downface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage2/upface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage2/cross_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage2/relief",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage2/coh100",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage2/strike",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage3/ex_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage3/ex_mean",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage3/step_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage3/lapneg_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage3/lappos_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage3/downface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage3/upface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage3/cross_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage3/relief",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage3/coh100",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SW",
+        "feature": "stage3/strike",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage1/ex_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage1/ex_mean",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage1/step_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage1/lapneg_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage1/lappos_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage1/downface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage1/upface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage1/cross_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage1/relief",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage1/coh100",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage1/strike",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage2/ex_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage2/ex_mean",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage2/step_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage2/lapneg_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage2/lappos_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage2/downface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage2/upface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage2/cross_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage2/relief",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage2/coh100",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage2/strike",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage3/ex_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage3/ex_mean",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage3/step_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage3/lapneg_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage3/lappos_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage3/downface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage3/upface_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage3/cross_max",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage3/relief",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage3/coh100",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      },
+      {
+        "fold": "SE",
+        "feature": "stage3/strike",
+        "auc": null,
+        "flagged": true,
+        "constant": false,
+        "reason": "non-finite values; not cleared"
+      }
+    ],
+    "full_feature_auc_list_in_report": true
+  },
+  "per_outer_fold": [
+    {
+      "fold": "NW",
+      "n_truth": 1923,
+      "n_truth_far": 865,
+      "quota": 8018,
+      "dti": {
+        "stage1": 0.06641468953022098,
+        "stage2": 0.07262619311552994,
+        "stage3": 0.07276176766443782
+      },
+      "dti_far": {
+        "stage1": 0.04501295480701308,
+        "stage2": 0.05055458678980761,
+        "stage3": 0.052696270141142844
+      }
+    },
+    {
+      "fold": "NE",
+      "n_truth": 2367,
+      "n_truth_far": 1107,
+      "quota": 9941,
+      "dti": {
+        "stage1": 0.08764063663461517,
+        "stage2": 0.07710453725505563,
+        "stage3": 0.07523717532272063
+      },
+      "dti_far": {
+        "stage1": 0.06717159870324686,
+        "stage2": 0.06179645435725168,
+        "stage3": 0.057262158624290654
+      }
+    },
+    {
+      "fold": "SW",
+      "n_truth": 3781,
+      "n_truth_far": 1244,
+      "quota": 9772,
+      "dti": {
+        "stage1": 0.07409178900507772,
+        "stage2": 0.07229729817467744,
+        "stage3": 0.0776042093516474
+      },
+      "dti_far": {
+        "stage1": 0.053933964571839514,
+        "stage2": 0.05226367971870378,
+        "stage3": 0.05762305136909082
+      }
+    },
+    {
+      "fold": "SE",
+      "n_truth": 3250,
+      "n_truth_far": 1616,
+      "quota": 7868,
+      "dti": {
+        "stage1": 0.09459582378906478,
+        "stage2": 0.10271271336047713,
+        "stage3": 0.0864785526200598
+      },
+      "dti_far": {
+        "stage1": 0.08378243666359553,
+        "stage2": 0.08952873340328184,
+        "stage3": 0.07413672720622473
+      }
+    }
   ],
-  "crs": "EPSG:32611",
-  "footprint_cells": 5165852,
-  "emitted_cells_gt0": 20000,
-  "min_inside": 0.0,
-  "max_inside": 1.0,
-  "nan_inside": 0,
-  "nan_outside_count": 7113308,
-  "receipt_kind": "local receipt written by submission_writer; NOT an organiser receipt"
- },
- "gate_all_pixels_met": true,
- "gate_far_gt_1km_met": false,
- "leakage_canary_clean": true,
- "validator_passed": true,
- "caveats": [
-  "The preregistered gate is met on the all-pixel stratum (stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60, positive on all 4 outer blocks) and narrowly MISSED on the >1 km stratum (mean +0.0074, SE 0.0038, t = 1.97, required > 2.0, positive on all 4 blocks). The far stratum is underpowered: only a minority of the 1925-3780 withheld pixels per fold are more than 1 km from a visible mapped fault, and the far DTI itself is ~0.01 because a 20000-dot budget over 5.16 M footprint cells almost never lands within 300 m of a sparse far pixel.",
-  "The literal duplicate rule fires on one dense registry raster (311617 dots); the density-null control shows 95.8% of any random dot set would also fire it. Recorded as IR-28.",
-  "No ORGANIZER-CONFIRMED score exists; every DTI here is a local HOLDOUT-DTI."
- ]
+  "uniqueness": {
+    "surface": {
+      "status": "NOT RUN \u2014 no new surface candidate",
+      "worst_raster": null,
+      "comparison_count": 0,
+      "complete_accessible_scan": false
+    },
+    "final_dots": {
+      "status": "NOT RUN \u2014 no new dot candidate",
+      "worst_raster": null,
+      "comparison_count": 0,
+      "complete_accessible_scan": false
+    }
+  },
+  "format": {
+    "status": "NOT RUN \u2014 stopped before candidate",
+    "strict_validator_passed": false,
+    "outside_fill": null,
+    "validator_report": null
+  },
+  "raster": {
+    "path": null,
+    "sha256": null,
+    "evidence_only": true
+  },
+  "name": null,
+  "note": null,
+  "input_provenance_verified": false,
+  "organizer_confirmed": null,
+  "selector_status": "not requested",
+  "download_allowed": false,
+  "verdict": "negative",
+  "restrictions": [
+    "All-withheld paired stage-2 minus stage-1 gain did not exceed 2 outer-block SE.",
+    ">1 km paired stage-2 minus stage-1 gain did not exceed 2 outer-block SE; no density/power exception.",
+    "132 feature/fold canaries contained non-finite values, so an AUC and complete individual-feature safety check are unavailable; this is NOT evidence of AUC > .90.",
+    "pre-placement surface uniqueness was NOT RUN because the scientific gate stopped candidate generation.",
+    "final-dot raster uniqueness was NOT RUN because the scientific gate stopped candidate generation.",
+    "No strict official-grid/footprint format validator pass on a new raster.",
+    "Owner-mirror SHA pins do not authenticate original DrivenData files, native 1 m DEM, or a cultural mask.",
+    "Accessible prior rasters are not certified as the complete organizer-wide submission registry.",
+    "No independent scientific-lead review or weekly-slot selector approval; no organizer receipt or private score."
+  ],
+  "budget": {
+    "preregistered_hypotheses_tested": 1,
+    "first_execution_stopped_before_scoring": true,
+    "provisional_pre_plateau_safe_nms_archived": true,
+    "fit_attempts": 3,
+    "scored_attempts": 2,
+    "submission_slots_used": 0,
+    "measured_fit_seconds": 1010.6,
+    "max_experiments": 3,
+    "max_elapsed_seconds": 7200
+  },
+  "review_passes": {
+    "iterative_passes_planned": 3,
+    "independent_scientific_leads": 0
+  },
+  "caveat": "Withheld catalogue components are NOT the unknown panel truth; this is not an organizer score. CI is conditional on these folds, trained models and emission budget."
 }

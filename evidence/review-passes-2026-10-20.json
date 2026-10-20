@@ -1,0 +1,58 @@
+{
+  "date_utc": "2026-10-20",
+  "scope": "GEMSDOE68 H68-M1 and release surfaces; three iterative passes by one agent, NOT independent scientific-lead review",
+  "passes": [
+    {
+      "number": 1,
+      "label": "Research / prior work / preregistration",
+      "completed": true,
+      "evidence": [
+        "README.md standing brief + docs/PROMPT.md read before implementation",
+        "official DrivenData metric/rules/reference, USGS GeoDAWN and method paper separately checked; registry/sources_2026-10-20.json",
+        "dated 4-hypothesis ranking and fixed stop rules in docs/research/2026-10-20-autocontext-hypotheses.md",
+        "prior all/far release gate and 0.9948 dense-prior overlap independently inspected; old downloads withdrawn",
+        "previous alleged zeros fallback re-read from disk: 7,113,308 NaNs in each twin"
+      ],
+      "decision": "Old promote-with-caveats overturned; no reuse of a prior candidate."
+    },
+    {
+      "number": 2,
+      "label": "Implementation / shared-tool and unit-test review",
+      "completed": true,
+      "evidence": [
+        "gems68.blocks across-strike/edge-clipping/Gaussian-halo regressions in tests/test_blocks68.py",
+        "gems57.evaluate_holdout and gems57.holdout eager dict.get default fixed after first infrastructure-only stop; tests/test_shared_tools68.py",
+        "gems68.emission 5x5 LightGBM plateau suppression fixed and tested in tests/test_emission68.py BEFORE first scored attempt result was available",
+        "constant feature AUC=0.5; genuine non-finite still unresolved/flagged; tests/test_canary68.py",
+        "gems.submission_writer all-finite zero-exterior diagnostic implemented and tested; default remains official-spec NaN exterior",
+        "first scored pre-NMS holdout archived at evidence/archives/2026-10-20; same pre-registered H68-M1 rerun once with fixed emitter"
+      ],
+      "decision": "One hypothesis, two scored attempts (only corrected result canonical) plus one infrastructure-only failure; no search over held-out folds or contest slots."
+    },
+    {
+      "number": 3,
+      "label": "Results / release / documentation and deployment audit",
+      "completed": true,
+      "evidence": [
+        "evidence/ac68_m1_holdout.json: 11,321 withheld, 4,832 >1 km; stage2 paired outer t=0.117 overall and t=0.385 far, both <2; pooled stage 1 0.081157, stage 2 0.081385",
+        "644 per-feature/fold canary records saved; max measurable directional AUC 0.669601; 132 non-finite and not cleared; zero observed >0.90",
+        "scripts/lane68_m1_candidate.py stopped before final fitting (expected exit 2); neither new pre-placement nor dot scan nor strict validator run — no file manufactured",
+        "PYTHONPATH=src .venv/bin/python -m pytest -q tests: 54 passed, 7 skipped",
+        "scripts/build_site_verified.py and scripts/check_site_release.py: negative run card at every legacy/current URL, no public TIFF or ZIP files or download anchors",
+        "README/site/knowledge qualified owner-reported H33 0.2778, dated public leaderboard observation 0.4413, and no organizer-confirmed scores"
+      ],
+      "decision": "NEGATIVE — do not download/submit. No weekly competition slot used. Further experiments deferred under the strict budget and to avoid holdout tuning."
+    }
+  ],
+  "budget": {
+    "hypotheses_implemented": 1,
+    "fit_attempts": 3,
+    "infrastructure_only_failures": 1,
+    "quarantined_scored_attempts": 1,
+    "canonical_scored_attempts": 1,
+    "max_experiments_or_attempts_allowed": 3,
+    "submission_slots_used": 0
+  },
+  "independent_scientific_leads": 0,
+  "organizer_receipt": null
+}

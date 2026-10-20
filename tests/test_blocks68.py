@@ -79,6 +79,42 @@ def test_column_window_matches_full_width():
     assert np.isfinite(part).all()
 
 
+def test_across_box_averages_perpendicular_not_along():
+    h = w = 100
+    p = np.zeros((h, w), np.float32)
+    p[40:61, 50] = 1.0  # north/south strand, not east/west
+    cos2 = np.ones_like(p)  # along=column, across=row
+    sin2 = np.zeros_like(p)
+    values = B.build_context_block(p, slice(50, 51), cos2, sin2)
+    names = B.context_feature_names('p1')
+    assert values[names.index('p1_boxalong4'), 0, 50] == pytest.approx(1 / 9)
+    assert values[names.index('p1_boxacross4'), 0, 50] == pytest.approx(1)
+    assert values[names.index('p1_boxacross4'), 0, 50] > values[names.index('p1_boxalong4'), 0, 50]
+
+
+def test_gather_clamps_columns_without_row_wrap():
+    p = np.zeros((100, 61), np.float32)
+    p[51, 0] = 1.0  # a former flattened-index wrap would land on the next row
+    cos2 = np.ones_like(p)
+    sin2 = np.zeros_like(p)
+    values = B.build_context_block(p, slice(50, 51), cos2, sin2)
+    names = B.context_feature_names('p1')
+    assert values[names.index('p1_along1'), 0, 60] == 0.0
+
+
+def test_gaussian_is_invariant_at_interior_strip_boundary():
+    rng = np.random.default_rng(5)
+    p = rng.random((180, 70), dtype=np.float32)
+    cos2 = np.ones_like(p)
+    sin2 = np.zeros_like(p)
+    full = B.build_context_block(p, slice(60, 120), cos2, sin2)
+    for rows in (slice(60, 90), slice(90, 120)):
+        part = B.build_context_block(p, rows, cos2, sin2)
+        np.testing.assert_allclose(
+            part[:, :, :], full[:, rows.start - 60:rows.stop - 60, :], atol=1e-6, rtol=1e-6
+        )
+
+
 def test_read_rows_halo_and_columns():
     stack = np.arange(2 * 200 * 90, dtype=np.float32).reshape(2, 200, 90)
     index = {"a": 0, "b": 1}

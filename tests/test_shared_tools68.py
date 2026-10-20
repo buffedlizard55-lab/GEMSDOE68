@@ -20,6 +20,7 @@ import pytest
 from gems.submission_writer import write_submission
 from gems.validate_submission import validate
 from gems57 import holdout as H57
+from gems57 import evaluate_holdout as EH57
 from gems57 import metric as M57
 
 
@@ -87,6 +88,27 @@ def test_marginal_accept_is_consistent_with_recomputing_dti():
     assert M57.marginal_accept(dT, k_self, T, M, n, K) == (after["dti"] > base["dti"])
 
 
+def test_shared_evaluator_accepts_masked_known_without_visible():
+    """The preferred v2 fold supplies masked_known, not necessarily visible.
+
+    dict.get(key, fold['visible']) used to evaluate the fallback eagerly and
+    crashed even when masked_known was supplied. Pin the repair in the shared
+    evaluator, not in a private scoring fork.
+    """
+    truth = np.zeros((40, 40), bool)
+    truth[20, 20] = True
+    dots = np.zeros((40, 40), np.float32)
+    dots[20, 20] = 1.0
+    fold = {"region": np.ones_like(truth), "truth": truth,
+            "masked_known": np.zeros_like(truth)}
+    result, terms = EH57.evaluate(dots, fold, np.ones_like(truth), block_side=10)
+    assert result["evaluator_version"] == EH57.VERSION
+    assert result["n_truth"] == 1
+    assert result["dti"] > 0
+    assert terms.shape[1] == 4
+    assert H57.score(dots, fold, np.ones_like(truth))["dti"] == pytest.approx(result["dti"])
+
+
 # ------------------------------------------------------------ submission writer
 def _grid(tmp_path):
     """A tiny EPSG:32611 100 m reference grid plus a matching features raster."""
@@ -125,6 +147,33 @@ def test_writer_rejects_nan_inside_footprint(tmp_path):
     with pytest.raises(ValueError):
         write_submission(tmp_path / "x.tif", pred, np.ones((20, 25), bool), ref,
                          overwrite=True)
+
+
+def test_zero_outside_is_really_all_finite_but_not_official_spec(tmp_path):
+    import rasterio
+    ref, feats = _grid(tmp_path)
+    fp = np.ones((20, 25), bool)
+    fp[0, 0] = False
+    pred = np.zeros((20, 25), np.float32)
+    pred[5:8, 3:6] = 1.0
+    path = tmp_path / "compatibility.tif"
+    receipt = write_submission(path, pred, fp, ref, outside_fill="zero",
+                               name="compatibility", note="format diagnostic only")
+    with rasterio.open(path) as source:
+        disk = source.read(1)
+        assert source.nodata is None
+    assert np.isfinite(disk).all()
+    assert disk[0, 0] == 0.0
+    assert disk.min() == 0.0 and disk.max() == 1.0
+    assert receipt["outside_fill"] == "zero"
+    # The published format requires a null/NaN exterior; the only acceptance
+    # established here is for our explicit local diagnostic policy.
+    strict = validate(path, ref, feats)
+    assert not strict["passed"]
+    assert any(c["check"] == "NaN-only outside footprint" and c["status"] == "FAIL"
+               for c in strict["checks"])
+    diagnostic = validate(path, ref, feats, outside_policy="nan-or-zero")
+    assert diagnostic["passed"]
 
 
 def test_writer_round_trip_passes_the_validator(tmp_path):

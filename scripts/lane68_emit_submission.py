@@ -20,7 +20,10 @@ Usage::
 
     PYTHONPATH=src python scripts/emit_submission.py \
         --params evidence/ac68_emission_params.json \
-        --name GEMSDOE68-AC-stack3-r3-N32000 --out docs/downloads
+        --name GEMSDOE68-AC-stack3-r3-N32000 --out outputs/candidates
+
+This historical emitter never publishes a public download; use the strict
+H68-M1 gate and a separate selector before any Pages release.
 """
 
 from __future__ import annotations
@@ -73,7 +76,7 @@ def log(msg: str) -> None:
 
 
 def build_final_stack(grid, stack, idx, footprint, local_cos2, local_sin2,
-                      neg_ratio: int):
+                      neg_ratio: int, max_stage: int = 3):
     """Leak-free stacked probability map over the whole footprint."""
     h, w = grid.height, grid.width
     catalogue = grid.catalogue
@@ -138,6 +141,10 @@ def build_final_stack(grid, stack, idx, footprint, local_cos2, local_sin2,
         p2[inner[b]] = p[inner[b]]
         del p, cc
     log("  stage 2 (4 blocked models) done")
+    if max_stage == 2:
+        return dict(p1=p1, p2=p2, n_rows=int(ry.size), n_pos=int(y.sum()))
+    if max_stage != 3:
+        raise ValueError("max_stage must be 2 or 3")
 
     A3 = stage2_row_matrix(stack, idx, p2, dict(ry=ry, rx=rx, y=y, rb=rb),
                            own_cat, local_cos2, local_sin2)
@@ -157,11 +164,14 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--params", required=True,
                     help="JSON with radius_px and budget (tuned on the holdout)")
-    ap.add_argument("--out", default="docs/downloads")
+    ap.add_argument("--out", default="outputs/candidates",
+                    help="private candidate output only; the release gate controls public downloads")
     ap.add_argument("--name", default="GEMSDOE68-AC-stack3")
     ap.add_argument("--note", default="")
     ap.add_argument("--neg-ratio", type=int, default=NEG_RATIO)
     args = ap.parse_args(argv)
+    if (ROOT / args.out).resolve().is_relative_to((ROOT / "docs").resolve()):
+        ap.error("refusing to publish an unreviewed candidate under GitHub Pages; use outputs/candidates")
 
     params = json.loads(Path(args.params).read_text())
     radius_px = int(params["radius_px"])
@@ -230,9 +240,10 @@ def main(argv=None) -> int:
         receipt = write_submission(path, pred, official,
                                    ROOT / "data" / "bridge" / "sample_submission.tif",
                                    overwrite=True, name=f"{args.name}-{variant}",
-                                   note=note)
+                                   note=note, outside_fill="zero" if variant == "zeros" else "nan")
         report = validate(path, ROOT / "data" / "bridge" / "sample_submission.tif",
-                          ROOT / "data" / "bridge" / "training_features.tif")
+                          ROOT / "data" / "bridge" / "training_features.tif",
+                          outside_policy="nan-or-zero" if variant == "zeros" else "nan")
         written[variant] = {"path": str(path.relative_to(ROOT)),
                             "sha256": receipt["sha256"],
                             "bytes": path.stat().st_size,

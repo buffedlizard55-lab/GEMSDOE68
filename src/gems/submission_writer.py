@@ -2,8 +2,11 @@
 
 Refuses to write unless a reference raster supplies the CRS and geotransform, so the
 output can never silently carry a guessed grid. Output: single-band float32, nodata tag
-absent, NaN exactly outside the footprint, finite values in [0, 1] inside it, plus a JSON
-receipt (sha256, counts, extrema) written next to the file.
+absent, finite values in [0, 1] inside it, plus a JSON receipt (sha256, counts,
+extrema) written next to the file. NaN outside is the default competition-spec
+mode; an explicitly requested zero-outside compatibility variant is available
+for investigating portal range errors, and must not be called specification-
+compliant without organizer confirmation.
 """
 
 from __future__ import annotations
@@ -29,9 +32,12 @@ NOTE_MAX_CHARS = 140  # brief: note must be at most 140 characters
 
 
 def write_submission(out_path: str | Path, prediction, footprint, reference_path: str | Path,
-                     overwrite: bool = False, name: str | None = None, note: str | None = None) -> dict:
+                     overwrite: bool = False, name: str | None = None, note: str | None = None,
+                     outside_fill: str = "nan") -> dict:
     import rasterio
 
+    if outside_fill not in ("nan", "zero"):
+        raise ValueError("outside_fill must be 'nan' (official spec) or 'zero' (unconfirmed compatibility)")
     if name is not None and (not name.strip() or len(name) > 120):
         raise ValueError("name must be non-empty and at most 120 characters")
     if note is not None and len(note) > NOTE_MAX_CHARS:
@@ -65,7 +71,7 @@ def write_submission(out_path: str | Path, prediction, footprint, reference_path
     above = int((inside > 1.0 + CLIP_TOLERANCE).sum())
     if below or above:
         raise ValueError(f"{below + above} values outside [0, 1] (refusing to clip silently)")
-    out = np.full(ref_shape, np.nan, dtype=np.float32)
+    out = np.full(ref_shape, np.nan if outside_fill == "nan" else 0.0, dtype=np.float32)
     out[fp] = np.clip(inside, 0.0, 1.0).astype(np.float32)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -88,6 +94,8 @@ def write_submission(out_path: str | Path, prediction, footprint, reference_path
         "max_inside": float(out[fp].max()) if fp.any() else None,
         "nan_inside": int(np.isnan(out[fp]).sum()),
         "nan_outside_count": int(np.isnan(out[~fp]).sum()),
+        "outside_fill": outside_fill,
+        "outside_zero_count": int((out[~fp] == 0.0).sum()),
         "name": name or out_path.stem,
         "note": note or "",
         "note_chars": len(note or ""),

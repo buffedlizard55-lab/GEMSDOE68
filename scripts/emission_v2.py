@@ -185,11 +185,12 @@ import time as time_mod
 timestamp = time_mod.strftime("%Y%m%dT%H%M%SZ", time_mod.gmtime())
 
 # Create output directory
-os.makedirs('docs/downloads', exist_ok=True)
+# Historical emitter.  Keep its code for audit, but never publish without a gate.
+os.makedirs('outputs/legacy_candidates', exist_ok=True)
 
 submission_name = f"gemsdoe68-autocontext-physics-{timestamp}"
 out_filename = f"{submission_name}-zeros.tif"
-out_path = os.path.join('docs/downloads', out_filename)
+out_path = os.path.join('outputs/legacy_candidates', out_filename)
 
 with rasterio.open(
     out_path, 'w',

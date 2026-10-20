@@ -30,7 +30,8 @@ from gems68 import autocontext as AC, emission as E, grid as G, uniqueness as U,
 from gems68.experiment import Lane, log  # noqa: E402
 from gems68.holdout import quadrant_ids  # noqa: E402
 
-OUT = ROOT / "docs" / "downloads"
+# Archived experimental emitter: never write directly into public Pages.
+OUT = ROOT / "outputs" / "legacy_candidates"
 REG = ROOT / ".cache" / "registry"
 CACHE = ROOT / ".cache" / "final"
 
