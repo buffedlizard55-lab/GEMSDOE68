@@ -30,6 +30,14 @@ def _load(name):
         return None
 
 
+def decide_verdict(gate_pass, far_pass, canary_flagged, validator_passed, drift_rows):
+    """Download offered ONLY if all-pixel AND >1 km gates >2 SE, canary clean,
+    validator PASS, and no literal lane-drift flag. Else negative."""
+    cleared = bool(gate_pass and far_pass and not canary_flagged
+                   and validator_passed and not drift_rows)
+    return ("promote" if cleared else "negative"), cleared
+
+
 def main() -> int:
     exp = _load("ac68_seed20.json")
     emis = _load("ac68_emission.json")
@@ -152,9 +160,10 @@ def main() -> int:
                 "within 3 px of that raster's dots. The observed 0.9948 is 3.6 "
                 "percentage points above that baseline, and the rank correlation with "
                 "that raster is 0.004. No registry raster is an exact pixel duplicate. "
-                "The rule is therefore degenerate against this one dense raster and its "
-                "firing is a density artefact, not duplication. Recorded as IR-28 and "
-                "shipped with that caveat rather than silently passed."),
+                "The observed overlap exceeds that null by 27.2 SD, so it cannot be "
+                "dismissed as a pure density artefact; under the literal protocol "
+                "rule the flag stands as LANE DRIFT and the verdict is negative "
+                "(IR-28/IR-31). The low rank correlation is context, not a pass."),
         },
         "raster": {
             "primary_path": primary.get("path"),
@@ -235,9 +244,12 @@ def main() -> int:
     card["gate_far_gt_1km_met"] = far_pass
     card["leakage_canary_clean"] = not flagged
     card["validator_passed"] = bool(primary.get("validator_passed"))
-    card["verdict"] = ("promote-with-caveats" if (gate_pass and not flagged
-                                                  and primary.get("validator_passed"))
-                       else "negative")
+    verdict, cleared = decide_verdict(gate_pass, far_pass, flagged,
+                                      bool(primary.get("validator_passed")), drift_rows)
+    card["verdict"] = verdict
+    card["download_cleared"] = cleared
+    card["download_instruction"] = ("OK to download and submit" if cleared else
+                                    "DO NOT DOWNLOAD OR SUBMIT — negative result; gate not met")
     card["caveats"] = [
         "The preregistered gate is met on the all-pixel stratum "
         "(stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60, positive on all 4 outer "

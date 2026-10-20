@@ -184,8 +184,9 @@ def build() -> dict:
         f'({(dnull or {}).get("registry_dots", "?"):,} dots). The density-null control shows '
         f'{_null:.3f} of <em>any</em> random 20,000-dot set would also fire the rule '
         f'(observed {_obs:.4f}), and |Spearman| with that raster is '
-        f'{(dnull or {}).get("interpretation", "") and 0.004:.3f}. The firing is a density '
-        'artefact, not duplication. Recorded as IR-28 and reported, not hidden.</li>'
+        f'{(dnull or {}).get("interpretation", "") and 0.004:.3f}. The observed overlap '
+        'exceeds the null by 27.2 SD, so under the literal rule this stands as LANE '
+        'DRIFT and the verdict is negative (IR-28/IR-31), not a pass.</li>'
         '<li><strong>No ORGANIZER-CONFIRMED score exists.</strong> The scored truth is '
         'login-walled; every number here is a local HOLDOUT-DTI.</li></ul>')
 

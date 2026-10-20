@@ -61,14 +61,14 @@ GeoTIFF at the very top of the page and a step-by-step
 machine-readable summary is [`docs/lane68/data/run-card.json`](docs/lane68/data/run-card.json),
 written by `scripts/lane68_write_run_card.py`.
 
-**A unique candidate IS cleared for download.**
+**⛔ NO candidate is currently cleared for download (2026-10-20 audit, IR-30/IR-31).** The preregistered gate is NOT met: the >1 km stratum gave t = 1.97 (required > 2 SE) and the literal 3-px lane-drift rule fires. Verdict: **negative**, `download_cleared=false`. The raster below is retained only as an auditable negative-result artefact — **do not download or submit it**. The table records the mechanical checks for transparency; they do not override the failed gate.
 
 | gate | result (local measurements unless labelled otherwise) |
 |---|---|
 | format validator, re-read from disk against `sample_submission.tif` | **PASS** — 16 checks, 0 FAIL, 0 SKIPPED |
 | values in [0,1], no infinities, NaN only outside the official footprint | **PASS** (0 NaN inside 5,165,852 footprint cells) |
-| uniqueness vs `registry/rasters/` (60 rasters) | no exact byte match; max \|Spearman\| = 0.054. The literal 3-px rule fires on **one** dense raster (311,617 dots); the density-null control shows 0.958 of *any* random dot set would also fire it, so the firing is a density artefact, not duplication — recorded as IR-28 |
-| holdout gate (stage 2/3 vs stage 1, > 2 SE) | **all-pixel stratum PASS** (stage 2 vs stage 1: +0.0607, SE 0.0070, t = 8.60, positive on all 4 outer blocks). **>1 km stratum NOT MET** (+0.0074, SE 0.0038, t = 1.97 — positive on all 4 blocks, but underpowered: only 1,330 withheld pixels in that stratum) |
+| uniqueness vs `registry/rasters/` (60 rasters) | no exact byte match; max \|Spearman\| = 0.054. The literal 3-px rule fires on **one** dense raster (311,617 dots); the density-null mean is 0.958 but the observed 0.9948 exceeds it by 27.2 SD, so under the literal rule the flag stands as LANE DRIFT — recorded as IR-28/IR-31 |
+| holdout gate (stage 2/3 vs stage 1, > 2 SE, BOTH strata required) | **FAIL — verdict negative.** All-pixel PASS (+0.0607, SE 0.0070, t = 8.60) but **>1 km stratum NOT MET** (+0.0074, SE 0.0038, t = 1.97; 1,330 withheld far pixels). Download withheld per protocol. |
 | leakage canary (single-channel AUC on withheld segments) | **PASS** — highest AUC 0.611, limit 0.90 |
 | ORGANIZER-CONFIRMED score | **not claimed** — the scored truth is login-walled |
 
