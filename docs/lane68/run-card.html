@@ -26,6 +26,7 @@
   <code>evidence/ac68_seed20.json</code>, <code>evidence/ac68_emission.json</code> and
   <code>evidence/ac68_lane_check.json</code>.  Download it:
   <a href="../../evidence/run-card-ac68.json">evidence/run-card-ac68.json</a>.</p>
+  <p><strong>Current submission:</strong> <code>GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif</code> &mdash; stage 3, r=3px, 32000 dots, validator 16/16 PASS, verdict promote-with-caveats.</p>
   <p>Fields that the protocol asks for but that this run cannot supply are written as
   <code>null</code> or as an explicit <code>not measured</code> string &mdash; nothing is
   filled in from memory.</p>
@@ -66,8 +67,8 @@
   <pre class="code">cd /home/user/GEMSDOE68
 PYTHONPATH=src python scripts/lane68_autocontext.py --seeds 20 --dot-budget 32000 \
     --out evidence/ac68_seed20.json
-PYTHONPATH=src python scripts/lane68_emit_submission.py --params evidence/ac68_params.json
-PYTHONPATH=src python scripts/lane68_check.py
+PYTHONPATH=src python scripts/lane68_emit_submission.py --params evidence/ac68_emission_params_new.json
+PYTHONPATH=src python scripts/lane68_check.py docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif registry/rasters/rasters/*.tif --stage emitted --json evidence/ac68_lane_check.json
 PYTHONPATH=src python scripts/lane68_write_run_card.py
 PYTHONPATH=src python scripts/lane68_build_site.py</pre>
   <p class="small">Tests: <code>PYTHONPATH=src python -m pytest tests -q</code> &rarr;

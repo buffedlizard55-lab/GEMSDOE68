@@ -286,6 +286,28 @@
    "source_ids": [
     "evidence/run-card-ac68.json"
    ]
+  },
+  {
+   "id": "IR-30-AC68-ZEROS-IDENTICAL",
+   "severity": "high",
+   "status": "FIXED 2026-10-20 \u2014 zeros regenerated all-finite; verdict still negative on other gates",
+   "title": "The -zeros fallback was pixel-identical (NaN-aware) to the -nan file",
+   "detail": "2026-10-20 re-read in a clean venv (rasterio 1.4.4): both files had 7,113,308 NaN cells and were NaN-aware identical, so the advertised all-finite fallback did not exist. Regenerated with scripts/lane68_fix_zeros.py (sha256 7412411520cb3f4e1f7ec82f0f9d22bd5b316f721ea0f681de584fc1ea303297, all 12,279,160 cells finite, same 20,000 >0 cells). Also footprint-cell counts disagree between evidence/ac68_emission.json (5,164,312) and the writer receipt (5,165,852); unresolved, flagged for re-validation against sample_submission.tif which is absent from this checkout.",
+   "source_ids": [
+    "scripts/lane68_fix_zeros.py",
+    "evidence/ac68_emission.json"
+   ]
+  },
+  {
+   "id": "IR-31-AC68-VERDICT-GATE",
+   "severity": "critical",
+   "status": "FIXED 2026-10-20 \u2014 verdict negative, download withheld",
+   "title": "Run-card verdict promoted a candidate that failed the preregistered >1 km gate and literal lane rule",
+   "detail": "lane68_write_run_card.py previously returned promote-with-caveats using only the all-pixel gate, ignoring far_pass (t=1.97<2) and literal LANE DRIFT, and the site offered a download. decide_verdict() now requires all-pixel AND >1 km >2SE, clean canary, validator PASS and no drift flag; current card is verdict=negative, download_cleared=false. The density-null interpretation was also corrected: observed overlap 0.9948 exceeds the 0.958 null by 27.2 SD, so it cannot be dismissed as a pure density artefact.",
+   "source_ids": [
+    "scripts/lane68_write_run_card.py",
+    "evidence/run-card-ac68.json"
+   ]
   }
  ]
 }
