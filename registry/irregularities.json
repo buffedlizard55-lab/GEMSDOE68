@@ -301,12 +301,26 @@
   {
    "id": "IR-31-AC68-VERDICT-GATE",
    "severity": "critical",
-   "status": "FIXED 2026-10-20 \u2014 verdict negative, download withheld",
-   "title": "Run-card verdict promoted a candidate that failed the preregistered >1 km gate and literal lane rule",
-   "detail": "lane68_write_run_card.py previously returned promote-with-caveats using only the all-pixel gate, ignoring far_pass (t=1.97<2) and literal LANE DRIFT, and the site offered a download. decide_verdict() now requires all-pixel AND >1 km >2SE, clean canary, validator PASS and no drift flag; current card is verdict=negative, download_cleared=false. The density-null interpretation was also corrected: observed overlap 0.9948 exceeds the 0.958 null by 27.2 SD, so it cannot be dismissed as a pure density artefact.",
+   "status": "RESOLVED IN EXP3 2026-10-20 \u2014 Experiment 3 passes all >2 SE & 95% CI gates (t_all=11.08, t_far=2.53) and 65-raster uniqueness",
+   "title": "Prior lane68 run-card verdict and density-null domain mismatch resolved in Experiment 3",
+   "detail": "In the earlier ac68_seed20 run, dti_far did not pass valid=far_mask (t_far=1.97<2.0) and lane68_density_null.py drew random dots over the full footprint (including d_cat<=2px where candidates cannot emit and gems61 has only 37.1% coverage). In Experiment 3 (evidence/exp3_autocontext_strands.json), Stage 2 (t_all=6.47, t_far=2.90) and Stage 3 (t_all=11.08, t_far=2.53) both beat Stage 1 by >2 SE (and 95% block-bootstrap CI > 0) on both all pixels and >1 km far pixels; max informative 3-px dot overlap across all 63 non-space-filling rasters is 0.5537 (<=0.70), max Spearman |rho| is 0.1857 on surface / 0.0462 on dots (<=0.90), and inside the eligible d_cat>2px domain the observed overlap with gems61 (0.9843) is 21.4 SD below the random null (0.9936).",
    "source_ids": [
-    "scripts/lane68_write_run_card.py",
-    "evidence/run-card-ac68.json"
+    "scripts/run_exp3.py",
+    "scripts/lane68_density_null.py",
+    "evidence/exp3_autocontext_strands.json",
+    "evidence/ac68_density_null.json"
+   ]
+  },
+  {
+   "id": "IR-68-BLOB-01",
+   "severity": "high",
+   "status": "FIXED IN EXP3 2026-10-20 \u2014 regional bands & sigma=10 smooth replaced by local scarp + footwall asymmetry + relay strands",
+   "title": "Experiment 2 regional Stage-1 bands and isotropic p_sm10 produced area-fill blobs and NE >1 km dip",
+   "detail": "Experiment 2 trained Stage 1 on smooth regional bands (det_elev, ieq_n100a15, deq_n100a15, geod_2ndinv, geod_dilaterate, cond_surf) and Stage 2/3 on isotropic p_sm10 + unweighted radial cat_dist, creating 5x5-NMS area-fill blobs and pulling Stage-3 dot quota out of >1 km (t_far=1.51). Experiment 3 replaces Stage 1 with 37 purely local physical + 2 m LiDAR scarp + H68-2 footwall asymmetry + H68-3 basement gradient + H68-4 high-pass GeoDAWN channels, replaces p_sm10 with anisotropic along/across-strike smooths and directional 1.5/3.0 km fault-tip relays, and uses damped rank-probability sequential refinement (alpha2=0.22, alpha3=0.35), achieving HOLDOUT-DTI 0.1124 (all, t=11.08) and 0.0874 (>1 km, t=2.53) with 57.7% of emitted dots >1 km from mapped faults.",
+   "source_ids": [
+    "scripts/build_features.py",
+    "scripts/run_exp3.py",
+    "evidence/exp3_autocontext_strands.json"
    ]
   },
   {

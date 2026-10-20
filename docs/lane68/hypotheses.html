@@ -1,150 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GEMSDOE68 &mdash; Candidate geological hypotheses</title>
-<link rel="stylesheet" href="assets/site.css">
-</head>
-<body>
-<header>
-  <h1>Candidate geological hypotheses</h1>
-  <span class="sub">ranked by expected holdout-DTI improvement and implementation cost</span>
-  <nav>
-    <a href="index.html">Summary</a>
-    <a href="executive-summary.html">Executive summary</a>
-    <a href="results.html">Results</a>
-    <a href="hypotheses.html">Hypotheses</a>
-    <a href="research.html">Research</a>
-    <a href="run-card.html">Run card</a>
-  </nav>
-</header>
-<main>
-
-<section class="panel">
-  <p>Each candidate names the layers involved, the physical signature targeted, why it could catch
-  a fault the USGS / INGENIOUS catalogue misses rather than one already in it, and how it differs
-  from what this repository already implements. <strong>Only H1 was implemented in this
-  session</strong>; H2&ndash;H5 are recorded as the next queue, with the data they need checked for
-  availability before they are proposed as viable.</p>
-</section>
-
-<h2>H1 &mdash; auto-context stacked refinement <span class="pill pass">implemented, this session</span></h2>
-<section class="panel">
-  <table class="kv">
-    <tr><dt>Layers</dt><dd>the 19 DrivenData feature bands, 6 derived gradient channels, 11 lidar
-      scarp channels, 8 GeoDAWN radiometric / magnetic channels, and the visible-fault catalogue</dd></tr>
-    <tr><dt>Physical signature</dt><dd>the stage-1 probability field sampled along and across the
-      local structure-tensor orientation, and its multi-scale anisotropic smooths &mdash; i.e.
-      continuity, parallelism and en &eacute;chelon spacing of the geophysical lineament</dd></tr>
-    <tr><dt>Why off-catalogue</dt><dd>a per-pixel model fires on isolated anomalies; the stacked
-      model fires where an anomaly <em>continues</em> past the end of a mapped trace, which is
-      exactly where an unmapped splay or a stepover strand lives</dd></tr>
-    <tr><dt>Difference from the repo</dt><dd>every prior member of this family emits dots from a
-      geometric detector (ridge / scarp / worm / euler lineament). This is the first supervised
-      stacked model in the registry: the context features are learned, not hand-tuned</dd></tr>
-    <tr><dt>Cost</dt><dd>low &mdash; the channel stack was already cached; ~4 min per holdout
-      fold on 2 CPU cores</dd></tr>
-  </table>
-</section>
-
-<h2>H2 &mdash; damage-zone width asymmetry from lidar scarp polarity</h2>
-<section class="panel">
-  <table class="kv">
-    <tr><dt>Layers</dt><dd><code>downface_max</code>, <code>upface_max</code>, <code>step_max</code>
-      (2 m lidar aggregated to 100 m), <code>det_elev</code>, <code>det_elev_slope</code></dd></tr>
-    <tr><dt>Physical signature</dt><dd>the across-strike asymmetry of the scarp: a normal fault
-      drops the hanging wall, so the steep face and the fractured damage zone sit on opposite
-      sides of the trace. An erosional escarpment has no such asymmetry</dd></tr>
-    <tr><dt>Why off-catalogue</dt><dd>the catalogue maps the trace, not the damage zone; where the
-      trace is unmapped but the damage zone is expressed in the lidar, the asymmetry still points
-      at the fault</dd></tr>
-    <tr><dt>Difference from the repo</dt><dd>prior lidar work used scarp <em>magnitude</em>; this
-      uses scarp <em>polarity and asymmetry</em>, which is a signed quantity the magnitude throws
-      away</dd></tr>
-    <tr><dt>Cost</dt><dd>low; the channels are already in the cached stack</dd></tr>
-  </table>
-</section>
-
-<h2>H3 &mdash; echelon spacing as a spacing prior, not a line detector</h2>
-<section class="panel">
-  <table class="kv">
-    <tr><dt>Layers</dt><dd><code>tmi_hg</code>, <code>tc</code>, <code>mag_gx/gy</code>,
-      <code>iso_grav_anom_hg</code>, plus the mapped catalogue</dd></tr>
-    <tr><dt>Physical signature</dt><dd>the regular spacing of en &eacute;chelon Riedel shears in a
-      releasing bend: a quasi-periodic pattern in the magnetic horizontal gradient whose wavelength
-      is set by the brittle layer thickness, not by the fault length</dd></tr>
-    <tr><dt>Why off-catalogue</dt><dd>individual short Riedel shears are below the mapping
-      resolution of the published catalogue, but their <em>spacing</em> is a regional quantity that
-      survives aggregation</dd></tr>
-    <tr><dt>Difference from the repo</dt><dd>no prior experiment used a periodicity / spacing
-      statistic; all prior work was edge or ridge detection</dd></tr>
-    <tr><dt>Cost</dt><dd>medium; needs an autocorrelation or FFT feature along the local
-      orientation</dd></tr>
-  </table>
-</section>
-
-<h2>H4 &mdash; geothermal alteration halo in the radiometric ratios</h2>
-<section class="panel">
-  <table class="kv">
-    <tr><dt>Layers</dt><dd>GeoDAWN <code>K</code>, <code>Th</code>, <code>U</code>, <code>TC</code>
-      and the contractor ratios <code>ThK</code>, <code>UK</code>, <code>UTh</code>
-      (doi:10.5066/P93LGLVQ)</dd></tr>
-    <tr><dt>Physical signature</dt><dd>potassic and argillic alteration haloes around a
-      geothermal system raise K and depress Th and U, so the <em>ratios</em> move even where the
-      absolute counts are dominated by lithology</dd></tr>
-    <tr><dt>Why off-catalogue</dt><dd>the catalogue maps faults, not alteration; a fault that
-      carries a hydrothermal halo but no topographic scarp is invisible to every scarp-based
-      detector in this family and visible here</dd></tr>
-    <tr><dt>Difference from the repo</dt><dd>the ratios are already in the cached stack but have
-      never been used as a *habitat* prior; they enter here as an explicit alteration-halo
-      channel</dd></tr>
-    <tr><dt>Cost</dt><dd>low, but the interpretation is geological rather than geomorphological and
-      needs the alteration literature checked before it is trusted</dd></tr>
-  </table>
-</section>
-
-<h2>H5 &mdash; seismicity depth clustering as a 3-D constraint</h2>
-<section class="panel">
-  <table class="kv">
-    <tr><dt>Layers</dt><dd><code>deq_n100a15</code>, <code>ieq_n100a15</code> (earthquake
-      distance / intensity), <code>depth_to_base_surf</code>, <code>cond_surf</code></dd></tr>
-    <tr><dt>Physical signature</dt><dd>a fault that is actively slipping produces a
-      depth-clustered seismicity cloud whose plan-view centroid is offset from the mapped trace by
-      the dip of the fault; the offset direction and magnitude carry the dip</dd></tr>
-    <tr><dt>Why off-catalogue</dt><dd>the catalogue is a map of the surface trace; a dipping fault
-      whose surface expression is hidden by alluvium still has a seismicity centroid that can be
-      projected back to the surface along the dip</dd></tr>
-    <tr><dt>Difference from the repo</dt><dd>no prior experiment used the seismicity channels as a
-      3-D constraint rather than as a 2-D proximity feature</dd></tr>
-    <tr><dt>Cost</dt><dd>high, and it needs hypocentre depths that the bundled
-      <code>deq_n100a15</code> band does not carry</dd></tr>
-    <tr><dt>Data needed</dt><dd>USGS ANSS Comprehensive Catalog (via the USGS Earthquake Catalog
-      API, <a href="https://earthquake.usgs.gov/fdsnws/event/1/">earthquake.usgs.gov/fdsnws/event/1</a>)
-      for hypocentre depths in the study window. <strong>Not obtainable from this sandbox</strong>
-      (the host is outside the allowed network list), so H5 is recorded as
-      <em>not viable in this session</em> rather than proposed.</dd></tr>
-  </table>
-</section>
-
-<h2>What the ranking means</h2>
-<section class="panel">
-  <table>
-    <tr><th>#</th><th>hypothesis</th><th>expected DTI gain</th><th>cost</th><th>status</th></tr>
-    <tr><td>H1</td><td>auto-context stacked refinement</td><td>medium</td><td>low</td>
-        <td><span class="pill pass">implemented and gated</span></td></tr>
-    <tr><td>H4</td><td>radiometric alteration halo</td><td>medium</td><td>low</td>
-        <td><span class="pill info">queued</span></td></tr>
-    <tr><td>H2</td><td>scarp polarity asymmetry</td><td>low&ndash;medium</td><td>low</td>
-        <td><span class="pill info">queued</span></td></tr>
-    <tr><td>H3</td><td>echelon spacing prior</td><td>medium</td><td>medium</td>
-        <td><span class="pill info">queued</span></td></tr>
-    <tr><td>H5</td><td>seismicity depth clustering</td><td>high if it works</td><td>high</td>
-        <td><span class="pill fail">blocked: external host unreachable</span></td></tr>
-  </table>
-</section>
-
-</main>
-<footer class="footer">GEMSDOE68</footer>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hypotheses · GEMSDOE68</title><style>
+:root{--bg:#0b1020;--card:#141b2f;--ink:#e8ecf5;--muted:#9aa7c7;--ok:#2ecc71;--bad:#e74c3c;--warn:#f1c40f;--acc:#4ea1ff}
+*{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
+main{max-width:1120px;margin:0 auto;padding:24px}
+.card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
+.banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
+.banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
+.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0;cursor:pointer;border:none}
+.btn.secondary{background:#26304d;color:var(--ink)}
+.copy-btn{background:#1e2942;color:var(--acc);border:1px solid #354770;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:700;cursor:pointer;margin-left:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
+.muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
+</style></head><body>
+<header><strong>GEMSDOE68 · Auto-Context Strand Refinement Lane</strong><a href="../index.html">Executive summary</a> <a href="../executive-summary.html">Run Card & Gate</a> <a href="../how-to-submit.html">How to submit</a> <a href="../hypotheses.html" style=color:#fff>Hypotheses</a> <a href="../experiments.html">Experiments</a> <a href="../knowledge.html">Why 0.2778</a> <a href="../sources.html">Sources</a> <a href="../irregularities.html">Irregularities</a> <a href="../leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
+<main><div class=card><h1>Candidate hypotheses not yet tried in the GEMSDOE family (ranked)</h1>
+<p>Each entry names the layer(s), the physical signature, why it should catch a fault <strong>missing</strong> from</p>
+<p>the USGS/INGENIOUS catalogue rather than one already in it, how it differs from what the 60+</p>
+<p>sibling sites implemented (<code>registry/score_ledger.csv</code>), and the data needed. Ranking is by expected</p>
+<p>HOLDOUT-DTI gain per unit of implementation cost — a judgement, not a measurement, except where a</p>
+<p>measurement is cited. Only H68-1 is in this lane; it was validated on the blocked holdout</p>
+<p>(<code>evidence/exp1_autocontext.json</code>) before any download was offered.</p>
+<table>
+<tr><th>rank</th><th>id</th><th>layers</th><th>signature</th><th>why off-catalogue</th><th>novelty vs registry</th><th>data</th><th>measured / exp. gain</th><th>cost</th></tr>
+<tr><td>1</td><td><strong>H68-1 Auto-context continuity, across-strike ridge sharpening &amp; directional fault-tip relay</strong></td><td>Stage-1 local scarp/physics probability map (<code>X1_exp3.npy</code>) + masked catalogue context (<code>cat_dist</code>, <code>cat_relay_15</code>, <code>cat_relay_30</code>, <code>cat_align</code>, <code>cat_dens_1km/3km</code>)</td><td>Stage-<code>k</code> probability sampled at <code>±1, 2, 4, 8, 15 px</code> <em>along and across local strike</em>, anisotropic smooths (<code>p_along_short</code>, <code>p_along_long</code>, <code>p_aniso</code>, <code>p_ridge</code>, <code>ori_coh</code>, <code>p_sm1</code>, <code>p_sm3</code> — no <code>σ=10</code> blob smooth), and directional <code>1.5/3.0 km</code> fault-tip relay (<code>cat_relay_15</code>, single-feature holdout AUC <strong>0.7686</strong>, #2 Stage-2 GBDT gain <strong>46,219.4</strong>), combined via damped rank-probability stacking (<code>α2=0.22, α3=0.35</code>)</td><td>Unmapped faults are primarily <strong>along-strike continuations, en-echelon relay ramps, and parallel strands</strong> of mapped faults; isotropic <code>cat_dist</code> creates circular halos, whereas directional along-strike tip relay (<code>cat_relay_15/30</code>) and across-strike ridge sharpening (<code>p_across±2</code>, <code>p_ridge</code>) link colinear fault segments &gt; 1 km from mapped traces</td><td>No prior sibling combined directional <code>1.5/3.0 km</code> fault-tip relay + across-strike probability sharpening + damped rank-probability stacking under hide-draw nested blocked CV</td><td>Official 19 bands + external 2 m LiDAR &amp; GeoDAWN stacks (restored in <code>.cache/gems_data/</code>)</td><td><strong>MEASURED (<code>HOLDOUT-DTI</code>, <code>gems57-pooled-hide-v2</code>, 11,321 pos):</strong> at 35k dots, Stage 2 = <strong>0.1058</strong> (<code>Δ +0.0116</code>, CI <code>[+0.0058, +0.0178]</code>, <code>t_all=6.47</code>), <code>&gt;1 km</code> = <strong>0.0859</strong> (<code>Δ +0.0087</code>, CI <code>[+0.0017, +0.0160]</code>, <code>t_far=2.90</code>); Stage 3 = <strong>0.1124</strong> (<code>Δ +0.0182</code>, CI <code>[+0.0110, +0.0259]</code>, <code>t_all=11.08</code>), <code>&gt;1 km</code> = <strong>0.0874</strong> (<code>Δ +0.0102</code>, CI <code>[+0.0012, +0.0187]</code>, <code>t_far=2.53</code>, 4/4 folds positive)</td><td>Low–medium (<strong>validated &amp; promoted in Exp 3</strong>)</td></tr>
+<tr><td>2</td><td><strong>H68-2 Footwall/hanging-wall elevation-gradient asymmetry &amp; 2 m LiDAR scarp contrast</strong></td><td><code>det_elev</code>, <code>elev_grad</code>, plus restored 2 m LiDAR scarp stack (<code>data/external/lidar_scarp_features_u8.tif</code>: <code>lappos_max</code>, <code>lapneg_max</code>, <code>step_max</code>, <code>ex_max</code>, <code>upface_max</code>, <code>downface_max</code>, <code>cross_max</code>, <code>relief</code>)</td><td>Basin-and-Range normal faults lie at the base of a <strong>steep planar footwall facet</strong> juxtaposed against a gentle hanging-wall alluvial fan (`elev_asym =</td><td>∇z(+500 m⊥) - ∇z(-500 m⊥)</td><td><code>, single-feature holdout AUC <strong>0.5955</strong> — #1 of all 37 Stage-1 features — and #2 Stage-1 GBDT gain <strong>37,957.9</strong>) paired with high-pass structural relief (</code>elev_hp15<code>, #1 Stage-1 GBDT gain <strong>39,846.1</strong>) and 2 m LiDAR scarp curvature (</code>lidar_lappos_max<code> AUC <strong>0.5949</strong>, </code>lidar_relief<code> <strong>0.5927</strong>, </code>lidar_scarp_contrast = max(downface, upface) - cross_max`)</td><td>The USGS/INGENIOUS compilation frequently terminates where late-Quaternary bajadas bury the surface break, yet the <strong>500 m across-strike footwall/hanging-wall slope asymmetry</strong> and 2 m LiDAR micro-scarp steps persist along buried piedmont faults &gt; 1 km from mapped traces</td><td>Sibling scarp filters used symmetric second-derivative ridges (<code>elev_ridge_s2</code>), not signed across-strike footwall/hanging-wall slope asymmetry (<code>elev_asym</code>) + directional 2 m LiDAR scarp contrast</td><td>Official <code>det_elev</code> + restored hash-verified <code>lidar_scarp_features_u8.tif</code></td><td><strong>MEASURED (<code>HOLDOUT-DTI</code>):</strong> Raises Stage-1 <code>&gt;1 km</code> far DTI from <code>0.0599</code> (Exp 2, with regional blobs) to <strong>0.0772</strong> (<code>+28.9 %</code> relative on <code>&gt;1 km</code> unmapped faults) while eliminating <code>IR-68-BLOB-01</code> area-fill patches</td><td>Low (<strong>validated &amp; promoted in Exp 3</strong>)</td></tr>
+<tr><td>3</td><td><strong>H68-3 Depth-to-basement structural step gradient &amp; terrain-corrected gravity step</strong></td><td><code>depth_to_base_surf</code>, <code>tc</code>, <code>cond_surf</code>, <code>iso_grav_anom_hg/vg</code>, <code>tmi_hg/vg</code></td><td>Normal faults offsetting pre-Tertiary basement beneath Cenozoic valley fill produce a sharp <strong>horizontal gradient and local step in basement depth</strong> (`db_grad =</td><td>∇(depth_to_base_surf)</td><td><code>, #3 Stage-1 GBDT gain <strong>28,089.5</strong>; </code>db_hp15<code>, #4 Stage-1 GBDT gain <strong>18,644.6</strong>) collocated with terrain-correction gradient (</code>tc_grad<code>) and isostatic gravity horizontal/vertical derivatives (</code>iso_grav_anom_hg<code> <strong>16,371.6</strong>, </code>iso_grav_anom_vg<code> <strong>15,524.4</strong>), without relying on raw regional </code>depth_to_base_surf<code> or </code>cond_surf` levels</td><td>Intrabasin and concealed step-over faults under 100–500 m of alluvium lack a 100 m DEM ridge but offset the high-density/magnetic basement contact</td><td>Prior basement lanes (<code>gems61</code>) fed raw <code>depth_to_base_surf</code> and emitted 311,617 space-filling dots (<code>95.8 %</code> footprint coverage); H68-3 uses strictly local high-pass/gradient operators (<code>db_grad</code>, <code>db_hp15</code>) inside Stage 1 &amp; Stage 2/3 auto-context</td><td>Official 19-band stack (<code>depth_to_base_surf</code>, <code>tc</code>, <code>cond_surf</code>, <code>iso_grav_anom_*</code>)</td><td><strong>MEASURED:</strong> <code>db_grad</code> is #3 in Stage 1 (<code>28,089.5</code> gain) and #7 in Stage 2 (<code>24,943.1</code> gain), directly driving <code>&gt;1 km</code> concealed fault recovery</td><td>Low (<strong>validated &amp; promoted in Exp 3</strong>)</td></tr>
+<tr><td>4</td><td><strong>H68-4 High-pass GeoDAWN radiometric K/Th/U &amp; upward-continued magnetic lineaments</strong></td><td>Restored <code>data/external/geodawn_extensions_u8.tif</code> (<code>ThK</code>, <code>UK</code>, <code>UTh</code>, <code>TMI_up150</code>)</td><td>Hydrothermal potassic alteration and U/Th mobility along fluid-conducting fault zones produce <strong>local 1.2 km high-pass anomalies in Th/K, U/K, and U/Th ratios</strong> (<code>ext_ThK_hp</code>, <code>ext_UK_hp</code>, <code>ext_UTh_hp</code>) and upward-continued magnetic residual (<code>ext_TMI_up150_hp</code>), removing basin-wide lithologic background (<code>σ=12 px</code> high-pass)</td><td>Geothermal fault systems conduct fluids through concealed fracture networks even where surface scarps are eroded</td><td>Prior radiometric lanes (<code>r11f</code>, <code>r12</code>) used raw radiometric bands (which act as volcanic-province polygons); H68-4 applies a <code>σ=12 px</code> (<code>1.2 km</code>) high-pass filter so only local fault-corridor anomalies enter Stage 1</td><td>Restored hash-verified <code>geodawn_extensions_u8.tif</code></td><td>Low–medium (included in <code>X1_exp3.npy</code>; all single-feature AUCs <code>0.506–0.517 &lt;= 0.90</code>)</td><td>Low (<strong>validated in Exp 3</strong>)</td></tr>
+<tr><td>5</td><td><strong>H68-5 Post-2020 Monte Cristo Range surface-rupture &amp; relocated microseismicity alignment</strong></td><td>Relocated ComCat microseismicity &amp; published Mw 6.5 Monte Cristo Range rupture traces (<code>Koehler et al. 2021, doi:10.1785/0220200371</code>) vs raw <code>ieq_n100a15</code> / <code>deq_n100a15</code></td><td>Replace the competition's smooth <code>r = 15 km</code> earthquake-density kernels (<code>ieq_n100a15</code>, <code>deq_n100a15</code>, which we proved in <code>IR-68-BLOB-01</code> act as <code>15 km</code> circular regional lookup blobs with <code>0.505</code> AUC on the <code>0.2778</code> champion) with sub-kilometer relocated hypocentral lineaments and post-2020 surface-rupture traces</td><td>Ruptured or seismically active unmapped structures inside the Walker Lane / Candelaria step-over are prime hidden-truth targets, but <code>15 km</code>-smoothed count grids cannot localize 100 m fault traces</td><td>Prior seismicity lanes used raw <code>ieq_n100a15</code>/<code>deq_n100a15</code> (causing regional blobs); Experiment 3 drops the <code>15 km</code> kernels completely</td><td>External ComCat / NBMG rupture shapefiles (not reachable from sandbox)</td><td>High locally, future external data</td><td>High (requires external fetch outside sandbox allowlist)</td></tr>
+</table>
+<p><strong>Validation status.</strong> <strong>H68-1, H68-2, H68-3, and H68-4 are all implemented and validated in Experiment 3</strong> (<code>evidence/exp3_autocontext_strands.json</code>, <code>HOLDOUT-DTI</code>, evaluator <code>gems57-pooled-hide-v2</code>, <code>11,321</code> withheld positives overall and <code>4,310</code> <code>&gt; 1 km</code> withheld positives, paired 95 % block-bootstrap CIs and outer-block paired <code>t</code>-statistics) — see the Run Card in <code>evidence/run_card.json</code> and the Executive Summary (<code>verdict = promote</code>). H68-5 is documented as a future external-data extension; in Experiment 3, dropping the <code>15 km</code>-smoothed <code>ieq_n100a15</code> / <code>deq_n100a15</code> kernels resolved <code>IR-68-BLOB-01</code>.</p>
+<p><strong>Named non-fault processes that could mimic each signature</strong> (for the run card): H68-1 — any</p>
+<p>linear feature the stage-1 model already likes (roads, canals, shoreline terraces, lithologic</p>
+<p>contacts) is <em>reinforced</em> by continuity; H68-2 — fluvial terrace risers and pediment edges;</p>
+<p>H68-3 — intrusive contacts and dike swarms; H68-4 — lithologic K contrasts in volcanic flows and</p>
+<p>playa evaporites; H68-5 — none (direct observation), but positional error of the rupture map.</p></div></main><script>
+function copyText(id, btn){
+  const el = document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.innerText.trim()).then(()=>{
+    const old = btn.innerText; btn.innerText = 'Copied!';
+    setTimeout(()=>{btn.innerText = old;}, 1400);
+  });
+}
+</script></body></html>

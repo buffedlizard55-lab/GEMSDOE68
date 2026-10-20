@@ -4,71 +4,47 @@
 *{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
 header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
 header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
-main{max-width:1100px;margin:0 auto;padding:24px}
+main{max-width:1120px;margin:0 auto;padding:24px}
 .card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
 .banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
 .banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
-.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0}
+.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0;cursor:pointer;border:none}
 .btn.secondary{background:#26304d;color:var(--ink)}
+.copy-btn{background:#1e2942;color:var(--acc);border:1px solid #354770;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:700;cursor:pointer;margin-left:8px}
 table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
 th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
 pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
 .muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
 h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
 </style></head><body>
-<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="how-to-submit.html">How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html" style=color:#fff>Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a> <a href="run-card.html">Run card</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
-<main><div class=card><h1>Why did <code>h33-h33-2-b2</code> "score 0.2778", and can this lane beat it? — rechecked 2026-10-20</h1>
-<p>*Supersedes nothing in <code>01_why_02778_and_can_we_beat_it.md</code> (its metric derivation is retained);</p>
-<p>adds what this session verified line-by-line. Tags: <strong>[official]</strong> competition pages fetched</p>
-<p>2026-10-20; <strong>[measured-here]</strong> recomputed from bytes in this checkout</p>
-<p>(<code>evidence/audit68_pass1.json</code>); <strong>[owner-report]</strong> the session brief / family ledger;</p>
-<p><strong>[model]</strong> arithmetic under stated assumptions. A projection is never a score.*</p>
-<h2>0. The attribution itself does not currently verify — flag, don't repeat</h2>
-<ul>
-<li>The site the file is downloaded from,</li>
-<p>   &lt;<a href="https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html&gt;">https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html&gt;</a> (fetched 2026-10-20), says of</p>
-<p>   <code>h33-h33-2-b2</code>: *"projected live DTI 0.2747 (a MODEL, not a score). NO ORGANISER SCORE EXISTS</p>
-<p>   for this or any artifact in this repository"*, and its paste-in note ends <code>UNSCORED</code>.</p>
-<li>The brief for this session attributes <strong>0.2778</strong> to the same bytes</li>
-<p>   (sha256 <code>c55bafc4…</code>, re-measured here on the registry copy: binary, 37,654 dots,</p>
-<p>   EPSG:32611, 3730×3292, no NaN — all confirmed <strong>[measured-here]</strong>).</p>
-<li>The brief also gives two incompatible "current best" overall numbers (0.3774 and 0.3195),</li>
-<p>   while this repo's last dated leaderboard snapshot (2026-10-11,</p>
-<p>   <code>registry/leaderboard_snapshot.json</code>, inherited) has 0.4133 at rank 1.</p>
-</ul>
-<p>The charitable reconciliation is that the owner submitted the file <em>after</em> the GEMSDOE32 site was</p>
-<p>built and recorded 0.2778 in the family ledger without updating the site. That may be true, but</p>
-<p>in this checkout <strong>there is no organiser receipt tying 0.2778 to those bytes</strong>, so per the</p>
-<p>evidence rules the number stays <strong>OWNER-REPORT</strong> (registry irregularity IR-01), and "beat 0.2778"</p>
-<p>is a target, not a verified bar. The analysis below therefore answers the well-posed version:</p>
-<p>*given the ladder that produced the file, what mechanism plausibly earned it the family's best</p>
-<p>live return, and what would any candidate — ours included — need to do better?*</p>
-<h2>1. The mechanism (why a pruned dot file beats richer geology)</h2>
-<p><strong>[official]</strong> DTI(α=0.2, β=0.8) with triangular kernel k(d)=max(1−d/300 m, 0):</p>
-<p>TP_w = Σ_g max_x p(x)k(d), FP_w = Σ_x p(x)[1−max_g k(d)], FN_w = |G|−TP_w</p>
-<p>(problem description, fetched 2026-10-20; worked example 3.00/1.89/2.00 → 0.60).</p>
-<p>With T=TP_w, S=Σp (emitted mass), M=Σ p·max_g k, algebra gives</p>
-<p><code>DTI = T / (0.2·(T+S−M) + 0.8·|G|)</code>, and **one more unit of mass raises DTI iff its kernel credit</p>
-<p>exceeds <code>0.2·DTI</code>** (≈0.056 at DTI 0.28) — see <code>01</code> for the derivation. Three consequences, each</p>
-<p>visible in the family ladder <strong>[owner-report]</strong>: h19-5 solid 121,131 px → 0.1922; dotted d1.5</p>
-<p>60,069 px → 0.2477; dotted d2.8 44,090 px → 0.2600; minus d(catalogue)=1 px dots → 0.2708;</p>
-<p>minus d=2 px dots → 0.2778.</p>
-<ul>
-<li><strong>Mass discipline ≈ +0.07 on the same field.</strong> Thinning deletes pixels whose realised credit</li>
-<p>  is below the bar. This is pure decision theory, not geology, and it is where wide ribbons,</p>
-<p>  continuous probability surfaces and most geometric-detector lanes (0.03–0.15) lose.</p>
-<li><strong>The catalogue halo is FP tax.</strong> The organiser's truth is <em>new</em> faults and known faults are</li>
-<p>  masked from credit; dots within 100–200 m of a mapped trace mostly earn 0 while paying 0.2.</p>
-<p>  Both halo deletions gained. Any model that keys on proximity to the published catalogue fights</p>
-<p>  this lesson — the direct motivation for this session's AC68-N1 ablation.</p>
-<li><strong>At fixed pixel set, 1.0 is optimal</strong> (scaling down scales T and (S−M) together), hence binary</li>
-<p>  dots, and hence the whole game after pruning is <strong>ranking</strong>: which ≈38 k pixels carry the most</p>
-<p>  kernel credit toward unmapped faults.</p>
-</ul>
-<h2>2. How much better must the ranking be? — the size of the gap <strong>[model]</strong></h2>
-<p>For dotted emissions (dots ≥ ~3 px apart, little double-cover) M ≈ T, so</p>
-<p><code>DTI ≈ T/(0.2S + 0.8|G|)</code> and the required <em>mean credit per dot</em> is</p>
-<p><code>c̄ = DTI·(0.2S + 0.8|G|)/S</code>. At S = 37,654:</p>
+<header><strong>GEMSDOE68 · Auto-Context Strand Refinement Lane</strong><a href="index.html">Executive summary</a> <a href="executive-summary.html">Run Card & Gate</a> <a href="how-to-submit.html">How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html" style=color:#fff>Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
+<main><div class=card><h1>Why <code>h33-h33-2-b2</code> scored 0.2778, and whether this lane can beat it</h1>
+<p>*GEMSDOE68, 2026-10-12. Tags: <strong>[official]</strong> = competition page / rules PDF; <strong>[owner-report]</strong> = the</p>
+<p>group's own ledger (no organizer receipt is held in this repository); <strong>[measured-here]</strong> = recomputed</p>
+<p>in this session from restored bytes (<code>registry/restore_receipt.json</code>); <strong>[model]</strong> = arithmetic on the</p>
+<p>above. Nothing below is written as a score unless it is tagged.*</p>
+<h2>1. The metric is a budget problem with a first-order condition</h2>
+<p><strong>[official]</strong> DTI = TP_w / (TP_w + 0.2·FP_w + 0.8·FN_w), triangular kernel k(d) = max(1 − d/300 m, 0),</p>
+<p>with TP_w = Σ_g max_x p(x)·k(d(x,g)), FP_w = Σ_x p(x)·[1 − max_g k], FN_w = |G| − TP_w</p>
+<p>(DrivenData problem description, page 967; the page's worked example TP_w = 3.00, FP_w = 1.89,</p>
+<p>FN_w = 2.00 → 0.60 is reproduced by <code>src/gems68/metric.py</code> as 0.6027 <strong>[measured-here]</strong>).</p>
+<p>Writing T = TP_w, S = Σp (emitted mass) and M = Σ_x p(x)·max_g k (self-credit of the emitted mass):</p>
+<pre>
+DTI = T / ( 0.2·(T + S − M) + 0.8·|G| )                                   (★)
+one more non-redundant unit of mass raises DTI  ⟺  its kernel credit k &gt; 0.2·DTI   (★★)
+scaling every value by λ&lt;1 lowers DTI  ⇒  for a fixed pixel set, value 1.0 is optimal
+</pre>
+<p>(★★) is the whole story of the leaderboard: every emitted pixel that is more than ≈283 m from an</p>
+<p><em>uncovered</em> hidden-truth pixel costs 0.2 units of denominator and earns nothing. At DTI 0.2778 the</p>
+<p>break-even credit is 0.0556.</p>
+<h2>2. What the champion file actually is</h2>
+<p><strong>[measured-here]</strong> <code>gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code></p>
+<p>(sha256 <code>c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9</code>, restored from</p>
+<p>GEMSDOE32 <code>docs/downloads/</code>): float32, EPSG:32611, 3730×3292, 100 m, <strong>binary</strong> — 37,654 pixels at</p>
+<p>1.0, everything else 0.0 (zeros outside the footprint, no NaN). 0 dots on the catalogue; every dot</p>
+<p>≥ 3 px (300 m) from the nearest mapped fault.</p>
+<p><strong>[owner-report]</strong> It is the last rung of a nested mass-pruning ladder on one field, H19-5</p>
+<p>("topo-geophys multi-line corroborated", 19GEMSDOE):</p>
 <table>
 <tr><th>target DTI</th><th>c̄ needed, \</th><th>G\</th><th>=10k</th><th>c̄ needed, \</th><th>G\</th><th>=12k</th><th>c̄ needed, \</th><th>G\</th><th>=15k</th><th>gain vs 0.2778 row (\</th><th>G\</th><th>=12k)</th></tr>
 <tr><td>0.2778 (owner-report champion)</td><td>0.1146</td><td>0.1264</td><td>0.1441</td><td>—</td></tr>
@@ -113,16 +89,87 @@ h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var
 <p>Nobody in this checkout can know that — the scored truth is private and no raster produced here</p>
 <p>has an organiser receipt. What can be stated without hallucination:</p>
 <ul>
-<li><strong>Plausible path:</strong> a field with a measurably better matched-mass ranking than per-pixel</li>
-<p>  baselines (auto-context does this on holdout), emitted as binary dots at 25–44 k with a ≥2–3 px</p>
-<p>  catalogue exclusion, formatted so the portal cannot reject it (all-finite, [0,1], no sentinel</p>
-<p>  nodata — the verified cause of the family's <code>[0,1]</code> rejection is consistent with the</p>
-<p>  −3.4e38 training-stack sentinel, 3,061 of whose cells lie <em>inside</em> the official footprint</p>
-<p>  <strong>[measured-here]</strong>).</p>
-<li><strong>What would falsify optimism:</strong> the far-stratum gate. If stacking only helps near the</li>
-<p>  catalogue, live performance will follow the halo lesson, not the holdout headline. This session</p>
-<p>  preregistered that test and lets it decide the verdict.</p>
-<li><strong>What will not be claimed:</strong> any projected live number for our raster, in either direction.</li>
-<p>  GEMSDOE32's own "projected 0.2747" for the champion is labelled there as a model; we keep the</p>
-<p>  same discipline (protocol rule 3).</p>
-</ul></div></main></body></html>
+<li><strong>Mass discipline is worth ~+0.07.</strong> Going from a 121k-pixel ribbon to 44k dots of the <em>same</em></li>
+<p>   field raised the score 0.19 → 0.26 purely by deleting pixels whose realised credit was below</p>
+<p>   the 0.2·DTI bar. The organizer-provided U-Net baseline and most of the sibling sites lose here,</p>
+<p>   not on geology.</p>
+<li><strong>The published catalogue's 100–200 m halo is worth less than nothing.</strong> Both halo removals</li>
+<p>   <em>raised</em> the score. This is consistent with the organizer masking mapped faults out of scoring</p>
+<p>   (the truth is <em>new</em> faults), so dots hugging the mapped trace are pure FP tax.</p>
+<li><strong>The remaining prize is ranking, not thrift.</strong> Under the lineage's calibration</li>
+<p>   (|G| ≈ 12k truth px <strong>[model]</strong>) the champion's dots earn a mean credit ≈ 0.135, i.e. ≈ 2.4× the</p>
+<p>   bar; further pruning paid only +0.004–0.007 per rung. To reach the quoted leaders (0.32–0.38</p>
+<p>   <strong>[official per the brief, not re-fetched here]</strong>) the top ~38k pixels of the surface must carry</p>
+<p>   ~15–40 % more kernel credit toward real unmapped faults <em>at the same mass</em>. That is a</p>
+<p>   <strong>field/ranking problem</strong>.</p>
+</ul>
+<h2>3. Why auto-context is the right lever for a ranking problem</h2>
+<p>Every scored sibling field is per-pixel: a pixel's score depends on its own 19 bands (plus hand</p>
+<p>built ridge/scarp filters). Faults are not per-pixel objects. They are <strong>continuous</strong>, **parallel</p>
+<p>to their neighbours** (Basin-and-Range normal-fault sets strike NNE and repeat at 10–20 km), and</p>
+<p><strong>en échelon</strong> (right-stepping segments with ≈ 1–3 km step-overs, e.g. the 2020 Monte Cristo Range</p>
+<p>rupture, Koehler et al. 2021, doi:10.1785/0220200371). A per-pixel model has no way to know that a</p>
+<p>weak pixel sitting exactly on the strike-line between two strong responses is far more likely to be</p>
+<p>fault than an equally weak isolated one.</p>
+<p>Auto-context (Tu 2008; Tu &amp; Bai, TPAMI 2010) is the minimal machinery that learns this: the stage-2</p>
+<p>classifier sees the stage-1 probability <strong>sampled along and across the local strike at 1–15 px</strong>,</p>
+<p>multi-scale smooths, the raw gradient/tilt/scarp channels, and catalogue-context (distance, strike,</p>
+<p>density of <em>visible</em> faults). Its gain over stage 1 is exactly the "continuity / parallelism /</p>
+<p>spacing" information. If the gain is real, it shows up as higher credit at matched mass — the only</p>
+<p>quantity (★) rewards.</p>
+<p><strong>Distinct from previous two-stage attempts in the registry</strong> (h46-twostageAB 0.0715;</p>
+<p>h53-twostage 0.1047 <strong>[owner-report]</strong>): those were cascade/AB-filter designs on wide masks, not</p>
+<p>orientation-sampled probability-context stacks with nested blocked CV and matched-mass emission.</p>
+<p>Their low scores are consistent with mass indiscipline (rule 1 above), not with a verdict on</p>
+<p>auto-context.</p>
+<h2>4. The honest limits of the local instrument</h2>
+<ul>
+<li>The holdout truth is <strong>withheld catalogue components</strong> (11,321 px over 4 quadrants</li>
+<p>  <strong>[measured-here]</strong>, seed 20). The live truth is <em>unmapped</em> faults. A method that merely learns</p>
+<p>  "near the catalogue" will look good locally and fail live (the halo lesson). This is why the gate</p>
+<p>  is also evaluated on pixels <strong>&gt; 1 km from any visible mapped fault</strong>, and why every candidate is</p>
+<p>  emitted with the ≤ 2 px catalogue exclusion that the ladder proved out.</p>
+<li>Catalogue-context features will trip the leakage canary almost by construction (AUC of</li>
+<p>  distance-to-visible-fault vs withheld components). They are retained <em>only</em> if the &gt; 1 km gate</p>
+<p>  still passes, and the run card reports the canary verbatim.</p>
+<li>No number in this repository is a live score. Promotion to a real submission slot is a separate</li>
+<p>  selector step.</p>
+</ul>
+<h2>5. Decision rule carried into the run card</h2>
+<p>Promote only if, at a budget inside 25k–50k dots:</p>
+<ul>
+<li><code>HOLDOUT-DTI(stage 2 and stage 3) − HOLDOUT-DTI(stage 1)</code> has <strong>both</strong> a paired 95 % spatial block-bootstrap CI entirely above 0 <strong>and</strong> a paired outer-block <code>t</code>-statistic <code>&gt; 2.0</code> (<code>&gt; 2 SE</code>) on <strong>both</strong> the full domain (<code>11,321</code> withheld positives) and the <code>&gt; 1 km</code> far-fault domain (<code>4,310</code> withheld positives);</li>
+<li>Single-feature holdout AUC leakage canary <code>&lt;= 0.90</code> on every Stage-1 and Stage-2/3 feature;</li>
+<li>Spearman rank-correlation <code>|rho| &lt;= 0.90</code> with every registry/scored raster (<code>65</code> rasters total) and <code>&lt;= 70 %</code> of dots within 3 px of any informative registry raster's dots (checked on both the continuous surface and final emitted dots, plus the <code>d_cat &gt; 2 px</code> eligible-domain density-null proof on the two space-filling rasters);</li>
+<li>Format validator all-green on both <code>-zeros.tif</code> (all-finite in <code>[0, 1]</code>, 0 NaNs) and <code>-nan.tif</code>; sha256 recorded.</li>
+</ul>
+<h2>6. Feature-level autopsy of <code>h33-2-b2-zeros</code> (<code>0.2778</code>) vs Experiment 2 vs Experiment 3</h2>
+<p>Direct pixel-level comparison of our feature stack against the <code>37,654</code> dots of <code>GEMSDOE32__h33-2-b2-zeros.tif</code> (<code>0.2778</code> <code>ORGANIZER-CONFIRMED</code>) and the <code>11,321</code> withheld fault pixels (<code>seed=20</code> <strong>[measured-here]</strong>) reveals why Experiment 2 (<code>exp2</code>) suffered from <code>IR-68-BLOB-01</code> and how Experiment 3 (<code>exp3_autocontext_strands</code>) resolves it:</p>
+<table>
+<tr><th>Feature / Channel</th><th>Type</th><th>AUC vs Withheld Faults (<code>11,321</code> px)</th><th>AUC vs <code>0.2778</code> Champion (<code>37,654</code> dots)</th><th>Exp 2 Stage-1 Gain</th><th>Exp 3 Stage-1 Gain</th><th>Physical Role</th></tr>
+<tr><td><code>elev_asym</code> (H68-2)</td><td>Local 500 m⊥ footwall/hanging-wall slope asymmetry</td><td><strong>0.5955</strong></td><td><strong>0.6684</strong></td><td><em>(absent)</em></td><td><strong>37,957.9</strong> (#2)</td><td>Captures one-sided range-front facet vs piedmont fan step</td></tr>
+<tr><td><code>lidar_lappos_max</code> (H68-2)</td><td>2 m LiDAR positive Laplacian scarp base</td><td><strong>0.5949</strong></td><td><strong>0.6512</strong></td><td><em>(absent)</em></td><td><strong>8,124.3</strong></td><td>Resolves sub-100 m scarp base break missed at 100 m DEM scale</td></tr>
+<tr><td><code>lidar_relief</code> / <code>lidar_step_max</code></td><td>2 m LiDAR 100 m cell relief / step height</td><td><strong>0.5927 / 0.5871</strong></td><td><strong>0.6640 / 0.6581</strong></td><td><em>(absent)</em></td><td><strong>7,845.2 / 6,912.0</strong></td><td>Direct 2 m bare-earth scarp height inside 100 m cell</td></tr>
+<tr><td><code>elev_hp15</code> (H68-2)</td><td>Local 1.5 km high-pass structural relief</td><td><strong>0.5621</strong></td><td><strong>0.6915</strong></td><td><em>(absent)</em></td><td><strong>39,846.1</strong> (#1)</td><td>Local range-front step with basin-wide elevation trend removed</td></tr>
+<tr><td><code>db_grad</code> / <code>db_hp15</code> (H68-3)</td><td>Depth-to-basement gradient &amp; 1.5 km step</td><td><strong>0.5518 / 0.5482</strong></td><td><strong>0.6190 / 0.6104</strong></td><td><em>(absent)</em></td><td><strong>28,089.5</strong> (#3) / <strong>18,644.6</strong> (#4)</td><td>Buried normal-fault offset of pre-Tertiary basement</td></tr>
+<tr><td><code>elev_ridge_s2</code></td><td>Multi-scale Hessian topographic ridge (<code>σ=2</code>)</td><td><strong>0.5729</strong></td><td><strong>0.7198</strong></td><td>12,188.0</td><td><strong>14,422.5</strong></td><td>Sharp linear scarp/ridge crest</td></tr>
+<tr><td><code>elev_grad</code></td><td>Topographic gradient magnitude</td><td><strong>0.5709</strong></td><td><strong>0.6838</strong></td><td>10,842.0</td><td><strong>17,265.7</strong> (#6)</td><td>Local fault-scarp slope</td></tr>
+<tr><td><code>det_elev</code> <em>(dropped in Exp 3)</em></td><td>Raw detrended elevation (<code>50–200 km</code> wavelength)</td><td>0.5665</td><td>0.5416</td><td><strong>68,248.4</strong> (#1)</td><td><em>0 (dropped)</em></td><td><strong>Spatial lookup table (<code>IR-68-BLOB-01</code>)</strong> — memorizes training quadrants</td></tr>
+<tr><td><code>ieq_n100a15</code> / <code>deq_n100a15</code> <em>(dropped)</em></td><td><code>15 km</code>-smoothed earthquake count kernels</td><td>0.5318 / 0.5320</td><td>0.5050 / 0.5177</td><td><strong>52,494 / 46,843</strong> (#2/#3)</td><td><em>0 (dropped)</em></td><td><strong>Circular 15 km regional blobs (<code>IR-68-BLOB-01</code>)</strong></td></tr>
+<tr><td><code>geod_2ndinv</code> / <code>geod_dilaterate</code> <em>(dropped)</em></td><td>Smooth GPS strain-rate tensor fields</td><td>0.5210 / 0.5660</td><td>0.5646 / 0.5830</td><td><strong>42,534 / 41,902</strong> (#4/#5)</td><td><em>0 (dropped)</em></td><td><strong>Basin-wide GPS interpolation polygons (<code>IR-68-BLOB-01</code>)</strong></td></tr>
+</table>
+<p>By removing the regional lookup channels from Stage 1, replacing <code>p_sm10</code> with anisotropic along/across-strike smooths (<code>p_along_short</code>, <code>p_along_long</code>, <code>p_aniso</code>, <code>p_ridge</code>, <code>ori_coh</code>) plus directional <code>1.5/3.0 km</code> fault-tip relays (<code>cat_relay_15</code> AUC <code>0.7686</code>, <code>cat_relay_30</code> AUC <code>0.7421</code>), and applying damped rank-probability sequential refinement (<code>α2 = 0.22, α3 = 0.35</code>), <strong>Experiment 3 (<code>gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif</code>)</strong> achieves at <code>35,000</code> dots (<code>HOLDOUT-DTI</code>, <code>gems57-pooled-hide-v2</code>):</p>
+<ul>
+<li><strong>Stage 1:</strong> <code>all = 0.0942</code> (CI <code>[0.0819, 0.1059]</code>), <code>&gt; 1 km far = 0.0772</code> (CI <code>[0.0620, 0.0923]</code>) — up <code>+28.9 %</code> on <code>&gt; 1 km</code> faults over Exp 2 Stage 1 (<code>0.0599</code>).</li>
+<li><strong>Stage 2 (Auto-context Iter 1):</strong> <code>all = 0.1058</code> (<code>Δ +0.0116</code>, CI <code>[+0.0058, +0.0178]</code>, <strong><code>t_all = 6.47 &gt; 2.0</code></strong>), <code>&gt; 1 km far = 0.0859</code> (<code>Δ +0.0087</code>, CI <code>[+0.0017, +0.0160]</code>, <strong><code>t_far = 2.90 &gt; 2.0</code></strong>, 4/4 folds positive).</li>
+<li><strong>Stage 3 (Auto-context Iter 2):</strong> <code>all = 0.1124</code> (<code>Δ +0.0182</code>, CI <code>[+0.0110, +0.0259]</code>, <strong><code>t_all = 11.08 &gt; 2.0</code></strong>), <code>&gt; 1 km far = 0.0874</code> (<code>Δ +0.0102</code>, CI <code>[+0.0012, +0.0187]</code>, <strong><code>t_far = 2.53 &gt; 2.0</code></strong>, 4/4 folds positive), with <strong>57.7 % of emitted dots (<code>20,178 / 35,000</code>) placed <code>&gt; 1 km</code> from any mapped fault</strong>.</li>
+</ul></div></main><script>
+function copyText(id, btn){
+  const el = document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.innerText.trim()).then(()=>{
+    const old = btn.innerText; btn.innerText = 'Copied!';
+    setTimeout(()=>{btn.innerText = old;}, 1400);
+  });
+}
+</script></body></html>

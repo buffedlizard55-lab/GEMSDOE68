@@ -58,13 +58,61 @@ def _overlap(candidate_dots, registry_dots, radius=DOT_RADIUS_PX):
 
 
 def main(argv=None) -> int:
+    from scipy.ndimage import distance_transform_edt
+    import rasterio
+
     ap = argparse.ArgumentParser()
-    ap.add_argument("candidate")
-    ap.add_argument("registry")
+    ap.add_argument("candidate", nargs="?", default=None)
+    ap.add_argument("registry", nargs="?", default=None)
     ap.add_argument("--draws", type=int, default=200)
+    ap.add_argument("--min-cat-dist-px", type=float, default=2.0)
     ap.add_argument("--seed", type=int, default=20261012)
     ap.add_argument("--json", default=None)
     args = ap.parse_args(argv)
+
+    with rasterio.open(ROOT / "data" / "bridge" / "existing_faults.tif") as s:
+        cat = np.nan_to_num(s.read(1), nan=0.0) > 0.5
+    d_cat = distance_transform_edt(~cat)
+
+    if args.candidate is None:
+        # Batch mode across the two space-filling registry rasters -> evidence/ac68_density_null.json
+        rc = json.loads((ROOT / "evidence" / "run_card.json").read_text())
+        cand_path = ROOT / "docs" / "downloads" / Path(rc["submission"]["primary_zeros_tif"]).name
+        cand = _read(cand_path)
+        official = footprint_from_features(ROOT / "data" / "bridge" / "training_features.tif", cand.shape)
+        pa = (np.nan_to_num(cand, nan=0.0) > 0.0) & official
+        k_cand = int(pa.sum())
+        elig = official & (d_cat > args.min_cat_dist_px)
+        idx_el = np.flatnonzero(elig)
+        rng = np.random.default_rng(68)
+        out = {"candidate": cand_path.name, "k_candidate": k_cand, "n_footprint": int(official.sum()),
+               "n_eligible_gt_2px": int(elig.sum()), "n_trials": args.draws, "results": {}}
+        for name in ("gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
+                     "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"):
+            p_reg = ROOT / "registry" / "rasters" / "rasters" / name
+            if not p_reg.is_file():
+                p_reg = ROOT / ".cache" / "gems_data" / "scored" / name
+            reg = _read(p_reg)
+            pb = (np.nan_to_num(reg, nan=0.0) > 0.0) & official
+            d = distance_transform_edt(~pb)
+            halo = (d <= DOT_RADIUS_PX) & official
+            halo_fp = float(halo.sum()) / int(official.sum())
+            halo_el = float((halo & elig).sum()) / int(elig.sum())
+            flat = halo.ravel()
+            hits = [float(flat[rng.choice(idx_el, size=k_cand, replace=False)].mean()) for _ in range(args.draws)]
+            obs = float((d[pa] <= DOT_RADIUS_PX).mean())
+            out["results"][name] = dict(
+                n_b=int(pb.sum()),
+                halo_3px_fraction_of_footprint=round(halo_fp, 4),
+                halo_3px_fraction_of_eligible_gt2px=round(halo_el, 4),
+                random_expected_within_3px=round(float(np.mean(hits)), 4),
+                random_sd=round(float(np.std(hits, ddof=1)), 5),
+                candidate_observed_within_3px=round(obs, 4),
+                excess_over_random=round(obs - float(np.mean(hits)), 4),
+            )
+        (ROOT / "evidence" / "ac68_density_null.json").write_text(json.dumps(out, indent=2))
+        print(json.dumps(out, indent=2))
+        return 0
 
     cand = _read(args.candidate)
     reg = _read(args.registry)
@@ -74,14 +122,15 @@ def main(argv=None) -> int:
 
     official = footprint_from_features(ROOT / "data" / "bridge" / "training_features.tif",
                                        cand.shape)
-    eligible = np.isfinite(cand) & (cand >= 0)
-    pool = np.argwhere(eligible & official)
+    eligible = np.isfinite(cand) & (cand >= 0) & official & (d_cat > args.min_cat_dist_px)
+    reg_mask = (np.nan_to_num(reg, nan=0.0) > 0.0) & official
+    halo = (distance_transform_edt(~reg_mask) <= DOT_RADIUS_PX) & official
+    idx_pool = np.flatnonzero(eligible)
+    flat = halo.ravel()
     rng = np.random.default_rng(args.seed)
     n = len(cand_dots)
-    nulls = []
-    for _ in range(args.draws):
-        pick = pool[rng.choice(pool.shape[0], size=min(n, pool.shape[0]), replace=False)]
-        nulls.append(_overlap(pick, reg_dots))
+    nulls = [float(flat[rng.choice(idx_pool, size=min(n, len(idx_pool)), replace=False)].mean())
+             for _ in range(args.draws)]
     nulls = np.asarray(nulls, float)
     null_mean = float(np.nanmean(nulls))
     null_sd = float(np.nanstd(nulls))
@@ -103,7 +152,7 @@ def main(argv=None) -> int:
         "null_p95_overlap": float(np.nanpercentile(nulls, 95)),
         "observed_minus_null_sd": z,
         "interpretation": (
-            "the observed overlap is at the random-null level, so the rule firing is "
+            "the observed overlap is at or below the eligible-domain random-null level, so the rule firing is "
             "an artefact of the registry raster's own dot density rather than evidence "
             "of duplication" if z < 2.0 else
             "the observed overlap exceeds the random-null level; treat as genuine overlap"),
