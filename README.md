@@ -50,7 +50,33 @@
 
 ## Status
 
-Two lanes now share this repository.
+### 2026-10-20 session — current candidate: ✅ OK TO DOWNLOAD AND SUBMIT
+
+**Primary file (one-click at the top of [`docs/index.html`](docs/index.html)):**
+`docs/downloads/gems68-autoctx4-ext-bagged-25000dots-20261020T200722Z-3d070595-zeros.tif`
+SHA-256 `99e00aa5f7137306271f12227dea5da476f8d2943a84fcfffe8dc4b94b43335c` · 25,000 binary dots · all-finite float32,
+single band, EPSG:32611, 3730×3292 @ 100 m, values exactly {0,1} (no cell can be outside [0,1]).
+NaN-outside twin `gems68-autoctx4-ext-bagged-25000dots-20261020T200722Z-3d070595-nan.tif` (identical inside the footprint;
+passes shared `gems.validate_submission` in full) is published alongside.
+
+- **Submission name:** `gems68-autoctx4-ext-bagged-25000dots-20261020T200722Z-3d070595-zeros`
+- **Note (107 chars):** *"GEMSDOE68 autoctx4 ext+bagged s3; 25000 dots >2px off cat; HOLDOUT-DTI 0.1219 vs s1 0.0711 seed42; UNSCORED"*
+- **Gate (pre-registered, fresh seed 42):** HOLDOUT-DTI (evaluator `gems57-pooled-hide-v2`,
+  11,348 withheld positives) stage 3 **0.1219** vs stage 1
+  **0.0711**, Δ +0.0509 (95% CI [+0.0377, +0.0640]);
+  far >1 km **0.0871** vs **0.0623**, Δ +0.0249
+  (95% CI [+0.0147, +0.0354]). Leakage canary clean.
+- **Uniqueness vs 69 prior rasters** (registry + every prior GEMSDOE68 download):
+  max Spearman ρ = 0.106 (< 0.90); max dots within 3 px = 61.0 %
+  (< 70 %, vs this repo's own Exp-2 file); no byte duplicate.
+- Exp 3 (stage 3 @ 38,000, seed 31) **failed** its pre-registered far gate and is logged negative
+  (`evidence/run_card_exp3.json`). No ORGANIZER-CONFIRMED score exists for any file here — UNSCORED.
+- Run card: `evidence/run_card.json` (= `evidence/run_card_exp4.json`). Slot promotion remains a
+  separate selector step.
+
+### Earlier lanes (historical — do not submit from these)
+
+Two earlier lanes share this repository's history.
 
 **The repository site is [`docs/index.html`](docs/index.html)** — it links to both.
 

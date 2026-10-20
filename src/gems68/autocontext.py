@@ -34,6 +34,35 @@ LGB_PARAMS = dict(objective="binary", learning_rate=0.05, num_leaves=31,
                   min_data_in_leaf=200, feature_fraction=0.8, bagging_fraction=0.8,
                   bagging_freq=1, lambda_l2=1.0, num_threads=2, verbose=-1, seed=68)
 N_ROUNDS = 220
+# Model-seed bagging (Exp 3): one booster per seed, probabilities averaged.
+# Default (68,) reproduces the Exp 1/2 single-booster behaviour exactly.
+MODEL_SEEDS = (68,)
+
+
+def train_bagged(X, y, feature_names=None, seeds=None):
+    """Train one LightGBM booster per model seed on the same rows."""
+    boosters = []
+    for s in (MODEL_SEEDS if seeds is None else seeds):
+        params = {**LGB_PARAMS, "seed": int(s), "bagging_seed": int(s) + 1000,
+                  "feature_fraction_seed": int(s) + 2000}
+        ds = lgb.Dataset(X, label=y, feature_name=feature_names, free_raw_data=True)
+        boosters.append(lgb.train(params, ds, num_boost_round=N_ROUNDS))
+    return boosters
+
+
+def predict_bagged(boosters, X) -> np.ndarray:
+    """Mean probability over bagged boosters."""
+    out = np.zeros(len(X), np.float64)
+    for b in boosters:
+        out += b.predict(X, num_threads=2)
+    return (out / len(boosters)).astype(np.float32)
+
+
+def mean_gain(boosters) -> dict:
+    """Mean gain importance over bagged boosters (same feature order)."""
+    names = boosters[0].feature_name()
+    gains = np.mean([b.feature_importance("gain") for b in boosters], axis=0)
+    return dict(zip(names, gains.tolist()))
 
 
 def context_names() -> list[str]:
@@ -89,20 +118,30 @@ def context_matrix(pmap: np.ndarray, footprint: np.ndarray, phys: list[np.ndarra
 
 
 def fit_predict(X: np.ndarray, y: np.ndarray, train_idx: np.ndarray, pred_idx: np.ndarray,
-                rng: np.random.Generator, feature_names=None) -> tuple[np.ndarray, lgb.Booster]:
-    """Train on a PU-subsampled training set and predict ``pred_idx`` rows."""
+                rng: np.random.Generator, feature_names=None):
+    """Train on a PU-subsampled training set and predict ``pred_idx`` rows.
+
+    Returns (probabilities, boosters): a list with one booster per entry in
+    ``MODEL_SEEDS``; probabilities are the bagged mean.  Each bag member gets
+    its own negative subsample draw (same positives, same budget).
+    """
     pos = train_idx[y[train_idx] == 1]
-    neg = train_idx[y[train_idx] == 0]
-    n_neg = min(len(neg), max(NEG_PER_POS * len(pos), 50_000), MAX_TRAIN_ROWS - len(pos))
-    neg = rng.choice(neg, size=n_neg, replace=False)
-    rows = np.concatenate([pos, neg])
-    ds = lgb.Dataset(X[rows], label=y[rows], feature_name=feature_names, free_raw_data=True)
-    booster = lgb.train(LGB_PARAMS, ds, num_boost_round=N_ROUNDS)
-    out = np.empty(len(pred_idx), np.float32)
-    for s in range(0, len(pred_idx), 1_000_000):
-        sl = pred_idx[s:s + 1_000_000]
-        out[s:s + len(sl)] = booster.predict(X[sl], num_threads=2)
-    return out, booster
+    neg_all = train_idx[y[train_idx] == 0]
+    n_neg = min(len(neg_all), max(NEG_PER_POS * len(pos), 50_000), MAX_TRAIN_ROWS - len(pos))
+    boosters = []
+    out = np.zeros(len(pred_idx), np.float64)
+    for s in MODEL_SEEDS:
+        neg = rng.choice(neg_all, size=n_neg, replace=False)
+        rows = np.concatenate([pos, neg])
+        params = {**LGB_PARAMS, "seed": int(s), "bagging_seed": int(s) + 1000,
+                  "feature_fraction_seed": int(s) + 2000}
+        ds = lgb.Dataset(X[rows], label=y[rows], feature_name=feature_names, free_raw_data=True)
+        booster = lgb.train(params, ds, num_boost_round=N_ROUNDS)
+        boosters.append(booster)
+        for a in range(0, len(pred_idx), 1_000_000):
+            sl = pred_idx[a:a + 1_000_000]
+            out[a:a + len(sl)] += booster.predict(X[sl], num_threads=2)
+    return (out / len(boosters)).astype(np.float32), boosters
 
 
 def blocked_oof(X: np.ndarray, y: np.ndarray, block_of_row: np.ndarray, dist_to_block: dict,
@@ -116,9 +155,9 @@ def blocked_oof(X: np.ndarray, y: np.ndarray, block_of_row: np.ndarray, dist_to_
         pred_idx = np.flatnonzero((block_of_row == b) & rows_allowed)
         tr = np.flatnonzero(rows_allowed & (block_of_row != b) & np.isin(block_of_row, blocks)
                             & (dist_to_block[b] > BUFFER_PX))
-        p, booster = fit_predict(X, y, tr, pred_idx, rng, feature_names)
+        p, boosters = fit_predict(X, y, tr, pred_idx, rng, feature_names)
         oof[pred_idx] = p
-        gains[b] = dict(zip(booster.feature_name(), booster.feature_importance("gain").tolist()))
+        gains[b] = mean_gain(boosters)
     return oof, gains
 
 

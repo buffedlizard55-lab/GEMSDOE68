@@ -31,7 +31,14 @@ def _same_transform(a, b, tolerance: float = 1e-6) -> bool:
 
 
 def footprint_from_features(features_path: str | Path, shape_hw=None) -> np.ndarray:
-    """Footprint = cells whose first feature band is finite and above the nodata sentinel."""
+    """Cells whose first feature band is finite and above the nodata sentinel.
+
+    NOTE: this is NOT the official submission footprint.  On the organizer
+    rasters it gives 5,165,852 cells vs 5,167,373 for the sample submission
+    (3,061 cells inside the official footprint carry the float32 sentinel in
+    band 1, and 1,540 finite band-1 cells lie outside).  Kept for reporting
+    only; footprint *checks* use :func:`footprint_from_reference`.
+    """
     import rasterio
 
     with rasterio.open(features_path) as src:
@@ -39,6 +46,26 @@ def footprint_from_features(features_path: str | Path, shape_hw=None) -> np.ndar
     fp = np.isfinite(band) & (band > FEATURE_NODATA_SENTINEL)
     if shape_hw is not None and fp.shape != tuple(shape_hw):
         raise ValueError(f"features shape {fp.shape} != expected {shape_hw}")
+    return fp
+
+
+def footprint_from_reference(reference_path: str | Path, shape_hw=None) -> np.ndarray:
+    """Official footprint from a reference raster on the official grid.
+
+    Valid cells = finite and not the raster's nodata (labels.tif uses -1;
+    sample_submission.tif uses NaN).  On the organizer rasters both give
+    5,167,373 cells and identical masks.
+    """
+    import rasterio
+
+    with rasterio.open(reference_path) as src:
+        band = src.read(1).astype(np.float64)
+        nodata = src.nodata
+    fp = np.isfinite(band)
+    if nodata is not None and np.isfinite(nodata):
+        fp &= band != float(nodata)
+    if shape_hw is not None and fp.shape != tuple(shape_hw):
+        raise ValueError(f"reference shape {fp.shape} != expected {shape_hw}")
     return fp
 
 
@@ -56,11 +83,13 @@ def validate(path: str | Path, reference_path: str | Path | None = None,
     ref_shape = None
     ref_transform = None
     ref_crs = None
+    ref_footprint = None
     if reference_path is not None:
         with rasterio.open(reference_path) as ref:
             ref_shape = (ref.height, ref.width)
             ref_transform = ref.transform
             ref_crs = ref.crs
+        ref_footprint = footprint_from_reference(reference_path, ref_shape)
 
     with rasterio.open(path) as src:
         out_shape = (src.height, src.width)
@@ -109,7 +138,18 @@ def validate(path: str | Path, reference_path: str | Path | None = None,
             feat_shape = (feats.height, feats.width)
             feat_transform = feats.transform
             feat_crs = feats.crs
-        fp = np.isfinite(band) & (band > FEATURE_NODATA_SENTINEL)
+        feat_fp = np.isfinite(band) & (band > FEATURE_NODATA_SENTINEL)
+        # Official footprint comes from the reference raster when available;
+        # the features band-1 finite mask differs from it (see docstring).
+        fp = ref_footprint if ref_footprint is not None else feat_fp
+        if ref_footprint is not None:
+            sym = int((feat_fp != ref_footprint).sum())
+            checks.append(_check(
+                "info: features band-1 mask vs official footprint", True,
+                f"symmetric_difference={sym} cells "
+                f"(features={int(feat_fp.sum())} official={int(ref_footprint.sum())}); "
+                "footprint checks below use the official (reference) mask",
+                status="INFO"))
         if ref_shape is not None:
             grid_shape = ref_shape
             grid_transform = ref_transform

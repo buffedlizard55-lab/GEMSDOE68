@@ -33,7 +33,11 @@ def log(*a):
 
 class Lane:
     def __init__(self, grid, X1: np.ndarray, phys: list[np.ndarray], quad_map: np.ndarray,
-                 eval_seed: int = 20, train_seeds=(20, 21, 22), rng_seed: int = 68):
+                 eval_seed: int = 20, train_seeds=(20, 21, 22), rng_seed: int = 68,
+                 stage1_names=None):
+        self.stage1_names = list(stage1_names) if stage1_names is not None else list(F.STAGE1_NAMES)
+        if X1.shape[1] != len(self.stage1_names):
+            raise ValueError(f"X1 has {X1.shape[1]} columns but {len(self.stage1_names)} stage-1 names")
         self.g = grid
         self.fp = grid.footprint
         self.X1 = X1
@@ -64,14 +68,14 @@ class Lane:
         """OOF p1 on the training blocks + outer prediction. outer=None -> LOQO over all 4."""
         tq = [b for b in range(4) if b != outer]
         oof, _ = AC.blocked_oof(self.X1, self.y1, self.q, self.dist_to_block,
-                                np.ones(self.N, bool), tq, self.rng, F.STAGE1_NAMES)
+                                np.ones(self.N, bool), tq, self.rng, self.stage1_names)
         imp = None
         if outer is not None:
             pred_idx = np.flatnonzero(self.q == outer)
             tr = np.flatnonzero(np.isin(self.q, tq) & (self.dist_to_block[outer] > AC.BUFFER_PX))
-            p, b = AC.fit_predict(self.X1, self.y1, tr, pred_idx, self.rng, F.STAGE1_NAMES)
+            p, bs = AC.fit_predict(self.X1, self.y1, tr, pred_idx, self.rng, self.stage1_names)
             oof[pred_idx] = p
-            imp = dict(zip(b.feature_name(), b.feature_importance("gain").tolist()))
+            imp = AC.mean_gain(bs)
         return oof, imp
 
     # ---- stage k >= 2 ----------------------------------------------------
@@ -99,22 +103,20 @@ class Lane:
         # minus the evaluation hide; used as the next stage's input map)
         for b in tq:
             Xtr, ytr = self._train_rows(pmap_prev, tq, exclude_block=b)
-            booster = lgb.train(AC.LGB_PARAMS, lgb.Dataset(Xtr, label=ytr, feature_name=self.names2),
-                                num_boost_round=AC.N_ROUNDS)
+            boosters = AC.train_bagged(Xtr, ytr, self.names2)
             del Xtr, ytr
             AC.context_matrix(pmap_prev, self.fp, self.phys, self.eval_ctx, out=self.X2)
             idx = np.flatnonzero(self.q == b)
-            out[idx] = booster.predict(self.X2[idx], num_threads=2)
+            out[idx] = AC.predict_bagged(boosters, self.X2[idx])
         imp = None
         if outer is not None:
             Xtr, ytr = self._train_rows(pmap_prev, tq, exclude_block=outer)
-            booster = lgb.train(AC.LGB_PARAMS, lgb.Dataset(Xtr, label=ytr, feature_name=self.names2),
-                                num_boost_round=AC.N_ROUNDS)
+            boosters = AC.train_bagged(Xtr, ytr, self.names2)
             del Xtr, ytr
             AC.context_matrix(pmap_prev, self.fp, self.phys, self.eval_ctx, out=self.X2)
             idx = np.flatnonzero(self.q == outer)
-            out[idx] = booster.predict(self.X2[idx], num_threads=2)
-            imp = dict(zip(booster.feature_name(), booster.feature_importance("gain").tolist()))
+            out[idx] = AC.predict_bagged(boosters, self.X2[idx])
+            imp = AC.mean_gain(boosters)
         return out, imp
 
     def nested(self, n_stages: int = 3):

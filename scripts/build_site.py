@@ -136,17 +136,19 @@ Max share of dots within 3 px of one registry raster's dots: <b class={'bad' if 
 <table><tr><th>registry raster (top 6 by dot overlap)</th><th>share of our dots within 3 px</th><th>that raster's own 3 px footprint coverage</th><th>lift (overlap ÷ coverage; 1.0 = chance)</th></tr>{ovrows}</table>
 <p class=muted>Rasters whose 3 px halo covers more than 70 % of the footprint are excluded from the duplicate verdict (they overlap every candidate by construction): {html.escape(", ".join(u.get("excluded_uninformative_rasters", [])) or "none")}.</p></div>
 
-<div class=card><h2>⚠ Three candidates exist in this repository — only one is evidenced</h2>
-<table><tr><th>candidate</th><th>PR</th><th>own holdout gate</th><th>uniqueness check</th><th>recommendation</th></tr>
-<tr><td><code>gems68-autoctx-40000-20261012T014104Z-zeros.tif</code></td><td>#1</td><td class=bad>failed (stage 2 0.00002 vs stage 1 0.0082, Δ −0.139 — its own evidence/holdout.json)</td><td class=bad>incomplete (0 rasters)</td><td class=bad>do not submit</td></tr>
-<tr><td><code>gemsdoe68-autocontext-s2-20261012T014136Z-zeros.tif</code></td><td>#2</td><td class=bad>no holdout DTI / gate recorded</td><td class=warn>claimed PASS, registry size not stated</td><td class=bad>not evidenced — do not spend a slot</td></tr>
-<tr><td><code>{prim['name']}</code></td><td>#3 (this page)</td><td class=ok>passed (table above)</td><td class=ok>complete, 23 rasters</td><td class=ok><b>submit this one</b></td></tr></table>
-<p class=muted>Facts are read from each candidate's own run card; see <code>evidence/sibling_candidates_same_holdout.json</code> for an as-is cross-score (context only).</p></div>
+<div class=card><h2>⚠ Several earlier candidates exist in this repository — superseded</h2>
+<table><tr><th>candidate</th><th>status (from its own evidence)</th><th>recommendation</th></tr>
+<tr><td><code>gems68-autoctx-40000-20261012T014104Z-zeros.tif</code></td><td class=bad>own holdout gate failed (evidence/holdout.json)</td><td class=bad>do not submit</td></tr>
+<tr><td><code>gemsdoe68-autocontext-s2-20261012T014136Z-zeros.tif</code></td><td class=bad>no holdout DTI / gate recorded</td><td class=bad>not evidenced — do not spend a slot</td></tr>
+<tr><td><code>gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.tif</code></td><td class=warn>Exp 2 gate passed on the same seed used for selection; superseded by the fresh-seed Exp 3 file below</td><td class=warn>superseded</td></tr>
+<tr><td><code>GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif</code> (lane68 subsite)</td><td class=warn>far-&gt;1 km gate missed (t = 1.97); "zeros" file actually carries NaN outside (IR-68-ZEROS)</td><td class=warn>superseded</td></tr>
+<tr><td><code>{prim['name']}</code></td><td class=ok>Exp 4: pre-registered stage {h['stage']} @ {h['budget']:,}, gate passed on FRESH seed {h.get('eval_seed','?')} (table above). Exp 3's 38k candidate failed on seed 31 — logged negative.</td><td class=ok><b>the current candidate</b></td></tr></table>
+<p class=muted>All earlier files remain in <code>docs/downloads/</code> for audit; the uniqueness check above includes them as prior rasters.</p></div>
 <div class=card><h2>Where the dots are (sanity map) and the key risk</h2>
 <img src="assets/dots_map.png" alt="dot map" style="width:100%;border-radius:10px">
-<p><b>Risk, stated plainly:</b> only {u['dot_overlap_within_3px']['gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif']['overlap']*100:.0f} % of these dots lie within 300 m of the 0.2778 champion's dots, and the median dot is {card['emission']['median_dist_px']/10:.1f} km from the published catalogue (champion ≈ 2.0 km). Part of the surface is area-fill in regional highs rather than lines (IR-68-BLOB-01). The holdout says this ranks withheld faults better — including far from mapped faults — but the holdout's truth is catalogue components, not the panel's new faults. This file is a genuinely different bet, not an increment on the champion.</p></div>
+<p><b>Risk, stated plainly:</b> only {u['dot_overlap_within_3px'].get('GEMSDOE32__h33-2-b2-zeros.tif', {}).get('overlap', float('nan'))*100:.0f} % of these dots lie within 300 m of the H33-2-B2 file's dots, and the median dot is {card['emission']['median_dist_px']/10:.1f} km from the published catalogue (champion ≈ 2.0 km). Part of the surface is area-fill in regional highs rather than lines (IR-68-BLOB-01). The holdout says this ranks withheld faults better — including far from mapped faults — but the holdout's truth is catalogue components, not the panel's new faults. This file is a genuinely different bet, not an increment on the champion.</p></div>
 <div class=card><h2>One-paragraph answer: why 0.2778, and can it be beaten?</h2>
-<p>The 0.2778 champion (<code>h33-h33-2-b2</code>, GEMSDOE32, owner-reported) is a <b>binary field of 37,654 dots</b>, the last rung of a pruning ladder on one per-pixel field (0.1922 solid → 0.2477 → 0.2600 → 0.2708 → 0.2778). The metric DTI = T/(0.2·(T+S−M)+0.8·|G|) charges 0.2 per emitted unit that is not within 300 m of an uncovered new fault, so deleting low-credit mass — first the field's tail, then the 100–200 m halo of the <em>published</em> catalogue — paid at every step. What is left to win is <b>ranking</b>: the same ≈38 k dots must carry more kernel credit toward real unmapped faults. That is a field problem, and auto-context (continuity, parallelism, en-échelon spacing learned from the stage-1 map) is the cheapest principled attack on it. The full derivation and provenance tags are in <a href="knowledge.html">Why 0.2778</a>; the measured result of this lane is on the <a href="experiments.html">Experiments</a> page.</p></div>
+<p>The owner-reported 0.2778 attribution concerns <code>h33-h33-2-b2</code> (GEMSDOE32) — note that the file's own audit JSON and the GEMSDOE32 site describe it as <b>UNSCORED, projected 0.2747</b>, on the owner-reported 0.2708 base, so 0.2778 has no organizer receipt anywhere in this checkout (IR-01). The file itself is a <b>binary field of 37,654 dots</b>, the last rung of a pruning ladder on one per-pixel field (0.1922 solid → 0.2477 → 0.2600 → 0.2708 → 0.2778). The metric DTI = T/(0.2·(T+S−M)+0.8·|G|) charges 0.2 per emitted unit that is not within 300 m of an uncovered new fault, so deleting low-credit mass — first the field's tail, then the 100–200 m halo of the <em>published</em> catalogue — paid at every step. What is left to win is <b>ranking</b>: the same ≈38 k dots must carry more kernel credit toward real unmapped faults. That is a field problem, and auto-context (continuity, parallelism, en-échelon spacing learned from the stage-1 map) is the cheapest principled attack on it. The full derivation and provenance tags are in <a href="knowledge.html">Why 0.2778</a>; the measured result of this lane is on the <a href="experiments.html">Experiments</a> page.</p></div>
 """
 
 
@@ -163,7 +165,7 @@ def build_howto(card: dict) -> str:
 <li>Submit. Copy the score from the receipt into <code>registry/score_ledger.csv</code> tagged <b>ORGANIZER-CONFIRMED</b> with the exact file name and SHA-256.</li>
 </ol>
 <h2>About the earlier "Predicted values must be in range [0, 1]" error</h2>
-<p>The primary file here is <b>all-finite</b>: 0.0 outside the footprint, values exactly 0.0 or 1.0 inside, no NaN, no nodata tag, no sentinel. The family's champion (0.2778) was uploaded in this "zeros" form. A NaN-outside variant is also published (the public spec permits NaN outside the footprint and several NaN-variants scored in the ledger), but if the portal rejects it for range, use the zeros file. The local validator re-reads the bytes on disk and checks: single band, float32, 3730×3292, EPSG:32611, pinned transform, no NaN/inf anywhere, min ≥ 0, max ≤ 1, zero positive pixels outside the footprint, zero positive pixels on the mapped catalogue.</p>
+<p>The primary file here is <b>all-finite</b>: 0.0 outside the footprint, values exactly 0.0 or 1.0 inside, no NaN, no nodata tag, no sentinel — so no cell can fall outside [0, 1]. Earlier family files were accepted by the portal in this "zeros" form. The published spec says data outside the bounds is null/NaN, so a NaN-outside twin (identical inside the footprint) is also published: it passes the shared <code>gems.validate_submission</code> in full (<code>evidence/validator_shared_exp4_nan.json</code>), while the zeros file fails only that validator's strict NaN-only-outside check by design (<code>evidence/validator_shared_exp4_zeros.json</code>). Upload the zeros file first; if the portal objects to anything, upload the NaN twin instead. Both were re-read from disk and verified cell-for-cell identical inside the footprint. The local validator re-reads the bytes on disk and checks: single band, float32, 3730×3292, EPSG:32611, pinned transform, no NaN/inf anywhere, min ≥ 0, max ≤ 1, zero positive pixels outside the footprint, zero positive pixels on the mapped catalogue.</p>
 <h2>Rules you should know</h2>
 <ul><li>Weekly submission cap is shown on the submission page; promotion to a slot is a separate selector decision (<a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">rules PDF 96647</a>).</li>
 <li>Metric: distance-weighted Tversky index, α = 0.2 (FP), β = 0.8 (FN), 300 m triangular kernel (<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">problem description</a>).</li>
@@ -171,7 +173,7 @@ def build_howto(card: dict) -> str:
 </div>"""
 
 
-def build_experiments(exp1: dict, exp2: dict) -> str:
+def build_experiments(exp1: dict, exp2: dict, exp3: dict | None = None, exp4: dict | None = None) -> str:
     def table(exp, title):
         rows = ""
         for key, g in exp["gate"].items():
@@ -202,7 +204,9 @@ def build_experiments(exp1: dict, exp2: dict) -> str:
     return ("<h1>Experiments (HOLDOUT-DTI only; nothing here is a leaderboard score)</h1>"
             "<div class=card><p>Both experiments use the same hide-and-recover holdout (whole catalogue components withheld per quadrant with a 3 px feature collar, 12 px boundary erosion, visible faults masked pixel-exactly), the same emission rule at matched budgets, and a paired 20 km-block bootstrap for the CI. "
             "Experiment 1 trained stage 2 with the visible catalogue as both label and context source → <code>cat_dist</code> was 0 on every positive and took 95 % of the gain (IR-68-LEAK-01). Experiment 2 fixes this with hide-draw labels: withheld components are the positives and context comes from the remaining visible map.</p></div>"
-            + table(exp2, "Experiment 2 — hide-draw auto-context (the result that counts)")
+            + (table(exp4, "Experiment 4 — same recipe, FRESH seed 42, pre-registered stage 3 @ 25,000 (the result that counts)") if exp4 else "")
+            + (table(exp3, "Experiment 3 — ext channels + extended offsets + seed bagging, FRESH seed 31, pre-registered stage 3 @ 38,000 (NEGATIVE: far CI crossed 0)") if exp3 else "")
+            + table(exp2, "Experiment 2 — hide-draw auto-context, seed 20 (selection seed; superseded by Exp 3)")
             + table(e1, "Experiment 1 — naive stage-2 labels (negative result, kept as the leak record)"))
 
 
@@ -219,9 +223,13 @@ def main() -> int:
     card = json.loads((EV / "run_card.json").read_text())
     exp1 = json.loads((EV / "exp1_autocontext.json").read_text())
     exp2 = json.loads((EV / "exp2_autocontext_hidedraw.json").read_text())
+    _e3 = EV / "exp3_autocontext_ext_bagged.json"
+    exp3 = json.loads(_e3.read_text()) if _e3.is_file() else None
+    _e4 = EV / "exp4_autocontext_ext_bagged.json"
+    exp4 = json.loads(_e4.read_text()) if _e4.is_file() else None
     (DOCS / "index.html").write_text(page("Executive summary", build_index(card, exp2), "index.html"))
     (DOCS / "how-to-submit.html").write_text(page("How to submit", build_howto(card), "how-to-submit.html"))
-    (DOCS / "experiments.html").write_text(page("Experiments", build_experiments(exp1, exp2), "experiments.html"))
+    (DOCS / "experiments.html").write_text(page("Experiments", build_experiments(exp1, exp2, exp3, exp4), "experiments.html"))
     (DOCS / "leaderboard.html").write_text(page("Score ledger", build_ledger(), "leaderboard.html"))
     for src, dst, title in ((DOCS / "hypotheses.md", "hypotheses.html", "Hypotheses"),
                             (ROOT / "knowledge" / "01_why_02778_and_can_we_beat_it.md", "knowledge.html", "Why 0.2778"),
