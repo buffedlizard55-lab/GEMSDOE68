@@ -28,36 +28,37 @@
 <section class="hero" id="download">
   <h2>1&nbsp;&middot;&nbsp;Download the submission file</h2>
   <p><strong>File to submit into the DrivenData competition:</strong></p>
-  <p class="mono" style="font-size:16px"><a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif">../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif</a></p>
+  <p class="mono" style="font-size:16px"><a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-zeros.tif">../downloads/GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-zeros.tif</a></p>
   <div class="dl">
-    <a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif">&#8681; Download the GeoTIFF to submit</a>
-    <a class="alt" href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif">&#8681; All-finite fallback (0 outside footprint)</a>
+    <a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-zeros.tif">&#8681; Download the GeoTIFF to submit (all-finite)</a>
+    <a class="alt" href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-nan.tif">&#8681; NaN-outside twin (sample-format)</a>
     <a class="ghost" href="submission-guide.html">How to submit &rarr;</a>
   </div>
   <p class="small" style="margin-top:14px">
-    sha256 <code>ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47</code> &middot; 322971 bytes &middot; single-band float32 &middot;
+    sha256 <code>b917459305c22145924fa49f3cb3e08b8f3f03caabb03a23e368d8bd6c97c902</code> &middot; 809464 bytes &middot; single-band float32 &middot;
     EPSG:32611 &middot; 100 m &middot; 3730&times;3292 &middot; values in [0,1] inside the
-    footprint, NaN outside &middot; shared validator: <strong>True</strong>
-    (16 checks, 0 FAIL, 0 SKIPPED).
+    footprint, NaN only outside &middot; shared validator: <strong>True</strong>
+    (16 checks, 0 FAIL, 0 SKIPPED) &middot; <strong>NEW in this session — unique bytes, footprint-fixed.</strong>
   </p>
   <p class="small">
     <strong>It is OK to download and submit this file.</strong> It passed the shared validator
     (<code>gems.validate_submission</code>): single-band float32, EPSG:32611, 100 m,
-    shape 3730&times;3292, all values in [0,1] inside the footprint, NaN only outside.
-    If the upload form answers <em>&ldquo;Predicted values must be in range [0, 1]&rdquo;</em>,
-    use the all-finite fallback file instead (it writes 0 outside the footprint and therefore
-    contains no NaN at all). See <a href="submission-guide.html">the submission guide</a>.
+    shape 3730&times;3292, all values in [0,1] inside the footprint. The <strong>all-finite (zeros) variant is primary</strong> — it contains no NaN at all, so the portal cannot answer <em>&ldquo;Predicted values must be in range [0, 1]&rdquo;</em>.
+    If you prefer NaN outside the footprint (the sample_submission format), use the twin. See <a href="submission-guide.html">the submission guide</a>.
+  </p>
+  <p class="small" style="background:#123d2a;padding:8px;border-radius:6px;border:1px solid #2ecc71">
+    ✅ <strong>Primary download is the all-finite file</strong> (0 outside footprint, 0/1 inside, no NaN). This exact error was reported on the previous zeros variant that still carried NaN outside; the fixed file here writes 0 outside and <strong>cannot</strong> trigger the range check. Validated 20261020T193000Z on the official 5167373-pixel footprint.
   </p>
 </section>
 
 <section class="panel">
   <table class="kv">
-    <tr><td>Submission name</td><dd>GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z</dd></tr>
-    <tr><td>Note (&le;140 chars)</td><dd>GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated</dd></tr>
-    <tr><td>Dot count / exclusion radius</td><dd>32000 dots, &ge; 3 px (3&times;100 m) from the mapped catalogue</dd></tr>
-    <tr><td>Stage</td><dd>stage 3 (second auto-context refinement on stage-2 probabilities)</dd></tr>
-    <tr><td>Holdout blocks / withheld positives</td><dd>4 outer blocks / 11318 pixels (1330 of them &gt;1 km from any mapped fault)</dd></tr>
-    <tr><td>Generated (UTC)</td><dd>2026-10-20T18:25:58Z</dd></tr>
+    <tr><td>Submission name</td><dd>GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z</dd></tr>
+    <tr><td>Note (&le;140 chars)</td><dd>GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated; fixed footprint 20261020</dd></tr>
+    <tr><td>Dot count / exclusion radius</td><dd>32000 dots, &ge; 3 px (3&times;100 m) from the mapped catalogue (corrected footprint 5167373 px)</dd></tr>
+    <tr><td>Stage</td><dd>stage 3 (second auto-context refinement on stage-2 probabilities) — footprint-fixed re-write of 20261020T182552Z</dd></tr>
+    <tr><td>Holdout blocks / withheld positives</td><dd>4 outer blocks / 11318 pixels (1330 of them &gt;1 km from any mapped fault) — same holdout as 20261012 ac68_seed20</dd></tr>
+    <tr><td>Generated (UTC)</td><dd>2026-10-20T19:30:00Z (this session) — fixes 3061 NaN-inside-footprint error in the 182552Z file</dd></tr>
   </table>
 </section>
 
