@@ -9,7 +9,9 @@ Everything is anchored to the organizer grid read off the mirrored competition r
 * ``sample_submission.tif`` is float32 with nodata=NaN, finite exactly on the footprint.
 
 The footprint derived from ``labels != -1`` is *identical* to the footprint derived from
-``isfinite(sample_submission)``: 5,167,373 pixels (checked in tests/test_grid.py).
+``isfinite(sample_submission)``: 5,167,373 pixels (checked in tests/test_grid.py). Files can be
+placed in the documented ``data/`` layout or restored into ``.cache/gems_data/`` by
+``scripts/restore_data.py``; this module resolves either layout.
 """
 
 from __future__ import annotations
@@ -28,12 +30,28 @@ REPO = Path(__file__).resolve().parents[2]
 DATA = REPO / "data"
 BRIDGE = DATA / "bridge"
 OFFICIAL = DATA / "official"
+CACHE_DATA = REPO / ".cache" / "gems_data"
 WORK = REPO / "work"
 
-FEATURES_TIF = BRIDGE / "gems-geodawn-numerical-features.tif"
-LABELS_TIF = OFFICIAL / "labels.tif"
-EXISTING_TIF = OFFICIAL / "existing_faults.tif"
-SAMPLE_TIF = OFFICIAL / "sample_submission.tif"
+
+def _first_present(*paths: Path) -> Path:
+    """Prefer user-placed data files, then the SHA-pinned restore_data.py cache."""
+    return next((path for path in paths if path.exists()), paths[0])
+
+
+FEATURES_TIF = _first_present(
+    BRIDGE / "gems-geodawn-numerical-features.tif",
+    DATA / "training_features.tif",
+    CACHE_DATA / "training_features.tif",
+)
+LABELS_TIF = _first_present(
+    OFFICIAL / "labels.tif", DATA / "labels.tif", CACHE_DATA / "labels.tif")
+EXISTING_TIF = _first_present(
+    OFFICIAL / "existing_faults.tif", DATA / "existing_faults.tif",
+    CACHE_DATA / "existing_faults.tif")
+SAMPLE_TIF = _first_present(
+    OFFICIAL / "sample_submission.tif", DATA / "sample_submission.tif",
+    CACHE_DATA / "sample_submission.tif")
 
 FEATURES_SHA256 = "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5"
 LABELS_SHA256 = "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093"

@@ -30,11 +30,12 @@ def _load(name):
         return None
 
 
-def decide_verdict(gate_pass, far_pass, canary_flagged, validator_passed, drift_rows):
-    """Download offered ONLY if all-pixel AND >1 km gates >2 SE, canary clean,
-    validator PASS, and no literal lane-drift flag. Else negative."""
+def decide_verdict(gate_pass, far_pass, canary_flagged, validator_passed, drift_rows,
+                   holdout_linked=False, surface_check_passed=False, ci_available=False):
+    """Fail closed unless performance, provenance, CI, uniqueness and format all pass."""
     cleared = bool(gate_pass and far_pass and not canary_flagged
-                   and validator_passed and not drift_rows)
+                   and validator_passed and not drift_rows and holdout_linked
+                   and surface_check_passed and ci_available)
     return ("promote" if cleared else "negative"), cleared
 
 
@@ -43,6 +44,8 @@ def main() -> int:
     emis = _load("ac68_emission.json")
     lane = _load("ac68_lane_check.json")
     dnull = _load("ac68_lane_density_null.json")
+    validation_recheck = _load("ac68_validation_recheck.json")
+    surface_check = _load("ac68_lane_surface_check.json")
 
     gate = (exp or {}).get("gate_all_pixels", {})
     gate_far = (exp or {}).get("gate_far_gt_1km", {})
@@ -69,6 +72,13 @@ def main() -> int:
     files = (emis or {}).get("files", {})
     primary = files.get("nan") or {}
     secondary = files.get("zeros") or {}
+    fresh_validation_matches = bool(
+        validation_recheck
+        and validation_recheck.get("sha256") == primary.get("sha256")
+        and validation_recheck.get("passed") is True
+        and not validation_recheck.get("skipped_checks_mean_unverified")
+    )
+    validator_source = validation_recheck if fresh_validation_matches else primary
 
     comps = (lane or {}).get("comparisons", [])
     max_corr = max((r.get("absolute_spearman_rho") or 0) for r in comps) if comps else None
@@ -82,9 +92,40 @@ def main() -> int:
                      "exact_duplicate": r.get("exact_duplicate")}
                     for r in comps if r.get("drift")]
 
+    # The latest emission and the holdout evidence are separate artefacts. Do not
+    # imply the released surface was itself evaluated unless their identity is pinned.
+    emission_time = (emis or {}).get("generated_utc")
+    holdout_time = (exp or {}).get("generated_utc")
+    emitted_path = primary.get("path")
+    emitted_sha = primary.get("sha256")
+    lane_matches_emission = bool(
+        lane and lane.get("candidate_sha256") == emitted_sha
+        and lane.get("candidate") == Path(emitted_path or "").name)
+    holdout_linked = bool(
+        exp and emitted_sha
+        and exp.get("prediction_surface_sha256") == emitted_sha)
+    surface_check_passed = bool(
+        surface_check and surface_check.get("stage") == "surface"
+        and surface_check.get("candidate_sha256")
+        and surface_check.get("verdict", "").startswith("no drift"))
+    ci = (exp or {}).get("ci95")
+    ci_available = bool(isinstance(ci, dict) and ci.get("lower") is not None
+                        and ci.get("upper") is not None)
+
     card = {
         "schema": "gemsdoe68-run-card/1",
-        "generated_utc": (exp or {}).get("generated_utc"),
+        "generated_utc": emission_time or holdout_time,
+        "holdout_evidence_generated_utc": holdout_time,
+        "emission_evidence_generated_utc": emission_time,
+        "holdout_emission_linkage": {
+            "candidate_sha256_matches_lane_check": lane_matches_emission,
+            "holdout_run_sha256_for_emitted_surface": (exp or {}).get("prediction_surface_sha256"),
+            "holdout_hash_linked": holdout_linked,
+            "preplacement_surface_check_passed": surface_check_passed,
+            "paired_95ci_available": ci_available,
+            "status": ("hash-pinned holdout and pre-placement check recorded" if holdout_linked and surface_check_passed
+                       else "not established; holdout evidence is for the stage configuration, not a hash-pinned prediction surface; no pre-placement surface check is recorded")
+        },
         "lane": "auto-context stacked refinement (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436)",
         "hypothesis": (
             "A second classifier trained on the first classifier's probability maps plus the raw "
@@ -149,26 +190,24 @@ def main() -> int:
             "literal_verdict": (lane or {}).get("verdict"),
             "rasters_flagged_by_literal_rule": drift_rows,
             "flagged_detail": drift_reason,
-            "density_null_control": dnull,
+            "density_null_control_historical": {
+                "evidence": dnull,
+                "applies_to_latest_candidate": False
+            },
             "interpretation": (
-                "The literal rule fires on exactly one registry raster, "
-                "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif, which "
-                "carries 311617 dots (25.4 dots per 1000 footprint cells). The "
-                "density-null control draws 100 random 20000-dot sets from the same "
-                "eligible region and scores them with the same rule: the null overlap "
-                "is 0.958 +- 0.001, so 95.8% of ANY dot set, related or not, lands "
-                "within 3 px of that raster's dots. The observed 0.9948 is 3.6 "
-                "percentage points above that baseline, and the rank correlation with "
-                "that raster is 0.004. No registry raster is an exact pixel duplicate. "
-                "The observed overlap exceeds that null by 27.2 SD, so it cannot be "
-                "dismissed as a pure density artefact; under the literal protocol "
-                "rule the flag stands as LANE DRIFT and the verdict is negative "
-                "(IR-28/IR-31). The low rank correlation is context, not a pass."),
+                "The final candidate's same-file lane check flags a literal >70% dot "
+                "overlap with one registry raster. No exact byte match is reported. "
+                "The older density-null experiment concerns a different 20000-dot "
+                "candidate and is not treated as an explanation or pass for this file. "
+                "Per protocol this flag is a stop condition."),
         },
         "raster": {
             "primary_path": primary.get("path"),
             "primary_sha256": primary.get("sha256"),
             "primary_bytes": primary.get("bytes"),
+            "candidate_stage": (emis or {}).get("emission_params", {}).get("stage"),
+            "candidate_dot_count": (emis or {}).get("dot_count"),
+            "emission_footprint_cells": (emis or {}).get("footprint_cells"),
             "fallback_path": secondary.get("path"),
             "fallback_sha256": secondary.get("sha256"),
             "dot_count": (emis or {}).get("dot_count"),
@@ -177,10 +216,14 @@ def main() -> int:
         },
         "validator_output": {
             "tool": "gems.validate_submission (shared, unmodified)",
-            "passed": primary.get("validator_passed"),
-            "n_checks": primary.get("n_checks"),
-            "failures": primary.get("validator_failures"),
-            "skipped": primary.get("validator_skipped"),
+            "evidence_class": (validation_recheck or {}).get("evidence_class") if fresh_validation_matches else "prior emission evidence",
+            "generated_utc": (validation_recheck or {}).get("generated_utc") if fresh_validation_matches else (emis or {}).get("generated_utc"),
+            "passed": (validator_source or {}).get("passed", (validator_source or {}).get("validator_passed")),
+            "n_checks": len((validator_source or {}).get("checks", [])) or (validator_source or {}).get("n_checks"),
+            "failures": ([c["check"] for c in validation_recheck.get("checks", []) if c.get("status") == "FAIL"]
+                         if fresh_validation_matches else primary.get("validator_failures")),
+            "skipped": ([c["check"] for c in validation_recheck.get("checks", []) if c.get("status") == "SKIPPED"]
+                        if fresh_validation_matches else primary.get("validator_skipped")),
         },
         "submission_name": (emis or {}).get("files", {}).get("nan", {}).get(
             "path", "").split("/")[-1].replace("-nan.tif", "") or None,
@@ -194,9 +237,19 @@ def main() -> int:
             "faults, not discovery of genuinely unmapped ones.",
             "The registry of prior rasters is the one committed in registry/rasters; completeness "
             "is not certified by the organisers.",
-            "The 3-px dot-overlap rule is degenerate for this family: the footprint contains cells "
-            "that lie within 3 px of some registry raster's dots almost everywhere, so the rule is "
-            "reported as measured and interpreted with that caveat rather than silently passed.",
+            "No pre-placement surface uniqueness check is present in this checkout's evidence; "
+            "the final emitted raster check is present and fires the literal overlap rule, so the "
+            "pre-placement protocol requirement is unverified.",
+            "The holdout run is not hash-pinned to the latest emitted GeoTIFF; the reported holdout "
+            "is method/configuration evidence, not proof of this exact file's performance.",
+            "The emission's 5164312-cell channel-stack domain is 1540 cells smaller than the "
+            "5165852-cell official submission footprint. The emitter explicitly fills those "
+            "official-only cells with zero; the independent validator confirms the official footprint "
+            "has no NaN inside. This is an intentional domain difference, not a failed format check.",
+            "The paired physical-spatial-block 95% CI requested by protocol was not computed; the "
+            "run card explicitly labels it not computed.",
+            "The same-file literal 3-px overlap rule fires against one dense registry raster; under "
+            "the lane protocol this is a stop condition, regardless of any density-null interpretation.",
         ],
         "budget": {
             "experiments_run": 1,
@@ -240,16 +293,38 @@ def main() -> int:
         }
         break
 
+    receipt_cells = (card.get("receipt") or {}).get("footprint_cells")
+    emission_cells = card["raster"].get("emission_footprint_cells")
+    card["raster"]["receipt_footprint_cells"] = receipt_cells
+    card["raster"]["official_minus_emission_footprint_cells"] = (
+        receipt_cells - emission_cells
+        if isinstance(receipt_cells, int) and isinstance(emission_cells, int)
+        else None
+    )
     card["gate_all_pixels_met"] = gate_pass
     card["gate_far_gt_1km_met"] = far_pass
     card["leakage_canary_clean"] = not flagged
-    card["validator_passed"] = bool(primary.get("validator_passed"))
-    verdict, cleared = decide_verdict(gate_pass, far_pass, flagged,
-                                      bool(primary.get("validator_passed")), drift_rows)
+    validator_passed = bool(validator_source.get("passed", validator_source.get("validator_passed")))
+    card["validator_passed"] = validator_passed
+    card["release_prerequisites"] = {
+        "all_pixel_holdout_gt_2se": gate_pass,
+        "far_gt_1km_holdout_gt_2se": far_pass,
+        "leakage_canary_clean": not flagged,
+        "validator_passed_no_skips": validator_passed,
+        "no_registry_drift": not drift_rows,
+        "holdout_hash_linked_to_candidate": holdout_linked,
+        "preplacement_surface_check_passed": surface_check_passed,
+        "paired_95ci_available": ci_available,
+    }
+    verdict, cleared = decide_verdict(
+        gate_pass, far_pass, flagged, validator_passed, drift_rows,
+        holdout_linked=holdout_linked,
+        surface_check_passed=surface_check_passed,
+        ci_available=ci_available)
     card["verdict"] = verdict
     card["download_cleared"] = cleared
     card["download_instruction"] = ("OK to download and submit" if cleared else
-                                    "DO NOT DOWNLOAD OR SUBMIT — negative result; gate not met")
+                                    "DO NOT DOWNLOAD OR SUBMIT — negative result; release prerequisites not met")
     card["caveats"] = [
         "The preregistered gate is met on the all-pixel stratum "
         "(stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60, positive on all 4 outer "

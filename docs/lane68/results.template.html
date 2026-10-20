@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE68 lane &mdash; Results</title>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header>
+  <h1>Results</h1>
+  <span class="sub">every number is a local HOLDOUT-DTI measurement</span>
+  <nav>
+    <a href="index.html">Summary</a>
+    <a href="executive-summary.html">Executive summary</a>
+    <a href="results.html">Results</a>
+    <a href="hypotheses.html">Hypotheses</a>
+    <a href="research.html">Research</a>
+    <a href="run-card.html">Run card</a>
+  </nav>
+</header>
+<main>
+{{CURRENT_STATUS}}
+<section class="panel">
+  <h2>Per-outer-block holdout</h2>
+  <p class="small">Each row is one spatially blocked outer fold: a quadrant of the footprint with
+  whole catalogue segments withheld inside a 1.2 km eroded domain, a 600 m buffer between the four
+  inner blocks used for the out-of-fold probabilities, and visible fault pixels masked
+  pixel-exactly before scoring.</p>
+  <table>
+    <tr><th>Cell</th><th class="num">withheld px</th><th class="num">&gt;1 km px</th>
+        <th class="num">DTI s1</th><th class="num">DTI s2</th><th class="num">DTI s3</th>
+        <th class="num">far s1</th><th class="num">far s2</th><th class="num">far s3</th></tr>
+    <tr><td class='mono'>draw20_foldNW_all</td><td class='num'>1925</td><td class='num'>278</td><td class='num'>0.1054</td><td class='num'>0.1643</td><td class='num'>0.1542</td><td class='num'>0.0013</td><td class='num'>0.0072</td><td class='num'>0.0058</td></tr><tr><td class='mono'>draw20_foldNE_all</td><td class='num'>2360</td><td class='num'>399</td><td class='num'>0.1310</td><td class='num'>0.2106</td><td class='num'>0.2182</td><td class='num'>0.0069</td><td class='num'>0.0253</td><td class='num'>0.0284</td></tr><tr><td class='mono'>draw20_foldSW_all</td><td class='num'>3780</td><td class='num'>343</td><td class='num'>0.1294</td><td class='num'>0.1879</td><td class='num'>0.1730</td><td class='num'>0.0000</td><td class='num'>0.0014</td><td class='num'>0.0019</td></tr><tr><td class='mono'>draw20_foldSE_all</td><td class='num'>3253</td><td class='num'>310</td><td class='num'>0.1522</td><td class='num'>0.1977</td><td class='num'>0.2021</td><td class='num'>0.0014</td><td class='num'>0.0053</td><td class='num'>0.0070</td></tr>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Pooled holdout DTI</h2>
+  <table>
+    <tr><th>Model</th><th class="num">Pooled holdout DTI</th></tr>
+    <tr><td>Stage 1 &mdash; per-pixel LightGBM</td><td class="num">0.1301</td></tr>
+    <tr><td><strong>Stage 2 &mdash; auto-context (1st refinement; no candidate cleared)</strong></td><td class="num">0.1904</td></tr>
+    <tr><td>Stage 3 &mdash; auto-context (2nd refinement; emitted candidate not cleared)</td><td class="num">0.1868</td></tr>
+  </table>
+  <p class="small">&alpha; = 0.2, &beta; = 0.8, 300 m triangular kernel, evaluator
+  <code>gems57.metric.dti_binary</code> / <code>gems57.holdout</code>
+  (pooled hide-and-recover). 11318 withheld positive pixels in total, 1330 of them
+  more than 1 km from any visible mapped fault.</p>
+</section>
+
+<section class="panel" id="gate">
+  <h2>Gate: stage 2 / 3 vs stage 1</h2>
+  <table>
+    <tr><th>Comparison</th><th class="num">mean &Delta;DTI</th><th class="num">SE</th>
+        <th class="num">t</th><th>&gt;2 SE?</th></tr>
+    <tr><td class='mono'>stage2_vs_stage1</td><td class='num'>0.0607</td><td class='num'>0.0070</td><td class='num'>8.60</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>stage3_vs_stage1</td><td class='num'>0.0574</td><td class='num'>0.0101</td><td class='num'>5.71</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>stage3_vs_stage2</td><td class='num'>-0.0033</td><td class='num'>0.0055</td><td class='num'>-0.60</td><td><span class="pill fail">FAIL</span></td></tr><tr><td class='mono'>stage2_vs_stage1</td><td class='num'>0.0074</td><td class='num'>0.0038</td><td class='num'>1.97</td><td><span class="pill fail">FAIL</span></td></tr><tr><td class='mono'>stage3_vs_stage1</td><td class='num'>0.0084</td><td class='num'>0.0044</td><td class='num'>1.88</td><td><span class="pill fail">FAIL</span></td></tr><tr><td class='mono'>stage3_vs_stage2</td><td class='num'>0.0010</td><td class='num'>0.0010</td><td class='num'>0.99</td><td><span class="pill fail">FAIL</span></td></tr>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Emission-parameter sweep</h2>
+  <table>
+    <tr><th>Stage</th><th class="num">radius (px)</th><th class="num">dots</th><th class="num">mean holdout DTI</th></tr>
+    <tr><td>stage2</td><td class='num'>3</td><td class='num'>20000</td><td class='num'>0.2403</td></tr><tr><td>stage3</td><td class='num'>3</td><td class='num'>20000</td><td class='num'>0.2332</td></tr><tr><td>stage2</td><td class='num'>0</td><td class='num'>20000</td><td class='num'>0.2090</td></tr><tr><td>stage3</td><td class='num'>0</td><td class='num'>20000</td><td class='num'>0.2061</td></tr><tr><td>stage2</td><td class='num'>3</td><td class='num'>32000</td><td class='num'>0.1956</td></tr><tr><td>stage1</td><td class='num'>3</td><td class='num'>20000</td><td class='num'>0.1919</td></tr><tr><td>stage3</td><td class='num'>3</td><td class='num'>32000</td><td class='num'>0.1906</td></tr><tr><td>stage2</td><td class='num'>0</td><td class='num'>32000</td><td class='num'>0.1901</td></tr><tr><td>stage3</td><td class='num'>0</td><td class='num'>32000</td><td class='num'>0.1869</td></tr><tr><td>stage2</td><td class='num'>0</td><td class='num'>44090</td><td class='num'>0.1705</td></tr><tr><td>stage3</td><td class='num'>0</td><td class='num'>44090</td><td class='num'>0.1668</td></tr><tr><td>stage1</td><td class='num'>3</td><td class='num'>32000</td><td class='num'>0.1658</td></tr>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Leakage canary</h2>
+  <p class="small">Each stage-1 channel alone, as a detector of withheld fault pixels versus
+  training-domain negatives.</p>
+  <table>
+    <tr><th>Channel</th><th class="num">mean AUC</th><th class="num">max AUC</th></tr>
+    <tr><td class='mono'>geod_2ndinv</td><td class='num'>0.5677</td><td class='num'>0.6115</td></tr><tr><td class='mono'>geod_shearrate</td><td class='num'>0.5656</td><td class='num'>0.6106</td></tr><tr><td class='mono'>lappos_max</td><td class='num'>0.5847</td><td class='num'>0.6040</td></tr><tr><td class='mono'>ieq_n100a15</td><td class='num'>0.5669</td><td class='num'>0.6004</td></tr><tr><td class='mono'>lapneg_max</td><td class='num'>0.5802</td><td class='num'>0.5966</td></tr><tr><td class='mono'>relief</td><td class='num'>0.5754</td><td class='num'>0.5925</td></tr><tr><td class='mono'>step_max</td><td class='num'>0.5748</td><td class='num'>0.5875</td></tr><tr><td class='mono'>ex_max</td><td class='num'>0.5725</td><td class='num'>0.5869</td></tr><tr><td class='mono'>det_elev_gmag</td><td class='num'>0.5688</td><td class='num'>0.5845</td></tr><tr><td class='mono'>deq_n100a15</td><td class='num'>0.5485</td><td class='num'>0.5781</td></tr><tr><td class='mono'>det_elev_slope</td><td class='num'>0.5611</td><td class='num'>0.5756</td></tr><tr><td class='mono'>ex_mean</td><td class='num'>0.5595</td><td class='num'>0.5735</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="lane">
+  <h2>Uniqueness vs the registry</h2>
+  <table>
+    <tr><th>Registry raster</th><th class="num">|Spearman|</th><th class="num">dot overlap</th><th>drift?</th></tr>
+    {{LANE_ROWS}}
+  </table>
+  <p class="small">Final emitted-raster check over the committed registry: max |Spearman| = {{LANE_MAX_RHO}}; max 3-px dot overlap = {{LANE_MAX_OVERLAP}}. Thresholds: |Spearman| &gt; 0.90 or &gt; 70% overlap; exact byte matches are also checked. The current flagged overlap is a protocol stop condition. No pre-placement continuous-surface check is recorded.</p>
+</section>
+
+</main>
+<footer class="footer">GEMSDOE68</footer>
+</body>
+</html>

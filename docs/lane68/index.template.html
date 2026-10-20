@@ -23,31 +23,9 @@
 </header>
 <main>
 
-<!-- ============================ DOWNLOAD FIRST ============================ -->
-<section class="hero" id="download" style="border:3px solid #b03a2e">
-  <h2>1&nbsp;&middot;&nbsp;&#9940; DO NOT DOWNLOAD OR SUBMIT &mdash; NEGATIVE RESULT</h2>
-  <p><strong>This candidate is NOT cleared.</strong> The preregistered gate requires stage&nbsp;2
-  to beat stage&nbsp;1 by &gt;2&nbsp;SE <em>including on pixels &gt;1&nbsp;km from any mapped
-  fault</em>; that stratum scored t&nbsp;=&nbsp;1.97 (FAIL), and the literal 3-px lane-drift rule
-  also fires (IR-28/IR-30). Per the parallel-run protocol the download is therefore
-  <strong>not offered</strong>. The raster is retained in <code>docs/downloads/</code> only as an
-  auditable negative-result artefact (filename and sha256 in the run card); do not upload it.
-  When a future candidate passes every gate, its one-click download will appear here.</p>
-  <div class="dl">
-    <a class="ghost" href="executive-summary.html">Why it is not cleared &amp; how a cleared file will be submitted &rarr;</a>
-  </div>
-  <p class="small" style="margin-top:14px">
-    sha256 <code>{{SHA256}}</code> &middot; {{BYTES}} bytes &middot; single-band float32 &middot;
-    EPSG:32611 &middot; 100 m &middot; 3730&times;3292 &middot; values in [0,1] inside the
-    footprint, NaN outside &middot; shared validator: <strong>{{VALIDATOR}}</strong>
-    ({{N_CHECKS}} checks).
-  </p>
-  <p class="small">
-    If the upload form answers <em>&ldquo;Predicted values must be in range [0, 1]&rdquo;</em>,
-    use the all-finite fallback file instead (it writes 0 outside the footprint and therefore
-    contains no NaN at all). See <a href="submission-guide.html">the submission guide</a>.
-  </p>
-</section>
+<!-- The release action is rendered from the machine-readable run card. A negative
+     card MUST NOT produce a GeoTIFF download link. -->
+{{RELEASE_STATUS_BLOCK}}
 
 <section class="panel">
   <table class="kv">
@@ -87,12 +65,14 @@
   <p class="small">Pooled distance-weighted Tversky index over the withheld segments of all
   outer blocks, &alpha;=0.2, &beta;=0.8, 300 m triangular kernel, evaluator
   <code>gems57.metric.dti_binary</code> / <code>gems57.holdout</code>
-  (pooled hide-and-recover, label-blind quadrants).</p>
+  (pooled hide-and-recover, label-blind quadrants; evidence generated 2026-10-12, 11,318
+  withheld positives). The paired physical-spatial-block 95% CI was not computed. These model-level
+  results are not hash-linked to the 2026-10-20 emitted TIFF and are not a score for that file.</p>
   <table>
     <tr><th>Model</th><th class="num">Pooled holdout DTI</th></tr>
     <tr><td>Stage 1 &mdash; per-pixel LightGBM on the 45-channel stack</td><td class="num">{{POOLED_S1}}</td></tr>
-    <tr><td><strong>Stage 2 &mdash; auto-context (1st refinement, SHIPPED)</strong></td><td class="num">{{POOLED_S2}}</td></tr>
-    <tr><td>Stage 3 &mdash; auto-context (2nd refinement, not shipped)</td><td class="num">{{POOLED_S3}}</td></tr>
+    <tr><td><strong>Stage 2 &mdash; auto-context (1st refinement; HOLDOUT-DTI model result, no release cleared)</strong></td><td class="num">{{POOLED_S2}}</td></tr>
+    <tr><td>Stage 3 &mdash; auto-context (2nd refinement; current emitted candidate, not cleared)</td><td class="num">{{POOLED_S3}}</td></tr>
   </table>
 </section>
 
@@ -125,9 +105,8 @@
 <!-- ============================ EMISSION SWEEP ============================ -->
 <h2>6&nbsp;&middot;&nbsp;Emission-parameter sweep (holdout)</h2>
 <section class="panel">
-  <p class="small">Mean holdout DTI over outer blocks for each combination of shipped stage,
-  minimum distance from the mapped catalogue, and dot budget. The shipped parameters are the
-  best-performing combination that was <em>not</em> selected by looking at the submission grid.</p>
+  <p class="small">HOLDOUT-DTI parameter sweep over outer blocks. These retrospective model-selection
+  measurements do not clear the latest emitted TIFF; no submission slot is selected here.</p>
   <table>
     <tr><th>Stage</th><th class="num">radius (px)</th><th class="num">dots</th><th class="num">mean holdout DTI</th></tr>
     {{SWEEP_ROWS}}

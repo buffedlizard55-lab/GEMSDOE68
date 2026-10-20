@@ -9,6 +9,10 @@ def test_current_evidence_is_negative():
     assert m.decide_verdict(True, True, [], True, ["dense.tif"]) == ("negative", False)
 
 def test_only_full_pass_promotes():
-    assert m.decide_verdict(True, True, [], True, []) == ("promote", True)
-    assert m.decide_verdict(True, True, ["leaky"], True, []) == ("negative", False)
-    assert m.decide_verdict(True, True, [], False, []) == ("negative", False)
+    # A score alone is insufficient: the exact holdout raster, pre-placement
+    # uniqueness check, and paired CI must also be present and pass.
+    provenance = {"holdout_linked": True, "surface_check_passed": True, "ci_available": True}
+    assert m.decide_verdict(True, True, [], True, [], **provenance) == ("promote", True)
+    assert m.decide_verdict(True, True, ["leaky"], True, [], **provenance) == ("negative", False)
+    assert m.decide_verdict(True, True, [], False, [], **provenance) == ("negative", False)
+    assert m.decide_verdict(True, True, [], True, []) == ("negative", False)

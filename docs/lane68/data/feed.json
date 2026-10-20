@@ -1,11 +1,14 @@
 {
- "generated_utc": "2026-10-12T03:28:09Z",
+ "generated_utc": "2026-10-20T18:25:58Z",
+ "holdout_evidence_generated_utc": "2026-10-12T03:28:09Z",
  "site": "GEMSDOE68",
  "lane": "auto-context stacked refinement (Tu, CVPR 2008)",
  "status": "negative",
- "submission": "GEMSDOE68-AC-stack2",
- "download": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
- "sha256": "cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf",
+ "submission": "GEMSDOE68-AC-stack3-r3-N32000",
+ "download": null,
+ "candidate_artifact": "docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif",
+ "download_cleared": false,
+ "sha256": "ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47",
  "holdout_dti": {
   "stage1": 0.13014032809345344,
   "stage2": 0.19044851256926598,
@@ -105,7 +108,7 @@
    }
   }
  },
- "dot_count": 20000,
+ "dot_count": 32000,
  "sources": [
   "https://www.drivendata.org/competitions/306/competition-doe-gems/",
   "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",

@@ -20,7 +20,7 @@
   </nav>
 </header>
 <main>
-
+<section class="panel" style="border:3px solid #9e2a2b;background:#fff2f2;color:#411"><strong>NEGATIVE RESULT — DO NOT DOWNLOAD OR SUBMIT.</strong> The far-stratum holdout gate and/or lane-uniqueness gate failed. The emitted artifact is not hash-linked to the holdout prediction surface. No download is offered.</section>
 <section class="panel">
   <h2>Per-outer-block holdout</h2>
   <p class="small">Each row is one spatially blocked outer fold: a quadrant of the footprint with
@@ -40,8 +40,8 @@
   <table>
     <tr><th>Model</th><th class="num">Pooled holdout DTI</th></tr>
     <tr><td>Stage 1 &mdash; per-pixel LightGBM</td><td class="num">0.1301</td></tr>
-    <tr><td><strong>Stage 2 &mdash; auto-context (1st refinement, SHIPPED)</strong></td><td class="num">0.1904</td></tr>
-    <tr><td>Stage 3 &mdash; auto-context (2nd refinement, not shipped)</td><td class="num">0.1868</td></tr>
+    <tr><td><strong>Stage 2 &mdash; auto-context (1st refinement; no candidate cleared)</strong></td><td class="num">0.1904</td></tr>
+    <tr><td>Stage 3 &mdash; auto-context (2nd refinement; emitted candidate not cleared)</td><td class="num">0.1868</td></tr>
   </table>
   <p class="small">&alpha; = 0.2, &beta; = 0.8, 300 m triangular kernel, evaluator
   <code>gems57.metric.dti_binary</code> / <code>gems57.holdout</code>
@@ -80,10 +80,9 @@
   <h2>Uniqueness vs the registry</h2>
   <table>
     <tr><th>Registry raster</th><th class="num">|Spearman|</th><th class="num">dot overlap</th><th>drift?</th></tr>
-    <tr><td class='mono'>19GEMSDOE__h19-4-multiline-corroborated.tif</td><td class='num'>0.054</td><td class='num'>0.663</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>19GEMSDOE__h19-5-powerlaw-budget-multiline.tif</td><td class='num'>0.054</td><td class='num'>0.654</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__faultzone-anatomy-60000px-prev.tif</td><td class='num'>0.007</td><td class='num'>0.207</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__h57-anatomy-enechelon-zeros.tif</td><td class='num'>0.001</td><td class='num'>0.056</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__h57r2-shipped8-all-flank0-20261009T180433Z-90e532947353-zeros.tif</td><td class='num'>0.003</td><td class='num'>0.080</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__parallel-12000dots-zeros.tif</td><td class='num'>0.000</td><td class='num'>0.017</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE24__h25-1-dotted-h19-5-d1-5.tif</td><td class='num'>0.032</td><td class='num'>0.625</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE25__dotted-h19-5-d2-8.tif</td><td class='num'>0.026</td><td class='num'>0.606</td><td><span class="pill pass">PASS</span></td></tr>
+    <tr><td class='mono'>gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif</td><td class='num'>0.021</td><td class='num'>0.985</td><td><span class="pill fail">FAIL</span></td></tr><tr><td class='mono'>57GEMSDOE__h57r2-shipped8-all-flank0-20261009T180433Z-90e532947353-zeros.tif</td><td class='num'>0.086</td><td class='num'>0.503</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE27__topo-gap-closure-t-v2-on-d1-5.tif</td><td class='num'>0.021</td><td class='num'>0.438</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>19GEMSDOE__h19-4-multiline-corroborated.tif</td><td class='num'>0.032</td><td class='num'>0.417</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>19GEMSDOE__h19-5-powerlaw-budget-multiline.tif</td><td class='num'>0.032</td><td class='num'>0.411</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>gemsdoe32-h32d-submodular-multipysics-46090-20261004T183200Z-4de30601-zeros.tif</td><td class='num'>0.016</td><td class='num'>0.397</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>gemsdoe32-h32d-submodular-multipysics-46090-20261004T183200Z-4de30601-nan.tif</td><td class='num'>0.016</td><td class='num'>0.397</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>gemsdoe32-h32a-dip-projected-step-46090-20261004T183200Z-838fcd84-zeros.tif</td><td class='num'>0.015</td><td class='num'>0.392</td><td><span class="pill pass">PASS</span></td></tr>
   </table>
-  <p class="small">Thresholds: |Spearman| &gt; 0.90 or &gt; 70 % of dots within 3 px of one
-  raster's dots. Exact byte matches are also checked.</p>
+  <p class="small">Final emitted-raster check over the committed registry: max |Spearman| = 0.0861; max 3-px dot overlap = 0.9847. Thresholds: |Spearman| &gt; 0.90 or &gt; 70% overlap; exact byte matches are also checked. The current flagged overlap is a protocol stop condition. No pre-placement continuous-surface check is recorded.</p>
 </section>
 
 </main>

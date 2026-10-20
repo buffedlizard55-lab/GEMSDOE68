@@ -1,6 +1,16 @@
 {
  "schema": "gemsdoe68-run-card/1",
- "generated_utc": "2026-10-12T03:28:09Z",
+ "generated_utc": "2026-10-20T18:25:58Z",
+ "holdout_evidence_generated_utc": "2026-10-12T03:28:09Z",
+ "emission_evidence_generated_utc": "2026-10-20T18:25:58Z",
+ "holdout_emission_linkage": {
+  "candidate_sha256_matches_lane_check": true,
+  "holdout_run_sha256_for_emitted_surface": null,
+  "holdout_hash_linked": false,
+  "preplacement_surface_check_passed": false,
+  "paired_95ci_available": false,
+  "status": "not established; holdout evidence is for the stage configuration, not a hash-pinned prediction surface; no pre-placement surface check is recorded"
+ },
  "lane": "auto-context stacked refinement (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436)",
  "hypothesis": "A second classifier trained on the first classifier's probability maps plus the raw channels can recover withheld fault segments better than the per-pixel model alone, because the stacked features expose continuity, parallelism and en-echelon spacing that a per-pixel model cannot see.",
  "mechanism": "Stage 1 LightGBM scores every 100 m cell from 44 fold-invariant channels plus 11 catalogue-context features derived only from the visible faults. Stage 2/3 LightGBM adds stage-n probabilities sampled at +/-1,2,3,5,8,12,15 px along and across the local structure-tensor orientation, oriented box means at several half-widths (multi-scale anisotropic smooths), two isotropic smooths, the 21 raw gradient/tilt/scarp channels and the 11 catalogue-context features recomputed with the target block's labels masked. Out-of-fold probabilities come from 4 inner spatial blocks inside each outer training domain (600 m buffer); the outer folds are 4 label-blind quadrants with whole catalogue segments withheld inside a 1.2 km eroded domain.",
@@ -96,36 +106,46 @@
     "exact_duplicate": false
    }
   ],
-  "density_null_control": {
-   "candidate": "GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
-   "registry": "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
-   "candidate_dots": 20000,
-   "registry_dots": 311617,
-   "registry_dot_density_per_1000_cells": 25.3777,
-   "observed_overlap_within_3px": 0.9948,
-   "overlap_limit": 0.7,
-   "literal_rule_fires": true,
-   "null_draws": 100,
-   "null_mean_overlap": 0.958387,
-   "null_sd_overlap": 0.0013380885620914668,
-   "null_p95_overlap": 0.960265,
-   "observed_minus_null_sd": 27.212698046746304,
-   "interpretation": "the observed overlap exceeds the random-null level; treat as genuine overlap"
+  "density_null_control_historical": {
+   "evidence": {
+    "candidate": "GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
+    "registry": "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
+    "candidate_dots": 20000,
+    "registry_dots": 311617,
+    "registry_dot_density_per_1000_cells": 25.3777,
+    "observed_overlap_within_3px": 0.9948,
+    "overlap_limit": 0.7,
+    "literal_rule_fires": true,
+    "null_draws": 100,
+    "null_mean_overlap": 0.958387,
+    "null_sd_overlap": 0.0013380885620914668,
+    "null_p95_overlap": 0.960265,
+    "observed_minus_null_sd": 27.212698046746304,
+    "interpretation": "the observed overlap exceeds the random-null level; treat as genuine overlap"
+   },
+   "applies_to_latest_candidate": false
   },
-  "interpretation": "The literal rule fires on exactly one registry raster, gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif, which carries 311617 dots (25.4 dots per 1000 footprint cells). The density-null control draws 100 random 20000-dot sets from the same eligible region and scores them with the same rule: the null overlap is 0.958 +- 0.001, so 95.8% of ANY dot set, related or not, lands within 3 px of that raster's dots. The observed 0.9948 is 3.6 percentage points above that baseline, and the rank correlation with that raster is 0.004. No registry raster is an exact pixel duplicate. The rule is therefore degenerate against this one dense raster and its firing is a density artefact, not duplication. Recorded as IR-28 and shipped with that caveat rather than silently passed."
+  "interpretation": "The final candidate's same-file lane check flags a literal >70% dot overlap with one registry raster. No exact byte match is reported. The older density-null experiment concerns a different 20000-dot candidate and is not treated as an explanation or pass for this file. Per protocol this flag is a stop condition."
  },
  "raster": {
   "primary_path": "docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif",
   "primary_sha256": "ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47",
   "primary_bytes": 322971,
+  "candidate_stage": "stage3",
+  "candidate_dot_count": 32000,
+  "emission_footprint_cells": 5164312,
   "fallback_path": "docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif",
   "fallback_sha256": "712ef781e870a9d5cb42142bd72490dfc39cdb2b23cf4f6087d9dcc40d4ec194",
   "dot_count": 32000,
   "emission_radius_px": 3,
-  "emission_budget": 32000
+  "emission_budget": 32000,
+  "receipt_footprint_cells": 5165852,
+  "official_minus_emission_footprint_cells": 1540
  },
  "validator_output": {
   "tool": "gems.validate_submission (shared, unmodified)",
+  "evidence_class": "LOCAL-VALIDATOR-RECHECK (not organizer confirmation)",
+  "generated_utc": "2026-10-20T19:41:43Z",
   "passed": true,
   "n_checks": 16,
   "failures": [],
@@ -134,12 +154,16 @@
  "submission_name": "GEMSDOE68-AC-stack3-r3-N32000",
  "note": "GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated",
  "note_chars": 98,
- "verdict": "promote-with-caveats",
+ "verdict": "negative",
  "limitations": [
   "The scored truth is login-walled; no ORGANIZER-CONFIRMED score exists for any raster produced in this checkout.",
   "The holdout truth is the withheld catalogue itself, so it measures recovery of mapped faults, not discovery of genuinely unmapped ones.",
   "The registry of prior rasters is the one committed in registry/rasters; completeness is not certified by the organisers.",
-  "The 3-px dot-overlap rule is degenerate for this family: the footprint contains cells that lie within 3 px of some registry raster's dots almost everywhere, so the rule is reported as measured and interpreted with that caveat rather than silently passed."
+  "No pre-placement surface uniqueness check is present in this checkout's evidence; the final emitted raster check is present and fires the literal overlap rule, so the pre-placement protocol requirement is unverified.",
+  "The holdout run is not hash-pinned to the latest emitted GeoTIFF; the reported holdout is method/configuration evidence, not proof of this exact file's performance.",
+  "The emission's 5164312-cell channel-stack domain is 1540 cells smaller than the 5165852-cell official submission footprint. The emitter explicitly fills those official-only cells with zero; the independent validator confirms the official footprint has no NaN inside. This is an intentional domain difference, not a failed format check.",
+  "The paired physical-spatial-block 95% CI requested by protocol was not computed; the run card explicitly labels it not computed.",
+  "The same-file literal 3-px overlap rule fires against one dense registry raster; under the lane protocol this is a stop condition, regardless of any density-null interpretation."
  ],
  "budget": {
   "experiments_run": 1,
@@ -168,6 +192,18 @@
  "gate_far_gt_1km_met": false,
  "leakage_canary_clean": true,
  "validator_passed": true,
+ "release_prerequisites": {
+  "all_pixel_holdout_gt_2se": true,
+  "far_gt_1km_holdout_gt_2se": false,
+  "leakage_canary_clean": true,
+  "validator_passed_no_skips": true,
+  "no_registry_drift": false,
+  "holdout_hash_linked_to_candidate": false,
+  "preplacement_surface_check_passed": false,
+  "paired_95ci_available": false
+ },
+ "download_cleared": false,
+ "download_instruction": "DO NOT DOWNLOAD OR SUBMIT \u2014 negative result; release prerequisites not met",
  "caveats": [
   "The preregistered gate is met on the all-pixel stratum (stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60, positive on all 4 outer blocks) and narrowly MISSED on the >1 km stratum (mean +0.0074, SE 0.0038, t = 1.97, required > 2.0, positive on all 4 blocks). The far stratum is underpowered: only a minority of the 1925-3780 withheld pixels per fold are more than 1 km from a visible mapped fault, and the far DTI itself is ~0.01 because a 20000-dot budget over 5.16 M footprint cells almost never lands within 300 m of a sparse far pixel.",
   "The literal duplicate rule fires on one dense registry raster (311617 dots); the density-null control shows 95.8% of any random dot set would also fire it. Recorded as IR-28.",

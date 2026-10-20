@@ -55,33 +55,36 @@ Two lanes now share this repository.
 **The repository site is [`docs/index.html`](docs/index.html)** — it links to both.
 
 **This session's lane (GEMSDOE68 / lane 68) is at
-[`docs/lane68/index.html`](docs/lane68/index.html)**, with a one-click download of the submission
-GeoTIFF at the very top of the page and a step-by-step
-[`docs/lane68/executive-summary.html`](docs/lane68/executive-summary.html). The canonical
-machine-readable summary is [`docs/lane68/data/run-card.json`](docs/lane68/data/run-card.json),
-written by `scripts/lane68_write_run_card.py`.
+[`docs/lane68/index.html`](docs/lane68/index.html)**. The first-screen release banner makes the
+current verdict explicit; it provides no raster link for negative runs. The step-by-step
+[`docs/lane68/executive-summary.html`](docs/lane68/executive-summary.html) explains the submission
+flow and why this candidate is blocked. The canonical machine-readable summary is
+[`docs/lane68/data/run-card.json`](docs/lane68/data/run-card.json), written by
+`scripts/lane68_write_run_card.py` and `scripts/lane68_build_site.py`.
 
-**⛔ NO candidate is currently cleared for download (2026-10-20 audit, IR-30/IR-31).** The preregistered gate is NOT met: the >1 km stratum gave t = 1.97 (required > 2 SE) and the literal 3-px lane-drift rule fires. Verdict: **negative**, `download_cleared=false`. The raster below is retained only as an auditable negative-result artefact — **do not download or submit it**. The table records the mechanical checks for transparency; they do not override the failed gate.
+**⛔ NO candidate is cleared for download (latest candidate evidence: 2026-10-20; negative verdict).** The current stage-3 emission is retained for audit only; **do not download or submit it**. The stage-2 far-stratum gate is narrowly below threshold (t = 1.97; required > 2), the current candidate's literal 3-px overlap rule fires, and the current emitted TIFF is not hash-linked to the holdout prediction surface. Its local format validator passing does not override those failures. The emission's 5,164,312-cell channel-stack domain is 1,540 cells smaller than the 5,165,852-cell official submission footprint; the emitter intentionally assigns zero to those official-only cells, and the independent validator confirms no NaN inside the official footprint. The website now fails closed: it offers a TIFF link only when the run card explicitly records `verdict=promote` and `download_cleared=true`.
 
 | gate | result (local measurements unless labelled otherwise) |
 |---|---|
-| format validator, re-read from disk against `sample_submission.tif` | **PASS** — 16 checks, 0 FAIL, 0 SKIPPED |
-| values in [0,1], no infinities, NaN only outside the official footprint | **PASS** (0 NaN inside 5,165,852 footprint cells) |
-| uniqueness vs `registry/rasters/` (60 rasters) | no exact byte match; max \|Spearman\| = 0.054. The literal 3-px rule fires on **one** dense raster (311,617 dots); the density-null mean is 0.958 but the observed 0.9948 exceeds it by 27.2 SD, so under the literal rule the flag stands as LANE DRIFT — recorded as IR-28/IR-31 |
-| holdout gate (stage 2/3 vs stage 1, > 2 SE, BOTH strata required) | **FAIL — verdict negative.** All-pixel PASS (+0.0607, SE 0.0070, t = 8.60) but **>1 km stratum NOT MET** (+0.0074, SE 0.0038, t = 1.97; 1,330 withheld far pixels). Download withheld per protocol. |
-| leakage canary (single-channel AUC on withheld segments) | **PASS** — highest AUC 0.611, limit 0.90 |
+| local format validator (as recorded in 2026-10-20 emission evidence; not rerun in this environment) | **PASS** — 16 checks, 0 FAIL, 0 SKIPPED |
+| raster value/footprint receipt (as recorded in the adjacent local writer receipt) | **PASS, independently rechecked 2026-10-20**: no NaN inside 5,165,852 official cells; values 0–1. The 1,540-cell smaller channel domain is intentionally zero-filled by the emitter |
+| uniqueness vs `registry/rasters/` (60 rasters; final candidate compared) | no exact byte match; max \|Spearman\| = 0.0861; 3-px overlap = 0.9847 against `gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif` (311,617 dots). Literal protocol fires: **LANE DRIFT — stop**. The stored density-null experiment was for a different, older 20,000-dot raster and is not used to excuse this flag |
+| HOLDOUT-DTI gate (stage 2/3 vs stage 1, >2 SE in both strata) | **FAIL — verdict negative.** For 11,318 withheld positives, all-pixel stage 2 vs stage 1: +0.0607 (SE 0.0070, t=8.60); >1 km stratum: +0.0074 (SE 0.0038, t=1.97; 1,330 positives), below required >2 |
+| leakage canary (single-channel AUC on withheld segments) | **HOLDOUT-DTI supporting check** — highest recorded AUC 0.611, below 0.90; source evidence dated 2026-10-12 |
 | ORGANIZER-CONFIRMED score | **not claimed** — the scored truth is login-walled |
 
-Headline HOLDOUT-DTI (pooled, α = 0.2, β = 0.8, 300 m triangular, evaluator
-`gems57.metric.dti_binary` / `gems57.holdout`, 11,318 withheld positive pixels):
-stage 1 **0.1301**, stage 2 **0.1904**, stage 3 0.1868. Stage 2 is the shipped model.
+HOLDOUT-DTI (pooled, α = 0.2, β = 0.8, 300 m triangular, evaluator
+`gems57-pooled-hide-v2 / gems57.metric.dti_binary`, 11,318 withheld positive pixels; evaluator
+run dated 2026-10-12): stage 1 **0.1301**, stage 2 **0.1904**, stage 3 **0.1868**. The paired
+physical-spatial-block 95% CI requested by the protocol was **not computed**. These are model-level
+holdout results, not a score for the current TIFF: no hash-pinned link from the emitted surface to
+the holdout predictions is recorded.
 
-The submission name is `GEMSDOE68-AC-stack2`, the note (98 characters) is
-*"GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage2, r=3px, 20000 dots;
-holdout-gated"*, and the emission parameters (stage 2, 3 px catalogue exclusion, 20,000 dots) come
-from the holdout sweep, not from the submission grid. Two files ship: `-nan` (primary, passes all
-16 validator checks) and `-zeros` (all-finite fallback, for a NaN-blind range check on the upload
-form).
+Latest candidate identifier: `GEMSDOE68-AC-stack3-r3-N32000`; its local writer receipt records a
+98-character note, *“GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px,
+32000 dots; holdout-gated”*. That embedded wording is not a clearance: the protocol verdict is
+negative. Its two TIFF variants remain stored only as audit artifacts; the site offers neither for
+download or submission.
 
 **No ORGANIZER-CONFIRMED score is claimed for either lane.** Every number above is a local
 HOLDOUT-DTI.
@@ -141,37 +144,22 @@ tests/             pytest suite
 
 ## Data placement
 
-The competition files are login-walled at
-<https://www.drivendata.org/competitions/306/competition-doe-gems/data/>. They are mirrored,
-split and integrity-pinned in sibling repositories; `registry/data_manifest.json` records the exact
-repo, ref, path and sha256 of each one. To place them locally:
+The DrivenData data tab is login-walled at
+<https://www.drivendata.org/competitions/306/competition-doe-gems/data/>. The repository has an
+integrity-pinned GitHub mirror manifest (`registry/data_manifest.json`) and a restoration helper:
 
 ```bash
-mkdir -p data/bridge data/external
-# training_features.tif (5 parts, repo buffedlizard55-lab/GEMSDOE @ c0c06ac8…)
-cat data/bridge/gems-geodawn-numerical-features.tif.part-* > data/bridge/training_features.tif
-# labels.tif / existing_faults.tif / sample_submission.tif
-#   (repo buffedlizard55-lab/GEMSDOE24 @ 07345ea0…, path data/bridge/)
-# data/external/* — lidar scarp, GeoDAWN radiometric and magnetic sidecars
+python scripts/restore_data.py --group core
+# Files land under .cache/gems_data/ (git-ignored); receipt: registry/restore_receipt.json
+python scripts/restore_data.py --group external  # optional sidecar layers, when needed
 ```
 
-Then verify the pins:
-
-```bash
-PYTHONPATH=src python - <<'PY'
-import json, hashlib, pathlib
-pins = json.loads(pathlib.Path('registry/data_manifest.json').read_text())
-for f in pins['files']:
-    p = pathlib.Path('data') / f['dest'].replace('training_features.tif', 'bridge/training_features.tif')
-    p = pathlib.Path('data/bridge') / pathlib.Path(f['dest']).name
-    if not p.exists():
-        print('MISSING', f['dest']); continue
-    h = hashlib.sha256(p.read_bytes()).hexdigest()
-    print('OK ' if h == f['sha256'] else 'MISMATCH ', f['dest'], h[:16])
-PY
-```
-
-Measured in this checkout: all four core files match their pinned sha256 exactly.
+**Current checkout status (rechecked 2026-10-20):** `data/` contains only metadata JSON files.
+`python scripts/restore_data.py --group all` verified and restored all manifest entries (core,
+external layers, and pinned scored/calibration rasters) into ignored `.cache/gems_data/`;
+`registry/restore_receipt.json` records `all_verified: true`. The mirror restore is separate from
+DrivenData authentication. The scored/calibration rasters are audit inputs only, not submission
+candidates.
 
 ## Official sources
 
@@ -191,5 +179,5 @@ Measured in this checkout: all four core files match their pinned sha256 exactly
 ## Tests
 
 ```bash
-PYTHONPATH=src python -m pytest tests -q     # 37 passed, 8 skipped (both lanes)
+PYTHONPATH=src .venv/bin/python -m pytest tests -q -rs  # 52 passed, 2 skipped on 2026-10-20; 15 warnings
 ```

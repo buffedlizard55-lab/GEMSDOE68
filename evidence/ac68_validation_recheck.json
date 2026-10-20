@@ -1,0 +1,93 @@
+{
+  "file": "docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif",
+  "sha256": "ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47",
+  "passed": true,
+  "has_failures": false,
+  "checks": [
+    {
+      "check": "single band",
+      "status": "PASS",
+      "detail": "count=1"
+    },
+    {
+      "check": "dtype float32",
+      "status": "PASS",
+      "detail": "dtype=float32"
+    },
+    {
+      "check": "CRS EPSG:32611",
+      "status": "PASS",
+      "detail": "crs=EPSG:32611"
+    },
+    {
+      "check": "shape matches",
+      "status": "PASS",
+      "detail": "file=(3730, 3292) expected=(3730, 3292)"
+    },
+    {
+      "check": "resolution 100 m",
+      "status": "PASS",
+      "detail": "res=(100.0, 100.0)"
+    },
+    {
+      "check": "transform matches reference",
+      "status": "PASS",
+      "detail": "file=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) ref=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+    },
+    {
+      "check": "CRS matches reference",
+      "status": "PASS",
+      "detail": "file=EPSG:32611 ref=EPSG:32611"
+    },
+    {
+      "check": "nodata tag is none or NaN",
+      "status": "PASS",
+      "detail": "nodata=None (finite nodata tags are rejected conservatively)"
+    },
+    {
+      "check": "no infinities",
+      "status": "PASS",
+      "detail": "inf_count=0"
+    },
+    {
+      "check": "values within [0, 1]",
+      "status": "PASS",
+      "detail": "min=0.0 max=1.0 finite_cells=5165852"
+    },
+    {
+      "check": "features grid shape matches",
+      "status": "PASS",
+      "detail": "features=(3730, 3292) reference=(3730, 3292)"
+    },
+    {
+      "check": "features transform matches reference grid",
+      "status": "PASS",
+      "detail": "features=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) reference=(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)"
+    },
+    {
+      "check": "features CRS matches reference grid",
+      "status": "PASS",
+      "detail": "features=EPSG:32611 reference=EPSG:32611"
+    },
+    {
+      "check": "no NaN inside footprint",
+      "status": "PASS",
+      "detail": "nan_inside=0 footprint_cells=5165852"
+    },
+    {
+      "check": "NaN-only outside footprint",
+      "status": "PASS",
+      "detail": "finite_outside=0; only NaN is allowed outside"
+    },
+    {
+      "check": "info: emitted cells (value > 0)",
+      "status": "INFO",
+      "detail": "emitted=32000"
+    }
+  ],
+  "skipped_checks_mean_unverified": false,
+  "generated_utc": "2026-10-20T19:41:43Z",
+  "reference_path": ".cache/gems_data/sample_submission.tif",
+  "features_path": ".cache/gems_data/training_features.tif",
+  "evidence_class": "LOCAL-VALIDATOR-RECHECK (not organizer confirmation)"
+}
