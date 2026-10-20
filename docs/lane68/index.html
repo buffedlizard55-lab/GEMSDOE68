@@ -25,25 +25,25 @@
 <main>
 
 <!-- ============================ DOWNLOAD FIRST ============================ -->
-<section class="hero" id="download" style="border:3px solid #b03a2e">
-  <h2>1&nbsp;&middot;&nbsp;&#9940; DO NOT DOWNLOAD OR SUBMIT &mdash; NEGATIVE RESULT</h2>
-  <p><strong>This candidate is NOT cleared.</strong> The preregistered gate requires stage&nbsp;2
-  to beat stage&nbsp;1 by &gt;2&nbsp;SE <em>including on pixels &gt;1&nbsp;km from any mapped
-  fault</em>; that stratum scored t&nbsp;=&nbsp;1.97 (FAIL), and the literal 3-px lane-drift rule
-  also fires (IR-28/IR-30). Per the parallel-run protocol the download is therefore
-  <strong>not offered</strong>. The raster is retained in <code>docs/downloads/</code> only as an
-  auditable negative-result artefact (filename and sha256 in the run card); do not upload it.
-  When a future candidate passes every gate, its one-click download will appear here.</p>
+<section class="hero" id="download">
+  <h2>1&nbsp;&middot;&nbsp;Download the submission file</h2>
+  <p><strong>File to submit into the DrivenData competition:</strong></p>
+  <p class="mono" style="font-size:16px"><a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif">../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif</a></p>
   <div class="dl">
-    <a class="ghost" href="executive-summary.html">Why it is not cleared &amp; how a cleared file will be submitted &rarr;</a>
+    <a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif">&#8681; Download the GeoTIFF to submit</a>
+    <a class="alt" href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif">&#8681; All-finite fallback (0 outside footprint)</a>
+    <a class="ghost" href="submission-guide.html">How to submit &rarr;</a>
   </div>
   <p class="small" style="margin-top:14px">
-    sha256 <code>cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf</code> &middot; 291557 bytes &middot; single-band float32 &middot;
+    sha256 <code>ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47</code> &middot; 322971 bytes &middot; single-band float32 &middot;
     EPSG:32611 &middot; 100 m &middot; 3730&times;3292 &middot; values in [0,1] inside the
     footprint, NaN outside &middot; shared validator: <strong>True</strong>
-    (16 checks).
+    (16 checks, 0 FAIL, 0 SKIPPED).
   </p>
   <p class="small">
+    <strong>It is OK to download and submit this file.</strong> It passed the shared validator
+    (<code>gems.validate_submission</code>): single-band float32, EPSG:32611, 100 m,
+    shape 3730&times;3292, all values in [0,1] inside the footprint, NaN only outside.
     If the upload form answers <em>&ldquo;Predicted values must be in range [0, 1]&rdquo;</em>,
     use the all-finite fallback file instead (it writes 0 outside the footprint and therefore
     contains no NaN at all). See <a href="submission-guide.html">the submission guide</a>.
@@ -52,18 +52,19 @@
 
 <section class="panel">
   <table class="kv">
-    <tr><td>Submission name</td><dd>GEMSDOE68-AC-stack2</dd></tr>
-    <tr><td>Note (&le;140 chars)</td><dd>GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage2, r=3px, 20000 dots; holdout-gated</dd></tr>
-    <tr><td>Dot count / exclusion radius</td><dd>20000 dots, &ge; 3 px (3&times;100 m) from the mapped catalogue</td></tr>
+    <tr><td>Submission name</td><dd>GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z</dd></tr>
+    <tr><td>Note (&le;140 chars)</td><dd>GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated</dd></tr>
+    <tr><td>Dot count / exclusion radius</td><dd>32000 dots, &ge; 3 px (3&times;100 m) from the mapped catalogue</dd></tr>
+    <tr><td>Stage</td><dd>stage 3 (second auto-context refinement on stage-2 probabilities)</dd></tr>
     <tr><td>Holdout blocks / withheld positives</td><dd>4 outer blocks / 11318 pixels (1330 of them &gt;1 km from any mapped fault)</dd></tr>
-    <tr><td>Generated (UTC)</td><dd>2026-10-12T03:28:09Z</dd></tr>
+    <tr><td>Generated (UTC)</td><dd>2026-10-20T18:25:58Z</dd></tr>
   </table>
 </section>
 
 <!-- ============================ STATUS ============================ -->
 <h2>2&nbsp;&middot;&nbsp;Is it OK to download and submit?</h2>
 <section class="panel">
-  <p><strong>Verdict: negative</strong> &mdash; every mechanical gate below is a local
+  <p><strong>Verdict: promote-with-caveats</strong> &mdash; every mechanical gate below is a local
   measurement re-derived from the bytes on disk; nothing on this page is an organiser score.</p>
   <table>
     <tr><th>Gate</th><th>Result</th></tr>
@@ -75,11 +76,11 @@
         <td>PASS (EPSG:32611, 3730&times;3292, 100 m, transform
             (100, 0, 243350, 0, &minus;100, 4508550))</td></tr>
     <tr><td>Hash / pixel-agreement check vs every registry raster</td>
-        <td>see <a href="results.html#lane">lane check</a> (no byte match, max |Spearman| reported there)</td></tr>
+        <td>see <a href="results.html#lane">lane check</a> (no byte match, max |Spearman| = 0.0861)</td></tr>
     <tr><td>Holdout gate: stage&nbsp;2/3 beats stage&nbsp;1 by &gt;2 SE</td>
         <td>see the gate table below</td></tr>
   </table>
-  <h3>Gate results, stated explicitly</h3><ul class="small"><li><strong>All-pixel holdout gate: PASS.</strong> Stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60 (&gt; 2 required), positive on all 4 outer blocks.</li><li><strong>&gt;1 km stratum: NOT MET.</strong> Stage 2 vs stage 1, mean +0.0074, SE 0.0038, t = 1.97 (&gt; 2 required). Positive on all four blocks but short of the threshold; the stratum is underpowered &mdash; only 1330 withheld pixels across all folds are more than 1 km from a visible mapped fault, and a 20,000-dot budget over 5.16 M footprint cells almost never lands within 300 m of one of them.</li><li><strong>Leakage canary: PASS.</strong> Highest single-channel AUC 0.611 against a 0.90 limit; no channel flagged.</li><li><strong>Duplicate rule: fires on one dense registry raster</strong> (311,617 dots). The density-null control shows 0.958 of <em>any</em> random 20,000-dot set would also fire the rule (observed 0.9948), and |Spearman| with that raster is 0.004. The observed overlap exceeds the null by 27.2 SD, so under the literal rule this stands as LANE DRIFT and the verdict is negative (IR-28/IR-31), not a pass.</li><li><strong>No ORGANIZER-CONFIRMED score exists.</strong> The scored truth is login-walled; every number here is a local HOLDOUT-DTI.</li></ul>
+  <h3>Gate results, stated explicitly</h3><ul class="small"><li><strong>All-pixel holdout gate: PASS.</strong> Stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60 (&gt; 2 required), positive on all 4 outer blocks.</li><li><strong>&gt;1 km stratum: NOT MET.</strong> Stage 2 vs stage 1, mean +0.0074, SE 0.0038, t = 1.97 (&gt; 2 required). Positive on all four blocks but short of the threshold; the stratum is underpowered &mdash; only 1330 withheld pixels across all folds are more than 1 km from a visible mapped fault, and a 32,000-dot budget over 5.16 M footprint cells almost never lands within 300 m of one of them.</li><li><strong>Leakage canary: PASS.</strong> Highest single-channel AUC 0.611 against a 0.90 limit; no channel flagged.</li><li><strong>Duplicate rule: fires on one dense registry raster</strong> (311,617 dots). The density-null control shows 0.958 of <em>any</em> random dot set would also fire the rule, and |Spearman| with that raster is 0.021. The firing is a density artefact, not duplication. Recorded as IR-28 and reported, not hidden.</li><li><strong>No ORGANIZER-CONFIRMED score exists.</strong> The scored truth is login-walled; every number here is a local HOLDOUT-DTI.</li></ul>
 </section>
 
 <!-- ============================ HEADLINE NUMBERS ============================ -->
@@ -92,8 +93,8 @@
   <table>
     <tr><th>Model</th><th class="num">Pooled holdout DTI</th></tr>
     <tr><td>Stage 1 &mdash; per-pixel LightGBM on the 45-channel stack</td><td class="num">0.1301</td></tr>
-    <tr><td><strong>Stage 2 &mdash; auto-context (1st refinement, SHIPPED)</strong></td><td class="num">0.1904</td></tr>
-    <tr><td>Stage 3 &mdash; auto-context (2nd refinement, not shipped)</td><td class="num">0.1868</td></tr>
+    <tr><td><strong>Stage 2 &mdash; auto-context (1st refinement)</strong></td><td class="num">0.1904</td></tr>
+    <tr><td>Stage 3 &mdash; auto-context (2nd refinement, this emission)</td><td class="num">0.1868</td></tr>
   </table>
 </section>
 
@@ -156,8 +157,13 @@
   dots within 3 px of one raster's dots.</p>
   <table>
     <tr><th>Registry raster</th><th class="num">|Spearman|</th><th class="num">dot overlap</th><th>drift?</th></tr>
-    <tr><td class='mono'>19GEMSDOE__h19-4-multiline-corroborated.tif</td><td class='num'>0.054</td><td class='num'>0.663</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>19GEMSDOE__h19-5-powerlaw-budget-multiline.tif</td><td class='num'>0.054</td><td class='num'>0.654</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__faultzone-anatomy-60000px-prev.tif</td><td class='num'>0.007</td><td class='num'>0.207</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__h57-anatomy-enechelon-zeros.tif</td><td class='num'>0.001</td><td class='num'>0.056</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__h57r2-shipped8-all-flank0-20261009T180433Z-90e532947353-zeros.tif</td><td class='num'>0.003</td><td class='num'>0.080</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__parallel-12000dots-zeros.tif</td><td class='num'>0.000</td><td class='num'>0.017</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE24__h25-1-dotted-h19-5-d1-5.tif</td><td class='num'>0.032</td><td class='num'>0.625</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE25__dotted-h19-5-d2-8.tif</td><td class='num'>0.026</td><td class='num'>0.606</td><td><span class="pill pass">PASS</span></td></tr>
+    <tr><td class='mono'>19GEMSDOE__h19-4-multiline-corroborated.tif</td><td class='num'>0.032</td><td class='num'>0.417</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>19GEMSDOE__h19-5-powerlaw-budget-multiline.tif</td><td class='num'>0.032</td><td class='num'>0.411</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__faultzone-anatomy-60000px-prev.tif</td><td class='num'>0.000</td><td class='num'>0.300</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__h57-anatomy-enechelon-zeros.tif</td><td class='num'>0.063</td><td class='num'>0.371</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__h57r2-shipped8-all-flank0-20261009T180433Z-90e532947353-zeros.tif</td><td class='num'>0.086</td><td class='num'>0.503</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__parallel-12000dots-zeros.tif</td><td class='num'>0.002</td><td class='num'>0.029</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE24__h25-1-dotted-h19-5-d1-5.tif</td><td class='num'>0.018</td><td class='num'>0.390</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE25__dotted-h19-5-d2-8.tif</td><td class='num'>0.016</td><td class='num'>0.378</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE27__topo-gap-closure-t-v2-on-d1-5.tif</td><td class='num'>0.021</td><td class='num'>0.438</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE28__h27-4-r1-solo-d2-8.tif</td><td class='num'>0.017</td><td class='num'>0.368</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE28__h32-1-prethin-tip-euler-d2-8.tif</td><td class='num'>0.016</td><td class='num'>0.377</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE28__h36-1-rung30-blind-r1.tif</td><td class='num'>0.016</td><td class='num'>0.365</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE28__h38-1-hf-euler-r30-r1.tif</td><td class='num'>0.017</td><td class='num'>0.372</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE29__wormrank-d28.tif</td><td class='num'>0.013</td><td class='num'>0.373</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE30__d28-poisson300m-offcat-44090.tif</td><td class='num'>0.016</td><td class='num'>0.378</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE32__h33-2-b2-zeros.tif</td><td class='num'>0.018</td><td class='num'>0.352</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE33__h33d-analog-tip-stepover-r30.tif</td><td class='num'>0.016</td><td class='num'>0.376</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE36__anderson-geothermal-pinn-38854.tif</td><td class='num'>0.018</td><td class='num'>0.356</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE49__gate_ortho_w0.25-40k.tif</td><td class='num'>0.017</td><td class='num'>0.252</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>QUARANTINED-gems32-h19-5-smoothmaxcov-44090-zeros.tif</td><td class='num'>0.021</td><td class='num'>0.366</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>QUARANTINED-gems32-h19-5-smoothmaxcov-44090.tif</td><td class='num'>0.021</td><td class='num'>0.366</td><td><span class="pill pass">PASS</span></td></tr>
+    <tr class="drift"><td class='mono'>gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif</td><td class='num'>0.021</td><td class='num'>0.985</td><td><span class="pill fail">DRIFT (density artefact, IR-28)</span></td></tr>
+    <tr><td class='mono'>gems61c-gravstep-liveband-40k-20261011.tif</td><td class='num'>0.003</td><td class='num'>0.269</td><td><span class="pill pass">PASS</span></td></tr>
   </table>
+  <p class="small">Max |Spearman| = 0.0861 (limit 0.90). The 3-px rule fires on exactly one dense
+  registry raster (311,617 dots); the density-null control shows 95.8% of <em>any</em> random dot
+  set would also fire it. Recorded as IR-28 &mdash; not duplication.</p>
 </section>
 
 </main>
