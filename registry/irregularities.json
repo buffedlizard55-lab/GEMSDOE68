@@ -1,6 +1,6 @@
 {
  "schema": 4,
- "review_date": "2026-10-12",
+ "review_date": "2026-10-20",
  "items": [
   {
    "id": "IR-01-H33-ATTRIBUTION",
@@ -285,6 +285,49 @@
    "detail": "The protocol allows a maximum of three experiments or two hours. The first experiment run was lost to the row-halo bug and had to be restarted from scratch. Only one holdout experiment was ultimately run, which is inside the experiment count, but the wall-clock time exceeded the two-hour allowance. The overrun is recorded in evidence/run-card-ac68.json rather than hidden.",
    "source_ids": [
     "evidence/run-card-ac68.json"
+   ]
+  },
+  {
+   "id": "IR-68-PORTAL-01",
+   "severity": "critical",
+   "status": "RESOLVED & TESTED IN S68 v3",
+   "title": "Sample-submission vs training-features 3,061-cell footprint mismatch + portal NaN range check",
+   "detail": "sample_submission.tif contains 5,167,373 finite cells while training_features.tif band 1 contains 5,165,852 finite cells (3,061 sample_submission cells have NaN features). In addition, a NaN-blind portal check (arr >= 0) & (arr <= 1) rejects any NaN pixel with 'Predicted values must be in range [0, 1]'. S68 v3 ships an all-finite primary upload (-zeros.tif, 12,279,160 finite cells in [0, 1], nan_total=0) alongside -nan.tif (fp_union, nan_in_sample_sub=0) and -strict-nan.tif (16/16 gems.validate_submission).",
+   "source_ids": [
+    "tests/test_o2_autocontext68.py",
+    "tests/test_s68_submission_and_runcard.py"
+   ]
+  },
+  {
+   "id": "IR-68-GDR-LEAK-01",
+   "severity": "critical",
+   "status": "PREVENTED & CANARY-VERIFIED (max AUC 0.6634 << 0.90)",
+   "title": "Auxiliary GDR-1391 CSVs contained precomputed dist_known_fault_px from full catalogue",
+   "detail": "src/gems68/multiphysics_stack.py strips dist_known_fault_px before rasterizing DOE GDR-1391 paleo-sinter, Quaternary vents, hot springs, and 2m probe anomalies. Pre-model Leakage Canary across all 59 channels passed with max symmetric AUC = 0.6634.",
+   "source_ids": [
+    "evidence/s68_leakage_canary.json"
+   ]
+  },
+  {
+   "id": "IR-68-INNERCV-01",
+   "severity": "medium",
+   "status": "FIXED IN PASS 2 & RE-VERIFIED",
+   "title": "Cached outer Stage-3 surface evaluated on inner 20%-hide mask logged 0.0000 inner DTI",
+   "detail": "Fixed in scripts/run_s68_pipeline.py (_compute_inner20_budget_curve) to evaluate out-of-block Stage-2 and Stage-3 models on PreparedCatalogueField(known_20) with hid_20 collar-masked at 20% hide density, yielding B*=38,000 (inner DTI=0.1528).",
+   "source_ids": [
+    "scripts/run_s68_pipeline.py",
+    "evidence/s68_run_card.json"
+   ]
+  },
+  {
+   "id": "IR-68-BLOB-RESOLVED",
+   "severity": "high",
+   "status": "RESOLVED IN S68 v3 (+74.0% ALL, 2.11x FAR HOLDOUT-DTI)",
+   "title": "Prior PR#3 regional bands placed 58.9% (22,383 dots) in >3 km low-prior desert playas",
+   "detail": "Replaced raw discontinuous angles and sigma=10 Stage-1 smooths with gauge-invariant O(2) double-angle features, GeoDAWN seam suppression, DOE GDR-1391 thermal conduits, TverskyContextNet, and 300 m submodular emission, cutting >3 km unvetted playa scatter from 58.90% to 1.01% (382 multi-physics dots) and lifting ALL HOLDOUT-DTI from 0.1189 to 0.2069.",
+   "source_ids": [
+    "evidence/s68_run_card.json",
+    "docs/assets/fig2_nevada_physics_allocation.png"
    ]
   }
  ]

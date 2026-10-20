@@ -8,5 +8,5 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.11"}
       - run: pip install -r requirements.txt
-      - run: pytest -q tests   # data-dependent tests skip when .cache is absent
-      - run: python -c "import json;c=json.load(open('evidence/run_card.json'));assert c['files']['primary']['validator']['all_checks_passed'];print(c['verdict'])"
+      - run: PYTHONPATH=src pytest -q tests   # data-dependent checks skip cleanly when .cache is absent
+      - run: python -c "import json; c=json.load(open('evidence/run_card.json')); assert c['files']['primary']['validator']['all_checks_passed']; assert c['winner']['ok_to_download_and_submit']; print(c['verdict'], c['submission_name'])"

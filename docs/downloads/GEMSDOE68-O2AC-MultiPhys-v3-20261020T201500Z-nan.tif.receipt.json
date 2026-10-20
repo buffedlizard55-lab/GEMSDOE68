@@ -1,0 +1,20 @@
+{
+  "file": "GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-nan.tif",
+  "sha256": "1aae84bb9a0cad39500053121c22c1a844f409c65830d50ed8f1ab5422cd488f",
+  "shape_hw": [
+    3730,
+    3292
+  ],
+  "crs": "EPSG:32611",
+  "footprint_cells": 5168913,
+  "emitted_cells_gt0": 38000,
+  "min_inside": 0.0,
+  "max_inside": 1.0,
+  "nan_inside": 0,
+  "nan_outside_count": 7110247,
+  "name": "GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-nan",
+  "note": "",
+  "note_chars": 0,
+  "reference": "sample_submission.tif",
+  "receipt_kind": "local receipt written by submission_writer; NOT an organiser receipt"
+}

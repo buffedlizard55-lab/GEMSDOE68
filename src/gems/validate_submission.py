@@ -157,6 +157,93 @@ def validate(path: str | Path, reference_path: str | Path | None = None,
             "checks": checks, "skipped_checks_mean_unverified": bool(skipped)}
 
 
+def validate_portal_ready(path: str | Path, sample_sub_path: str | Path,
+                          features_path: str | Path,
+                          catalogue_path: str | Path | None = None) -> dict:
+    """Strict DrivenData upload-portal preflight check.
+
+    Specifically catches IR-68-PORTAL-01: the 3,061-cell mismatch where
+    ``sample_submission.tif`` is finite (5,167,373 cells) while band 1 of
+    ``training_features.tif`` carries nodata (5,165,852 cells). Any NaN inside
+    ``np.isfinite(sample_submission)`` causes DrivenData's upload check
+    ``((pred[valid] >= 0) & (pred[valid] <= 1)).all()`` to fail with
+    ``"Predicted values must be in range [0, 1]"``.
+    """
+    import rasterio
+    from .submission_writer import sha256_file
+
+    path = Path(path)
+    with rasterio.open(sample_sub_path) as ref:
+        sub = ref.read(1)
+        fp_sub = np.isfinite(sub)
+        ref_shape = (ref.height, ref.width)
+        ref_crs = ref.crs
+        ref_transform = ref.transform
+
+    fp_feat = footprint_from_features(features_path, ref_shape)
+    with rasterio.open(path) as src:
+        arr = src.read(1)
+        out_shape = (src.height, src.width)
+        out_crs = src.crs
+        out_transform = src.transform
+        out_dtype = src.dtypes[0]
+        out_count = src.count
+        out_nodata = src.nodata
+
+    finite = np.isfinite(arr)
+    nan_in_sample_sub = int((~finite & fp_sub).sum())
+    nan_in_union = int((~finite & (fp_sub | fp_feat)).sum())
+    n_inf = int(np.isinf(arr).sum())
+    vals = arr[finite]
+    vmin = float(vals.min()) if vals.size else float("nan")
+    vmax = float(vals.max()) if vals.size else float("nan")
+    in_range = bool(vals.size > 0 and vmin >= 0.0 and vmax <= 1.0)
+    all_pixels_in_0_1 = bool(((arr >= 0.0) & (arr <= 1.0)).all())
+
+    on_cat = None
+    if catalogue_path is not None:
+        with rasterio.open(catalogue_path) as cat_ds:
+            cat = cat_ds.read(1) > 0
+        on_cat = int(((arr > 0) & finite & cat).sum())
+
+    checks = [
+        _check("single band", out_count == 1, f"count={out_count}"),
+        _check("dtype float32", out_dtype == "float32", f"dtype={out_dtype}"),
+        _check("CRS EPSG:32611", out_crs is not None and out_crs == ref_crs, f"crs={out_crs}"),
+        _check("shape 3730x3292", out_shape == ref_shape, f"shape={out_shape}"),
+        _check("transform matches sample_submission", _same_transform(out_transform, ref_transform),
+               f"transform={tuple(out_transform)[:6]}"),
+        _check("no infinities anywhere", n_inf == 0, f"inf={n_inf}"),
+        _check("finite values strictly in [0, 1]", in_range, f"min={vmin} max={vmax}"),
+        _check("zero NaN inside sample_submission footprint (5,167,373 cells)",
+               nan_in_sample_sub == 0,
+               f"nan_in_sample_sub={nan_in_sample_sub}"),
+        _check("zero NaN inside union(sample_submission, features) (5,168,913 cells)",
+               nan_in_union == 0,
+               f"nan_in_union={nan_in_union}"),
+    ]
+    if on_cat is not None:
+        checks.append(_check("zero positive dots on mapped catalogue", on_cat == 0,
+                             f"on_catalogue={on_cat}"))
+
+    passed = all(c["status"] == "PASS" for c in checks)
+    return {
+        "file": str(path),
+        "sha256": sha256_file(path),
+        "bytes": path.stat().st_size,
+        "nodata": None if (out_nodata is None or np.isnan(out_nodata)) else float(out_nodata),
+        "all_12279160_pixels_finite_in_0_1": all_pixels_in_0_1,
+        "nan_in_sample_sub": nan_in_sample_sub,
+        "nan_total": int((~finite).sum()),
+        "emitted_positive_pixels": int(np.nansum(arr > 0)),
+        "min": vmin,
+        "max": vmax,
+        "on_catalogue_positive_pixels": on_cat,
+        "passed": passed,
+        "checks": checks,
+    }
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("file")

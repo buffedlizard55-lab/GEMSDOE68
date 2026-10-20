@@ -126,3 +126,60 @@ def to_map(vec: np.ndarray, footprint: np.ndarray) -> np.ndarray:
     m = np.zeros(footprint.shape, np.float32)
     m[footprint] = np.nan_to_num(vec, nan=0.0)
     return m
+
+
+from dataclasses import dataclass as _dataclass
+
+
+@_dataclass
+class FoldSpec:
+    index: int
+    hidden: np.ndarray
+    visible: np.ndarray
+    train_mask: np.ndarray
+    known: np.ndarray
+    n_hidden: int
+
+
+def quadrant_blocks(footprint: np.ndarray) -> np.ndarray:
+    ys, xs = np.nonzero(footprint)
+    out = np.full(footprint.shape, -1, np.int8)
+    if ys.size == 0:
+        return out
+    ym, xm = float(np.median(ys)), float(np.median(xs))
+    out[ys, xs] = ((ys >= ym).astype(np.int8) * 2 + (xs >= xm).astype(np.int8))
+    return out
+
+
+def make_folds(labels: np.ndarray, footprint: np.ndarray, buffer_px: int = 12) -> list[FoldSpec]:
+    """Partition >=3-px connected fault components across 4 spatial quadrants."""
+    fp = np.asarray(footprint, bool)
+    pos = (np.asarray(labels) == 1) & fp
+    qmap = quadrant_blocks(fp)
+    lab, n_comp = ndi.label(pos, structure=np.ones((3, 3), bool))
+    sizes = np.bincount(lab.ravel())
+    comp_quad = np.full(n_comp + 1, -1, np.int8)
+    for cid in range(1, n_comp + 1):
+        if sizes[cid] < 3:
+            continue
+        m = lab == cid
+        qs = qmap[m]
+        qs = qs[qs >= 0]
+        comp_quad[cid] = int(np.bincount(qs).argmax()) if qs.size else 0
+    folds = []
+    for q in range(4):
+        cids = np.flatnonzero(comp_quad == q)
+        hidden = np.isin(lab, cids)
+        visible = pos & ~hidden
+        buf = ndi.binary_dilation(hidden, iterations=buffer_px) if hidden.any() else np.zeros_like(fp)
+        train_mask = fp & ~buf
+        folds.append(FoldSpec(
+            index=q,
+            hidden=hidden,
+            visible=visible,
+            train_mask=train_mask,
+            known=visible.copy(),
+            n_hidden=int(hidden.sum()),
+        ))
+    return folds
+

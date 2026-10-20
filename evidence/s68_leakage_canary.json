@@ -1,0 +1,320 @@
+{
+  "generated_utc": "2026-10-20T18:33:05Z",
+  "rule": "Protocol Rule 4: single-feature holdout AUC > 0.90 (symmetric max(AUC, 1-AUC) > 0.90) is leakage until proven otherwise",
+  "withheld_positive_pixels": 11321,
+  "evaluated_pixels": 609950,
+  "n_channels": 59,
+  "max_symmetric_auc": 0.6633749351109998,
+  "max_channel": "sgmc_bedrock_logd",
+  "flagged_channels_gt_0_90": {},
+  "passed": true,
+  "gdr_stats": {
+    "n_wellspring_sites_with_temp_or_geotherm": 2398,
+    "n_hot_spring_or_geotherm_anomalies": 1462,
+    "n_2m_probe_stations_in_grid": 3439,
+    "n_2m_probe_anomalous_ge_1_5c": 748,
+    "n_paleo_geothermal_vents_in_footprint": 281,
+    "n_quaternary_volcanic_vents": 21,
+    "label_columns_dropped": [
+      "dist_known_fault_px"
+    ]
+  },
+  "per_channel": {
+    "det_elev_hp": {
+      "auc": 0.42897893325975434,
+      "symmetric_auc": 0.5710210667402457,
+      "flag": false
+    },
+    "det_elev_slope": {
+      "auc": 0.5638183672209622,
+      "symmetric_auc": 0.5638183672209622,
+      "flag": false
+    },
+    "det_elev_gmag": {
+      "auc": 0.5679382119763363,
+      "symmetric_auc": 0.5679382119763363,
+      "flag": false
+    },
+    "elev_lap": {
+      "auc": 0.5560729498804188,
+      "symmetric_auc": 0.5560729498804188,
+      "flag": false
+    },
+    "elev_ridge_s1": {
+      "auc": 0.5575229085767754,
+      "symmetric_auc": 0.5575229085767754,
+      "flag": false
+    },
+    "elev_ridge_s2": {
+      "auc": 0.5713930849111795,
+      "symmetric_auc": 0.5713930849111795,
+      "flag": false
+    },
+    "elev_tilt": {
+      "auc": 0.5679382111647773,
+      "symmetric_auc": 0.5679382111647773,
+      "flag": false
+    },
+    "mag_hp": {
+      "auc": 0.5011658227100628,
+      "symmetric_auc": 0.5011658227100628,
+      "flag": false
+    },
+    "rtp_hp": {
+      "auc": 0.49893667344046566,
+      "symmetric_auc": 0.5010633265595343,
+      "flag": false
+    },
+    "tmi_hg": {
+      "auc": 0.5287477650203054,
+      "symmetric_auc": 0.5287477650203054,
+      "flag": false
+    },
+    "tmi_vg": {
+      "auc": 0.4870128141221559,
+      "symmetric_auc": 0.5129871858778441,
+      "flag": false
+    },
+    "tc": {
+      "auc": 0.47144625832185366,
+      "symmetric_auc": 0.5285537416781463,
+      "flag": false
+    },
+    "tilt_grad_mag": {
+      "auc": 0.5340165223240726,
+      "symmetric_auc": 0.5340165223240726,
+      "flag": false
+    },
+    "rtp_ridge_s2": {
+      "auc": 0.5123811876955674,
+      "symmetric_auc": 0.5123811876955674,
+      "flag": false
+    },
+    "iso_grav_hp": {
+      "auc": 0.5241696960739933,
+      "symmetric_auc": 0.5241696960739933,
+      "flag": false
+    },
+    "iso_grav_anom_hg": {
+      "auc": 0.4924496093837647,
+      "symmetric_auc": 0.5075503906162353,
+      "flag": false
+    },
+    "iso_grav_anom_vg": {
+      "auc": 0.5142530339098934,
+      "symmetric_auc": 0.5142530339098934,
+      "flag": false
+    },
+    "iso_grav_anom_slope": {
+      "auc": 0.5236100802644499,
+      "symmetric_auc": 0.5236100802644499,
+      "flag": false
+    },
+    "grav_ridge_s2": {
+      "auc": 0.4834521158738363,
+      "symmetric_auc": 0.5165478841261637,
+      "flag": false
+    },
+    "cond_hp": {
+      "auc": 0.5273819211775095,
+      "symmetric_auc": 0.5273819211775095,
+      "flag": false
+    },
+    "basement_grad": {
+      "auc": 0.5377211928520574,
+      "symmetric_auc": 0.5377211928520574,
+      "flag": false
+    },
+    "ex_max": {
+      "auc": 0.5858549365165729,
+      "symmetric_auc": 0.5858549365165729,
+      "flag": false
+    },
+    "ex_mean": {
+      "auc": 0.5791645675377218,
+      "symmetric_auc": 0.5791645675377218,
+      "flag": false
+    },
+    "step_max": {
+      "auc": 0.5869873653407095,
+      "symmetric_auc": 0.5869873653407095,
+      "flag": false
+    },
+    "lapneg_max": {
+      "auc": 0.5889405300710804,
+      "symmetric_auc": 0.5889405300710804,
+      "flag": false
+    },
+    "lappos_max": {
+      "auc": 0.5918892948365992,
+      "symmetric_auc": 0.5918892948365992,
+      "flag": false
+    },
+    "downface_max": {
+      "auc": 0.5977173530649826,
+      "symmetric_auc": 0.5977173530649826,
+      "flag": false
+    },
+    "upface_max": {
+      "auc": 0.6015652194319168,
+      "symmetric_auc": 0.6015652194319168,
+      "flag": false
+    },
+    "cross_max": {
+      "auc": 0.5969317447562273,
+      "symmetric_auc": 0.5969317447562273,
+      "flag": false
+    },
+    "relief": {
+      "auc": 0.5848463705707164,
+      "symmetric_auc": 0.5848463705707164,
+      "flag": false
+    },
+    "coh100": {
+      "auc": 0.5231117451343223,
+      "symmetric_auc": 0.5231117451343223,
+      "flag": false
+    },
+    "strike": {
+      "auc": 0.5401839895413265,
+      "symmetric_auc": 0.5401839895413265,
+      "flag": false
+    },
+    "lidar_valid": {
+      "auc": 0.5315603490636588,
+      "symmetric_auc": 0.5315603490636588,
+      "flag": false
+    },
+    "rad_K": {
+      "auc": 0.4648321154733067,
+      "symmetric_auc": 0.5351678845266933,
+      "flag": false
+    },
+    "rad_Th": {
+      "auc": 0.48040294664067934,
+      "symmetric_auc": 0.5195970533593206,
+      "flag": false
+    },
+    "rad_U": {
+      "auc": 0.4729615294494131,
+      "symmetric_auc": 0.5270384705505868,
+      "flag": false
+    },
+    "rad_TC": {
+      "auc": 0.47147170615894035,
+      "symmetric_auc": 0.5285282938410596,
+      "flag": false
+    },
+    "rad_K_hp": {
+      "auc": 0.44633603055484206,
+      "symmetric_auc": 0.5536639694451579,
+      "flag": false
+    },
+    "ext_ThK": {
+      "auc": 0.5036287724151096,
+      "symmetric_auc": 0.5036287724151096,
+      "flag": false
+    },
+    "ext_UK": {
+      "auc": 0.5085182573901177,
+      "symmetric_auc": 0.5085182573901177,
+      "flag": false
+    },
+    "ext_UTh": {
+      "auc": 0.5091584348999647,
+      "symmetric_auc": 0.5091584348999647,
+      "flag": false
+    },
+    "ext_TMI_up150": {
+      "auc": 0.509110417456997,
+      "symmetric_auc": 0.509110417456997,
+      "flag": false
+    },
+    "gdr_spring_enthalpy_k15": {
+      "auc": 0.5205812942232041,
+      "symmetric_auc": 0.5205812942232041,
+      "flag": false
+    },
+    "gdr_hot_spring_logd": {
+      "auc": 0.5191767925746607,
+      "symmetric_auc": 0.5191767925746607,
+      "flag": false
+    },
+    "gdr_probe2m_dab_k8": {
+      "auc": 0.4661643506621298,
+      "symmetric_auc": 0.5338356493378702,
+      "flag": false
+    },
+    "gdr_probe2m_anom_logd": {
+      "auc": 0.5012082455597685,
+      "symmetric_auc": 0.5012082455597685,
+      "flag": false
+    },
+    "gdr_paleovent_logd": {
+      "auc": 0.5468915722049474,
+      "symmetric_auc": 0.5468915722049474,
+      "flag": false
+    },
+    "gdr_volcvent_logd": {
+      "auc": 0.455852571806022,
+      "symmetric_auc": 0.544147428193978,
+      "flag": false
+    },
+    "vent_alteration_coupling": {
+      "auc": 0.47387545889942656,
+      "symmetric_auc": 0.5261245411005735,
+      "flag": false
+    },
+    "ext_TMI_up150_hg": {
+      "auc": 0.5303464433218982,
+      "symmetric_auc": 0.5303464433218982,
+      "flag": false
+    },
+    "potential_concordance": {
+      "auc": 0.5700453023897349,
+      "symmetric_auc": 0.5700453023897349,
+      "flag": false
+    },
+    "anderson_nne_align": {
+      "auc": 0.570429276154087,
+      "symmetric_auc": 0.570429276154087,
+      "flag": false
+    },
+    "walker_nw_align": {
+      "auc": 0.4913194800016457,
+      "symmetric_auc": 0.5086805199983543,
+      "flag": false
+    },
+    "geod_strain_index": {
+      "auc": 0.5680035379089313,
+      "symmetric_auc": 0.5680035379089313,
+      "flag": false
+    },
+    "geod_dilat_norm": {
+      "auc": 0.44059157316800246,
+      "symmetric_auc": 0.5594084268319975,
+      "flag": false
+    },
+    "crustal_seis_rate": {
+      "auc": 0.540190666680638,
+      "symmetric_auc": 0.540190666680638,
+      "flag": false
+    },
+    "sgmc_bedrock_logd": {
+      "auc": 0.33662506488900024,
+      "symmetric_auc": 0.6633749351109998,
+      "flag": false
+    },
+    "tiger_road_logd": {
+      "auc": 0.5011850387324449,
+      "symmetric_auc": 0.5011850387324449,
+      "flag": false
+    },
+    "geodawn_seam_logd": {
+      "auc": 0.4711202094400758,
+      "symmetric_auc": 0.5288797905599242,
+      "flag": false
+    }
+  },
+  "elapsed_s": 200.5
+}
