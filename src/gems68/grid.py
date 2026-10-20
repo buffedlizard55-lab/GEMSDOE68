@@ -61,6 +61,22 @@ class Grid:
     def shape(self):
         return SHAPE
 
+    @property
+    def n_footprint(self) -> int:
+        return int(self.footprint.sum())
+
+    @property
+    def n_catalogue(self) -> int:
+        return int(self.catalogue.sum())
+
+    @property
+    def footprint_rows(self) -> np.ndarray:
+        return np.nonzero(self.footprint)[0].astype(np.int32)
+
+    @property
+    def footprint_cols(self) -> np.ndarray:
+        return np.nonzero(self.footprint)[1].astype(np.int32)
+
 
 def load_grid(data_dir: Path | None = None) -> Grid:
     d = Path(data_dir) if data_dir else DATA
@@ -88,6 +104,22 @@ def read_band(index: int, data_dir: Path | None = None) -> np.ndarray:
         a[a <= -3.0e38] = np.nan
     a[~np.isfinite(a)] = np.nan
     return a
+
+
+def load_feature_bands(grid: Grid | None = None, data_dir: Path | None = None) -> dict[str, np.ndarray]:
+    """Read all 19 feature bands of training_features.tif into a dict[name -> float32 HxW]."""
+    d = Path(data_dir) if data_dir else DATA
+    out: dict[str, np.ndarray] = {}
+    with rasterio.open(d / "training_features.tif") as src:
+        _check(src, "training_features.tif")
+        nd = src.nodata
+        for idx, name in enumerate(BAND_NAMES, start=1):
+            a = src.read(idx).astype(np.float32)
+            if nd is not None:
+                a[a <= -3.0e38] = np.nan
+            a[~np.isfinite(a)] = np.nan
+            out[name] = a
+    return out
 
 
 def write_geotiff(path: Path, arr: np.ndarray, *, nodata: float | None = None) -> dict:

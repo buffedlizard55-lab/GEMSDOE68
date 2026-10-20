@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Why 0.2778 · GEMSDOE68</title><style>
+<title>Why 0.2778 (rechecked) · GEMSDOE68</title><style>
 :root{--bg:#0b1020;--card:#141b2f;--ink:#e8ecf5;--muted:#9aa7c7;--ok:#2ecc71;--bad:#e74c3c;--warn:#f1c40f;--acc:#4ea1ff}
 *{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
 header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
@@ -46,15 +46,48 @@ scaling every value by λ&lt;1 lowers DTI  ⇒  for a fixed pixel set, value 1.0
 <p><strong>[owner-report]</strong> It is the last rung of a nested mass-pruning ladder on one field, H19-5</p>
 <p>("topo-geophys multi-line corroborated", 19GEMSDOE):</p>
 <table>
-<tr><th>rung</th><th>dots</th><th>live score</th><th>what changed</th></tr>
-<tr><td>h19-5 solid</td><td>121,131</td><td>0.1922</td><td>—</td></tr>
-<tr><td>d1.5 dotted</td><td>60,069</td><td>0.2477</td><td>thinned to ~1.5 px spacing</td></tr>
-<tr><td>d2.8 dotted</td><td>44,090</td><td>0.2600</td><td>thinned to ~2.8 px spacing</td></tr>
-<tr><td>h27-4</td><td>40,199</td><td>0.2708</td><td>removed dots at exactly d = 1 px from catalogue</td></tr>
-<tr><td><strong>h33-2-b2</strong></td><td><strong>37,654</strong></td><td><strong>0.2778</strong></td><td>removed dots at exactly d = 2 px from catalogue</td></tr>
+<tr><th>target DTI</th><th>c̄ needed, \</th><th>G\</th><th>=10k</th><th>c̄ needed, \</th><th>G\</th><th>=12k</th><th>c̄ needed, \</th><th>G\</th><th>=15k</th><th>gain vs 0.2778 row (\</th><th>G\</th><th>=12k)</th></tr>
+<tr><td>0.2778 (owner-report champion)</td><td>0.1146</td><td>0.1264</td><td>0.1441</td><td>—</td></tr>
+<tr><td>0.3195</td><td>0.1318</td><td>0.1454</td><td>0.1657</td><td><strong>+15 % mean credit</strong></td></tr>
+<tr><td>0.3774</td><td>0.1557</td><td>0.1717</td><td>0.1958</td><td><strong>+36 % mean credit</strong></td></tr>
+<tr><td>0.4133 (2026-10-11 snapshot rank 1)</td><td>0.1705</td><td>0.1880</td><td>0.2144</td><td><strong>+49 % mean credit</strong></td></tr>
 </table>
-<p>Three independent facts follow from (★) and the ladder, and they are the design constraints for</p>
-<p>anything that wants to beat it:</p>
+<p>Interpretation: the champion's average dot sits at a kernel credit of roughly 0.12 (i.e. typically</p>
+<p>within ~150–250 m of <em>some</em> new-fault pixel, or covering one partially). Nobody reaches 0.32–0.41</p>
+<p>by emission thrift — the pruning ladder already harvested that (+0.004–0.007 per late rung). The</p>
+<p>leaders' top ≈38 k pixels must simply <em>be nearer real unmapped faults</em>, by 15–50 % in mean</p>
+<p>credit. That is a detector/ranking problem, and it caps what any re-emission of an existing field</p>
+<p>can do. It also says what a holdout must demonstrate to be live-relevant: a candidate field whose</p>
+<p>top-ranked pixels recover withheld faults better <em>at matched mass</em>, especially away from the</p>
+<p>catalogue — precisely this lane's gate.</p>
+<p>Why auto-context is still the right lever (and its measured size): faults are extended objects —</p>
+<p>continuous, parallel in NNE Basin-and-Range sets, en échelon at 1–3 km step-overs — so a weak</p>
+<p>pixel <em>on strike between two strong responses</em> is more likely fault than an equal isolated pixel,</p>
+<p>information no per-pixel model has. In this repo's whole-component holdout the stacked stages</p>
+<p>beat stage 1 by +0.035…+0.055 HOLDOUT-DTI at 25–38 k dots with bootstrap CIs excluding 0</p>
+<p>(evidence/exp2…, HOLDOUT-DTI, 11,321 withheld positives) — a <em>relative</em> gain over a per-pixel</p>
+<p>LightGBM that is itself weaker than the h19-5 field. The honest reading: stacking is worth</p>
+<p>roughly the right order of magnitude (+30–60 % relative on a per-pixel base), but only if the</p>
+<p>base field is competitive and the gain survives &gt;1 km from mapped faults, which is exactly where</p>
+<p>exp1/exp2 are weakest and what AC68-N1 tests.</p>
+<h2>3. The contrarian point the leaderboard hides: the Final Prize Round</h2>
+<p><strong>[official]</strong> (problem description, fetched today): the Initial Prize Round scores a fixed</p>
+<p>private set of expert-mapped new faults (top 5 → $10 k each). The <strong>Final Prize Round ($250 k)</strong></p>
+<p>re-scores the <em>same single chosen submission</em> against an <strong>expanded label set</strong> that adds faults</p>
+<p>experts verify after reviewing all teams' predictions: *"Predictions that helped experts identify</p>
+<p>previously-unmapped faults can score higher here."*</p>
+<p>Maximise P(Win) therefore does <strong>not</strong> mean maximising expected public-leaderboard DTI alone. A</p>
+<p>submission that is a slight re-pruning of the incumbent field has almost no discovery upside; a</p>
+<p>submission whose dots sit on <em>genuinely unmapped but geologically defensible</em> strands — far from</p>
+<p>the catalogue, exactly where our &gt;1 km gate applies — buys option value in the round worth 5× the</p>
+<p>money, at some expected cost in round 1. The portfolio-correct target for this lane is: matched-</p>
+<p>mass ranking at least as good as the incumbent family on recoverable faults, with as much of its</p>
+<p>mass as possible on defensible off-catalogue strands. That is also why copying or lightly</p>
+<p>perturbing the champion (prohibited here, and detectable) is strategically poor even before it is</p>
+<p>a rules problem.</p>
+<h2>4. Can <em>we</em> generate a submission scoring higher than 0.2778?</h2>
+<p>Nobody in this checkout can know that — the scored truth is private and no raster produced here</p>
+<p>has an organiser receipt. What can be stated without hallucination:</p>
 <ul>
 <li><strong>Mass discipline is worth ~+0.07.</strong> Going from a 121k-pixel ribbon to 44k dots of the <em>same</em></li>
 <p>   field raised the score 0.19 → 0.26 purely by deleting pixels whose realised credit was below</p>

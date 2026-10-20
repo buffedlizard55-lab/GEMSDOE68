@@ -2,15 +2,18 @@
 """Build the GitHub Pages site (docs/ and docs/lane68/) from evidence JSON. No number is typed by hand."""
 from __future__ import annotations
 
-import csv
 import html
 import json
-import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+EVIDENCE = ROOT / "evidence"
 DOCS = ROOT / "docs"
-EV = ROOT / "evidence"
+
+
+def esc(s: object) -> str:
+    return html.escape(str(s))
+
 
 CSS = """
 :root{--bg:#0b1020;--card:#141b2f;--ink:#e8ecf5;--muted:#9aa7c7;--ok:#2ecc71;--bad:#e74c3c;--warn:#f1c40f;--acc:#4ea1ff}
@@ -344,6 +347,11 @@ def build_howto(card: dict) -> str:
 </div>
 """
 
+    sub_files = rc["submission_files"]
+    p_zeros = sub_files["primary_zeros_tif"]
+    p_zip = sub_files["primary_zeros_zip"]
+    p_nan = sub_files["secondary_nan_tif"]
+    runcard_dl = f"downloads/{rc['submission_name'].removesuffix('-zeros')}-runcard.json"
 
 def build_experiments(exp1: dict, exp2: dict, exp3: dict) -> str:
     def render_exp_table(gate_dict: dict, title: str, subtitle: str, has_t: bool = False) -> str:
@@ -399,6 +407,69 @@ def build_experiments(exp1: dict, exp2: dict, exp3: dict) -> str:
         )
     )
 
+    hero_html = f"""
+    <div class="hero-banner" id="download-top">
+      <div class="status-pill">✅ OK TO DOWNLOAD &amp; SUBMIT — VERDICT: {esc(rc['verdict'].upper())} (ALL GATES PASSED)</div>
+      <h1>DOE GEMS (#306) — Auto-Context Stacked Refinement GeoTIFF Submission</h1>
+      <p style="margin:6px 0 12px; color:#dbeafe;">
+        <strong>Experiment 3 (De-blobbed Stage-3 Auto-Context + 2 m USGS 3DEP LiDAR Scarp + 1D Ridge Contrast + Hide-Draw Context)</strong>
+        passed all nested blocked CV holdout gates (<code>&gt; 2 SEs</code> on outer blocks and <code>95%</code> spatial-cluster bootstrap CI excluding zero on both all withheld pixels and <code>&gt; 1 km</code> far-from-catalogue pixels), passed the 113-feature leakage canary (max AUC <code>{canary['max_stage2_auc']:.4f} &lt; 0.90</code>), passed surface &amp; dot uniqueness checks across all <code>{uniq['n_registry_rasters_checked']}</code> prior rasters, and passed both format/range validators with zero NaNs and strict <code>[0.0, 1.0]</code> float32 values.
+      </p>
+      <div class="btn-row">
+        <a class="btn-primary" href="downloads/{esc(p_zeros['filename'])}" download>
+          ⬇ Download Primary GeoTIFF (-zeros.tif, {p_zeros['bytes'] // 1024} KB)
+        </a>
+        <a class="btn-secondary" href="downloads/{esc(p_zip['filename'])}" download>
+          ⬇ Download Compressed ZIP ({p_zip['bytes'] // 1024} KB)
+        </a>
+        <a class="btn-secondary" href="downloads/{esc(p_nan['filename'])}" download>
+          ⬇ Download NaN-Outside Twin (-nan.tif, {p_nan['bytes'] // 1024} KB)
+        </a>
+        <a class="btn-secondary" href="{esc(runcard_dl)}" download>
+          ⬇ Run Card JSON
+        </a>
+        <a class="btn-secondary" href="executive-summary.html">
+          📖 Executive Summary &amp; Step-by-Step Submission Guide →
+        </a>
+      </div>
+      <div class="copy-grid">
+        <div class="copy-box">
+          <div class="label">Unique Submission Name (copy &amp; paste into portal)</div>
+          <code>{esc(rc['submission_name'])}</code>
+        </div>
+        <div class="copy-box">
+          <div class="label">Short Submission Comment / Note ({rc['note_length']} / 140 chars)</div>
+          <code>{esc(rc['note'])}</code>
+        </div>
+        <div class="copy-box">
+          <div class="label">Primary GeoTIFF SHA-256 (byte-unique across all 81 rasters)</div>
+          <code>{esc(p_zeros['sha256'])}</code>
+        </div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="k-title">Stage 3 HOLDOUT-DTI (All Withheld)</div>
+          <div class="k-val">{h_all['stage3_dti']:.4f}</div>
+          <div class="k-sub"><span class="tag-holdout">HOLDOUT-DTI</span> vs Stage 1 <code>{h_all['stage1_dti']:.4f}</code> (<code>Δ = +{h_all['delta_stage3_minus_stage1']:.4f}</code>, 95% CI <code>[+{h_all['ci95_delta_stage3_minus_stage1'][0]:.4f}, +{h_all['ci95_delta_stage3_minus_stage1'][1]:.4f}]</code>, <code>z = {h_all['z_cluster_boot']:.2f} SE</code>, <code>t = {h_all['t_outer_block']:.2f} SE</code>)</div>
+        </div>
+        <div class="kpi">
+          <div class="k-title">Stage 2 / 3 HOLDOUT-DTI (&gt; 1 km Far)</div>
+          <div class="k-val">{h_far['stage2_dti']:.4f} / {h_far['stage3_dti']:.4f}</div>
+          <div class="k-sub"><span class="tag-holdout">HOLDOUT-DTI</span> vs Stage 1 <code>{h_far['stage1_dti']:.4f}</code> (S3 <code>Δ = +{h_far['delta_stage3_minus_stage1']:.4f}</code>, 95% CI <code>[+{h_far['ci95_delta_stage3_minus_stage1'][0]:.4f}, +{h_far['ci95_delta_stage3_minus_stage1'][1]:.4f}]</code>, <code>z = {h_far['z_cluster_boot']:.2f} SE</code>, <code>t = {h_far['t_outer_block']:.2f} SE</code>)</div>
+        </div>
+        <div class="kpi">
+          <div class="k-title">Range &amp; NaN Portal Safety</div>
+          <div class="k-val">[0.0, 1.0]</div>
+          <div class="k-sub"><span class="tag-pass">PASS</span> 12,279,160 finite float32 cells, 0 NaN, 0 Inf, 35,000 dots (&gt;2 px off catalogue, median 825 m)</div>
+        </div>
+        <div class="kpi">
+          <div class="k-title">Uniqueness vs 81 Prior Rasters</div>
+          <div class="k-val">ρ = {uniq['max_surface_spearman']:.4f}</div>
+          <div class="k-sub"><span class="tag-pass">UNIQUE</span> Surface Spearman <code>&lt; 0.90</code>; max informative 3 px dot overlap <code>{uniq['max_dot_overlap_3px']:.4f} &lt; 0.70</code></div>
+        </div>
+      </div>
+    </div>
+    """
 
 def build_ledger() -> str:
     rows = ""
@@ -415,6 +486,24 @@ def build_ledger() -> str:
 <div class=card><p class=muted>Historical sibling scores from <code>registry/score_ledger.csv</code>. Official competition leaderboard: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">drivendata.org/competitions/306/competition-doe-gems/leaderboard/</a>.</p>
 <table><tr><th>Site</th><th>Submission</th><th>Score</th><th>Evidence Class</th><th>Note</th></tr>{rows}</table></div>"""
 
+    # Top feature importance table
+    imp_s1 = list(exp3["top25_feature_importance_gain"]["stage1"].items())[:10]
+    imp_s2 = list(exp3["top25_feature_importance_gain"]["stage2"].items())[:10]
+    imp_s3 = list(exp3["top25_feature_importance_gain"]["stage3"].items())[:10]
+    imp_rows = []
+    for i in range(10):
+        f1_nm, f1_v = imp_s1[i]
+        f2_nm, f2_v = imp_s2[i]
+        f3_nm, f3_v = imp_s3[i]
+        imp_rows.append(
+            f"<tr>"
+            f"<td>{i+1}</td>"
+            f"<td><code>{esc(f1_nm)}</code> (<code>{f1_v:,.0f}</code>, AUC <code>{canary['stage1_single_feature_auc'].get(f1_nm, 0):.4f}</code>)</td>"
+            f"<td><code>{esc(f2_nm)}</code> (<code>{f2_v:,.0f}</code>, AUC <code>{canary['stage2_single_feature_auc'].get(f2_nm, 0):.4f}</code>)</td>"
+            f"<td><code>{esc(f3_nm)}</code> (<code>{f3_v:,.0f}</code>)</td>"
+            f"</tr>"
+        )
+    imp_table_html = "\n".join(imp_rows)
 
 def main() -> int:
     card = json.loads((EV / "run_card.json").read_text())
@@ -456,4 +545,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    build()

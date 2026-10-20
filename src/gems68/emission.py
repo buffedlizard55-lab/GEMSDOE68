@@ -26,12 +26,37 @@ def exclusion_mask(catalogue: np.ndarray, exclude_px: float = EXCLUDE_PX) -> np.
     return ndi.distance_transform_edt(~np.asarray(catalogue, bool)) <= exclude_px
 
 
-def emit_dots(surface: np.ndarray, allowed: np.ndarray, n_dots: int, nms: int = 5) -> np.ndarray:
-    s = np.where(allowed, np.nan_to_num(surface.astype(np.float32), nan=0.0), 0.0)
-    mx = ndi.maximum_filter(s, size=nms, mode="constant", cval=0.0)
-    cand = (s >= mx) & (s > 0) & allowed
+def emit_dots(
+    surface: np.ndarray,
+    allowed: np.ndarray,
+    n_dots_or_catalogue: int | np.ndarray | None = None,
+    nms: int = 5,
+    *,
+    budget: int | None = None,
+    nms_size: int | None = None,
+    exclusion_px: float = EXCLUDE_PX,
+) -> np.ndarray:
+    """Emit binary dots from ``surface`` using 5x5 NMS and optional catalogue collar exclusion.
+
+    Supports both:
+      - ``emit_dots(surface, allowed, n_dots, nms=5)``
+      - ``emit_dots(surface, allowed, catalogue, budget=..., nms_size=5, exclusion_px=2.0)``
+    """
+    eff_allowed = np.asarray(allowed, dtype=bool)
+    if isinstance(n_dots_or_catalogue, np.ndarray):
+        cat = np.asarray(n_dots_or_catalogue, dtype=bool)
+        if exclusion_px > 0 and cat.any():
+            eff_allowed = eff_allowed & ~exclusion_mask(cat, exclusion_px)
+        n_dots = int(budget) if budget is not None else 0
+    else:
+        n_dots = int(budget) if budget is not None else int(n_dots_or_catalogue or 0)
+    eff_nms = int(nms_size) if nms_size is not None else int(nms)
+
+    s = np.where(eff_allowed, np.nan_to_num(surface.astype(np.float32), nan=0.0), 0.0)
+    mx = ndi.maximum_filter(s, size=eff_nms, mode="constant", cval=0.0)
+    cand = (s >= mx) & (s > 0) & eff_allowed
     yy, xx = np.nonzero(cand)
-    if len(yy) == 0:
+    if len(yy) == 0 or n_dots <= 0:
         return np.zeros(surface.shape, bool)
     vals = s[yy, xx]
     if n_dots < len(vals):
@@ -42,6 +67,186 @@ def emit_dots(surface: np.ndarray, allowed: np.ndarray, n_dots: int, nms: int = 
     return out
 
 
+def spatial_block_terms(
+    emitted: np.ndarray,
+    truth: np.ndarray,
+    active: np.ndarray,
+    block_side: int = 200,
+) -> np.ndarray:
+    """Compute (tp, fp, fn, n_truth) per 200x200 px (20 km) spatial cluster."""
+    from .metric import kernel
+
+    p = np.asarray(emitted, dtype=bool) & np.asarray(active, dtype=bool)
+    g = np.asarray(truth, dtype=bool) & np.asarray(active, dtype=bool)
+    h, w = g.shape
+    ncols = (w + block_side - 1) // block_side
+    nrows = (h + block_side - 1) // block_side
+    terms = np.zeros((ncols * nrows, 4), dtype=np.float64)
+
+    if g.any():
+        dp = ndi.distance_transform_edt(~p) if p.any() else np.full(g.shape, np.inf)
+        cov = kernel(dp[g])
+        ty, tx = np.nonzero(g)
+        tids = (ty // block_side) * ncols + (tx // block_side)
+        terms[:, 0] = np.bincount(tids, weights=cov, minlength=len(terms))
+        terms[:, 2] = np.bincount(tids, weights=1.0 - cov, minlength=len(terms))
+        terms[:, 3] = np.bincount(tids, weights=np.ones(len(ty)), minlength=len(terms))
+        dg = ndi.distance_transform_edt(~g)
+    else:
+        dg = np.full(g.shape, np.inf)
+
+    if p.any():
+        py, px = np.nonzero(p)
+        pids = (py // block_side) * ncols + (px // block_side)
+        fp_w = 1.0 - kernel(dg[p])
+        terms[:, 1] = np.bincount(pids, weights=fp_w, minlength=len(terms))
+    return terms
+
+
 def quota(n_total: int, footprint: np.ndarray, region: np.ndarray) -> int:
     """Share of a global dot budget proportional to a region's footprint area."""
     return int(round(n_total * float((footprint & region).sum()) / float(footprint.sum())))
+
+
+# ---------------------------------------------------------------------------
+# Exp-3 emission variants (preregistered in knowledge/02_exp3_preregistration_and_hypotheses.md).
+# V0 above is unchanged.  V1/V2/V3 share one greedy min-spacing selector; they
+# differ only in the candidate set / ranking score handed to it.
+# ---------------------------------------------------------------------------
+
+SPACING_PX = 2.8  # champion ladder's winning thinning scale (d2.8 -> 0.2600 rung)
+
+
+def greedy_spacing(score: np.ndarray, allowed: np.ndarray, candidates: np.ndarray,
+                   n_dots: int, min_dist_px: float = SPACING_PX) -> np.ndarray:
+    """Top-``n_dots`` candidate pixels by ``score`` under an exact pairwise
+    minimum-spacing constraint (greedy, descending score; grid-hash accelerated).
+
+    Ties are broken by raster order so the result is deterministic.  Every pair
+    of emitted dots is >= ``min_dist_px`` apart (verified in tests)."""
+    cand = np.asarray(candidates, bool) & np.asarray(allowed, bool)
+    yy, xx = np.nonzero(cand)
+    out = np.zeros(score.shape, bool)
+    if len(yy) == 0 or n_dots <= 0:
+        return out
+    vals = np.nan_to_num(score[yy, xx].astype(np.float64), nan=-np.inf)
+    order = np.lexsort((xx, yy, -vals))  # descending value, then raster order
+    yy, xx = yy[order], xx[order]
+    cell = float(min_dist_px)
+    r2 = cell * cell
+    buckets: dict[tuple[int, int], list[tuple[int, int]]] = {}
+    kept_y: list[int] = []
+    kept_x: list[int] = []
+    for y, x in zip(yy.tolist(), xx.tolist()):
+        by, bx = int(y // cell), int(x // cell)
+        ok = True
+        for gy in (by - 1, by, by + 1):
+            for gx in (bx - 1, bx, bx + 1):
+                for (ky, kx) in buckets.get((gy, gx), ()):  # exact check vs neighbours
+                    if (y - ky) ** 2 + (x - kx) ** 2 < r2:
+                        ok = False
+                        break
+                if not ok:
+                    break
+            if not ok:
+                break
+        if ok:
+            buckets.setdefault((by, bx), []).append((y, x))
+            kept_y.append(y)
+            kept_x.append(x)
+            if len(kept_y) >= n_dots:
+                break
+    out[np.asarray(kept_y), np.asarray(kept_x)] = True
+    return out
+
+
+def crest_mask(surface: np.ndarray, allowed: np.ndarray) -> np.ndarray:
+    """Across-strike ridge crests of ``surface`` (H68-A).
+
+    A pixel is a crest pixel iff its surface value is >= the bilinearly sampled
+    surface at +/-1 px and +/-2 px ACROSS the local line orientation (structure
+    tensor of the surface itself, same parameters as the stage-k context:
+    sigma_grad 1.5, sigma_win 4).  Along-strike neighbours never suppress, so a
+    continuous fault-parallel crest survives intact."""
+    from . import features as F
+
+    s = np.where(allowed, np.nan_to_num(surface.astype(np.float32), nan=0.0), 0.0)
+    _, _, _, theta = F.orientation_field(s, 1.5, 4.0)
+    yy, xx = np.nonzero(allowed & (s > 0))
+    th = theta[yy, xx].astype(np.float64)
+    cy, cx = -np.cos(th), np.sin(th)  # across-line unit vector (row, col); along = (sin, cos)
+    centre = s[yy, xx].astype(np.float64)
+    keep = np.ones(len(yy), bool)
+    for d in (1.0, 2.0):
+        for sgn in (1.0, -1.0):
+            sampled = ndi.map_coordinates(
+                s, [yy + sgn * d * cy, xx + sgn * d * cx], order=1, mode="nearest")
+            keep &= centre >= sampled - 1e-12
+    out = np.zeros(surface.shape, bool)
+    out[yy[keep], xx[keep]] = True
+    return out
+
+
+def greedy_spacing_stratified(score: np.ndarray, allowed: np.ndarray, candidates: np.ndarray,
+                              zone_id: np.ndarray, zone_quotas: dict[int, int],
+                              min_dist_px: float = SPACING_PX) -> np.ndarray:
+    """Greedy >=``min_dist_px`` spacing (global, exact) with per-zone dot quotas.
+
+    Single pass in descending score order (raster-order tie-break): a candidate
+    is accepted iff it is >= min_dist from every accepted dot AND its zone's
+    quota is unexhausted.  Used by Exp-4 (H68-G) with near/far zones split at
+    10 px from the visible catalogue and quotas proportional to zone area."""
+    cand = np.asarray(candidates, bool) & np.asarray(allowed, bool)
+    yy, xx = np.nonzero(cand)
+    out = np.zeros(score.shape, bool)
+    if len(yy) == 0:
+        return out
+    vals = np.nan_to_num(score[yy, xx].astype(np.float64), nan=-np.inf)
+    order = np.lexsort((xx, yy, -vals))
+    yy, xx = yy[order], xx[order]
+    zones = zone_id[yy, xx]
+    remaining = dict(zone_quotas)
+    cell = float(min_dist_px)
+    r2 = cell * cell
+    buckets: dict[tuple[int, int], list[tuple[int, int]]] = {}
+    kept_y: list[int] = []
+    kept_x: list[int] = []
+    total = sum(zone_quotas.values())
+    for y, x, z in zip(yy.tolist(), xx.tolist(), zones.tolist()):
+        if remaining.get(int(z), 0) <= 0:
+            continue
+        by, bx = int(y // cell), int(x // cell)
+        ok = True
+        for gy in (by - 1, by, by + 1):
+            for gx in (bx - 1, bx, bx + 1):
+                for (ky, kx) in buckets.get((gy, gx), ()):
+                    if (y - ky) ** 2 + (x - kx) ** 2 < r2:
+                        ok = False
+                        break
+                if not ok:
+                    break
+            if not ok:
+                break
+        if ok:
+            buckets.setdefault((by, bx), []).append((y, x))
+            kept_y.append(y)
+            kept_x.append(x)
+            remaining[int(z)] -= 1
+            if len(kept_y) >= total:
+                break
+    out[np.asarray(kept_y), np.asarray(kept_x)] = True
+    return out
+
+
+def rank01(values: np.ndarray, mask: np.ndarray) -> np.ndarray:
+    """Percentile rank in [0,1] of ``values`` over ``mask`` (0 outside)."""
+    out = np.zeros(values.shape, np.float32)
+    idx = np.flatnonzero(np.asarray(mask, bool).ravel())
+    if idx.size == 0:
+        return out
+    v = np.nan_to_num(values.ravel()[idx].astype(np.float64), nan=-np.inf)
+    order = np.argsort(v, kind="mergesort")
+    ranks = np.empty(idx.size, np.float64)
+    ranks[order] = np.arange(idx.size)
+    out.ravel()[idx] = (ranks / max(idx.size - 1, 1)).astype(np.float32)
+    return out

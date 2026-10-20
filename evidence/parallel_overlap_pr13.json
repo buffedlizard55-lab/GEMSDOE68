@@ -1,0 +1,27 @@
+{
+ "mine": "docs/downloads/gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros.tif",
+ "mine_dots": 38000,
+ "comparisons": {
+  "gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros.tif": {
+   "dots": 38000,
+   "exact_shared": 186,
+   "frac_mine_within3px_euclidean": 0.08036842105263158,
+   "frac_mine_within3px_chebyshev": 0.11028947368421052,
+   "sha256": "8e69b8877c88ed56f7649b69d1c1997d666754a0056a34eefdeab4d2f6b3fb12"
+  },
+  "gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.tif": {
+   "dots": 35000,
+   "exact_shared": 1139,
+   "frac_mine_within3px_euclidean": 0.45244736842105265,
+   "frac_mine_within3px_chebyshev": 0.5744473684210526,
+   "sha256": "eefc2885990d5f5ae0c943ab152ef69de6de1c6c722420e1dbcd6e4af634ecac"
+  },
+  "gems68-autoctx4-ext-bagged-25000dots-20261020T200722Z-3d070595-zeros.tif": {
+   "dots": 25000,
+   "exact_shared": 650,
+   "frac_mine_within3px_euclidean": 0.12960526315789472,
+   "frac_mine_within3px_chebyshev": 0.17863157894736842,
+   "sha256": "99e00aa5f7137306271f12227dea5da476f8d2943a84fcfffe8dc4b94b43335c"
+  }
+ }
+}

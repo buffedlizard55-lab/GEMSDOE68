@@ -81,7 +81,7 @@ def main() -> int:
         oof1, _ = AC.blocked_oof(X1, y, q, dist_to_block, rows_all, tq, rng, F.STAGE1_NAMES)
         tr = np.flatnonzero(np.isin(q, tq) & (dist_to_block[qo] > AC.BUFFER_PX))
         p1o, b1 = AC.fit_predict(X1, y, tr, pred_idx, rng, F.STAGE1_NAMES)
-        importances[1].append(dict(zip(b1.feature_name(), b1.feature_importance("gain").tolist())))
+        importances[1].append(AC.mean_gain(b1))
         p_outer[1][pred_idx] = p1o
         p_prev = oof1.copy(); p_prev[pred_idx] = p1o
         log(f"outer {FOLD_NAMES[qo]} stage1 done")
@@ -90,7 +90,7 @@ def main() -> int:
             AC.context_matrix(AC.to_map(p_prev, fp), fp, phys, ctx_vecs, out=X2)
             oofk, _ = AC.blocked_oof(X2, y, q, dist_to_block, rows_all, tq, rng, names2)
             pko, bk = AC.fit_predict(X2, y, tr, pred_idx, rng, names2)
-            importances[k].append(dict(zip(bk.feature_name(), bk.feature_importance("gain").tolist())))
+            importances[k].append(AC.mean_gain(bk))
             p_outer[k][pred_idx] = pko
             p_prev = oofk.copy(); p_prev[pred_idx] = pko
             log(f"outer {FOLD_NAMES[qo]} stage{k} done")
