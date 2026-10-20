@@ -26,11 +26,14 @@ from scipy import ndimage
 
 REPO = Path(__file__).resolve().parents[2]
 DATA = REPO / "data"
-BRIDGE = DATA / "bridge"
-OFFICIAL = DATA / "official"
-WORK = REPO / "work"
+CACHE_DATA = REPO / ".cache" / "gems_data"
+BRIDGE = DATA / "bridge" if (DATA / "bridge").exists() else CACHE_DATA
+OFFICIAL = DATA / "official" if (DATA / "official").exists() else CACHE_DATA
+WORK = REPO / ".cache" / "work"
 
-FEATURES_TIF = BRIDGE / "gems-geodawn-numerical-features.tif"
+FEATURES_TIF = (BRIDGE / "gems-geodawn-numerical-features.tif"
+                if (BRIDGE / "gems-geodawn-numerical-features.tif").exists()
+                else CACHE_DATA / "training_features.tif")
 LABELS_TIF = OFFICIAL / "labels.tif"
 EXISTING_TIF = OFFICIAL / "existing_faults.tif"
 SAMPLE_TIF = OFFICIAL / "sample_submission.tif"
