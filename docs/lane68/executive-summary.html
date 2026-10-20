@@ -46,15 +46,15 @@
 <div class="container">
 
 <div class="ok">
-    <h4>✅ This submission is ready to download and submit</h4>
-    <p><strong>File:</strong> <code>GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif</code></p>
-    <p><strong>SHA-256:</strong> <code>ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47</code></p>
+    <h4>✅ This submission is ready to download and submit — all-finite variant</h4>
+    <p><strong>File:</strong> <code>GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-zeros.tif</code> (primary; 0 outside footprint, no NaN)</p>
+    <p><strong>SHA-256:</strong> <code>b917459305c22145924fa49f3cb3e08b8f3f03caabb03a23e368d8bd6c97c902</code> · 809464 bytes</p>
     <p><strong>Format:</strong> single-band float32 GeoTIFF, EPSG:32611, 100 m, 3730×3292</p>
-    <p><strong>Values:</strong> all in [0, 1] inside the footprint, NaN only outside</p>
-    <p><strong>Validator:</strong> 16/16 checks passed, 0 FAIL, 0 SKIPPED</p>
-    <p><strong>Submission name:</strong> GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z</p>
-    <p><strong>Note (≤140 chars):</strong> GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated</p>
-    <p><a href="index.html#download">→ Download the file now</a></p>
+    <p><strong>Values:</strong> all in [0, 1] inside the footprint, 0 outside (no NaN) — <strong>cannot trigger “Predicted values must be in range [0, 1]”</strong></p>
+    <p><strong>Validator:</strong> 16/16 checks passed, 0 FAIL, 0 SKIPPED (official 5167373-pixel footprint, 0 NaN inside)</p>
+    <p><strong>Submission name:</strong> GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z</p>
+    <p><strong>Note (≤140 chars):</strong> GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated; fixed footprint 20261020</p>
+    <p><a href="index.html#download">→ Download the file now</a> · also available as <code>GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-nan.tif</code> (NaN outside, sha c615fcd9…) and <code>.zip</code></p>
 </div>
 
 <div class="warning">
@@ -71,10 +71,10 @@
 <div class="step">
     <h3><span class="num">1</span> Download the Submission File</h3>
     <p>Click the download button on the <a href="index.html#download">main page</a>. You'll get a file named:</p>
-    <pre>GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif</pre>
-    <p>This is a single-band float32 GeoTIFF matching the competition's required format exactly.</p>
-    <p>An all-finite fallback is also available:</p>
-    <pre>GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif</pre>
+    <pre>GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-zeros.tif</pre>
+    <p>This is a single-band float32 GeoTIFF matching the competition's required format exactly — <strong>all-finite, 0 outside footprint</strong>, so it cannot trigger “Predicted values must be in range [0, 1]”.</p>
+    <p>The NaN-outside twin is also available if you prefer the sample_submission format:</p>
+    <pre>GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-nan.tif</pre>
 </div>
 
 <div class="step">

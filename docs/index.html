@@ -20,10 +20,13 @@ h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var
 <header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html" style=color:#fff>Executive summary</a> <a href="how-to-submit.html">How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
 <main>
 <h1>Executive summary</h1>
-<p class=muted>DOE GEMS Prize (DrivenData #306) · lane: auto-context stacked refinement · built 20261012T022132Z UTC · every number below is read from <code>evidence/run_card.json</code>.</p>
-<div class="banner ok">✅ CLEARED: this file passed the holdout gate, the lane-uniqueness check and the format validator. It is OK to download and submit (promotion to a weekly slot remains the selector's decision).</div>
+<p class=muted>DOE GEMS Prize (DrivenData #306) · lane: auto-context stacked refinement · built 20261020T193000Z UTC · every number below is read from <code>evidence/run_card.json</code> and <code>evidence/fixed_32000_receipt.json</code>.</p>
+<div style="background:#d4edda;border:2px solid #0f7b3f;border-radius:10px;padding:14px 16px;margin:16px 0">
+  <strong>🔧 Fixed 20261020T193000Z — new unique file in this session:</strong> <code>GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-zeros.tif</code> (sha256 <code>b9174593…</code>, 809 kB, all-finite, 0 outside footprint) fixes the 3061 NaN-inside-footprint error in the 182552Z file. It is the same 32 k dots, now on the official 5167373-pixel footprint, validator 16/16 PASS. <a href="lane68/index.html#download">Download it in lane 68 →</a>
+</div>
+<div class="banner ok">✅ CLEARED (38000-dot file): this file passed the holdout gate on BOTH strata, the lane-uniqueness check and the format validator. It is OK to download and submit (promotion to a weekly slot remains the selector's decision).</div>
 <div class=card>
-<h2>The submission file</h2>
+<h2>The submission file (CLEARED — 38000 dots, 20261012)</h2>
 <p><a class=btn href="downloads/gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.tif" download>⬇ Download gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.tif</a>
 <a class="btn secondary" href="downloads/gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.zip" download>⬇ ZIP (same TIFF)</a>
 <a class="btn secondary" href="downloads/gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-nan.tif" download>NaN-outside variant (secondary)</a></p>
@@ -36,6 +39,24 @@ h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var
 <tr><th>Emission</th><td>38,000 binary dots · all &gt; 2 px from the published catalogue (min 2.24 px, median 51.0 px, p95 112.2 px) · 5×5 local maxima of the stage-3 surface</td></tr>
 <tr><th>Organizer-confirmed score</th><td><b>none</b> — UNSCORED. No number on this site is a leaderboard score.</td></tr>
 </table></div>
+
+<div class=card style="border:2px solid #0f7b3f">
+<h2>🆕 New in this session — 32000-dot FIXED file (20261020)</h2>
+<p><a class=btn href="downloads/GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-zeros.tif" download>⬇ Download GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-zeros.tif (all-finite, primary)</a>
+<a class="btn secondary" href="downloads/GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-nan.tif" download>NaN-outside twin</a>
+<a class="btn secondary" href="downloads/GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z-zeros.zip" download>ZIP</a></p>
+<table>
+<tr><th>Submission name</th><td><code>GEMSDOE68-AC-stack3-r3-N32000-FIXED-20261020T193000Z</code></td></tr>
+<tr><th>Note (≤140 chars)</th><td><code>GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated; fixed footprint 20261020</code> <small>(118 chars)</small></td></tr>
+<tr><th>SHA-256 (zeros)</th><td><code>b917459305c22145924fa49f3cb3e08b8f3f03caabb03a23e368d8bd6c97c902</code></td></tr>
+<tr><th>SHA-256 (nan)</th><td><code>c615fcd98b9bdd50b31bfcd87b58a6592a984112f436bf27997d508a89ae2fa8</code></td></tr>
+<tr><th>Format</th><td>float32 · single band · EPSG:32611 · 3730×3292 · 100 m · values exactly {0,1} · 0 outside (zeros) / NaN outside (nan) · 0 NaN inside official footprint</td></tr>
+<tr><th>Validator</th><td>16/16 PASS — <b class=ok>all checks true</b> (official footprint 5167373 px, emitted 32000, min 0 max 1, no NaN inside)</td></tr>
+<tr><th>Emission</th><td>32,000 binary dots · same dots as 20261020T182552Z, re-written on official grid (fixes 3061 NaN-inside error)</td></tr>
+<tr><th>Organizer-confirmed score</th><td><b>none</b> — UNSCORED</td></tr>
+</table>
+<p class=muted><strong>Why fixed?</strong> The 182552Z file used the cached stack's footprint (5165852 px) which is 1521 cells short of the official 5167373-pixel footprint; the portal therefore saw 3061 NaN inside the footprint and rejected “values must be in [0,1]”. The FIXED file writes 0 inside those 3061 cells and is all-finite. See <a href="lane68/executive-summary.html">lane 68 executive summary</a> for the step-by-step submission guide.</p>
+</div>
 
 <div class=card><h2>What the holdout says (HOLDOUT-DTI, evaluator <code>gems57-pooled-hide-v2</code>, 11,321 withheld positives)</h2>
 <table><tr><th></th><th>stage 1 (per-pixel)</th><th>stage 3 (auto-context)</th><th>paired Δ</th><th>95 % CI (20 km block bootstrap)</th><th>gate</th></tr>

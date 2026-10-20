@@ -2,100 +2,36 @@
   "storage_root": "/home/user/GEMSDOE68/.cache/gems_data",
   "files": [
     {
-      "id": "scored_h19_5",
-      "dest": "scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
-      "group": "scored",
+      "id": "training_features",
+      "dest": "training_features.tif",
+      "group": "core",
       "status": "restored",
-      "bytes": 1712322,
-      "sha256": "ec1f9b56b83ce33cad781ceb9f104b18fb4f2ff785263a4e89616af4aabdee8d"
+      "bytes": 418912844,
+      "sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5"
     },
     {
-      "id": "scored_h19_4",
-      "dest": "scored/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
-      "group": "scored",
+      "id": "labels",
+      "dest": "labels.tif",
+      "group": "core",
       "status": "restored",
-      "bytes": 1716768,
-      "sha256": "89109a3bd2cd3b12e7a0f388113c519843acfc9c4f46825affefc3e63dd99b22"
+      "bytes": 425830,
+      "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093"
     },
     {
-      "id": "scored_h16_1",
-      "dest": "scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
-      "group": "scored",
+      "id": "existing_faults",
+      "dest": "existing_faults.tif",
+      "group": "core",
       "status": "restored",
-      "bytes": 1718028,
-      "sha256": "055309694ed499ca3d87e76b3f5e81c292aef6e39c418d33ff5a817aa1309bea"
+      "bytes": 425830,
+      "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093"
     },
     {
-      "id": "scored_d15_scored",
-      "dest": "scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
-      "group": "scored",
+      "id": "sample_submission",
+      "dest": "sample_submission.tif",
+      "group": "core",
       "status": "restored",
-      "bytes": 1632732,
-      "sha256": "68d0e2e4fcc594f9a23f56c44b885fee733d026d39be55e18ad2a07289525310"
-    },
-    {
-      "id": "scored_d28_unscored",
-      "dest": "scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
-      "group": "scored",
-      "status": "restored",
-      "bytes": 1603424,
-      "sha256": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8"
-    },
-    {
-      "id": "calib_13gems_20261001_r13-lattice-s5_v2_nan-ou",
-      "dest": "scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
-      "group": "scored",
-      "status": "restored",
-      "bytes": 1706456,
-      "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2"
-    },
-    {
-      "id": "calib_8GEMSDOE_Hedge-v2_submission",
-      "dest": "scored/8GEMSDOE_Hedge-v2_submission.tif",
-      "group": "scored",
-      "status": "restored",
-      "bytes": 736494,
-      "sha256": "052688eafbc7a55d90caab72252a50304fe5caa8ecf973f8e791b4ae910f0792"
-    },
-    {
-      "id": "calib_gems10-h25-ctx-ridge-20260927T2329477041",
-      "dest": "scored/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
-      "group": "scored",
-      "status": "restored",
-      "bytes": 1772935,
-      "sha256": "1381e784fb8b8340beffd0e735ac9eea89ad35d1a807f8a9bab5506e3fc8275e"
-    },
-    {
-      "id": "calib_gems10-h28-dotted-ridge-20260928T0202562",
-      "dest": "scored/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
-      "group": "scored",
-      "status": "restored",
-      "bytes": 1620739,
-      "sha256": "7637b72d4c6c3e10226bf46bd72a20272d62ccbe29743062632d10b158b49c58"
-    },
-    {
-      "id": "calib_gemsdoe-ens12-adopted-7f00890a",
-      "dest": "scored/gemsdoe-ens12-adopted-7f00890a.tif",
-      "group": "scored",
-      "status": "restored",
-      "bytes": 570890,
-      "sha256": "7f00890a62878d612fb5eef67a9a364a2df819433dde74b6762ce4fc0fc4fe15"
-    },
-    {
-      "id": "calib_gemsdoe9-PLACEHOLDER-2314b599",
-      "dest": "scored/gemsdoe9-PLACEHOLDER-2314b599.tif",
-      "group": "scored",
-      "status": "restored",
-      "bytes": 439456,
-      "sha256": "2314b59920bfeeaf6a592d4868b25eca62212825620f9945723c2f6d0a2e5b22"
-    },
-    {
-      "id": "scored_gems27_tgc_v2_d15",
-      "dest": "scored/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
-      "group": "scored",
-      "status": "restored",
-      "bytes": 1635084,
-      "sha256": "33003374335d84bf885f2d8f5e9dd4c57044c8ec58fa6a0d7fa581e8bc41c11d"
+      "bytes": 1599597,
+      "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
     }
   ],
   "all_verified": true
