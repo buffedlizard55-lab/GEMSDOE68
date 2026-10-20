@@ -440,3 +440,88 @@ def catalogue_context(
     #   starves >1 km basin-interior fault strands.
     dist_clamped = np.clip(dist, 3.5, 12.0).astype(np.float32)
     return [dist_clamped, near_cos2, near_sin2, dens_1km, dens_3km, spacing_ratio, align, tip_drop]
+
+
+# ---------------------------------------------------------------------------
+# Compatibility helpers restored at the PR #11 merge (2026-10-20).
+# PR #9 rewrote this module for the scarp-ridge experiment and dropped the
+# exp2-era helpers below; the Exp-3-ridgecrest / Exp-4 emission code
+# (gems68.emission.crest_mask) and scripts/build_features.py still use them.
+# They are restored verbatim from 06fc4f3 (only G.* references adapted to the
+# names this module now imports).  PR #9's code above is untouched; its
+# catalogue_context(visible, ay, ax) differs from the exp2-era one-arg version
+# and is intentionally NOT shadowed here.
+# ---------------------------------------------------------------------------
+
+PHYSICS_NAMES = [
+    "elev_grad", "elev_lap", "elev_ridge_s1", "elev_ridge_s2", "elev_tilt",
+    "rtp_ridge_s2", "grav_ridge_s2",
+]
+CONTEXT_NAMES = ["cat_dist", "cat_strike_cos2", "cat_strike_sin2", "cat_dens_1km", "cat_dens_3km"]
+
+def _fill(a: np.ndarray, footprint: np.ndarray) -> np.ndarray:
+    a = a.astype(np.float32, copy=True)
+    bad = ~np.isfinite(a)
+    if bad.any():
+        med = float(np.nanmedian(a[footprint]))
+        a[bad] = med
+    return a
+
+
+def hessian_ridge(a: np.ndarray, sigma: float) -> np.ndarray:
+    """Signed principal curvature with the largest magnitude (Hessian eigenvalue)."""
+    hxx = ndi.gaussian_filter(a, sigma, order=(0, 2))
+    hyy = ndi.gaussian_filter(a, sigma, order=(2, 0))
+    hxy = ndi.gaussian_filter(a, sigma, order=(1, 1))
+    tr = 0.5 * (hxx + hyy)
+    det = np.sqrt(np.maximum(0.25 * (hxx - hyy) ** 2 + hxy ** 2, 0))
+    l1, l2 = tr + det, tr - det
+    out = np.where(np.abs(l1) > np.abs(l2), l1, l2)
+    return out.astype(np.float32)
+
+
+def raw_stack(footprint: np.ndarray) -> list[np.ndarray]:
+    return [_fill(read_band(i + 1), footprint) for i in range(19)]
+
+
+def physics_stack(bands: list[np.ndarray]) -> list[np.ndarray]:
+    elev = bands[BAND_NAMES.index("det_elev")]
+    rtp = bands[BAND_NAMES.index("rtp")]
+    grav = bands[BAND_NAMES.index("iso_grav_anom")]
+    gx = ndi.sobel(elev, axis=1) / 8.0
+    gy = ndi.sobel(elev, axis=0) / 8.0
+    grad = np.hypot(gx, gy).astype(np.float32)
+    lap = ndi.laplace(ndi.gaussian_filter(elev, 1.0)).astype(np.float32)
+    tilt = np.arctan(grad / 100.0).astype(np.float32)  # 100.0 = PIXEL_M
+    return [grad, lap, hessian_ridge(elev, 1.0), hessian_ridge(elev, 2.0), tilt,
+            hessian_ridge(rtp, 2.0), hessian_ridge(grav, 2.0)]
+
+
+def orientation_field(a: np.ndarray, sigma_grad: float = 1.0, sigma_win: float = 3.0):
+    """Structure-tensor orientation (theta of the dominant *line* direction).
+
+    Returns (cos2t, sin2t, coherence, theta) where theta is the direction along
+    the linear feature (perpendicular to the dominant gradient)."""
+    gx = ndi.gaussian_filter(a, sigma_grad, order=(0, 1))
+    gy = ndi.gaussian_filter(a, sigma_grad, order=(1, 0))
+    jxx = ndi.gaussian_filter(gx * gx, sigma_win)
+    jyy = ndi.gaussian_filter(gy * gy, sigma_win)
+    jxy = ndi.gaussian_filter(gx * gy, sigma_win)
+    # gradient direction = 0.5*atan2(2jxy, jxx-jyy); line direction is +90 deg
+    two_t = np.arctan2(2 * jxy, jxx - jyy)
+    theta = 0.5 * two_t + np.pi / 2
+    lam = np.sqrt((jxx - jyy) ** 2 + 4 * jxy ** 2)
+    coh = lam / (jxx + jyy + 1e-12)
+    return (np.cos(2 * theta).astype(np.float32), np.sin(2 * theta).astype(np.float32),
+            coh.astype(np.float32), theta.astype(np.float32))
+
+
+def stage1_matrix(bands, phys, footprint) -> np.ndarray:
+    cols = bands + phys
+    X = np.empty((int(footprint.sum()), len(cols)), np.float32)
+    for j, c in enumerate(cols):
+        X[:, j] = c[footprint]
+    return X
+
+
+STAGE1_NAMES = BAND_NAMES + PHYSICS_NAMES
