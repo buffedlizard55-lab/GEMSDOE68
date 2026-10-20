@@ -1,79 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GEMSDOE68 &mdash; Submission guide</title>
-<link rel="stylesheet" href="assets/site.css">
-</head>
-<body>
-<header>
-  <h1>Submission guide</h1>
-  <span class="sub">Exactly how to turn this repository into a DrivenData submission</span>
-  <nav>
-    <a href="index.html">Summary</a>
-    <a href="executive-summary.html">Executive summary</a>
-    <a href="submission-guide.html">Submission guide</a>
-    <a href="results.html">Results</a>
-    <a href="run-card.html">Run card</a>
-    <a href="hypotheses.html">Hypotheses</a>
-    <a href="irregularities.html">Irregularities</a>
-  </nav>
-</header>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to submit · GEMSDOE68</title><style>
+:root{--bg:#0b1020;--card:#141b2f;--ink:#e8ecf5;--muted:#9aa7c7;--ok:#2ecc71;--bad:#e74c3c;--warn:#f1c40f;--acc:#4ea1ff}
+*{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
+main{max-width:1120px;margin:0 auto;padding:24px}
+.card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
+.banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
+.banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
+.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0;cursor:pointer;border:none}
+.btn.secondary{background:#26304d;color:var(--ink)}
+.copy-btn{background:#1e2942;color:var(--acc);border:1px solid #354770;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:700;cursor:pointer;margin-left:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
+.muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
+</style></head><body>
+<header><strong>GEMSDOE68 · Auto-Context Strand Refinement Lane</strong><a href="../index.html">Executive summary</a> <a href="../executive-summary.html">Run Card & Gate</a> <a href="../how-to-submit.html" style=color:#fff>How to submit</a> <a href="../hypotheses.html">Hypotheses</a> <a href="../experiments.html">Experiments</a> <a href="../knowledge.html">Why 0.2778</a> <a href="../sources.html">Sources</a> <a href="../irregularities.html">Irregularities</a> <a href="../leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
 <main>
-
-<section class="hero">
-  <h2>Fastest path: download and upload</h2>
-  <p class="mono" style="font-size:16px"><a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif">docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif</a></p>
-  <div class="dl">
-    <a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif">&#8681; Download the GeoTIFF to submit</a>
-    <a class="alt" href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif">&#8681; All-finite fallback</a>
-  </div>
-</section>
-
-<h2>1. The file</h2>
-<section class="panel">
-  <table class="kv">
-    <tr><dt>file</dt><dd>docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif</dd></tr>
-    <tr><dt>fallback</dt><dd>docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif (all-finite, 0 outside footprint)</dd></tr>
-    <tr><dt>sha256</dt><dd>ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47</dd></tr>
-    <tr><dt>bytes</dt><dd>322971</dd></tr>
-    <tr><dt>bands / dtype</dt><dd>1 / float32</dd></tr>
-    <tr><dt>CRS</dt><dd>EPSG:32611</dd></tr>
-    <tr><dt>shape</dt><dd>3730 &times; 3292</dd></tr>
-    <tr><dt>resolution</dt><dd>100 m</dd></tr>
-    <tr><dt>values</dt><dd>float32 in [0, 1] inside the footprint; NaN outside</dd></tr>
-    <tr><dt>validator</dt><dd>16/16 checks passed, 0 FAIL, 0 SKIPPED</dd></tr>
-  </table>
-</section>
-
-<h2>2. Submit on DrivenData</h2>
-<section class="panel">
-  <ol>
-    <li>Go to <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">DrivenData GEMS Prize &rarr; Submit</a>.</li>
-    <li>Click "New submission" or "Submit".</li>
-    <li>Select the downloaded <code>.tif</code> file in "File to submit".</li>
-    <li>Paste the note: <code>GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated</code> (98 characters, &le; 140 limit).</li>
-    <li>Click "Create" / "Submit".</li>
-  </ol>
-</section>
-
-<h2>3. If the portal says "Predicted values must be in range [0, 1]"</h2>
-<section class="panel">
-  <p>This error means the file contains values outside [0, 1] or NaN inside the footprint.</p>
-  <p>Our nan.tif variant has NaN <em>outside</em> the footprint only &mdash; which matches the competition's sample submission format. If the portal's range check treats NaN as out of range, download the all-finite fallback instead:</p>
-  <p class="mono" style="font-size:16px"><a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif">GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif</a></p>
-  <p>The fallback writes 0 outside the footprint and contains no NaN at all.</p>
-</section>
-
-<h2>4. Verify</h2>
-<section class="panel">
-  <p>After submission, check the leaderboard for your entry under the submission name
-  <code>GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z</code>. Scoring may take some time to complete.</p>
-  <p>No organiser score is claimed on this site. Every number here is a local HOLDOUT-DTI measurement.</p>
-</section>
-
-</main>
-<footer class="footer">GEMSDOE68</footer>
-</body>
-</html>
+<h1>How to Make a Submission on DrivenData (Step by Step)</h1>
+<div class=card>
+<ol>
+  <li><b>Download the promoted primary GeoTIFF:</b> <a class=btn href="../downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif" download>⬇ gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif</a> (or <a href="../downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.zip" download>⬇ gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.zip</a>). Verify that its SHA-256 matches <code>849a0f04d2ca8e644eb346ac30c3f3a467024de447b3e8e3e44eecf2f814ae35</code>.</li>
+  <li>Open the official <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">DrivenData DOE GEMS Submissions Page</a> and click <b>Make a submission</b>.</li>
+  <li><b>File upload:</b> Select <code>gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif</code> (or <code>gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.zip</code>).</li>
+  <li><b>Submission Name / Note (&le; 140 chars):</b> Paste <code id="howto-note">GEMS68 Tu08 auto-ctx s3 strands 35k dots; holdout DTI 0.1124 (+0.0182, t=11.1), &gt;1km 0.0874 (+0.0102, t=2.53); sha8=849a0f04</code> <button class="copy-btn" onclick="copyText('howto-note', this)">Copy</button></li>
+  <li><b>After scoring:</b> Record the returned score in <code>registry/score_ledger.csv</code> as <code>ORGANIZER-CONFIRMED</code> together with the exact filename and SHA-256 hash.</li>
+</ol>
+<h2>Why <code>-zeros.tif</code> Resolves <code>"Predicted values must be in range [0, 1]"</code></h2>
+<p>DrivenData's submission form rejected an earlier NaN-masked file with <code>"Predicted values must be in range [0, 1]"</code> because IEEE-754 <code>NaN</code> fails unmasked <code>(arr &gt;= 0.0) &amp; (arr &lt;= 1.0)</code> range checks. Our primary file (<code>gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif</code>) is <b>100% finite across all 12,279,160 grid cells</b> (<code>0.0</code> outside the footprint, <code>0.0</code> on background footprint pixels, and calibrated probabilities in <code>[0.500, 1.000]</code> on the 35,000 emitted fault dots). A secondary NaN-outside twin (<code>gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-nan.tif</code>, SHA-256 <code>3f9553609ad7260f9e9a5520bde56ed4a728a9fa484e78fd59fe764101f8185d</code>) is also provided for byte-for-byte nodata parity with <code>sample_submission.tif</code>.</p>
+</div>
+</main><script>
+function copyText(id, btn){
+  const el = document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.innerText.trim()).then(()=>{
+    const old = btn.innerText; btn.innerText = 'Copied!';
+    setTimeout(()=>{btn.innerText = old;}, 1400);
+  });
+}
+</script></body></html>

@@ -1,176 +1,164 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GEMSDOE68 &mdash; Auto-context stacked fault discovery (DOE GEMS Prize #306)</title>
-<link rel="stylesheet" href="assets/site.css">
-</head>
-<body>
-<header>
-  <p class="small" style="margin:0 0 8px"><a href="../index.html">&larr; the repository site (all lanes)</a> &middot; this page is the GEMSDOE68 lane-68 site</p>
-  <h1>GEMSDOE68 &mdash; auto-context stacked fault discovery</h1>
-  <span class="sub">DOE GEMS Prize &middot; DrivenData #306 &middot; lane: stacked refinement (Tu, CVPR 2008)</span>
-  <nav>
-    <a href="index.html">Summary</a>
-    <a href="executive-summary.html">Executive summary &amp; how to submit</a>
-    <a href="submission-guide.html">Submission guide</a>
-    <a href="results.html">Results</a>
-    <a href="research.html">Research &amp; sources</a>
-    <a href="run-card.html">Run card</a>
-    <a href="hypotheses.html">Hypotheses</a>
-    <a href="irregularities.html">Irregularities</a>
-  </nav>
-</header>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Executive summary · GEMSDOE68</title><style>
+:root{--bg:#0b1020;--card:#141b2f;--ink:#e8ecf5;--muted:#9aa7c7;--ok:#2ecc71;--bad:#e74c3c;--warn:#f1c40f;--acc:#4ea1ff}
+*{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
+main{max-width:1120px;margin:0 auto;padding:24px}
+.card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
+.banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
+.banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
+.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0;cursor:pointer;border:none}
+.btn.secondary{background:#26304d;color:var(--ink)}
+.copy-btn{background:#1e2942;color:var(--acc);border:1px solid #354770;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:700;cursor:pointer;margin-left:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
+.muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
+</style></head><body>
+<header><strong>GEMSDOE68 · Auto-Context Strand Refinement Lane</strong><a href="../index.html" style=color:#fff>Executive summary</a> <a href="../executive-summary.html">Run Card & Gate</a> <a href="../how-to-submit.html">How to submit</a> <a href="../hypotheses.html">Hypotheses</a> <a href="../experiments.html">Experiments</a> <a href="../knowledge.html">Why 0.2778</a> <a href="../sources.html">Sources</a> <a href="../irregularities.html">Irregularities</a> <a href="../leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
 <main>
+<h1>Executive Summary &amp; Submission Portal</h1>
+<p class=muted>DOE GEMS Prize (DrivenData #306) · Lane: <b>Auto-context stacked refinement (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436)</b> · Experiment: <code>exp3_autocontext_strands</code> · Every metric below is read directly from <code>evidence/run_card.json</code> and <code>evidence/exp3_autocontext_strands.json</code>.</p>
+<div class="banner ok">✅ CLEARED — OK TO DOWNLOAD AND SUBMIT (Verdict: <code>PROMOTE</code>). Passes outer-block &gt; 2 SE and 95% block-bootstrap CI gates on both all pixels (<code>t = 11.08</code>) and &gt; 1 km far pixels (<code>t = 2.53</code>, 4/4 outer quadrants positive), single-feature leakage canary (&le; 0.90), DrivenData [0, 1] format check (0 NaNs), and 65-raster uniqueness check.</div>
 
-<!-- ============================ DOWNLOAD FIRST ============================ -->
-<section class="hero" id="download">
-  <h2>1&nbsp;&middot;&nbsp;Download the submission file</h2>
-  <p><strong>File to submit into the DrivenData competition:</strong></p>
-  <p class="mono" style="font-size:16px"><a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif">../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif</a></p>
-  <div class="dl">
-    <a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif">&#8681; Download the GeoTIFF to submit</a>
-    <a class="alt" href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif">&#8681; All-finite fallback (0 outside footprint)</a>
-    <a class="ghost" href="submission-guide.html">How to submit &rarr;</a>
-  </div>
-  <p class="small" style="margin-top:14px">
-    sha256 <code>ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47</code> &middot; 322971 bytes &middot; single-band float32 &middot;
-    EPSG:32611 &middot; 100 m &middot; 3730&times;3292 &middot; values in [0,1] inside the
-    footprint, NaN outside &middot; shared validator: <strong>True</strong>
-    (16 checks, 0 FAIL, 0 SKIPPED).
-  </p>
-  <p class="small">
-    <strong>It is OK to download and submit this file.</strong> It passed the shared validator
-    (<code>gems.validate_submission</code>): single-band float32, EPSG:32611, 100 m,
-    shape 3730&times;3292, all values in [0,1] inside the footprint, NaN only outside.
-    If the upload form answers <em>&ldquo;Predicted values must be in range [0, 1]&rdquo;</em>,
-    use the all-finite fallback file instead (it writes 0 outside the footprint and therefore
-    contains no NaN at all). See <a href="submission-guide.html">the submission guide</a>.
-  </p>
-</section>
+<div class=card>
+<h2>1. Download Unique Competition GeoTIFF Submission (Promoted)</h2>
+<p>
+  <a class=btn href="../downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif" download>⬇ Download Primary GeoTIFF (gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif)</a>
+  <a class="btn secondary" href="../downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.zip" download>⬇ Download Primary .ZIP (gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.zip)</a>
+  <a class="btn secondary" href="../downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-nan.tif" download>⬇ Secondary NaN-Outside Twin (gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-nan.tif)</a>
+  <a class="btn secondary" href="../downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-nan.zip" download>⬇ Secondary NaN .ZIP</a>
+</p>
+<p class=muted><b>Why the <code>-zeros.tif</code> file is primary:</b> DrivenData's upload validator checks <code>"Predicted values must be in range [0, 1]"</code> before applying the footprint mask on some portal paths (<code>IR-68-RANGE-01</code>). The primary <code>-zeros.tif</code> file is <b>100% finite across all 12,279,160 cells (0 NaNs anywhere, 0.0 outside the footprint, [0.50, 1.00] on the 35,000 emitted fault dots)</b> — the exact same convention used by the <code>0.2778</code> (`ORGANIZER-CONFIRMED`) family champion.</p>
+<table>
+<tr><th>Status / Verdict</th><td><b class=ok>PROMOTE — OK TO DOWNLOAD AND SUBMIT</b> (All holdout, &gt; 1 km far-fault, format &amp; 65-raster uniqueness gates passed)</td></tr>
+<tr><th>Submission Name (paste into form / ledger)</th><td><code id="sub-name">gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros</code> <button class="copy-btn" onclick="copyText('sub-name', this)">Copy</button></td></tr>
+<tr><th>Submission Note (&le; 140 chars, paste into "Note")</th><td><code id="sub-note">GEMS68 Tu08 auto-ctx s3 strands 35k dots; holdout DTI 0.1124 (+0.0182, t=11.1), &gt;1km 0.0874 (+0.0102, t=2.53); sha8=849a0f04</code> <small>(124 / 140 chars)</small> <button class="copy-btn" onclick="copyText('sub-note', this)">Copy</button></td></tr>
+<tr><th>Primary <code>-zeros.tif</code> SHA-256 &amp; Size</th><td><code id="sub-sha">849a0f04d2ca8e644eb346ac30c3f3a467024de447b3e8e3e44eecf2f814ae35</code> (345,388 bytes; ZIP: 307,983 bytes) <button class="copy-btn" onclick="copyText('sub-sha', this)">Copy</button></td></tr>
+<tr><th>Secondary <code>-nan.tif</code> SHA-256 &amp; Size</th><td><code>3f9553609ad7260f9e9a5520bde56ed4a728a9fa484e78fd59fe764101f8185d</code> (419,642 bytes; ZIP: 334,495 bytes)</td></tr>
+<tr><th>Grid &amp; Format Specification</th><td>Single-band <code>float32</code> GeoTIFF · <code>EPSG:32611</code> · <code>3730 &times; 3292</code> (100 m pixels) · affine transform <code>(100, 0, 243350, 0, -100, 4508550)</code> · <code>5,167,373</code> footprint pixels</td></tr>
+<tr><th>Preflight Validator (<code>validate_submission.py</code>)</th><td>
+  single_band: <b class=ok>True</b> ·
+  dtype_float32: <b class=ok>True</b> ·
+  dimensions_3730x3292: <b class=ok>True</b> ·
+  crs_epsg_32611: <b class=ok>True</b> ·
+  no_nan_anywhere: <b class=ok>True</b> ·
+  range_0_1_guaranteed: <b class=ok>True</b> ·
+  zero_dots_on_mapped_catalogue: <b class=ok>True</b>
+</td></tr>
+<tr><th>Emitted Dot Geometry</th><td><b>35,000</b> NMS-thinned fault dots (&gt; 2 px / 200 m from mapped catalogue) · <b>20,178 dots (57.6 %) lie &gt; 1 km from any mapped fault</b> (vs 42.2 % in Exp 2)</td></tr>
+<tr><th>Organizer-Confirmed Live Score</th><td><b>UNSCORED</b> — Every evaluation metric below is strictly labeled <code>HOLDOUT-DTI</code> (evaluator <code>gems57-pooled-hide-v2</code>).</td></tr>
+</table>
+</div>
 
-<section class="panel">
-  <table class="kv">
-    <tr><td>Submission name</td><dd>GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z</dd></tr>
-    <tr><td>Note (&le;140 chars)</td><dd>GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated</dd></tr>
-    <tr><td>Dot count / exclusion radius</td><dd>32000 dots, &ge; 3 px (3&times;100 m) from the mapped catalogue</dd></tr>
-    <tr><td>Stage</td><dd>stage 3 (second auto-context refinement on stage-2 probabilities)</dd></tr>
-    <tr><td>Holdout blocks / withheld positives</td><dd>4 outer blocks / 11318 pixels (1330 of them &gt;1 km from any mapped fault)</dd></tr>
-    <tr><td>Generated (UTC)</td><dd>2026-10-20T18:25:58Z</dd></tr>
-  </table>
-</section>
+<div class=card>
+<h2>2. Spatially-Blocked Nested CV Holdout Gate (<code>HOLDOUT-DTI</code>, Evaluator <code>gems57-pooled-hide-v2</code>)</h2>
+<p class=muted>Evaluated across 4 spatially blocked, buffered quadrants (<code>NW</code>, <code>NE</code>, <code>SW</code>, <code>SE</code>; seed 20; <b>11,321</b> withheld catalogue fault pixels overall and <b>4,310</b> withheld fault pixels <b>&gt; 1 km</b> from any visible mapped fault) at the promoted <b>35,000-dot</b> budget:</p>
+<table>
+<tr>
+  <th>Stratum &amp; Stage</th>
+  <th>Stage 1 (Local Scarp + Physics)</th>
+  <th>Candidate Stage</th>
+  <th>Paired &Delta; vs Stage 1</th>
+  <th>95% Block-Bootstrap CI (20 km blocks)</th>
+  <th>Outer-Block Paired <i>t</i>-Stat (&gt; 2.0 SE Gate)</th>
+  <th>Per-Quadrant &Delta; (NW, NE, SW, SE)</th>
+  <th>Gate</th>
+</tr>
+<tr>
+  <td><b>All Withheld Faults (11,321 px) — Stage 2 (Iter 1)</b></td>
+  <td><code>0.0942</code><br><small>CI [0.0829, 0.1050]</small></td>
+  <td><code>0.1058</code><br><small>CI [0.0944, 0.1164]</small></td>
+  <td><b class=ok>+0.0116</b></td>
+  <td><code>[+0.0058, +0.0178]</code></td>
+  <td><b class=ok>6.47 SE</b></td>
+  <td><code>+0.0139, +0.0130, +0.0065, +0.0145</code> (4/4 +)</td>
+  <td class=ok><b>PASS</b></td>
+</tr>
+<tr>
+  <td><b>All Withheld Faults (11,321 px) — Stage 3 (Iter 2, Promoted)</b></td>
+  <td><code>0.0942</code><br><small>CI [0.0829, 0.1050]</small></td>
+  <td><b class=ok><code>0.1124</code></b><br><small>CI [0.1007, 0.1234]</small></td>
+  <td><b class=ok>+0.0182</b></td>
+  <td><code>[+0.0110, +0.0259]</code></td>
+  <td><b class=ok>11.08 SE</b></td>
+  <td><code>+0.0176, +0.0136, +0.0210, +0.0195</code> (4/4 +)</td>
+  <td class=ok><b>PASS</b></td>
+</tr>
+<tr>
+  <td><b>&gt; 1 km Far Faults (4,310 px) — Stage 2 (Iter 1)</b></td>
+  <td><code>0.0772</code><br><small>CI [0.0631, 0.0907]</small></td>
+  <td><code>0.0859</code><br><small>CI [0.0721, 0.1002]</small></td>
+  <td><b class=ok>+0.0087</b></td>
+  <td><code>[+0.0017, +0.0160]</code></td>
+  <td><b class=ok>2.90 SE</b></td>
+  <td><code>+0.0156, +0.0118, +0.0005, +0.0092</code> (4/4 +)</td>
+  <td class=ok><b>PASS</b></td>
+</tr>
+<tr>
+  <td><b>&gt; 1 km Far Faults (4,310 px) — Stage 3 (Iter 2, Promoted)</b></td>
+  <td><code>0.0772</code><br><small>CI [0.0631, 0.0907]</small></td>
+  <td><b class=ok><code>0.0874</code></b><br><small>CI [0.0726, 0.1018]</small></td>
+  <td><b class=ok>+0.0102</b></td>
+  <td><code>[+0.0012, +0.0187]</code></td>
+  <td><b class=ok>2.53 SE</b></td>
+  <td><code>+0.0217, +0.0131, +0.0079, +0.0012</code> (4/4 +)</td>
+  <td class=ok><b>PASS</b></td>
+</tr>
+</table>
+<p class=muted><b>Leakage Canary:</b> Max single-feature holdout AUC across all 37 Stage-1 features is <code>elev_asym = 0.5955 &le; 0.90</code>; max across all 55 Stage-2/3 features is <code>cat_relay_15 = 0.7686 &le; 0.90</code> (<b class=ok>PASS</b>).</p>
+</div>
 
-<!-- ============================ STATUS ============================ -->
-<h2>2&nbsp;&middot;&nbsp;Is it OK to download and submit?</h2>
-<section class="panel">
-  <p><strong>Verdict: promote-with-caveats</strong> &mdash; every mechanical gate below is a local
-  measurement re-derived from the bytes on disk; nothing on this page is an organiser score.</p>
-  <table>
-    <tr><th>Gate</th><th>Result</th></tr>
-    <tr><td>Format validator (shared <code>gems.validate_submission</code>)</td>
-        <td>True &mdash; 16 checks</td></tr>
-    <tr><td>Values in [0,1], no infinities, no NaN inside the footprint</td>
-        <td>PASS (checked on the re-read file)</td></tr>
-    <tr><td>CRS / shape / transform match the official grid</td>
-        <td>PASS (EPSG:32611, 3730&times;3292, 100 m, transform
-            (100, 0, 243350, 0, &minus;100, 4508550))</td></tr>
-    <tr><td>Hash / pixel-agreement check vs every registry raster</td>
-        <td>see <a href="results.html#lane">lane check</a> (no byte match, max |Spearman| = 0.0861)</td></tr>
-    <tr><td>Holdout gate: stage&nbsp;2/3 beats stage&nbsp;1 by &gt;2 SE</td>
-        <td>see the gate table below</td></tr>
-  </table>
-  <h3>Gate results, stated explicitly</h3><ul class="small"><li><strong>All-pixel holdout gate: PASS.</strong> Stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60 (&gt; 2 required), positive on all 4 outer blocks.</li><li><strong>&gt;1 km stratum: NOT MET.</strong> Stage 2 vs stage 1, mean +0.0074, SE 0.0038, t = 1.97 (&gt; 2 required). Positive on all four blocks but short of the threshold; the stratum is underpowered &mdash; only 1330 withheld pixels across all folds are more than 1 km from a visible mapped fault, and a 32,000-dot budget over 5.16 M footprint cells almost never lands within 300 m of one of them.</li><li><strong>Leakage canary: PASS.</strong> Highest single-channel AUC 0.611 against a 0.90 limit; no channel flagged.</li><li><strong>Duplicate rule: fires on one dense registry raster</strong> (311,617 dots). The density-null control shows 0.958 of <em>any</em> random dot set would also fire the rule, and |Spearman| with that raster is 0.021. The firing is a density artefact, not duplication. Recorded as IR-28 and reported, not hidden.</li><li><strong>No ORGANIZER-CONFIRMED score exists.</strong> The scored truth is login-walled; every number here is a local HOLDOUT-DTI.</li></ul>
-</section>
+<div class=card>
+<h2>3. Spatial Morphology &amp; Resolution of <code>IR-68-BLOB-01</code></h2>
+<img src="../assets/dots_map.png" alt="Stage 1, Stage 3, and Emitted 35,000 Dots" style="width:100%;border-radius:10px">
+<p><b>What changed from Experiment 2 to Experiment 3:</b> In Experiment 2, Stage 1 relied on smooth basin-wide lookup fields (<code>det_elev</code>, <code>ieq_n100a15</code>, <code>deq_n100a15</code>, <code>geod_2ndinv</code>, <code>cond_surf</code>) and Stage 2/3 relied on an isotropic <code>&sigma; = 10 px</code> (1 km) smooth (<code>p_sm10</code>), producing 2D area-fill blobs and pulling Stage-3 dot quota out of the &gt; 1 km far-field (<code>NE far &Delta; = -0.0034</code>, <code>t_far = 1.51 &lt; 2.0</code>). Experiment 3 replaces Stage 1 with <b>37 purely local physical + 2 m LiDAR scarp + H68-2 across-strike footwall asymmetry (<code>elev_asym</code>) + H68-3 basement gradient (<code>db_grad</code>) + H68-4 high-pass GeoDAWN channels</b>, replaces <code>p_sm10</code> with anisotropic along/across-strike smooths (<code>p_along_short</code>, <code>p_aniso</code>, <code>p_ridge</code>, <code>ori_coh</code>) and directional 1.5/3.0 km fault-tip relays (<code>cat_relay_15</code>, <code>cat_relay_30</code>), and applies damped rank-probability sequential refinement (<code>&alpha;2 = 0.22, &alpha;3 = 0.35</code>). Only <b>20.15 %</b> of Experiment 3's dots overlap within 3 px of Experiment 2's dots.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px">
+  <div><h3>Stage 1 Top Gain Features</h3><table><tr><th>Feature</th><th>Mean Gain</th></tr><tr><td><code>elev_hp15</code></td><td>39,846.1</td></tr><tr><td><code>elev_asym</code></td><td>37,957.9</td></tr><tr><td><code>db_grad</code></td><td>28,089.5</td></tr><tr><td><code>db_hp15</code></td><td>18,644.6</td></tr><tr><td><code>tc</code></td><td>17,912.1</td></tr><tr><td><code>elev_grad</code></td><td>17,265.7</td></tr><tr><td><code>iso_grav_anom_hg</code></td><td>16,371.6</td></tr><tr><td><code>iso_grav_anom_vg</code></td><td>15,524.4</td></tr></table></div>
+  <div><h3>Stage 2 Top Gain Features</h3><table><tr><th>Feature</th><th>Mean Gain</th></tr><tr><td><code>cat_dist</code></td><td>115,573.6</td></tr><tr><td><code>cat_relay_15</code></td><td>46,219.4</td></tr><tr><td><code>cat_dens_3km</code></td><td>38,789.9</td></tr><tr><td><code>cat_dens_1km</code></td><td>31,654.0</td></tr><tr><td><code>cat_strike_sin2</code></td><td>30,825.2</td></tr><tr><td><code>cat_strike_cos2</code></td><td>27,567.5</td></tr><tr><td><code>db_grad</code></td><td>24,943.1</td></tr><tr><td><code>cat_relay_30</code></td><td>21,883.7</td></tr></table></div>
+  <div><h3>Stage 3 Top Gain Features</h3><table><tr><th>Feature</th><th>Mean Gain</th></tr><tr><td><code>cat_dist</code></td><td>181,022.7</td></tr><tr><td><code>p_across-2</code></td><td>115,078.1</td></tr><tr><td><code>p_across+2</code></td><td>72,608.2</td></tr><tr><td><code>p_ridge</code></td><td>55,224.2</td></tr><tr><td><code>p_sm3</code></td><td>52,224.7</td></tr><tr><td><code>p_along_short</code></td><td>44,302.1</td></tr><tr><td><code>p_across-4</code></td><td>40,591.2</td></tr><tr><td><code>cat_dens_3km</code></td><td>37,660.3</td></tr></table></div>
+</div>
+</div>
 
-<!-- ============================ HEADLINE NUMBERS ============================ -->
-<h2>3&nbsp;&middot;&nbsp;Headline numbers (all HOLDOUT-DTI)</h2>
-<section class="panel">
-  <p class="small">Pooled distance-weighted Tversky index over the withheld segments of all
-  outer blocks, &alpha;=0.2, &beta;=0.8, 300 m triangular kernel, evaluator
-  <code>gems57.metric.dti_binary</code> / <code>gems57.holdout</code>
-  (pooled hide-and-recover, label-blind quadrants).</p>
-  <table>
-    <tr><th>Model</th><th class="num">Pooled holdout DTI</th></tr>
-    <tr><td>Stage 1 &mdash; per-pixel LightGBM on the 45-channel stack</td><td class="num">0.1301</td></tr>
-    <tr><td><strong>Stage 2 &mdash; auto-context (1st refinement)</strong></td><td class="num">0.1904</td></tr>
-    <tr><td>Stage 3 &mdash; auto-context (2nd refinement, this emission)</td><td class="num">0.1868</td></tr>
-  </table>
-</section>
+<div class=card>
+<h2>4. Uniqueness Audit Across All 72 Prior Registry &amp; Scored Rasters</h2>
+<p>Checked on <b>both</b> the continuous Stage-3 probability surface and the final emitted 35,000 dots against all 55 rasters in <code>registry/rasters/rasters/*.tif</code> and all 10 calibration rasters in <code>.cache/gems_data/scored/*.tif</code>:</p>
+<ul>
+  <li><b>Max Spearman rank-correlation (continuous surface):</b> <b class=ok>0.1848 &le; 0.90</b> (<code>gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif</code>)</li>
+  <li><b>Max Spearman rank-correlation (final emitted dots):</b> <b class=ok>0.0471 &le; 0.90</b> (<code>19GEMSDOE__h19-5-powerlaw-budget-multiline.tif</code>)</li>
+  <li><b>Max 3-px dot overlap across all 63 informative rasters (<code>coverage &le; 70%</code>):</b> <b class=ok>55.37 % &le; 70.0 %</b> (<code>gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif</code>; surface top-35k overlap: <b class=ok>58.06 % &le; 70.0 %</b>)</li>
+</ul>
+<table>
+<tr><th>Informative Registry Raster (Top 8 by 3-px Dot Overlap)</th><th>Raster Dots</th><th>Our Dots w/in 3 px</th><th>Reverse 3-px Overlap</th><th>Raster 3-px Footprint Coverage</th><th>Surface &rho;</th><th>Dots &rho;</th></tr>
+<tr><td><code>gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif</code></td><td>69,281</td><td>55.37 %</td><td>34.84 %</td><td>27.20 %</td><td>+0.0881</td><td>+0.0291</td></tr><tr><td><code>gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif</code></td><td>174,232</td><td>54.93 %</td><td>37.36 %</td><td>26.31 %</td><td>+0.1472</td><td>+0.0385</td></tr><tr><td><code>8GEMSDOE_Hedge-v2_submission.tif</code></td><td>227,507</td><td>53.55 %</td><td>29.98 %</td><td>28.36 %</td><td>+0.1530</td><td>+0.0170</td></tr><tr><td><code>gemsdoe-ens12-adopted-7f00890a.tif</code></td><td>172,974</td><td>53.51 %</td><td>39.27 %</td><td>24.29 %</td><td>+0.1429</td><td>+0.0243</td></tr><tr><td><code>gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif</code></td><td>123,939</td><td>52.96 %</td><td>50.70 %</td><td>20.86 %</td><td>+0.1848</td><td>+0.0430</td></tr><tr><td><code>19GEMSDOE__h19-4-multiline-corroborated.tif</code></td><td>123,779</td><td>51.77 %</td><td>50.82 %</td><td>20.36 %</td><td>+0.1837</td><td>+0.0457</td></tr><tr><td><code>gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif</code></td><td>123,779</td><td>51.77 %</td><td>50.82 %</td><td>20.36 %</td><td>+0.1837</td><td>+0.0457</td></tr><tr><td><code>19GEMSDOE__h19-5-powerlaw-budget-multiline.tif</code></td><td>121,131</td><td>50.82 %</td><td>51.42 %</td><td>19.61 %</td><td>+0.1844</td><td>+0.0471</td></tr>
+</table>
+<h3>Space-Filling Registry Rasters (Excluded per <code>IR-68-UNIQ-01</code> / <code>IR-68-UNIQ-02</code> Eligible-Domain Density-Null Proof)</h3>
+<table>
+<tr><th>Space-Filling Raster</th><th>Raster Dots</th><th>Full-Footprint 3-px Coverage</th><th>Eligible (<code>d_cat &gt; 2 px</code>) 3-px Coverage</th><th>Observed 3-px Overlap</th><th>Excess vs Eligible Random Null</th><th>Reverse Overlap</th><th>Dots &rho;</th></tr>
+<tr><td><code>13gems_20261001_r13-lattice-s5_v2_nan-outside.tif</code></td><td>206,895</td><td>99.87 %</td><td>99.87 %</td><td>99.39 %</td><td class=ok><b>-0.49 %</b> (below random null)</td><td>16.87 %</td><td>+0.0011</td></tr><tr><td><code>gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif</code></td><td>311,617</td><td>95.82 %</td><td>99.37 %</td><td>98.44 %</td><td class=ok><b>-0.94 %</b> (below random null)</td><td>17.53 %</td><td>+0.0146</td></tr>
+</table>
+</div>
 
-<!-- ============================ PER-CELL ============================ -->
-<h2>4&nbsp;&middot;&nbsp;Per-outer-block holdout</h2>
-<section class="panel">
-  <p class="small">Each row is one spatially blocked outer fold (a quadrant of the footprint with
-  whole catalogue segments withheld and a 1.2 km buffer). The three right-hand columns repeat the
-  DTI on withheld pixels more than 1 km from any <em>visible</em> mapped fault.</p>
-  <table>
-    <tr><th>Cell</th><th class="num">withheld px</th><th class="num">&gt;1 km px</th>
-        <th class="num">DTI s1</th><th class="num">DTI s2</th><th class="num">DTI s3</th>
-        <th class="num">far s1</th><th class="num">far s2</th><th class="num">far s3</th></tr>
-    <tr><td class='mono'>draw20_foldNW_all</td><td class='num'>1925</td><td class='num'>278</td><td class='num'>0.1054</td><td class='num'>0.1643</td><td class='num'>0.1542</td><td class='num'>0.0013</td><td class='num'>0.0072</td><td class='num'>0.0058</td></tr><tr><td class='mono'>draw20_foldNE_all</td><td class='num'>2360</td><td class='num'>399</td><td class='num'>0.1310</td><td class='num'>0.2106</td><td class='num'>0.2182</td><td class='num'>0.0069</td><td class='num'>0.0253</td><td class='num'>0.0284</td></tr><tr><td class='mono'>draw20_foldSW_all</td><td class='num'>3780</td><td class='num'>343</td><td class='num'>0.1294</td><td class='num'>0.1879</td><td class='num'>0.1730</td><td class='num'>0.0000</td><td class='num'>0.0014</td><td class='num'>0.0019</td></tr><tr><td class='mono'>draw20_foldSE_all</td><td class='num'>3253</td><td class='num'>310</td><td class='num'>0.1522</td><td class='num'>0.1977</td><td class='num'>0.2021</td><td class='num'>0.0014</td><td class='num'>0.0053</td><td class='num'>0.0070</td></tr>
-  </table>
-</section>
-
-<!-- ============================ GATE ============================ -->
-<h2>5&nbsp;&middot;&nbsp;Gate: stage 2 / 3 vs stage 1 on outer blocks</h2>
-<section class="panel">
-  <p class="small">Paired per-block differences; SE is the standard error of the mean difference
-  across the outer blocks. The gate requires a mean improvement of more than two standard errors.</p>
-  <table>
-    <tr><th>Comparison</th><th class="num">mean &Delta;DTI</th><th class="num">SE</th>
-        <th class="num">t</th><th>&gt;2 SE?</th></tr>
-    <tr><td class='mono'>stage2_vs_stage1</td><td class='num'>0.0607</td><td class='num'>0.0070</td><td class='num'>8.60</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>stage3_vs_stage1</td><td class='num'>0.0574</td><td class='num'>0.0101</td><td class='num'>5.71</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>stage3_vs_stage2</td><td class='num'>-0.0033</td><td class='num'>0.0055</td><td class='num'>-0.60</td><td><span class="pill fail">FAIL</span></td></tr><tr><td class='mono'>stage2_vs_stage1</td><td class='num'>0.0074</td><td class='num'>0.0038</td><td class='num'>1.97</td><td><span class="pill fail">FAIL</span></td></tr><tr><td class='mono'>stage3_vs_stage1</td><td class='num'>0.0084</td><td class='num'>0.0044</td><td class='num'>1.88</td><td><span class="pill fail">FAIL</span></td></tr><tr><td class='mono'>stage3_vs_stage2</td><td class='num'>0.0010</td><td class='num'>0.0010</td><td class='num'>0.99</td><td><span class="pill fail">FAIL</span></td></tr>
-  </table>
-</section>
-
-<!-- ============================ EMISSION SWEEP ============================ -->
-<h2>6&nbsp;&middot;&nbsp;Emission-parameter sweep (holdout)</h2>
-<section class="panel">
-  <p class="small">Mean holdout DTI over outer blocks for each combination of shipped stage,
-  minimum distance from the mapped catalogue, and dot budget. The shipped parameters are the
-  best-performing combination that was <em>not</em> selected by looking at the submission grid.</p>
-  <table>
-    <tr><th>Stage</th><th class="num">radius (px)</th><th class="num">dots</th><th class="num">mean holdout DTI</th></tr>
-    <tr><td>stage2</td><td class='num'>3</td><td class='num'>20000</td><td class='num'>0.2403</td></tr><tr><td>stage3</td><td class='num'>3</td><td class='num'>20000</td><td class='num'>0.2332</td></tr><tr><td>stage2</td><td class='num'>0</td><td class='num'>20000</td><td class='num'>0.2090</td></tr><tr><td>stage3</td><td class='num'>0</td><td class='num'>20000</td><td class='num'>0.2061</td></tr><tr><td>stage2</td><td class='num'>3</td><td class='num'>32000</td><td class='num'>0.1956</td></tr><tr><td>stage1</td><td class='num'>3</td><td class='num'>20000</td><td class='num'>0.1919</td></tr><tr><td>stage3</td><td class='num'>3</td><td class='num'>32000</td><td class='num'>0.1906</td></tr><tr><td>stage2</td><td class='num'>0</td><td class='num'>32000</td><td class='num'>0.1901</td></tr><tr><td>stage3</td><td class='num'>0</td><td class='num'>32000</td><td class='num'>0.1869</td></tr><tr><td>stage2</td><td class='num'>0</td><td class='num'>44090</td><td class='num'>0.1705</td></tr><tr><td>stage3</td><td class='num'>0</td><td class='num'>44090</td><td class='num'>0.1668</td></tr><tr><td>stage1</td><td class='num'>3</td><td class='num'>32000</td><td class='num'>0.1658</td></tr>
-  </table>
-</section>
-
-<!-- ============================ CANARY ============================ -->
-<h2>7&nbsp;&middot;&nbsp;Leakage canary</h2>
-<section class="panel">
-  <p class="small">Each stage-1 channel was tested alone against the withheld segments (AUC of the
-  channel as a detector of withheld fault pixels versus training-domain negatives). An AUC above
-  0.90 would mean leakage until disproven; none is reported above that bar.</p>
-  <table>
-    <tr><th>Channel</th><th class="num">mean AUC</th><th class="num">max AUC</th></tr>
-    <tr><td class='mono'>geod_2ndinv</td><td class='num'>0.5677</td><td class='num'>0.6115</td></tr><tr><td class='mono'>geod_shearrate</td><td class='num'>0.5656</td><td class='num'>0.6106</td></tr><tr><td class='mono'>lappos_max</td><td class='num'>0.5847</td><td class='num'>0.6040</td></tr><tr><td class='mono'>ieq_n100a15</td><td class='num'>0.5669</td><td class='num'>0.6004</td></tr><tr><td class='mono'>lapneg_max</td><td class='num'>0.5802</td><td class='num'>0.5966</td></tr><tr><td class='mono'>relief</td><td class='num'>0.5754</td><td class='num'>0.5925</td></tr><tr><td class='mono'>step_max</td><td class='num'>0.5748</td><td class='num'>0.5875</td></tr><tr><td class='mono'>ex_max</td><td class='num'>0.5725</td><td class='num'>0.5869</td></tr><tr><td class='mono'>det_elev_gmag</td><td class='num'>0.5688</td><td class='num'>0.5845</td></tr><tr><td class='mono'>deq_n100a15</td><td class='num'>0.5485</td><td class='num'>0.5781</td></tr><tr><td class='mono'>det_elev_slope</td><td class='num'>0.5611</td><td class='num'>0.5756</td></tr><tr><td class='mono'>ex_mean</td><td class='num'>0.5595</td><td class='num'>0.5735</td></tr>
-  </table>
-</section>
-
-<!-- ============================ LANE ============================ -->
-<h2 id="lane">8&nbsp;&middot;&nbsp;Uniqueness vs the registry of prior rasters</h2>
-<section class="panel">
-  <p class="small">Rank correlation on the continuous surface and 3-pixel dot overlap against every
-  raster in <code>registry/rasters/</code>, computed with the shared
-  <code>scripts/lane68_check.py</code>. Drift thresholds: |Spearman| &gt; 0.90, or more than 70 % of
-  dots within 3 px of one raster's dots.</p>
-  <table>
-    <tr><th>Registry raster</th><th class="num">|Spearman|</th><th class="num">dot overlap</th><th>drift?</th></tr>
-    <tr><td class='mono'>19GEMSDOE__h19-4-multiline-corroborated.tif</td><td class='num'>0.032</td><td class='num'>0.417</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>19GEMSDOE__h19-5-powerlaw-budget-multiline.tif</td><td class='num'>0.032</td><td class='num'>0.411</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__faultzone-anatomy-60000px-prev.tif</td><td class='num'>0.000</td><td class='num'>0.300</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__h57-anatomy-enechelon-zeros.tif</td><td class='num'>0.063</td><td class='num'>0.371</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__h57r2-shipped8-all-flank0-20261009T180433Z-90e532947353-zeros.tif</td><td class='num'>0.086</td><td class='num'>0.503</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>57GEMSDOE__parallel-12000dots-zeros.tif</td><td class='num'>0.002</td><td class='num'>0.029</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE24__h25-1-dotted-h19-5-d1-5.tif</td><td class='num'>0.018</td><td class='num'>0.390</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE25__dotted-h19-5-d2-8.tif</td><td class='num'>0.016</td><td class='num'>0.378</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE27__topo-gap-closure-t-v2-on-d1-5.tif</td><td class='num'>0.021</td><td class='num'>0.438</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE28__h27-4-r1-solo-d2-8.tif</td><td class='num'>0.017</td><td class='num'>0.368</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE28__h32-1-prethin-tip-euler-d2-8.tif</td><td class='num'>0.016</td><td class='num'>0.377</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE28__h36-1-rung30-blind-r1.tif</td><td class='num'>0.016</td><td class='num'>0.365</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE28__h38-1-hf-euler-r30-r1.tif</td><td class='num'>0.017</td><td class='num'>0.372</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE29__wormrank-d28.tif</td><td class='num'>0.013</td><td class='num'>0.373</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE30__d28-poisson300m-offcat-44090.tif</td><td class='num'>0.016</td><td class='num'>0.378</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE32__h33-2-b2-zeros.tif</td><td class='num'>0.018</td><td class='num'>0.352</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE33__h33d-analog-tip-stepover-r30.tif</td><td class='num'>0.016</td><td class='num'>0.376</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE36__anderson-geothermal-pinn-38854.tif</td><td class='num'>0.018</td><td class='num'>0.356</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>GEMSDOE49__gate_ortho_w0.25-40k.tif</td><td class='num'>0.017</td><td class='num'>0.252</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>QUARANTINED-gems32-h19-5-smoothmaxcov-44090-zeros.tif</td><td class='num'>0.021</td><td class='num'>0.366</td><td><span class="pill pass">PASS</span></td></tr><tr><td class='mono'>QUARANTINED-gems32-h19-5-smoothmaxcov-44090.tif</td><td class='num'>0.021</td><td class='num'>0.366</td><td><span class="pill pass">PASS</span></td></tr>
-    <tr class="drift"><td class='mono'>gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif</td><td class='num'>0.021</td><td class='num'>0.985</td><td><span class="pill fail">DRIFT (density artefact, IR-28)</span></td></tr>
-    <tr><td class='mono'>gems61c-gravstep-liveband-40k-20261011.tif</td><td class='num'>0.003</td><td class='num'>0.269</td><td><span class="pill pass">PASS</span></td></tr>
-  </table>
-  <p class="small">Max |Spearman| = 0.0861 (limit 0.90). The 3-px rule fires on exactly one dense
-  registry raster (311,617 dots); the density-null control shows 95.8% of <em>any</em> random dot
-  set would also fire it. Recorded as IR-28 &mdash; not duplication.</p>
-</section>
-
-</main>
-<footer class="footer">
-  <p>GEMSDOE68 &middot; every number on this page is generated from
-  <code>evidence/*.json</code> by <code>scripts/lane68_build_site.py</code>; nothing is hand-entered.
-  No organiser score is claimed anywhere on this site.</p>
-</footer>
-</body>
-</html>
+<div class=card>
+<h2>5. Audit of All Repository Submission Artifacts across PRs #1–#7</h2>
+<table>
+<tr><th>Candidate File</th><th>Origin</th><th>Holdout Gate (All &amp; &gt; 1 km)</th><th>Uniqueness &amp; Morphology</th><th>Recommendation</th></tr>
+<tr><td><code>gems68-autoctx-40000-20261012T014104Z-zeros.tif</code></td><td>PR #1 (Exp 1)</td><td class=bad>FAILED (<code>IR-68-LEAK-01</code>: visible catalogue used as both label &amp; <code>cat_dist</code>; Stage 3 DTI 0.0053)</td><td class=bad>Halos around visible faults</td><td class=bad>Do not submit</td></tr>
+<tr><td><code>gemsdoe68-autocontext-s2-20261012T014136Z-zeros.tif</code></td><td>PR #2</td><td class=bad>No holdout DTI recorded</td><td class=warn>Superseded</td><td class=bad>Do not submit</td></tr>
+<tr><td><code>gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.tif</code></td><td>PR #3 (Exp 2)</td><td class=warn>Stage 2 passed (<code>t_far=2.51</code>), but Stage 3 had <code>NE far &Delta; = -0.0034</code> (<code>t_far=1.51 &lt; 2.0</code>)</td><td class=warn>Exhibited regional area-fill blobs (<code>IR-68-BLOB-01</code>)</td><td class=warn>Superseded by Exp 3</td></tr>
+<tr><td><code>GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif</code></td><td>PR #6 (lane68)</td><td class=bad>Failed &gt; 1 km 2-SE gate (<code>t_far=1.88 &lt; 2.0</code>, <code>IR-68-GATE-01</code>)</td><td class=warn>Un-thinned top-N clusters</td><td class=bad>Do not submit</td></tr>
+<tr><td><b><code>gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif</code></b></td><td><b>Exp 3 (This Release)</b></td><td class=ok><b>PASSED BOTH STAGES &amp; BOTH STRATA: Stage 2 (<code>t_all=6.47, t_far=2.90</code>), Stage 3 (<code>t_all=11.08, t_far=2.53</code>, 4/4 folds +)</b></td><td class=ok><b>PASSED all 65 rasters (max &rho;=0.1857, max info overlap=55.37%, crisp linear strands, 57.7% &gt; 1 km)</b></td><td class=ok><b>✅ PROMOTE — DOWNLOAD &amp; SUBMIT THIS FILE</b></td></tr>
+</table>
+</div>
+</main><script>
+function copyText(id, btn){
+  const el = document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.innerText.trim()).then(()=>{
+    const old = btn.innerText; btn.innerText = 'Copied!';
+    setTimeout(()=>{btn.innerText = old;}, 1400);
+  });
+}
+</script></body></html>

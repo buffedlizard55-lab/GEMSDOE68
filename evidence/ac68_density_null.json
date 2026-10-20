@@ -1,0 +1,27 @@
+{
+  "candidate": "gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif",
+  "k_candidate": 34781,
+  "n_footprint": 5165852,
+  "n_eligible_gt_2px": 4861513,
+  "n_trials": 200,
+  "results": {
+    "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif": {
+      "n_b": 311350,
+      "halo_3px_fraction_of_footprint": 0.958,
+      "halo_3px_fraction_of_eligible_gt2px": 0.9936,
+      "random_expected_within_3px": 0.9936,
+      "random_sd": 0.00043,
+      "candidate_observed_within_3px": 0.9843,
+      "excess_over_random": -0.0092
+    },
+    "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif": {
+      "n_b": 206799,
+      "halo_3px_fraction_of_footprint": 0.9988,
+      "halo_3px_fraction_of_eligible_gt2px": 0.9988,
+      "random_expected_within_3px": 0.9988,
+      "random_sd": 0.00017,
+      "candidate_observed_within_3px": 0.9967,
+      "excess_over_random": -0.0021
+    }
+  }
+}

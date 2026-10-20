@@ -4,19 +4,20 @@
 *{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
 header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
 header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
-main{max-width:1100px;margin:0 auto;padding:24px}
+main{max-width:1120px;margin:0 auto;padding:24px}
 .card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
 .banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
 .banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
-.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0}
+.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0;cursor:pointer;border:none}
 .btn.secondary{background:#26304d;color:var(--ink)}
+.copy-btn{background:#1e2942;color:var(--acc);border:1px solid #354770;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:700;cursor:pointer;margin-left:8px}
 table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
 th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
 pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
 .muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
 h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
 </style></head><body>
-<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="how-to-submit.html">How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html" style=color:#fff>Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
+<header><strong>GEMSDOE68 · Auto-Context Strand Refinement Lane</strong><a href="index.html">Executive summary</a> <a href="executive-summary.html">Run Card & Gate</a> <a href="how-to-submit.html">How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html" style=color:#fff>Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
 <main><div class=card><h1>Sources (for manual review)</h1>
 <p>Status legend: <strong>verified-here</strong> = fetched/recomputed in this session's sandbox (which can reach only</p>
 <p>github.com, api.github.com, codeload.github.com, registry.npmjs.org, pypi.org, files.pythonhosted.org);</p>
@@ -49,4 +50,13 @@ h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var
 </table>
 <p><strong>Irregularity to note:</strong> the brief states the "current leaderboard GEMSDOE high score" as 0.3774 in one</p>
 <p>place and 0.3195 in another, and the lineage's 2026-10-11 note quotes a #1 of 0.4133. None can be</p>
-<p>re-fetched from this sandbox; treat all three as unverified here.</p></div></main></body></html>
+<p>re-fetched from this sandbox; treat all three as unverified here.</p></div></main><script>
+function copyText(id, btn){
+  const el = document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.innerText.trim()).then(()=>{
+    const old = btn.innerText; btn.innerText = 'Copied!';
+    setTimeout(()=>{btn.innerText = old;}, 1400);
+  });
+}
+</script></body></html>

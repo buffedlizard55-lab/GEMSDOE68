@@ -98,7 +98,31 @@ auto-context.
 
 ## 5. Decision rule carried into the run card
 
-Promote only if, at a budget inside 25k–50k dots: HOLDOUT-DTI(stage 2 or 3) − HOLDOUT-DTI(stage 1)
-has a paired 95 % block-bootstrap CI entirely above 0 on **both** the full domain and the > 1 km
-domain; rank-correlation with every registry raster < 0.90; < 70 % of dots within 3 px of any one
-registry raster's dots; validator all-green; sha256 recorded. Otherwise log the negative result.
+Promote only if, at a budget inside 25k–50k dots:
+1. `HOLDOUT-DTI(stage 2 and stage 3) − HOLDOUT-DTI(stage 1)` has **both** a paired 95 % spatial block-bootstrap CI entirely above 0 **and** a paired outer-block `t`-statistic `> 2.0` (`> 2 SE`) on **both** the full domain (`11,321` withheld positives) and the `> 1 km` far-fault domain (`4,310` withheld positives);
+2. Single-feature holdout AUC leakage canary `<= 0.90` on every Stage-1 and Stage-2/3 feature;
+3. Spearman rank-correlation `|rho| <= 0.90` with every registry/scored raster (`65` rasters total) and `<= 70 %` of dots within 3 px of any informative registry raster's dots (checked on both the continuous surface and final emitted dots, plus the `d_cat > 2 px` eligible-domain density-null proof on the two space-filling rasters);
+4. Format validator all-green on both `-zeros.tif` (all-finite in `[0, 1]`, 0 NaNs) and `-nan.tif`; sha256 recorded.
+
+## 6. Feature-level autopsy of `h33-2-b2-zeros` (`0.2778`) vs Experiment 2 vs Experiment 3
+
+Direct pixel-level comparison of our feature stack against the `37,654` dots of `GEMSDOE32__h33-2-b2-zeros.tif` (`0.2778` `ORGANIZER-CONFIRMED`) and the `11,321` withheld fault pixels (`seed=20` **[measured-here]**) reveals why Experiment 2 (`exp2`) suffered from `IR-68-BLOB-01` and how Experiment 3 (`exp3_autocontext_strands`) resolves it:
+
+| Feature / Channel | Type | AUC vs Withheld Faults (`11,321` px) | AUC vs `0.2778` Champion (`37,654` dots) | Exp 2 Stage-1 Gain | Exp 3 Stage-1 Gain | Physical Role |
+|---|---|---:|---:|---:|---:|---|
+| `elev_asym` (H68-2) | Local 500 m⊥ footwall/hanging-wall slope asymmetry | **0.5955** | **0.6684** | *(absent)* | **37,957.9** (#2) | Captures one-sided range-front facet vs piedmont fan step |
+| `lidar_lappos_max` (H68-2) | 2 m LiDAR positive Laplacian scarp base | **0.5949** | **0.6512** | *(absent)* | **8,124.3** | Resolves sub-100 m scarp base break missed at 100 m DEM scale |
+| `lidar_relief` / `lidar_step_max` | 2 m LiDAR 100 m cell relief / step height | **0.5927 / 0.5871** | **0.6640 / 0.6581** | *(absent)* | **7,845.2 / 6,912.0** | Direct 2 m bare-earth scarp height inside 100 m cell |
+| `elev_hp15` (H68-2) | Local 1.5 km high-pass structural relief | **0.5621** | **0.6915** | *(absent)* | **39,846.1** (#1) | Local range-front step with basin-wide elevation trend removed |
+| `db_grad` / `db_hp15` (H68-3) | Depth-to-basement gradient & 1.5 km step | **0.5518 / 0.5482** | **0.6190 / 0.6104** | *(absent)* | **28,089.5** (#3) / **18,644.6** (#4) | Buried normal-fault offset of pre-Tertiary basement |
+| `elev_ridge_s2` | Multi-scale Hessian topographic ridge (`σ=2`) | **0.5729** | **0.7198** | 12,188.0 | **14,422.5** | Sharp linear scarp/ridge crest |
+| `elev_grad` | Topographic gradient magnitude | **0.5709** | **0.6838** | 10,842.0 | **17,265.7** (#6) | Local fault-scarp slope |
+| `det_elev` *(dropped in Exp 3)* | Raw detrended elevation (`50–200 km` wavelength) | 0.5665 | 0.5416 | **68,248.4** (#1) | *0 (dropped)* | **Spatial lookup table (`IR-68-BLOB-01`)** — memorizes training quadrants |
+| `ieq_n100a15` / `deq_n100a15` *(dropped)* | `15 km`-smoothed earthquake count kernels | 0.5318 / 0.5320 | 0.5050 / 0.5177 | **52,494 / 46,843** (#2/#3) | *0 (dropped)* | **Circular 15 km regional blobs (`IR-68-BLOB-01`)** |
+| `geod_2ndinv` / `geod_dilaterate` *(dropped)* | Smooth GPS strain-rate tensor fields | 0.5210 / 0.5660 | 0.5646 / 0.5830 | **42,534 / 41,902** (#4/#5) | *0 (dropped)* | **Basin-wide GPS interpolation polygons (`IR-68-BLOB-01`)** |
+
+By removing the regional lookup channels from Stage 1, replacing `p_sm10` with anisotropic along/across-strike smooths (`p_along_short`, `p_along_long`, `p_aniso`, `p_ridge`, `ori_coh`) plus directional `1.5/3.0 km` fault-tip relays (`cat_relay_15` AUC `0.7686`, `cat_relay_30` AUC `0.7421`), and applying damped rank-probability sequential refinement (`α2 = 0.22, α3 = 0.35`), **Experiment 3 (`gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif`)** achieves at `35,000` dots (`HOLDOUT-DTI`, `gems57-pooled-hide-v2`):
+* **Stage 1:** `all = 0.0942` (CI `[0.0819, 0.1059]`), `> 1 km far = 0.0772` (CI `[0.0620, 0.0923]`) — up `+28.9 %` on `> 1 km` faults over Exp 2 Stage 1 (`0.0599`).
+* **Stage 2 (Auto-context Iter 1):** `all = 0.1058` (`Δ +0.0116`, CI `[+0.0058, +0.0178]`, **`t_all = 6.47 > 2.0`**), `> 1 km far = 0.0859` (`Δ +0.0087`, CI `[+0.0017, +0.0160]`, **`t_far = 2.90 > 2.0`**, 4/4 folds positive).
+* **Stage 3 (Auto-context Iter 2):** `all = 0.1124` (`Δ +0.0182`, CI `[+0.0110, +0.0259]`, **`t_all = 11.08 > 2.0`**), `> 1 km far = 0.0874` (`Δ +0.0102`, CI `[+0.0012, +0.0187]`, **`t_far = 2.53 > 2.0`**, 4/4 folds positive), with **57.7 % of emitted dots (`20,178 / 35,000`) placed `> 1 km` from any mapped fault**.
+

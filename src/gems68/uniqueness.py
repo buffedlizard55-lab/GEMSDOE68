@@ -50,20 +50,30 @@ def surface_rank_corr(surface: np.ndarray, registry: dict, footprint: np.ndarray
 
 
 def dot_overlap(dots: np.ndarray, registry: dict, footprint: np.ndarray,
-                radius_px: float = 3.0) -> dict:
-    """{name: {overlap, coverage, lift, n_registry_dots}} per registry raster."""
+                radius_px: float = 3.0, allowed: np.ndarray | None = None) -> dict:
+    """{name: {overlap, reverse_overlap, coverage, eligible_coverage, excess_over_eligible_null, lift, n_registry_dots}}."""
     res = {}
     n = int(dots.sum())
     n_fp = int(footprint.sum())
+    elig = (allowed & footprint) if allowed is not None else footprint
+    n_el = int(elig.sum())
+    cand_near = (ndi.distance_transform_edt(~dots) <= radius_px) if n > 0 else np.zeros_like(dots, bool)
     for name, a in registry.items():
-        pos = a > 0
+        pos = (a > 0) & footprint
         if not pos.any():
-            res[name] = dict(overlap=0.0, coverage=0.0, lift=0.0, n_registry_dots=0)
+            res[name] = dict(overlap=0.0, reverse_overlap=0.0, coverage=0.0,
+                             eligible_coverage=0.0, excess_over_eligible_null=0.0,
+                             lift=0.0, n_registry_dots=0)
             continue
         near = ndi.distance_transform_edt(~pos) <= radius_px
         ov = float((dots & near).sum() / max(n, 1))
+        rev_ov = float((pos & cand_near).sum() / max(int(pos.sum()), 1))
         cov = float((near & footprint).sum() / max(n_fp, 1))
-        res[name] = dict(overlap=ov, coverage=cov, lift=float(ov / max(cov, 1e-9)),
+        el_cov = float((near & elig).sum() / max(n_el, 1))
+        res[name] = dict(overlap=ov, reverse_overlap=rev_ov, coverage=cov,
+                         eligible_coverage=el_cov,
+                         excess_over_eligible_null=float(ov - el_cov),
+                         lift=float(ov / max(cov, 1e-9)),
                          n_registry_dots=int(pos.sum()))
     return res
 

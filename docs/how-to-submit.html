@@ -4,33 +4,40 @@
 *{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
 header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
 header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
-main{max-width:1100px;margin:0 auto;padding:24px}
+main{max-width:1120px;margin:0 auto;padding:24px}
 .card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
 .banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
 .banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
-.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0}
+.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0;cursor:pointer;border:none}
 .btn.secondary{background:#26304d;color:var(--ink)}
+.copy-btn{background:#1e2942;color:var(--acc);border:1px solid #354770;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:700;cursor:pointer;margin-left:8px}
 table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
 th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
 pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
 .muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
 h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
 </style></head><body>
-<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="how-to-submit.html" style=color:#fff>How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
+<header><strong>GEMSDOE68 · Auto-Context Strand Refinement Lane</strong><a href="index.html">Executive summary</a> <a href="executive-summary.html">Run Card & Gate</a> <a href="how-to-submit.html" style=color:#fff>How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
 <main>
-<h1>How to make a submission (step by step)</h1>
+<h1>How to Make a Submission on DrivenData (Step by Step)</h1>
 <div class=card>
 <ol>
-<li>Download the primary file: <a class=btn href="downloads/gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.tif" download>⬇ gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.tif</a> (or the <a href="downloads/gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.zip">ZIP</a> containing only that TIFF). Verify its SHA-256 matches <code>3495c83f82b723d84dea1e99adbe5fbd94e46133cf5f3deb9fe310b42135bc59</code>.</li>
-<li>Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">the competition's submission page</a> (login required) and click <b>New submission</b>.</li>
-<li><b>File to submit</b>: choose the downloaded <code>.tif</code> (or <code>.zip</code>). The form accepts a single-band GeoTIFF matching the sample's CRS (EPSG:32611), shape (3730×3292) and geotransform.</li>
-<li><b>Note</b> (optional, ≤140 characters): paste <code>GEMSDOE68 auto-context s3 hide-draw; 38000 dots &gt;2px off catalogue; HOLDOUT-DTI 0.1189 vs s1 0.0816; UNSCORED</code></li>
-<li>Submit. Copy the score from the receipt into <code>registry/score_ledger.csv</code> tagged <b>ORGANIZER-CONFIRMED</b> with the exact file name and SHA-256.</li>
+  <li><b>Download the promoted primary GeoTIFF:</b> <a class=btn href="downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif" download>⬇ gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif</a> (or <a href="downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.zip" download>⬇ gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.zip</a>). Verify that its SHA-256 matches <code>849a0f04d2ca8e644eb346ac30c3f3a467024de447b3e8e3e44eecf2f814ae35</code>.</li>
+  <li>Open the official <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">DrivenData DOE GEMS Submissions Page</a> and click <b>Make a submission</b>.</li>
+  <li><b>File upload:</b> Select <code>gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif</code> (or <code>gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.zip</code>).</li>
+  <li><b>Submission Name / Note (&le; 140 chars):</b> Paste <code id="howto-note">GEMS68 Tu08 auto-ctx s3 strands 35k dots; holdout DTI 0.1124 (+0.0182, t=11.1), &gt;1km 0.0874 (+0.0102, t=2.53); sha8=849a0f04</code> <button class="copy-btn" onclick="copyText('howto-note', this)">Copy</button></li>
+  <li><b>After scoring:</b> Record the returned score in <code>registry/score_ledger.csv</code> as <code>ORGANIZER-CONFIRMED</code> together with the exact filename and SHA-256 hash.</li>
 </ol>
-<h2>About the earlier "Predicted values must be in range [0, 1]" error</h2>
-<p>The primary file here is <b>all-finite</b>: 0.0 outside the footprint, values exactly 0.0 or 1.0 inside, no NaN, no nodata tag, no sentinel. The family's champion (0.2778) was uploaded in this "zeros" form. A NaN-outside variant is also published (the public spec permits NaN outside the footprint and several NaN-variants scored in the ledger), but if the portal rejects it for range, use the zeros file. The local validator re-reads the bytes on disk and checks: single band, float32, 3730×3292, EPSG:32611, pinned transform, no NaN/inf anywhere, min ≥ 0, max ≤ 1, zero positive pixels outside the footprint, zero positive pixels on the mapped catalogue.</p>
-<h2>Rules you should know</h2>
-<ul><li>Weekly submission cap is shown on the submission page; promotion to a slot is a separate selector decision (<a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">rules PDF 96647</a>).</li>
-<li>Metric: distance-weighted Tversky index, α = 0.2 (FP), β = 0.8 (FN), 300 m triangular kernel (<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">problem description</a>).</li>
-<li>Known/mapped faults are excluded from scoring; the truth is new faults mapped by the expert panel.</li></ul>
-</div></main></body></html>
+<h2>Why <code>-zeros.tif</code> Resolves <code>"Predicted values must be in range [0, 1]"</code></h2>
+<p>DrivenData's submission form rejected an earlier NaN-masked file with <code>"Predicted values must be in range [0, 1]"</code> because IEEE-754 <code>NaN</code> fails unmasked <code>(arr &gt;= 0.0) &amp; (arr &lt;= 1.0)</code> range checks. Our primary file (<code>gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif</code>) is <b>100% finite across all 12,279,160 grid cells</b> (<code>0.0</code> outside the footprint, <code>0.0</code> on background footprint pixels, and calibrated probabilities in <code>[0.500, 1.000]</code> on the 35,000 emitted fault dots). A secondary NaN-outside twin (<code>gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-nan.tif</code>, SHA-256 <code>3f9553609ad7260f9e9a5520bde56ed4a728a9fa484e78fd59fe764101f8185d</code>) is also provided for byte-for-byte nodata parity with <code>sample_submission.tif</code>.</p>
+</div>
+</main><script>
+function copyText(id, btn){
+  const el = document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.innerText.trim()).then(()=>{
+    const old = btn.innerText; btn.innerText = 'Copied!';
+    setTimeout(()=>{btn.innerText = old;}, 1400);
+  });
+}
+</script></body></html>

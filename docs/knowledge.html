@@ -4,19 +4,20 @@
 *{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
 header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
 header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
-main{max-width:1100px;margin:0 auto;padding:24px}
+main{max-width:1120px;margin:0 auto;padding:24px}
 .card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
 .banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
 .banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
-.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0}
+.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0;cursor:pointer;border:none}
 .btn.secondary{background:#26304d;color:var(--ink)}
+.copy-btn{background:#1e2942;color:var(--acc);border:1px solid #354770;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:700;cursor:pointer;margin-left:8px}
 table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
 th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
 pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
 .muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
 h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
 </style></head><body>
-<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="how-to-submit.html">How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html" style=color:#fff>Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
+<header><strong>GEMSDOE68 · Auto-Context Strand Refinement Lane</strong><a href="index.html">Executive summary</a> <a href="executive-summary.html">Run Card & Gate</a> <a href="how-to-submit.html">How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html" style=color:#fff>Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
 <main><div class=card><h1>Why <code>h33-h33-2-b2</code> scored 0.2778, and whether this lane can beat it</h1>
 <p>*GEMSDOE68, 2026-10-12. Tags: <strong>[official]</strong> = competition page / rules PDF; <strong>[owner-report]</strong> = the</p>
 <p>group's own ledger (no organizer receipt is held in this repository); <strong>[measured-here]</strong> = recomputed</p>
@@ -102,7 +103,40 @@ scaling every value by λ&lt;1 lowers DTI  ⇒  for a fixed pixel set, value 1.0
 <p>  selector step.</p>
 </ul>
 <h2>5. Decision rule carried into the run card</h2>
-<p>Promote only if, at a budget inside 25k–50k dots: HOLDOUT-DTI(stage 2 or 3) − HOLDOUT-DTI(stage 1)</p>
-<p>has a paired 95 % block-bootstrap CI entirely above 0 on <strong>both</strong> the full domain and the &gt; 1 km</p>
-<p>domain; rank-correlation with every registry raster &lt; 0.90; &lt; 70 % of dots within 3 px of any one</p>
-<p>registry raster's dots; validator all-green; sha256 recorded. Otherwise log the negative result.</p></div></main></body></html>
+<p>Promote only if, at a budget inside 25k–50k dots:</p>
+<ul>
+<li><code>HOLDOUT-DTI(stage 2 and stage 3) − HOLDOUT-DTI(stage 1)</code> has <strong>both</strong> a paired 95 % spatial block-bootstrap CI entirely above 0 <strong>and</strong> a paired outer-block <code>t</code>-statistic <code>&gt; 2.0</code> (<code>&gt; 2 SE</code>) on <strong>both</strong> the full domain (<code>11,321</code> withheld positives) and the <code>&gt; 1 km</code> far-fault domain (<code>4,310</code> withheld positives);</li>
+<li>Single-feature holdout AUC leakage canary <code>&lt;= 0.90</code> on every Stage-1 and Stage-2/3 feature;</li>
+<li>Spearman rank-correlation <code>|rho| &lt;= 0.90</code> with every registry/scored raster (<code>65</code> rasters total) and <code>&lt;= 70 %</code> of dots within 3 px of any informative registry raster's dots (checked on both the continuous surface and final emitted dots, plus the <code>d_cat &gt; 2 px</code> eligible-domain density-null proof on the two space-filling rasters);</li>
+<li>Format validator all-green on both <code>-zeros.tif</code> (all-finite in <code>[0, 1]</code>, 0 NaNs) and <code>-nan.tif</code>; sha256 recorded.</li>
+</ul>
+<h2>6. Feature-level autopsy of <code>h33-2-b2-zeros</code> (<code>0.2778</code>) vs Experiment 2 vs Experiment 3</h2>
+<p>Direct pixel-level comparison of our feature stack against the <code>37,654</code> dots of <code>GEMSDOE32__h33-2-b2-zeros.tif</code> (<code>0.2778</code> <code>ORGANIZER-CONFIRMED</code>) and the <code>11,321</code> withheld fault pixels (<code>seed=20</code> <strong>[measured-here]</strong>) reveals why Experiment 2 (<code>exp2</code>) suffered from <code>IR-68-BLOB-01</code> and how Experiment 3 (<code>exp3_autocontext_strands</code>) resolves it:</p>
+<table>
+<tr><th>Feature / Channel</th><th>Type</th><th>AUC vs Withheld Faults (<code>11,321</code> px)</th><th>AUC vs <code>0.2778</code> Champion (<code>37,654</code> dots)</th><th>Exp 2 Stage-1 Gain</th><th>Exp 3 Stage-1 Gain</th><th>Physical Role</th></tr>
+<tr><td><code>elev_asym</code> (H68-2)</td><td>Local 500 m⊥ footwall/hanging-wall slope asymmetry</td><td><strong>0.5955</strong></td><td><strong>0.6684</strong></td><td><em>(absent)</em></td><td><strong>37,957.9</strong> (#2)</td><td>Captures one-sided range-front facet vs piedmont fan step</td></tr>
+<tr><td><code>lidar_lappos_max</code> (H68-2)</td><td>2 m LiDAR positive Laplacian scarp base</td><td><strong>0.5949</strong></td><td><strong>0.6512</strong></td><td><em>(absent)</em></td><td><strong>8,124.3</strong></td><td>Resolves sub-100 m scarp base break missed at 100 m DEM scale</td></tr>
+<tr><td><code>lidar_relief</code> / <code>lidar_step_max</code></td><td>2 m LiDAR 100 m cell relief / step height</td><td><strong>0.5927 / 0.5871</strong></td><td><strong>0.6640 / 0.6581</strong></td><td><em>(absent)</em></td><td><strong>7,845.2 / 6,912.0</strong></td><td>Direct 2 m bare-earth scarp height inside 100 m cell</td></tr>
+<tr><td><code>elev_hp15</code> (H68-2)</td><td>Local 1.5 km high-pass structural relief</td><td><strong>0.5621</strong></td><td><strong>0.6915</strong></td><td><em>(absent)</em></td><td><strong>39,846.1</strong> (#1)</td><td>Local range-front step with basin-wide elevation trend removed</td></tr>
+<tr><td><code>db_grad</code> / <code>db_hp15</code> (H68-3)</td><td>Depth-to-basement gradient &amp; 1.5 km step</td><td><strong>0.5518 / 0.5482</strong></td><td><strong>0.6190 / 0.6104</strong></td><td><em>(absent)</em></td><td><strong>28,089.5</strong> (#3) / <strong>18,644.6</strong> (#4)</td><td>Buried normal-fault offset of pre-Tertiary basement</td></tr>
+<tr><td><code>elev_ridge_s2</code></td><td>Multi-scale Hessian topographic ridge (<code>σ=2</code>)</td><td><strong>0.5729</strong></td><td><strong>0.7198</strong></td><td>12,188.0</td><td><strong>14,422.5</strong></td><td>Sharp linear scarp/ridge crest</td></tr>
+<tr><td><code>elev_grad</code></td><td>Topographic gradient magnitude</td><td><strong>0.5709</strong></td><td><strong>0.6838</strong></td><td>10,842.0</td><td><strong>17,265.7</strong> (#6)</td><td>Local fault-scarp slope</td></tr>
+<tr><td><code>det_elev</code> <em>(dropped in Exp 3)</em></td><td>Raw detrended elevation (<code>50–200 km</code> wavelength)</td><td>0.5665</td><td>0.5416</td><td><strong>68,248.4</strong> (#1)</td><td><em>0 (dropped)</em></td><td><strong>Spatial lookup table (<code>IR-68-BLOB-01</code>)</strong> — memorizes training quadrants</td></tr>
+<tr><td><code>ieq_n100a15</code> / <code>deq_n100a15</code> <em>(dropped)</em></td><td><code>15 km</code>-smoothed earthquake count kernels</td><td>0.5318 / 0.5320</td><td>0.5050 / 0.5177</td><td><strong>52,494 / 46,843</strong> (#2/#3)</td><td><em>0 (dropped)</em></td><td><strong>Circular 15 km regional blobs (<code>IR-68-BLOB-01</code>)</strong></td></tr>
+<tr><td><code>geod_2ndinv</code> / <code>geod_dilaterate</code> <em>(dropped)</em></td><td>Smooth GPS strain-rate tensor fields</td><td>0.5210 / 0.5660</td><td>0.5646 / 0.5830</td><td><strong>42,534 / 41,902</strong> (#4/#5)</td><td><em>0 (dropped)</em></td><td><strong>Basin-wide GPS interpolation polygons (<code>IR-68-BLOB-01</code>)</strong></td></tr>
+</table>
+<p>By removing the regional lookup channels from Stage 1, replacing <code>p_sm10</code> with anisotropic along/across-strike smooths (<code>p_along_short</code>, <code>p_along_long</code>, <code>p_aniso</code>, <code>p_ridge</code>, <code>ori_coh</code>) plus directional <code>1.5/3.0 km</code> fault-tip relays (<code>cat_relay_15</code> AUC <code>0.7686</code>, <code>cat_relay_30</code> AUC <code>0.7421</code>), and applying damped rank-probability sequential refinement (<code>α2 = 0.22, α3 = 0.35</code>), <strong>Experiment 3 (<code>gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif</code>)</strong> achieves at <code>35,000</code> dots (<code>HOLDOUT-DTI</code>, <code>gems57-pooled-hide-v2</code>):</p>
+<ul>
+<li><strong>Stage 1:</strong> <code>all = 0.0942</code> (CI <code>[0.0819, 0.1059]</code>), <code>&gt; 1 km far = 0.0772</code> (CI <code>[0.0620, 0.0923]</code>) — up <code>+28.9 %</code> on <code>&gt; 1 km</code> faults over Exp 2 Stage 1 (<code>0.0599</code>).</li>
+<li><strong>Stage 2 (Auto-context Iter 1):</strong> <code>all = 0.1058</code> (<code>Δ +0.0116</code>, CI <code>[+0.0058, +0.0178]</code>, <strong><code>t_all = 6.47 &gt; 2.0</code></strong>), <code>&gt; 1 km far = 0.0859</code> (<code>Δ +0.0087</code>, CI <code>[+0.0017, +0.0160]</code>, <strong><code>t_far = 2.90 &gt; 2.0</code></strong>, 4/4 folds positive).</li>
+<li><strong>Stage 3 (Auto-context Iter 2):</strong> <code>all = 0.1124</code> (<code>Δ +0.0182</code>, CI <code>[+0.0110, +0.0259]</code>, <strong><code>t_all = 11.08 &gt; 2.0</code></strong>), <code>&gt; 1 km far = 0.0874</code> (<code>Δ +0.0102</code>, CI <code>[+0.0012, +0.0187]</code>, <strong><code>t_far = 2.53 &gt; 2.0</code></strong>, 4/4 folds positive), with <strong>57.7 % of emitted dots (<code>20,178 / 35,000</code>) placed <code>&gt; 1 km</code> from any mapped fault</strong>.</li>
+</ul></div></main><script>
+function copyText(id, btn){
+  const el = document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.innerText.trim()).then(()=>{
+    const old = btn.innerText; btn.innerText = 'Copied!';
+    setTimeout(()=>{btn.innerText = old;}, 1400);
+  });
+}
+</script></body></html>
