@@ -1,0 +1,13 @@
+{
+  "experiment": "exp4_autocontext_ext_bagged_confirm_seed42",
+  "registered_before_run": true,
+  "session_date": "2026-10-20",
+  "why": "Exp3's pre-registered candidate (stage 3 @ 38,000) FAILED its gate on fresh seed 31: delta-all +0.0293 CI [+0.0180,+0.0400] but delta-far(+>1 km) +0.0093 CI [-0.0022,+0.0202]. Exp3 is therefore logged NEGATIVE for that candidate. However stage 3 @ 25,000 dots is the only configuration whose paired CI excludes 0 on both strata in BOTH independent draws so far (Exp2 seed 20: far CI [+0.0048,+0.0267]; Exp3 seed 31: far CI [+0.0011,+0.0326], all-delta CIs also positive). Exp4 tests exactly that configuration, fixed in advance, on a third fresh evaluation draw (seed 42) with the Exp3 recipe unchanged.",
+  "recipe_unchanged_from_exp3": true,
+  "preregistered_candidate": {"stage": 3, "budget_dots": 25000},
+  "eval_seed": 42,
+  "train_seeds": [42, 43, 44],
+  "gate": "Paired spatial-block bootstrap 95% CI of HOLDOUT-DTI(stage3@25000)-HOLDOUT-DTI(stage1@25000) entirely above 0 on BOTH full and >1 km far domains (evaluator gems57-pooled-hide-v2), plus leakage canary clean (no single-feature AUC flag).",
+  "decision_rule": "Pass -> final build with identical recipe (train draws 42,43,44), emit 25,000 dots, uniqueness + validator, ONE download marked OK TO SUBMIT. Fail -> verdict negative for Exp4 as well; no new promoted download; site states NOT CLEARED.",
+  "experiment_budget_note": "This is experiment 2 of this session (Exp3 was 1); the brief's budget is 3 experiments."
+}

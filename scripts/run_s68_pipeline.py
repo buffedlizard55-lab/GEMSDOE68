@@ -870,20 +870,21 @@ def main() -> int:
 
     dl_dir = ROOT / "docs" / "downloads"
     dl_dir.mkdir(parents=True, exist_ok=True)
-    for old_f in dl_dir.glob("GEMSDOE68-AC-stack2-*"):
-        old_f.unlink()
 
     stem = f"GEMSDOE68-O2AC-MultiPhys-v3-{RUN_TS}"
     p_zeros = dl_dir / f"{stem}-zeros.tif"
     p_nan = dl_dir / f"{stem}-nan.tif"
     p_strict = dl_dir / f"{stem}-strict-nan.tif"
     p_zip = dl_dir / f"{stem}-zeros.tif.zip"
+    p_nan_zip = dl_dir / f"{stem}-nan.tif.zip"
 
     meta_zeros = write_submission(p_zeros, emitted_2d, fp_union, sub_ref, overwrite=True, outside_fill=0.0)
     meta_nan = write_submission(p_nan, emitted_2d, fp_union, sub_ref, overwrite=True, outside_fill=np.nan)
-    meta_strict = write_submission(p_strict, np.where(fp_feat, emitted_2d, 0.0), fp_feat, sub_ref, overwrite=True, outside_fill=np.nan)
+    meta_strict = write_submission(p_strict, np.where(fp_sub, emitted_2d, 0.0), fp_sub, sub_ref, overwrite=True, outside_fill=np.nan)
     with zipfile.ZipFile(p_zip, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
         zf.write(p_zeros, arcname=p_zeros.name)
+    with zipfile.ZipFile(p_nan_zip, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
+        zf.write(p_nan, arcname=p_nan.name)
     zip_sha256 = hashlib.sha256(p_zip.read_bytes()).hexdigest()
 
     portal_zeros = validate_portal_ready(p_zeros, sub_ref, feat_ref, cat_ref)

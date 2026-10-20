@@ -37,9 +37,10 @@ import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DATA = REPO_ROOT / "data"
-BRIDGE = DATA / "bridge"
-EXTERNAL = DATA / "external"
-CACHE = REPO_ROOT / "cache"
+CACHE_DATA = REPO_ROOT / ".cache" / "gems_data"
+BRIDGE = DATA / "bridge" if (DATA / "bridge" / "training_features.tif").exists() else CACHE_DATA
+EXTERNAL = DATA / "external" if (DATA / "external" / "lidar_scarp_features_u8.tif").exists() else (CACHE_DATA / "external")
+CACHE = REPO_ROOT / ".cache" / "channels"
 
 HEIGHT, WIDTH = 3730, 3292
 STRIP = 256

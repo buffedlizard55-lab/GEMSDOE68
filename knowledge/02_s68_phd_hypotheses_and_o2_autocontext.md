@@ -64,13 +64,13 @@ Before modifying model training code, five geological hypotheses were formulated
 ## 3. Nested Spatially Blocked Protocol & Monotonic Stage Verification
 
 ### 3.1 Zero-Leakage Nested Spatial Cross-Validation
-- **Outer Holdout (`seed=20`, untouched by feature engineering, model training, or budget tuning):** 4 spatial quadrants across Nevada (`NW, NE, SW, SE`), each eroded by `2.6 km` (`5.2 km` minimum Euclidean core-to-core separation, exceeding maximum spatial stencil radius by `> 3×`), withholding `20%` of whole connected fault components (`11,321` `ALL` positive pixels; `4,832` `FAR > 1.0 km` positive pixels) with a `3 px` (`300 m`) visibility collar masked around withheld traces.
+- **Outer Holdout (`seed=20`, untouched by feature engineering, model training, or budget tuning):** 4 spatial quadrants across Nevada (`NW, NE, SW, SE`), each eroded by `2.6 km` (`5.2 km` minimum Euclidean core-to-core separation, exceeding maximum spatial stencil radius by `> 3×`), withholding `20%` of whole connected fault components (`11,321` `ALL` positive pixels; `5,150` `FAR > 1.0 km` positive pixels) with a `3 px` (`300 m`) visibility collar masked around withheld traces.
 - **Inner Hide-World (`inner_worlds[0]`, strictly inside outer `vis_outer`):** Masks `40%` of remaining `vis_outer` connected fault components inside each training block with a `3 px` visibility collar so Stage-2 and Stage-3 auto-context classifiers learn genuine **gap-bridging and off-catalogue discovery** rather than collapsing onto `cat_dist == 0` (`IR-68-LEAK-01`). Dot budget `B*` is selected on a matched `20%`-hide inner-CV curve (`BUDGET_GRID = [26k, 32k, 36k, 38k, 42k, 48k, 56k]`), selecting **`B* = 38,000` dots (`inner DTI = 0.1528`)** with zero outer-holdout peeking.
 - **Pre-Model Holdout Leakage Canary (`evidence/s68_leakage_canary.json`):** Every single one of the `59` channels in `X_fp59.npy` was tested alone against withheld holdout faults before fitting a single tree. **59 / 59 channels passed (`max symmetric AUC = 0.6634 << 0.90` ceiling; `0` flagged channels).**
 
 ### 3.2 Complete Matched-Budget (`38,000` Dots) Outer Holdout Results (`HOLDOUT-DTI`)
 
-| Arm / Stage | Description | `ALL` `HOLDOUT-DTI` (`95% CI`, `11,321` px) | `FAR > 1 km` `HOLDOUT-DTI` (`95% CI`, `4,832` px) | Gain vs Stage 1 (`ALL` / `FAR`) |
+| Arm / Stage | Description | `ALL` `HOLDOUT-DTI` (`95% CI`, `11,321` px) | `FAR > 1 km` `HOLDOUT-DTI` (`95% CI`, `5,150` px) | Gain vs Stage 1 (`ALL` / `FAR`) |
 |---|---|---:|---:|---:|
 | `h19_5_nms5_38k` | Pre-scored `h19_5` surface + `5×5` box NMS (`38k` dots) | `0.0481` `[0.0365, 0.0604]` | `0.0444` `[0.0300, 0.0602]` | — |
 | `h19_5_submod_38k` | Pre-scored `h19_5` surface + **Exact Submodular 300 m (`38k` dots)** | `0.0880` `[0.0757, 0.1006]` | `0.0713` `[0.0566, 0.0867]` | `+0.0399` over `5×5` NMS alone |

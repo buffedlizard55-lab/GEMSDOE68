@@ -1,0 +1,377 @@
+{
+ "preregistration": "evidence/exp4_preregistration.json",
+ "experiment": "evidence/exp4_autocontext_ext.json",
+ "canary": {
+  "flags": [],
+  "max_auc_distance_from_0p5": 0.831105773064512,
+  "limit": 0.9,
+  "clean": true
+ },
+ "arms": {
+  "25000_stage2": {
+   "budget": 25000,
+   "stage": 2,
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems57-pooled-hide-v2",
+   "withheld_positive_pixels": 11321,
+   "dti_stage1": 0.06981647816791182,
+   "dti_candidate": 0.11647897987477406,
+   "delta_all": 0.04666250170686223,
+   "ci95_all": [
+    0.03464395021814881,
+    0.05902480444736204
+   ],
+   "far_dti_stage1": 0.05973195278519673,
+   "far_dti_candidate": 0.06894703699222948,
+   "delta_far": 0.00921508420703275,
+   "ci95_far": [
+    -0.003476525533278234,
+    0.022772808185515424
+   ],
+   "bootstrap_gate_both_strata": false,
+   "per_fold_gate": {
+    "all": {
+     "per_fold_deltas": [
+      0.05813582632302807,
+      0.02385798565307766,
+      0.061911853039452465,
+      0.040576298797336915
+     ],
+     "mean_delta": 0.04612049095322378,
+     "se": 0.00875639104448708,
+     "t_stat": 5.2670661598948,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    },
+    "far": {
+     "per_fold_deltas": [
+      0.03898906994007452,
+      -0.004195969023233798,
+      -0.006563088156555839,
+      0.01332964006071101
+     ],
+     "mean_delta": 0.010389913205248973,
+     "se": 0.010514695967566726,
+     "t_stat": 0.9881325372885099,
+     "passes_gt_2se": false,
+     "n_folds": 4
+    }
+   },
+   "per_fold_t_gate_both_strata": false,
+   "exp2_holdout_best_comparator": {
+    "dti_candidate": 0.1155335636723193,
+    "far_dti_candidate": 0.06328110248880181
+   },
+   "beats_exp2_all": true,
+   "far_vs_exp2": 0.005665934503427672,
+   "far_ok_vs_exp2": true
+  },
+  "25000_stage3": {
+   "budget": 25000,
+   "stage": 3,
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems57-pooled-hide-v2",
+   "withheld_positive_pixels": 11321,
+   "dti_stage1": 0.06981647816791182,
+   "dti_candidate": 0.11951182830628884,
+   "delta_all": 0.04969535013837702,
+   "ci95_all": [
+    0.035870633283382705,
+    0.06422643089064001
+   ],
+   "far_dti_stage1": 0.05973195278519673,
+   "far_dti_candidate": 0.06732934259623559,
+   "delta_far": 0.007597389811038857,
+   "ci95_far": [
+    -0.00648352360764399,
+    0.020927061054560565
+   ],
+   "bootstrap_gate_both_strata": false,
+   "per_fold_gate": {
+    "all": {
+     "per_fold_deltas": [
+      0.06499144931539669,
+      0.02133125477935284,
+      0.07186865104550513,
+      0.03756134032761456
+     ],
+     "mean_delta": 0.048938173866967305,
+     "se": 0.011814852090874234,
+     "t_stat": 4.142089421903727,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    },
+    "far": {
+     "per_fold_deltas": [
+      0.03733584347108665,
+      -0.010708479594448941,
+      -0.01803616498115604,
+      0.023966755198037232
+     ],
+     "mean_delta": 0.008139488523379725,
+     "se": 0.013364568365593332,
+     "t_stat": 0.6090348974033899,
+     "passes_gt_2se": false,
+     "n_folds": 4
+    }
+   },
+   "per_fold_t_gate_both_strata": false,
+   "exp2_holdout_best_comparator": {
+    "dti_candidate": 0.11809340813791974,
+    "far_dti_candidate": 0.06589195479860241
+   },
+   "beats_exp2_all": true,
+   "far_vs_exp2": 0.00143738779763318,
+   "far_ok_vs_exp2": true
+  },
+  "38000_stage2": {
+   "budget": 38000,
+   "stage": 2,
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems57-pooled-hide-v2",
+   "withheld_positive_pixels": 11321,
+   "dti_stage1": 0.08283722759046591,
+   "dti_candidate": 0.11890243249305248,
+   "delta_all": 0.036065204902586565,
+   "ci95_all": [
+    0.02575161244345468,
+    0.047465090776498485
+   ],
+   "far_dti_stage1": 0.06443436246206853,
+   "far_dti_candidate": 0.07564525092717861,
+   "delta_far": 0.011210888465110078,
+   "ci95_far": [
+    0.0006855465652749093,
+    0.02182232175536785
+   ],
+   "bootstrap_gate_both_strata": true,
+   "per_fold_gate": {
+    "all": {
+     "per_fold_deltas": [
+      0.042964845049159366,
+      0.015136647754994778,
+      0.05649521088284641,
+      0.026034806080079506
+     ],
+     "mean_delta": 0.035157877441770014,
+     "se": 0.009130126919707502,
+     "t_stat": 3.85075451315811,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    },
+    "far": {
+     "per_fold_deltas": [
+      0.03149824354596337,
+      -0.0015005591216315367,
+      0.0008424222807058152,
+      0.015941290461026256
+     ],
+     "mean_delta": 0.011695349291515975,
+     "se": 0.007649077617693074,
+     "t_stat": 1.5289881834201124,
+     "passes_gt_2se": false,
+     "n_folds": 4
+    }
+   },
+   "per_fold_t_gate_both_strata": false,
+   "exp2_holdout_best_comparator": {
+    "dti_candidate": 0.11646999575947209,
+    "far_dti_candidate": 0.0711281829757093
+   },
+   "beats_exp2_all": true,
+   "far_vs_exp2": 0.004517067951469306,
+   "far_ok_vs_exp2": true
+  },
+  "38000_stage3": {
+   "budget": 38000,
+   "stage": 3,
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems57-pooled-hide-v2",
+   "withheld_positive_pixels": 11321,
+   "dti_stage1": 0.08283722759046591,
+   "dti_candidate": 0.11969713117241888,
+   "delta_all": 0.03685990358195297,
+   "ci95_all": [
+    0.02367552732555744,
+    0.050325795745281156
+   ],
+   "far_dti_stage1": 0.06443436246206853,
+   "far_dti_candidate": 0.07560751014683002,
+   "delta_far": 0.011173147684761492,
+   "ci95_far": [
+    -0.0014672470680676011,
+    0.023444631568643348
+   ],
+   "bootstrap_gate_both_strata": false,
+   "per_fold_gate": {
+    "all": {
+     "per_fold_deltas": [
+      0.04651486732932019,
+      0.009872182422532655,
+      0.06462753635474826,
+      0.02160634152569625
+     ],
+     "mean_delta": 0.035655231908074334,
+     "se": 0.012313485385892662,
+     "t_stat": 2.8956246578993703,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    },
+    "far": {
+     "per_fold_deltas": [
+      0.03256998200359816,
+      -0.010359605551313059,
+      0.004436602100920513,
+      0.020842054243985067
+     ],
+     "mean_delta": 0.01187225819929767,
+     "se": 0.009391475563871073,
+     "t_stat": 1.2641525943984935,
+     "passes_gt_2se": false,
+     "n_folds": 4
+    }
+   },
+   "per_fold_t_gate_both_strata": false,
+   "exp2_holdout_best_comparator": {
+    "dti_candidate": 0.11891561600822471,
+    "far_dti_candidate": 0.07453983004036545
+   },
+   "beats_exp2_all": true,
+   "far_vs_exp2": 0.0010676801064645747,
+   "far_ok_vs_exp2": true
+  },
+  "50000_stage2": {
+   "budget": 50000,
+   "stage": 2,
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems57-pooled-hide-v2",
+   "withheld_positive_pixels": 11321,
+   "dti_stage1": 0.0887314238851996,
+   "dti_candidate": 0.11380481721134925,
+   "delta_all": 0.02507339332614965,
+   "ci95_all": [
+    0.014801872659884795,
+    0.03634949640814174
+   ],
+   "far_dti_stage1": 0.0647847336866925,
+   "far_dti_candidate": 0.07385191184168897,
+   "delta_far": 0.00906717815499647,
+   "ci95_far": [
+    -0.001261208785466499,
+    0.019800681729503566
+   ],
+   "bootstrap_gate_both_strata": false,
+   "per_fold_gate": {
+    "all": {
+     "per_fold_deltas": [
+      0.033728447032383674,
+      0.0075527883947483915,
+      0.04123963924419616,
+      0.015896870467527066
+     ],
+     "mean_delta": 0.024604436284713822,
+     "se": 0.007781162872876429,
+     "t_stat": 3.1620513137541364,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    },
+    "far": {
+     "per_fold_deltas": [
+      0.028796364858357647,
+      -0.006657870798700838,
+      0.0010700175264698394,
+      0.015885246233955375
+     ],
+     "mean_delta": 0.009773439455020506,
+     "se": 0.00787910413120462,
+     "t_stat": 1.2404252174195172,
+     "passes_gt_2se": false,
+     "n_folds": 4
+    }
+   },
+   "per_fold_t_gate_both_strata": false,
+   "exp2_holdout_best_comparator": {
+    "dti_candidate": 0.10995554268651521,
+    "far_dti_candidate": 0.06804452088598628
+   },
+   "beats_exp2_all": true,
+   "far_vs_exp2": 0.005807390955702693,
+   "far_ok_vs_exp2": true
+  },
+  "50000_stage3": {
+   "budget": 50000,
+   "stage": 3,
+   "evidence_class": "HOLDOUT-DTI",
+   "evaluator_version": "gems57-pooled-hide-v2",
+   "withheld_positive_pixels": 11321,
+   "dti_stage1": 0.0887314238851996,
+   "dti_candidate": 0.11296601802891595,
+   "delta_all": 0.024234594143716356,
+   "ci95_all": [
+    0.012565046802424155,
+    0.036753921440066596
+   ],
+   "far_dti_stage1": 0.0647847336866925,
+   "far_dti_candidate": 0.0721946422111096,
+   "delta_far": 0.0074099085244171,
+   "ci95_far": [
+    -0.004267076125628048,
+    0.019593208395367306
+   ],
+   "bootstrap_gate_both_strata": false,
+   "per_fold_gate": {
+    "all": {
+     "per_fold_deltas": [
+      0.03721841876489408,
+      0.003845176539870973,
+      0.04360253845859344,
+      0.01061226116188728
+     ],
+     "mean_delta": 0.023819598731311443,
+     "se": 0.009765177887525655,
+     "t_stat": 2.439238588959997,
+     "passes_gt_2se": true,
+     "n_folds": 4
+    },
+    "far": {
+     "per_fold_deltas": [
+      0.030650513596714717,
+      -0.011773588019514607,
+      -0.00288451217209397,
+      0.017443786657963256
+     ],
+     "mean_delta": 0.008359050015767349,
+     "se": 0.009622814008779458,
+     "t_stat": 0.8686700177454222,
+     "passes_gt_2se": false,
+     "n_folds": 4
+    }
+   },
+   "per_fold_t_gate_both_strata": false,
+   "exp2_holdout_best_comparator": {
+    "dti_candidate": 0.113105182814922,
+    "far_dti_candidate": 0.07092391382550277
+   },
+   "beats_exp2_all": false,
+   "far_vs_exp2": 0.0012707283856068369,
+   "far_ok_vs_exp2": true
+  }
+ },
+ "tier_before_uniqueness_and_format": "promote-with-caveats",
+ "chosen": {
+  "key": "38000_stage2",
+  "stage": 2,
+  "budget": 38000
+ },
+ "exp3_final_disposition": {
+  "tier_under_exp3_preregistration": "promote",
+  "chosen": {
+   "key": "25000_stage3",
+   "stage": 3,
+   "budget": 25000
+  },
+  "promotion_verdict": "negative",
+  "reason": "AC68-N1 does not beat the current holdout best (Exp2) at any budget (best CC-free candidate 0.0770 vs 0.1181 at 25k); per the standing brief a slot must not be spent on it. Retained as a scientific ablation result."
+ },
+ "note": "Uniqueness/format applied at build time can only downgrade this tier."
+}

@@ -1,0 +1,20 @@
+{
+  "file": "GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif",
+  "sha256": "712ef781e870a9d5cb42142bd72490dfc39cdb2b23cf4f6087d9dcc40d4ec194",
+  "shape_hw": [
+    3730,
+    3292
+  ],
+  "crs": "EPSG:32611",
+  "footprint_cells": 5165852,
+  "emitted_cells_gt0": 32000,
+  "min_inside": 0.0,
+  "max_inside": 1.0,
+  "nan_inside": 0,
+  "nan_outside_count": 7113308,
+  "name": "GEMSDOE68-AC-stack3-r3-N32000-zeros",
+  "note": "GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated",
+  "note_chars": 98,
+  "reference": "sample_submission.tif",
+  "receipt_kind": "local receipt written by submission_writer; NOT an organiser receipt"
+}

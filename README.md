@@ -58,7 +58,7 @@
   👉 **[`docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-zeros.tif`](docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-zeros.tif)** (`308,936` bytes / `301.7 KiB`, `SHA-256 = a9f99d5cbc5b616fd5b0535ace4d43246fc31a3f865277f26f4acc8495cc9817`)  
   - Compressed `.zip` bundle: [`docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-zeros.tif.zip`](docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-zeros.tif.zip) (`194,152` bytes, `SHA-256 = e2ede1a57b07fe046d4c5b54308409d304e86b49f182f5587635886be38f41f2`)
   - Union-footprint `NaN`-outside companion: [`docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-nan.tif`](docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-nan.tif) (`360,978` bytes, `SHA-256 = 1aae84bb9a0cad39500053121c22c1a844f409c65830d50ed8f1ab5422cd488f`)
-  - Strict `16/16` validator `training_features`-footprint twin: [`docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-strict-nan.tif`](docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-strict-nan.tif) (`361,035` bytes, `SHA-256 = 673c2e1b7321d0710a42dbd246126119845737da9daa147930cd6217e9a2b4ef`)
+  - Strict `17/17` validator `sample_submission`-footprint twin: [`docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-strict-nan.tif`](docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-strict-nan.tif) (`362,005` bytes, `SHA-256 = f1d7b06a9a1e34861b57953829b96d4f405b6eecb7fa00766cca5407ce50225e`)
 - **Unique Submission Name:** `GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z`
 - **Submission Comment / Note (`91 / 140` chars):**  
   `S68 O2-AutoContext3 + GDR1391 vents + Submod300m (38k dots); Holdout ALL=0.2069, FAR=0.1574`
@@ -74,7 +74,7 @@
 | Release Gate | Protocol Requirement | Verified S68 v3 Measurement | Verdict |
 |---|---|---|---|
 | **1. Outer Holdout — ALL Pixels** | Beat Stage 1 OOF by `> 2.0 SE` on outer spatial blocks | **`0.2069`** `[0.1885, 0.2238]` vs Stage 1 `0.1380` (`+0.0689`, **`+9.50 SE`**, `11,321` withheld px) | **PASS** |
-| **2. Outer Holdout — `> 1 km` Off-Catalogue** | Beat Stage 1 OOF by `> 2.0 SE` strictly `> 1.0 km` from any mapped fault | **`0.1574`** `[0.1288, 0.1812]` vs Stage 1 `0.1214` (`+0.0360`, **`+3.78 SE`**, `4,832` withheld px) | **PASS** |
+| **2. Outer Holdout — `> 1 km` Off-Catalogue** | Beat Stage 1 OOF by `> 2.0 SE` strictly `> 1.0 km` from any mapped fault | **`0.1574`** `[0.1288, 0.1812]` vs Stage 1 `0.1214` (`+0.0360`, **`+3.78 SE`**, `5,150` withheld px) | **PASS** |
 | **3. Format, Grid & Range Validators** | `float32`, `EPSG:32611`, `100 m`, `3730×3292`, `[0, 1]`, immune to portal `NaN` trap | `10/10` portal checks (`-zeros.tif`, `0` NaNs across all `12,279,160` cells) & `16/16` CLI `gems.validate_submission` (`-strict-nan.tif`) | **PASS** |
 | **4. 69-Raster Fleet Uniqueness** | `0` SHA-256 matches, `\|Spearman\| ≤ 0.90`, 3-px dot overlap `≤ 0.70` | `0` SHA matches across `69` unique rasters · max `\|Spearman\| = 0.1251` · max 3-px overlap `= 0.6421` | **PASS** |
 | **5. Pre-Model Leakage Canary** | Single-feature symmetric holdout `AUC ≤ 0.90` across all input channels | `59 / 59` channels pass · `max symmetric AUC = 0.6634 << 0.90` ([`evidence/s68_leakage_canary.json`](evidence/s68_leakage_canary.json)) | **PASS** |

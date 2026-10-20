@@ -24,14 +24,17 @@
 <main>
 
 <!-- ============================ DOWNLOAD FIRST ============================ -->
-<section class="hero" id="download">
-  <h2>1&nbsp;&middot;&nbsp;Download the submission file</h2>
-  <p><strong>File to submit into the DrivenData competition:</strong></p>
-  <p class="mono" style="font-size:16px"><a href="{{PRIMARY_LINK}}">{{PRIMARY_LINK}}</a></p>
+<section class="hero" id="download" style="border:3px solid #b03a2e">
+  <h2>1&nbsp;&middot;&nbsp;&#9940; DO NOT DOWNLOAD OR SUBMIT &mdash; NEGATIVE RESULT</h2>
+  <p><strong>This candidate is NOT cleared.</strong> The preregistered gate requires stage&nbsp;2
+  to beat stage&nbsp;1 by &gt;2&nbsp;SE <em>including on pixels &gt;1&nbsp;km from any mapped
+  fault</em>; that stratum scored t&nbsp;=&nbsp;1.97 (FAIL), and the literal 3-px lane-drift rule
+  also fires (IR-28/IR-30). Per the parallel-run protocol the download is therefore
+  <strong>not offered</strong>. The raster is retained in <code>docs/downloads/</code> only as an
+  auditable negative-result artefact (filename and sha256 in the run card); do not upload it.
+  When a future candidate passes every gate, its one-click download will appear here.</p>
   <div class="dl">
-    <a href="{{PRIMARY_LINK}}">&#8681; Download the GeoTIFF to submit</a>
-    <a class="alt" href="{{SECONDARY_LINK}}">&#8681; All-finite fallback (0 outside footprint)</a>
-    <a class="ghost" href="submission-guide.html">How to submit &rarr;</a>
+    <a class="ghost" href="executive-summary.html">Why it is not cleared &amp; how a cleared file will be submitted &rarr;</a>
   </div>
   <p class="small" style="margin-top:14px">
     sha256 <code>{{SHA256}}</code> &middot; {{BYTES}} bytes &middot; single-band float32 &middot;

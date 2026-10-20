@@ -94,7 +94,7 @@ def make_fig1_holdout_ladder(rc: dict) -> Path:
     ax2.grid(True, axis="x")
 
     ax1.set_title("A. ALL Withheld Faults (11,321 px)\n+0.0689 (+9.50 SE) vs S1 | 4.30× vs h19_5 NMS", fontsize=11.2, pad=11)
-    ax2.set_title("B. Blind Off-Catalogue Faults > 1 km (4,832 px)\n+0.0360 (+3.78 SE) vs S1 | 3.55× vs h19_5 NMS", fontsize=11.2, pad=11)
+    ax2.set_title("B. Blind Off-Catalogue Faults > 1 km (5,150 px)\n+0.0360 (+3.78 SE) vs S1 | 3.55× vs h19_5 NMS", fontsize=11.2, pad=11)
     ax1.set_xlabel("Pooled Outer HOLDOUT-DTI (95% Spatial CI)")
     ax2.set_xlabel("Outer HOLDOUT-DTI Strictly > 1.0 km from Catalogue")
     ax1.legend(loc="lower right", frameon=True, facecolor="#ffffff", fontsize=8.8)

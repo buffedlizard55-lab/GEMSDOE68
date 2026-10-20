@@ -1,0 +1,36 @@
+{
+ "file": "gems68-ac3-v6strat28-38000dots-20261020T200711Z-63df983e-zeros.tif",
+ "checks": {
+  "sha256_matches_card": true,
+  "single_band": true,
+  "float32": true,
+  "crs_epsg32611": true,
+  "shape_3730x3292": true,
+  "transform_ok": true,
+  "no_nodata_tag": true,
+  "all_cells_finite": true,
+  "no_nan_anywhere": true,
+  "global_min": 0.0,
+  "global_max": 1.0,
+  "values_subset_01": true,
+  "nan_inside_sample_footprint": 0,
+  "dots_outside_footprint": 0,
+  "n_dots": 38000,
+  "dots_on_catalogue": 0,
+  "min_dist_catalogue_px": 2.23606797749979,
+  "frac_dots_gt10px": 0.7934210526315789,
+  "median_dist_catalogue_px": 67.7421582177598,
+  "min_nn_spacing_px": 2.8284271247461903,
+  "median_nn_spacing_px": 3.0,
+  "worst_abs_spearman_vs_registry": {
+   "name": "57GEMSDOE__h57-anatomy-enechelon-zeros.tif",
+   "abs_rho": 0.01534154546196536
+  },
+  "dot_overlap_3px": {
+   "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif": 0.06994736842105263,
+   "exp2_candidate_s3_hidedraw": 0.6900263157894737
+  }
+ },
+ "hard_failures": [],
+ "verdict": "PASS"
+}

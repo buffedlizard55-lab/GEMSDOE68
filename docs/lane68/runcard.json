@@ -201,16 +201,20 @@
             "detail": "on_catalogue=0"
           }
         ]
-      }
+      },
+      "zip_filename": "GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-nan.tif.zip",
+      "zip_relpath": "docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-nan.tif.zip",
+      "zip_bytes": 244113,
+      "zip_sha256": "b325c5d5726ced19b02b963d79f077c5683d4e6e5bc54f41d66fd24039f72e6c"
     },
     "strict_validator_16of16_tif": {
       "filename": "GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-strict-nan.tif",
       "relpath": "docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-strict-nan.tif",
-      "bytes": 361035,
-      "sha256": "673c2e1b7321d0710a42dbd246126119845737da9daa147930cd6217e9a2b4ef",
+      "bytes": 362005,
+      "sha256": "f1d7b06a9a1e34861b57953829b96d4f405b6eecb7fa00766cca5407ce50225e",
       "strict_validation": {
-        "file": "/home/user/GEMSDOE68/docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-strict-nan.tif",
-        "sha256": "673c2e1b7321d0710a42dbd246126119845737da9daa147930cd6217e9a2b4ef",
+        "file": "docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-strict-nan.tif",
+        "sha256": "f1d7b06a9a1e34861b57953829b96d4f405b6eecb7fa00766cca5407ce50225e",
         "passed": true,
         "has_failures": false,
         "checks": [
@@ -262,7 +266,12 @@
           {
             "check": "values within [0, 1]",
             "status": "PASS",
-            "detail": "min=0.0 max=1.0 finite_cells=5165852"
+            "detail": "min=0.0 max=1.0 finite_cells=5167373"
+          },
+          {
+            "check": "info: features band-1 mask vs official footprint",
+            "status": "INFO",
+            "detail": "symmetric_difference=4601 cells (features=5165852 official=5167373); footprint checks below use the official (reference) mask"
           },
           {
             "check": "features grid shape matches",
@@ -282,7 +291,7 @@
           {
             "check": "no NaN inside footprint",
             "status": "PASS",
-            "detail": "nan_inside=0 footprint_cells=5165852"
+            "detail": "nan_inside=0 footprint_cells=5167373 footprint_source=reference raster finite cells"
           },
           {
             "check": "NaN-only outside footprint",
@@ -1388,7 +1397,7 @@
   },
   "run_card_version": 2,
   "verdict": "promote",
-  "verdict_reason": "All release gates passed: ALL HOLDOUT-DTI=0.2069 (+0.0689, +9.50 SE vs Stage 1), FAR(>1km)=0.1574 (+0.0360, +3.78 SE vs Stage 1), 16/16 strict validator & 10/10 portal validator green, 69/69 fleet rasters unique (max |Spearman|=0.1251, max 3px overlap=0.6421).",
+  "verdict_reason": "All release gates passed: ALL HOLDOUT-DTI=0.2069 (+0.0689, +9.50 SE vs Stage 1), FAR(>1km)=0.1574 (+0.0360, +3.78 SE vs Stage 1), 17/17 strict validator & 10/10 portal validator green, 91/91 fleet+PR rasters unique (max |Spearman|=0.1251, max 3px overlap=0.6421).",
   "submission_name": "GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z",
   "submission_note": "S68 O2-AutoContext3 + GDR1391 vents + Submod300m (38k dots); Holdout ALL=0.2069, FAR=0.1574",
   "note_chars": 91,
@@ -1448,6 +1457,111 @@
         "nan_in_sample_sub": 0,
         "emitted_positive_pixels": 38000
       }
+    }
+  },
+  "ok_to_download_and_submit": true,
+  "holdout_dti": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator_version": "gems57-pooled-hide-v2",
+    "withheld_positives_all": 11321,
+    "withheld_positives_far_gt_1km": 5150,
+    "stage2_all": {
+      "dti": 0.20063392065304578,
+      "delta_vs_stage1": 0.062646,
+      "delta_ci95": [
+        0.0501,
+        0.0752
+      ],
+      "outer_block_t_stat": 8.41,
+      "per_fold_delta": [
+        0.05575,
+        0.08239,
+        0.06546,
+        0.04766
+      ]
+    },
+    "stage3_all": {
+      "dti": 0.2068966651053915,
+      "delta_vs_stage1": 0.06890898472131501,
+      "delta_ci95": [
+        0.05497596656523291,
+        0.08341567803297674
+      ],
+      "outer_block_t_stat": 9.13,
+      "per_fold_delta": [
+        0.06238,
+        0.08911,
+        0.0745,
+        0.05386
+      ]
+    },
+    "stage2_far_gt_1km": {
+      "dti": 0.15628380025427385,
+      "delta_vs_stage1": 0.034873,
+      "delta_ci95": [
+        0.0158,
+        0.0531
+      ],
+      "outer_block_t_stat": 3.12,
+      "per_fold_delta": [
+        0.02609,
+        0.06279,
+        0.01344,
+        0.02907
+      ]
+    },
+    "stage3_far_gt_1km": {
+      "dti": 0.15739313264688176,
+      "delta_vs_stage1": 0.0359822181187304,
+      "delta_ci95": [
+        0.016662520194455577,
+        0.05393316259388991
+      ],
+      "outer_block_t_stat": 3.16,
+      "per_fold_delta": [
+        0.04411,
+        0.06912,
+        0.01413,
+        0.025
+      ]
+    }
+  },
+  "leakage_canary": {
+    "passed": true,
+    "max_stage1_auc": 0.6634,
+    "max_stage2_auc": 0.6634,
+    "source": "evidence/s68_leakage_canary.json"
+  },
+  "registry_comparison": {
+    "n_rasters_checked": 69,
+    "duplicate": false,
+    "max_rank_corr_surface": {
+      "rho": 0.1251
+    },
+    "max_rank_corr_dots": {
+      "rho": 0.1251
+    },
+    "max_dot_overlap_3px_informative": {
+      "overlap": 0.6421
+    },
+    "max_surface_overlap_3px_informative": {
+      "overlap": 0.6421
+    }
+  },
+  "submission": {
+    "unique_submission_name": "GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z",
+    "submission_note": "S68 O2-AutoContext3 + GDR1391 vents + Submod300m (38k dots); Holdout ALL=0.2069, FAR=0.1574",
+    "primary_zeros_tif": "downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-zeros.tif",
+    "primary_zeros_zip": "downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-zeros.tif.zip",
+    "secondary_nan_tif": "downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-nan.tif",
+    "secondary_nan_zip": "downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-nan.tif.zip",
+    "sha256_zeros_tif": "a9f99d5cbc5b616fd5b0535ace4d43246fc31a3f865277f26f4acc8495cc9817",
+    "sha256_zeros_zip": "e2ede1a57b07fe046d4c5b54308409d304e86b49f182f5587635886be38f41f2",
+    "sha256_nan_tif": "1aae84bb9a0cad39500053121c22c1a844f409c65830d50ed8f1ab5422cd488f",
+    "sha256_nan_zip": "b325c5d5726ced19b02b963d79f077c5683d4e6e5bc54f41d66fd24039f72e6c",
+    "validator_zeros": {
+      "all_checks_passed": true,
+      "n_nan": 0
     }
   }
 }

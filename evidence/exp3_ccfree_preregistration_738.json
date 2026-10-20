@@ -1,0 +1,40 @@
+{
+  "preregistered_utc": "2026-10-20",
+  "session_branch": "arena/738dbc78-gemsdoe68",
+  "experiment_id": "exp3_autocontext_ccfree",
+  "experiment_number_this_session": "1 of max 3 (protocol budget)",
+  "lane": "auto-context stacked refinement (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436)",
+  "hypothesis_id": "AC68-N1",
+  "hypothesis": "Removing the five catalogue-context features (cat_dist, cat_strike_cos2, cat_strike_sin2, cat_dens_1km, cat_dens_3km) from stage>=2 improves or preserves auto-context gains on withheld fault pixels >1 km from any known fault, because the published catalogue is incomplete (official problem description) and proximity-to-catalogue is a mapping artefact, not a physical property of unmapped faults.",
+  "mechanism": "Stage>=2 keeps orientation-sampled stage-(k-1) probabilities (+-1,3,7,15 px along/across), multi-scale smooths, anisotropy, orientation coherence and the 7 physics gradient/tilt/ridge channels, so continuity/parallelism/en-echelon evidence is still learnable, but the model cannot spend its budget on 'near a mapped fault' as a shortcut.",
+  "named_non_fault_mimic": "Range-front / basin-margin erosional escarpments and terraced alluvial margins: they produce the same detrended-elevation gradient, Laplacian and ridge responses as fault scarps, and continuity stacking can connect them into lineaments.",
+  "control_arm": "stage 1 (LightGBM on 19 organiser bands + 7 physics channels), same nested blocked CV, same emission rule and budgets",
+  "historical_comparator_NOT_a_control": "evidence/exp2_autocontext_hidedraw.json stage3 at the same budget (catalogue-context-full auto-context, same instrument, earlier checkout; library versions may differ)",
+  "instrument": {
+    "holdout": "gems68.holdout.buffered_component_draw, split buffered-whole-components-loqo-v2: whole 8-connected catalogue components withheld (20% per quadrant, eval seed 20), 12 px boundary erosion, 3 px feature collar; catalogue features from visible faults only; visible faults masked pixel-exactly",
+    "evaluator": "gems68.evaluate_holdout VERSION gems57-pooled-hide-v2 (pooled DTI, alpha=0.2, beta=0.8, 300 m triangular kernel)",
+    "train_draws_stage_ge2": [20, 21, 22],
+    "inner_blocks": "4 spatial quadrants, 12 px training exclusion band (autocontext.BUFFER_PX)",
+    "emission": "gems68.emission.emit_dots: exclude <=2 px from visible catalogue, 5x5 local maxima, top-N at value 1.0; global budgets apportioned to folds by footprint area (emission.quota)",
+    "budgets": [15000, 25000, 38000, 50000, 70000],
+    "far_stratum": "valid mask restricted to cells >10 px (1 km) from masked_known (catalogue minus hidden, global eval draw); truth and FP both counted inside that stratum only",
+    "leakage_canary": "single-feature AUC of every stage>=2 feature and each stage probability on withheld positives vs active negatives; AUC>0.90 flags leakage"
+  },
+  "decision_rule_fixed_before_the_run": {
+    "candidate_budgets_for_promotion": [25000, 38000, 50000],
+    "clean_promote_requires_ALL": [
+      "paired spatial-block bootstrap 95% CI for delta(candidate - stage1) entirely > 0 on BOTH all-pixel and >1 km strata at the chosen budget",
+      "per-fold (n=4) paired mean delta > 2 SE on BOTH strata at the chosen budget",
+      "no leakage-canary flag",
+      "surface rank-correlation and final-dot uniqueness pass vs informative registry rasters (see run card; literal result vs every raster always reported)",
+      "gems68.validate all_checks_passed on the all-finite primary and 0 NaN inside the official sample_submission footprint for the NaN twin",
+      "all finite values in [0,1], no nodata sentinel tag on the primary"
+    ],
+    "promote_with_caveats_if": "bootstrap CIs pass both strata but the n=4 per-fold t rule fails on the far stratum (low power), with every other requirement met; download labelled conditional, never 'clean'",
+    "negative_if": "any bootstrap CI includes 0 on either stratum at every candidate budget, or canary flags, or uniqueness/validator fails: log negative, withhold the download banner, retain bytes only as audit artefacts",
+    "stage_budget_choice": "highest pooled all-pixel HOLDOUT-DTI among arms satisfying the applicable gate tier; ties prefer fewer dots, then stage 2 over stage 3 (simpler)",
+    "no_slot_decision": "promotion to a weekly DrivenData slot stays a separate human selector step (protocol rule 6)"
+  },
+  "known_instrument_disagreement_recorded_before_the_run": "scripts/lane68_autocontext.py (evidence/ac68_seed20.json) used 12-px segment chunks (gems57.network.segments), a FULL 32000-dot budget PER FOLD (4x live mass density), and a far DTI that charges all 32000 dots as FP against far-only truth. Those three choices make its far t=1.97 non-comparable; this experiment uses the whole-component, quota-budget, valid-masked instrument and reports both bootstrap and per-fold gates so the disagreement stays visible.",
+  "data": "core competition rasters restored hash-verified this session from registry/data_manifest.json pins (scripts/restore_data.py --group core, RESTORE_CORE_EXIT=0). No new external data."
+}

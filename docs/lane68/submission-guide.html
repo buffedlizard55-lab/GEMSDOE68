@@ -40,7 +40,7 @@
           ⬇ Companion -nan.tif (352.5 KiB)
         </a>
         <a class="btn-secondary" href="../downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-strict-nan.tif" download>
-          ⬇ Strict 16/16 -strict-nan.tif (352.6 KiB)
+          ⬇ Strict 16/16 -strict-nan.tif (353.5 KiB)
         </a>
         
       </div>
@@ -147,7 +147,7 @@
                   </thead>
                   <tbody>
                     <tr><td><strong>1. All-Pixel Holdout Gate</strong></td><td>Beat Stage 1 OOF by &gt; 2.0 SE on outer spatial blocks</td><td><code>0.2069</code> vs <code>0.1380</code> (<code>+0.0689</code>, <strong>+9.50 SE</strong>, 11,321 px)</td><td><span class="badge badge-pass">PASS</span></td></tr>
-                    <tr><td><strong>2. Blind &gt; 1 km Off-Catalogue Gate</strong></td><td>Beat Stage 1 OOF by &gt; 2.0 SE strictly &gt; 1 km from catalogue</td><td><code>0.1574</code> vs <code>0.1214</code> (<code>+0.0360</code>, <strong>+3.78 SE</strong>, 4,832 px)</td><td><span class="badge badge-pass">PASS</span></td></tr>
+                    <tr><td><strong>2. Blind &gt; 1 km Off-Catalogue Gate</strong></td><td>Beat Stage 1 OOF by &gt; 2.0 SE strictly &gt; 1 km from catalogue</td><td><code>0.1574</code> vs <code>0.1214</code> (<code>+0.0360</code>, <strong>+3.78 SE</strong>, 5,150 px)</td><td><span class="badge badge-pass">PASS</span></td></tr>
                     <tr><td><strong>3. Portal &amp; Strict Format Validators</strong></td><td><code>float32</code>, <code>EPSG:32611</code>, 100 m, <code>3730×3292</code>, <code>[0, 1]</code>, 16/16 checks</td><td>10/10 portal checks (<code>-zeros.tif</code>) &amp; 16/16 CLI checks (<code>-strict-nan.tif</code>)</td><td><span class="badge badge-pass">PASS</span></td></tr>
                     <tr><td><strong>4. 69-Raster Fleet Uniqueness</strong></td><td>0 SHA matches, |Spearman| ≤ 0.90, 3-px dot overlap ≤ 0.70</td><td>0 SHA matches · max |ρ| = <code>0.1251</code> · max 3px overlap = <code>0.6421</code></td><td><span class="badge badge-pass">PASS</span></td></tr>
                     <tr><td><strong>5. Pre-Model Leakage Canary</strong></td><td>Single-feature symmetric holdout AUC ≤ 0.90 across all channels</td><td>59 / 59 clean · max symmetric AUC = <code>0.6634</code></td><td><span class="badge badge-pass">PASS</span></td></tr>
