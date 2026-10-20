@@ -68,6 +68,53 @@ def dot_overlap(dots: np.ndarray, registry: dict, footprint: np.ndarray,
     return res
 
 
+def check_against_paths(surface: np.ndarray, dots: np.ndarray, paths: list[Path],
+                        footprint: np.ndarray, n_sample: int = 400_000, seed: int = 68) -> list[dict]:
+    """Streaming variant of surface_rank_corr + dot_overlap: one registry raster
+    in memory at a time (the in-memory ``load_registry`` needs ~50 MB per raster,
+    which does not scale to the full 60+ raster registry in a 4 GB sandbox).
+    Returns one row per raster with |Spearman| on the fixed footprint sample,
+    dot overlap within 3 px, that raster's 3 px footprint coverage, and lift."""
+    import hashlib
+
+    yy, xx = np.nonzero(footprint)
+    rng = np.random.default_rng(seed)
+    pick = rng.choice(len(yy), size=min(n_sample, len(yy)), replace=False)
+    ys, xs = yy[pick], xx[pick]
+    s = surface[ys, xs]
+    n_dots = int(dots.sum())
+    rows = []
+    for p in paths:
+        h = hashlib.sha256()
+        with open(p, "rb") as f:
+            for chunk in iter(lambda: f.read(1 << 20), b""):
+                h.update(chunk)
+        with rasterio.open(p) as src:
+            a = src.read(1).astype(np.float32)
+            same_grid = (src.height, src.width) == surface.shape
+        if not same_grid:
+            rows.append(dict(name=p.name, sha256=h.hexdigest(), same_grid=False))
+            continue
+        a[~np.isfinite(a)] = 0.0
+        r = a[ys, xs]
+        rho = float(spearmanr(s, r).correlation) if np.std(r) > 0 else 0.0
+        if not np.isfinite(rho):
+            rho = 0.0
+        pos = a > 0
+        if pos.any():
+            near = ndi.distance_transform_edt(~pos) <= 3.0
+            ov = float((dots & near).sum() / max(n_dots, 1))
+            cov = float((near & footprint).sum() / float(footprint.sum()))
+        else:
+            ov, cov = 0.0, 0.0
+        rows.append(dict(name=p.name, sha256=h.hexdigest(), same_grid=True,
+                         spearman=rho, abs_spearman=abs(rho), dot_overlap_3px=ov,
+                         registry_coverage_3px=cov, lift=float(ov / max(cov, 1e-9)),
+                         n_registry_dots=int(pos.sum())))
+        del a
+    return rows
+
+
 def verdict(rhos: dict, overlaps: dict) -> dict:
     worst_rho = max(rhos.items(), key=lambda kv: kv[1]) if rhos else ("", 0.0)
     informative = {k: v for k, v in overlaps.items() if v["coverage"] <= COVERAGE_MAX}
