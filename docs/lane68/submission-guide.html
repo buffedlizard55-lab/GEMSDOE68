@@ -24,106 +24,53 @@
 
 <section class="hero">
   <h2>Fastest path: download and upload</h2>
-  <p class="mono" style="font-size:16px"><a href="../downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif">docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif</a></p>
+  <p class="mono" style="font-size:16px"><a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif">docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif</a></p>
   <div class="dl">
-    <a href="../downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif">&#8681; Download the GeoTIFF to submit</a>
-    <a class="alt" href="../downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif">&#8681; All-finite fallback</a>
+    <a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif">&#8681; Download the GeoTIFF to submit</a>
+    <a class="alt" href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif">&#8681; All-finite fallback</a>
   </div>
 </section>
 
 <h2>1. The file</h2>
 <section class="panel">
   <table class="kv">
-    <tr><dt>file</dt><dd>docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif</dd></tr>
-    <tr><dt>sha256</dt><dd>cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf</dd></tr>
-    <tr><dt>bytes</dt><dd>291557</dd></tr>
+    <tr><dt>file</dt><dd>docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif</dd></tr>
+    <tr><dt>fallback</dt><dd>docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif (all-finite, 0 outside footprint)</dd></tr>
+    <tr><dt>sha256</dt><dd>ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47</dd></tr>
+    <tr><dt>bytes</dt><dd>322971</dd></tr>
     <tr><dt>bands / dtype</dt><dd>1 / float32</dd></tr>
     <tr><dt>CRS</dt><dd>EPSG:32611</dd></tr>
-    <tr><dt>shape (rows &times; cols)</dt><dd>3730 &times; 3292</dd></tr>
-    <tr><dt>pixel size</dt><dd>100 m &times; 100 m</dd></tr>
-    <tr><dt>geotransform</dt><dd>(100, 0, 243350, 0, &minus;100, 4508550)</dd></tr>
-    <tr><dt>values</dt><dd>0.0 &hellip; 1.0 inside the footprint; NaN outside</dd></tr>
-    <tr><dt>validator</dt><dd>True (16 checks)</dd></tr>
+    <tr><dt>shape</dt><dd>3730 &times; 3292</dd></tr>
+    <tr><dt>resolution</dt><dd>100 m</dd></tr>
+    <tr><dt>values</dt><dd>float32 in [0, 1] inside the footprint; NaN outside</dd></tr>
+    <tr><dt>validator</dt><dd>16/16 checks passed, 0 FAIL, 0 SKIPPED</dd></tr>
   </table>
 </section>
 
-<h2>2. Upload</h2>
+<h2>2. Submit on DrivenData</h2>
 <section class="panel">
   <ol>
-    <li>Go to <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">the
-        competition submissions page</a> and press <strong>New submission</strong>.</li>
-    <li><strong>File to submit</strong>: choose the downloaded <code>.tif</code>. A
-        <code>.zip</code> containing exactly one GeoTIFF is also accepted; the repository ships
-        <code>&hellip;-nan.zip</code> next to the <code>.tif</code>.</li>
-    <li><strong>Note (optional)</strong>: paste
-        <br><code>GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage2, r=3px, 20000 dots; holdout-gated</code></li>
-    <li>Press <strong>Create submission</strong>.</li>
+    <li>Go to <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">DrivenData GEMS Prize &rarr; Submit</a>.</li>
+    <li>Click "New submission" or "Submit".</li>
+    <li>Select the downloaded <code>.tif</code> file in "File to submit".</li>
+    <li>Paste the note: <code>GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated</code> (98 characters, &le; 140 limit).</li>
+    <li>Click "Create" / "Submit".</li>
   </ol>
-  <h3>If the form rejects the file</h3>
-  <table>
-    <tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
-    <tr><td><em>Predicted values must be in range [0, 1]</em></td>
-        <td>the checker is NaN-blind (<code>NaN &gt;= 0</code> is false)</td>
-        <td>upload the all-finite fallback file instead</td></tr>
-    <tr><td><em>&hellip; must match the submission format's CRS, shape and geotransform</em></td>
-        <td>a reprojected or resampled copy was uploaded</td>
-        <td>re-download; never re-save the file through another tool</td></tr>
-    <tr><td><em>single-band</em></td>
-        <td>a multi-band export</td>
-        <td>re-download; the shipped file has exactly one band</td></tr>
-  </table>
 </section>
 
-<h2>3. Verify locally before uploading (optional)</h2>
+<h2>3. If the portal says "Predicted values must be in range [0, 1]"</h2>
 <section class="panel">
-  <pre># from the repository root, with the competition data placed under data/
-PYTHONPATH=src python -m gems.validate_submission \
-    docs/downloads/&lt;file&gt;.tif \
-    --reference data/bridge/sample_submission.tif \
-    --features  data/bridge/training_features.tif
-
-# duplicate / lane check against every prior raster in the registry
-python scripts/lane68_check.py --stage emitted \
-    docs/downloads/&lt;file&gt;.tif registry/rasters/*.tif \
-    --json evidence/ac68_lane_check.json</pre>
-  <p class="small">Both commands are read-only. <code>validate_submission</code> exits 0 only when
-  every required check passes; SKIPPED is never treated as a pass.</p>
+  <p>This error means the file contains values outside [0, 1] or NaN inside the footprint.</p>
+  <p>Our nan.tif variant has NaN <em>outside</em> the footprint only &mdash; which matches the competition's sample submission format. If the portal's range check treats NaN as out of range, download the all-finite fallback instead:</p>
+  <p class="mono" style="font-size:16px"><a href="../downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif">GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif</a></p>
+  <p>The fallback writes 0 outside the footprint and contains no NaN at all.</p>
 </section>
 
-<h2>4. Reproduce the file from scratch</h2>
+<h2>4. Verify</h2>
 <section class="panel">
-  <pre># 1. place the competition data (see README "Data placement")
-# 2. build the cached 45-channel stack (takes ~1 minute)
-PYTHONPATH=src python -c "from gems68 import features as F; F.load_channels()"
-# 3. holdout experiment + emission-parameter sweep (~25 min)
-PYTHONPATH=src python scripts/lane68_autocontext.py --seeds 20 \
-    --dot-budget 32000 --out evidence/ac68_seed20.json
-# 4. emit the submission with the parameters tuned in step 3
-PYTHONPATH=src python scripts/lane68_emit_submission.py \
-    --params evidence/ac68_emission_params.json \
-    --name GEMSDOE68-AC-stack3 --out docs/downloads
-# 5. lane check, then rebuild the site from the evidence
-python scripts/lane68_check.py --stage emitted docs/downloads/*-nan.tif \
-    registry/rasters/*.tif --json evidence/ac68_lane_check.json
-PYTHONPATH=src python scripts/lane68_build_site.py</pre>
-</section>
-
-<h2>5. Where every number comes from</h2>
-<section class="panel">
-  <table>
-    <tr><th>Claim type</th><th>Meaning</th></tr>
-    <tr><td><strong>HOLDOUT-DTI</strong></td>
-        <td>measured in this checkout with <code>gems57.metric.dti_binary</code>
-            (&alpha;=0.2, &beta;=0.8, 300 m triangular kernel) on the shared
-            hide-and-recover holdout; the evaluator version, the number of withheld positive
-            pixels and the 95 % CI are reported with it.</td></tr>
-    <tr><td><strong>ORGANIZER-CONFIRMED</strong></td>
-        <td>copied verbatim from a submission-page receipt tied to the exact raster sha256.
-            None is claimed by this repository.</td></tr>
-    <tr><td><em>owner-reported</em></td>
-        <td>a leaderboard value supplied by the repository owner. Never presented as a score
-            and never used to justify a design choice without a receipt.</td></tr>
-  </table>
+  <p>After submission, check the leaderboard for your entry under the submission name
+  <code>GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z</code>. Scoring may take some time to complete.</p>
+  <p>No organiser score is claimed on this site. Every number here is a local HOLDOUT-DTI measurement.</p>
 </section>
 
 </main>

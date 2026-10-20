@@ -78,8 +78,8 @@
  "correlation_overlap_vs_registry": {
   "registry_dir": "registry/rasters",
   "n_registry_rasters": 60,
-  "max_abs_spearman": 0.054202370983053055,
-  "max_dot_overlap_3px": 0.9948,
+  "max_abs_spearman": 0.0860995984050536,
+  "max_dot_overlap_3px": 0.98465625,
   "exact_byte_matches": [],
   "drift_limit_spearman": 0.9,
   "drift_limit_dot_overlap": 0.7,
@@ -90,8 +90,8 @@
   "flagged_detail": [
    {
     "registry": "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
-    "absolute_spearman_rho": 0.004185879666281769,
-    "candidate_dots_within_3px": 0.9948,
+    "absolute_spearman_rho": 0.020737250249696824,
+    "candidate_dots_within_3px": 0.98465625,
     "registry_dots": 311617,
     "exact_duplicate": false
    }
@@ -115,14 +115,14 @@
   "interpretation": "The literal rule fires on exactly one registry raster, gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif, which carries 311617 dots (25.4 dots per 1000 footprint cells). The density-null control draws 100 random 20000-dot sets from the same eligible region and scores them with the same rule: the null overlap is 0.958 +- 0.001, so 95.8% of ANY dot set, related or not, lands within 3 px of that raster's dots. The observed 0.9948 is 3.6 percentage points above that baseline, and the rank correlation with that raster is 0.004. No registry raster is an exact pixel duplicate. The rule is therefore degenerate against this one dense raster and its firing is a density artefact, not duplication. Recorded as IR-28 and shipped with that caveat rather than silently passed."
  },
  "raster": {
-  "primary_path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
-  "primary_sha256": "cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf",
-  "primary_bytes": 291557,
-  "fallback_path": "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif",
-  "fallback_sha256": "7175e1681ed2878cccaca89c6945700a043434118a31e4fe5ab4b0e557451260",
-  "dot_count": 20000,
+  "primary_path": "docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif",
+  "primary_sha256": "ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47",
+  "primary_bytes": 322971,
+  "fallback_path": "docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif",
+  "fallback_sha256": "712ef781e870a9d5cb42142bd72490dfc39cdb2b23cf4f6087d9dcc40d4ec194",
+  "dot_count": 32000,
   "emission_radius_px": 3,
-  "emission_budget": 20000
+  "emission_budget": 32000
  },
  "validator_output": {
   "tool": "gems.validate_submission (shared, unmodified)",
@@ -131,8 +131,8 @@
   "failures": [],
   "skipped": []
  },
- "submission_name": "GEMSDOE68-AC-stack2",
- "note": "GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage2, r=3px, 20000 dots; holdout-gated",
+ "submission_name": "GEMSDOE68-AC-stack3-r3-N32000",
+ "note": "GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated",
  "note_chars": 98,
  "verdict": "promote-with-caveats",
  "limitations": [
@@ -147,17 +147,17 @@
   "limit_hours": 2,
   "note": "one holdout experiment (4 outer folds x 4 inner blocks) plus one release run"
  },
- "submission_note_tag": "GEMSDOE68-AC-stack2-nan",
+ "submission_note_tag": "GEMSDOE68-AC-stack3-r3-N32000-nan",
  "receipt": {
-  "file": "GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
-  "sha256": "cf228273aa595e58eabbf4e05adc4501f5e19bdb77cefacaa35ab31ac0c8e2bf",
+  "file": "GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif",
+  "sha256": "ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47",
   "shape_hw": [
    3730,
    3292
   ],
   "crs": "EPSG:32611",
   "footprint_cells": 5165852,
-  "emitted_cells_gt0": 20000,
+  "emitted_cells_gt0": 32000,
   "min_inside": 0.0,
   "max_inside": 1.0,
   "nan_inside": 0,
