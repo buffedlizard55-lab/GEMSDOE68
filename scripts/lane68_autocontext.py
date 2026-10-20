@@ -116,7 +116,7 @@ def row_slices(h: int, step: int = ROW_BLOCK):
         yield slice(r0, min(h, r0 + step))
 
 
-def bbox_of(mask: np.ndarray, h: int, w: int, pad: int = 20):
+def bbox_of(mask: np.ndarray, h: int, w: int, pad: int = 40):
     """Row/column window covering ``mask`` plus ``pad`` pixels of halo."""
     ys, xs = np.nonzero(mask)
     if ys.size == 0:

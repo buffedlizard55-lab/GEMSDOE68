@@ -1,0 +1,6768 @@
+{
+  "generated_utc": "2026-10-20T19:01:09Z",
+  "hypothesis": "H68-M1 magnetic-edge-tangent auto-context (preregistered)",
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems57-pooled-hide-v2.1",
+  "evaluator_hashes": {
+    "evaluate_holdout.py": "a287288bb6fbc6fd5c76474a52e153104af19644b002b870ce8f345937d1d355",
+    "holdout.py": "3d91c74ed863218b1cabdf02ea8152d0ba7b35c6bcab365991cc4ca65e32e53f",
+    "metric.py": "4b10227952378d30cc1a60781cdff6ea58916abadde3af3b14185176c66c13e0",
+    "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+  },
+  "metric": {
+    "alpha": 0.2,
+    "beta": 0.8,
+    "triangular_radius_m": 300,
+    "spatial_bootstrap_cluster_m": 20000
+  },
+  "emitter_version": "gems68-plateau-safe-nms-v2",
+  "emitter_sha256": "653cf8e3934c44e92e5514e2f1a6595a4e343d56d64e65a4761a84cf4082296c",
+  "split": "gems57.holdout.buffered_component_draw v2, outer quadrant removed from fits and context, 12px outer/6px inner buffers, whole components + 3px feature collar",
+  "seed": 20,
+  "budget": 38000,
+  "emission": {
+    "nms": 5,
+    "exclude_px": 2.0
+  },
+  "features": {
+    "stack_channels": 45,
+    "stage1_channels": 44,
+    "stage2_channels": 53,
+    "orientation": "tangent to structure-tensor gradient of mag_anom, sigma=3 px"
+  },
+  "n_withheld": 11321,
+  "n_withheld_far": 4832,
+  "folds": [
+    {
+      "fold": "NW",
+      "n_truth": 1923,
+      "n_truth_far": 865,
+      "n_train_pos": 39744,
+      "n_train_rows": 158976,
+      "quota": 8018,
+      "dti": {
+        "stage1": {
+          "dti": 0.06641468953022098,
+          "tp": 210.31895601314474,
+          "fp": 7931.448957442375,
+          "fn": 1712.6810439868552,
+          "n_truth": 1923,
+          "n_emitted": 8018
+        },
+        "stage2": {
+          "dti": 0.07262619311552994,
+          "tp": 230.20092372410446,
+          "fp": 7926.139313379665,
+          "fn": 1692.7990762758955,
+          "n_truth": 1923,
+          "n_emitted": 8018
+        },
+        "stage3": {
+          "dti": 0.07276176766443782,
+          "tp": 230.64936360964393,
+          "fp": 7926.976821487376,
+          "fn": 1692.3506363903562,
+          "n_truth": 1923,
+          "n_emitted": 8018
+        }
+      },
+      "dti_far": {
+        "stage1": {
+          "dti": 0.04501295480701308,
+          "tp": 84.74442437159499,
+          "fp": 5868.592773211315,
+          "fn": 780.255575628405,
+          "n_truth": 865,
+          "n_emitted": 5903
+        },
+        "stage2": {
+          "dti": 0.05055458678980761,
+          "tp": 96.03768330751271,
+          "fp": 5942.3767441322325,
+          "fn": 768.9623166924873,
+          "n_truth": 865,
+          "n_emitted": 5980
+        },
+        "stage3": {
+          "dti": 0.052696270141142844,
+          "tp": 102.21030158769565,
+          "fp": 6135.848148653024,
+          "fn": 762.7896984123043,
+          "n_truth": 865,
+          "n_emitted": 6177
+        }
+      }
+    },
+    {
+      "fold": "NE",
+      "n_truth": 2367,
+      "n_truth_far": 1107,
+      "n_train_pos": 38220,
+      "n_train_rows": 152880,
+      "quota": 9941,
+      "dti": {
+        "stage1": {
+          "dti": 0.08764063663461517,
+          "tp": 343.76751648154675,
+          "fp": 9800.568135229692,
+          "fn": 2023.2324835184531,
+          "n_truth": 2367,
+          "n_emitted": 9941
+        },
+        "stage2": {
+          "dti": 0.07710453725505563,
+          "tp": 302.1085680227769,
+          "fp": 9820.733863430116,
+          "fn": 2064.891431977223,
+          "n_truth": 2367,
+          "n_emitted": 9941
+        },
+        "stage3": {
+          "dti": 0.07523717532272063,
+          "tp": 294.69842229609617,
+          "fp": 9821.9298570102,
+          "fn": 2072.3015777039036,
+          "n_truth": 2367,
+          "n_emitted": 9941
+        }
+      },
+      "dti_far": {
+        "stage1": {
+          "dti": 0.06717159870324686,
+          "tp": 157.0706708378918,
+          "fp": 7106.676575777769,
+          "fn": 949.9293291621082,
+          "n_truth": 1107,
+          "n_emitted": 7171
+        },
+        "stage2": {
+          "dti": 0.06179645435725168,
+          "tp": 146.7319068937972,
+          "fp": 7297.4627376018925,
+          "fn": 960.2680931062027,
+          "n_truth": 1107,
+          "n_emitted": 7357
+        },
+        "stage3": {
+          "dti": 0.057262158624290654,
+          "tp": 137.91955092512416,
+          "fp": 7476.898449531683,
+          "fn": 969.0804490748758,
+          "n_truth": 1107,
+          "n_emitted": 7536
+        }
+      }
+    },
+    {
+      "fold": "SW",
+      "n_truth": 3781,
+      "n_truth_far": 1244,
+      "n_train_pos": 31493,
+      "n_train_rows": 125972,
+      "quota": 9772,
+      "dti": {
+        "stage1": {
+          "dti": 0.07409178900507772,
+          "tp": 372.20271765333723,
+          "fp": 9621.473792211274,
+          "fn": 3408.7972823466625,
+          "n_truth": 3781,
+          "n_emitted": 9772
+        },
+        "stage2": {
+          "dti": 0.07229729817467744,
+          "tp": 363.10033565746306,
+          "fp": 9624.511358335345,
+          "fn": 3417.899664342537,
+          "n_truth": 3781,
+          "n_emitted": 9772
+        },
+        "stage3": {
+          "dti": 0.0776042093516474,
+          "tp": 389.97124875904206,
+          "fp": 9611.679280838393,
+          "fn": 3391.0287512409577,
+          "n_truth": 3781,
+          "n_emitted": 9772
+        }
+      },
+      "dti_far": {
+        "stage1": {
+          "dti": 0.053933964571839514,
+          "tp": 129.95889728775037,
+          "fp": 6942.005527304689,
+          "fn": 1114.0411027122495,
+          "n_truth": 1244,
+          "n_emitted": 6998
+        },
+        "stage2": {
+          "dti": 0.05226367971870378,
+          "tp": 125.6233696517914,
+          "fp": 6916.605190595765,
+          "fn": 1118.3766303482087,
+          "n_truth": 1244,
+          "n_emitted": 6968
+        },
+        "stage3": {
+          "dti": 0.05762305136909082,
+          "tp": 138.4502406136106,
+          "fp": 6898.992064515311,
+          "fn": 1105.5497593863895,
+          "n_truth": 1244,
+          "n_emitted": 6955
+        }
+      }
+    },
+    {
+      "fold": "SE",
+      "n_truth": 3250,
+      "n_truth_far": 1616,
+      "n_train_pos": 33697,
+      "n_train_rows": 134788,
+      "quota": 7868,
+      "dti": {
+        "stage1": {
+          "dti": 0.09459582378906478,
+          "tp": 399.43805759604766,
+          "fp": 7713.442067362616,
+          "fn": 2850.5619424039523,
+          "n_truth": 3250,
+          "n_emitted": 7868
+        },
+        "stage2": {
+          "dti": 0.10271271336047713,
+          "tp": 434.29695717898846,
+          "fp": 7707.046843894312,
+          "fn": 2815.7030428210114,
+          "n_truth": 3250,
+          "n_emitted": 7868
+        },
+        "stage3": {
+          "dti": 0.0864785526200598,
+          "tp": 364.82419328254764,
+          "fp": 7728.509484802276,
+          "fn": 2885.1758067174524,
+          "n_truth": 3250,
+          "n_emitted": 7868
+        }
+      },
+      "dti_far": {
+        "stage1": {
+          "dti": 0.08378243666359553,
+          "tp": 201.26145448342538,
+          "fp": 5345.695883241979,
+          "fn": 1414.7385455165745,
+          "n_truth": 1616,
+          "n_emitted": 5423
+        },
+        "stage2": {
+          "dti": 0.08952873340328184,
+          "tp": 212.64759016992537,
+          "fp": 5199.293355629847,
+          "fn": 1403.3524098300745,
+          "n_truth": 1616,
+          "n_emitted": 5278
+        },
+        "stage3": {
+          "dti": 0.07413672720622473,
+          "tp": 178.29244449845612,
+          "fp": 5382.276970503053,
+          "fn": 1437.707555501544,
+          "n_truth": 1616,
+          "n_emitted": 5449
+        }
+      }
+    }
+  ],
+  "summary": {
+    "pooled_all": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems57-pooled-hide-v2.1",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_radius_m": 300.0,
+      "pooled": true,
+      "scores": {
+        "stage1": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "dti": 0.08115704318087667,
+          "ci95": [
+            0.0695591724083919,
+            0.09332539510178776
+          ],
+          "withheld_positive_pixels": 11321,
+          "tpw": 1325.7272477440767,
+          "fpw": 35066.93295224598,
+          "fnw": 9995.272752255918
+        },
+        "stage2": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "dti": 0.081385235744475,
+          "ci95": [
+            0.06991665311707503,
+            0.09219089247467846
+          ],
+          "withheld_positive_pixels": 11321,
+          "tpw": 1329.7067845833324,
+          "fpw": 35078.431379039444,
+          "fnw": 9991.293215416663
+        },
+        "stage3": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "dti": 0.07838900506373706,
+          "ci95": [
+            0.06679605654282125,
+            0.08975942955735845
+          ],
+          "withheld_positive_pixels": 11321,
+          "tpw": 1280.1432279473295,
+          "fpw": 35089.09544413824,
+          "fnw": 10040.85677205267
+        }
+      },
+      "best_comparable_control": "stage1",
+      "paired_differences": {
+        "stage1": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "delta": 0.00022819256359832285,
+          "ci95": [
+            -0.007573931874672127,
+            0.008147552009155127
+          ],
+          "withheld_positive_pixels": 11321
+        },
+        "stage3": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "delta": 0.0029962306807379407,
+          "ci95": [
+            -0.0037090944777432816,
+            0.010050975190934733
+          ],
+          "withheld_positive_pixels": 11321
+        }
+      },
+      "bootstrap": {
+        "method": "paired physical spatial-cluster percentile",
+        "clusters": 156,
+        "draws": 1000,
+        "seed": 520810,
+        "confidence": 0.95,
+        "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+      },
+      "implementation_sha256": {
+        "evaluate_holdout.py": "a287288bb6fbc6fd5c76474a52e153104af19644b002b870ce8f345937d1d355",
+        "holdout.py": "3d91c74ed863218b1cabdf02ea8152d0ba7b35c6bcab365991cc4ca65e32e53f",
+        "metric.py": "4b10227952378d30cc1a60781cdff6ea58916abadde3af3b14185176c66c13e0",
+        "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+      }
+    },
+    "pooled_far": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems57-pooled-hide-v2.1",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_radius_m": 300.0,
+      "pooled": true,
+      "scores": {
+        "stage1": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "dti": 0.06343939511924687,
+          "ci95": [
+            0.04972721526101621,
+            0.07802979502589585
+          ],
+          "withheld_positive_pixels": 4832,
+          "tpw": 573.0354469806628,
+          "fpw": 25262.970759535754,
+          "fnw": 4258.964553019339
+        },
+        "stage2": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "dti": 0.06418241381894776,
+          "ci95": [
+            0.05166746500597975,
+            0.07854707011296014
+          ],
+          "withheld_positive_pixels": 4832,
+          "tpw": 581.0405500230264,
+          "fpw": 25355.738027959742,
+          "fnw": 4250.959449976973
+        },
+        "stage3": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "dti": 0.060821981471772264,
+          "ci95": [
+            0.0493320735317426,
+            0.07327088069864308
+          ],
+          "withheld_positive_pixels": 4832,
+          "tpw": 556.8725376248865,
+          "fpw": 25894.015633203064,
+          "fnw": 4275.127462375112
+        }
+      },
+      "best_comparable_control": "stage1",
+      "paired_differences": {
+        "stage1": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "delta": 0.0007430186997008925,
+          "ci95": [
+            -0.008496043400021793,
+            0.009794324084967703
+          ],
+          "withheld_positive_pixels": 4832
+        },
+        "stage3": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "delta": 0.0033604323471755,
+          "ci95": [
+            -0.004022211283383476,
+            0.010876189135977252
+          ],
+          "withheld_positive_pixels": 4832
+        }
+      },
+      "bootstrap": {
+        "method": "paired physical spatial-cluster percentile",
+        "clusters": 153,
+        "draws": 1000,
+        "seed": 520810,
+        "confidence": 0.95,
+        "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+      },
+      "implementation_sha256": {
+        "evaluate_holdout.py": "a287288bb6fbc6fd5c76474a52e153104af19644b002b870ce8f345937d1d355",
+        "holdout.py": "3d91c74ed863218b1cabdf02ea8152d0ba7b35c6bcab365991cc4ca65e32e53f",
+        "metric.py": "4b10227952378d30cc1a60781cdff6ea58916abadde3af3b14185176c66c13e0",
+        "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+      }
+    },
+    "paired_outer_all": {
+      "stage2_vs_stage1": {
+        "mean_delta": 0.0004994507366903704,
+        "se": 0.004259288442408663,
+        "n_blocks": 4,
+        "t_stat": 0.11726154343468857,
+        "passes_gt_2se": false,
+        "per_block": [
+          0.006211503585308961,
+          -0.010536099379559544,
+          -0.001794490830400286,
+          0.00811688957141235
+        ]
+      },
+      "stage3_vs_stage1": {
+        "mean_delta": -0.002665308500028253,
+        "se": 0.0045087226912432655,
+        "n_blocks": 4,
+        "t_stat": -0.5911449167642872,
+        "passes_gt_2se": false,
+        "per_block": [
+          0.006347078134216838,
+          -0.012403461311894542,
+          0.003512420346569678,
+          -0.008117271169004986
+        ]
+      },
+      "stage3_vs_stage2": {
+        "mean_delta": -0.0031647592367186235,
+        "se": 0.0046111630684407085,
+        "n_blocks": 4,
+        "t_stat": -0.6863255950279817,
+        "passes_gt_2se": false,
+        "per_block": [
+          0.0001355745489078769,
+          -0.0018673619323349988,
+          0.005306911176969964,
+          -0.016234160740417336
+        ]
+      },
+      "stage_means": {
+        "stage1": 0.08068573473974466,
+        "stage2": 0.08118518547643502,
+        "stage3": 0.07802042623971642
+      }
+    },
+    "paired_outer_far": {
+      "stage2_vs_stage1": {
+        "mean_delta": 0.001060624880837479,
+        "se": 0.0027524525265774837,
+        "n_blocks": 4,
+        "t_stat": 0.3853381195846836,
+        "passes_gt_2se": false,
+        "per_block": [
+          0.005541631982794525,
+          -0.005375144345995182,
+          -0.0016702848531357367,
+          0.00574629673968631
+        ]
+      },
+      "stage3_vs_stage1": {
+        "mean_delta": -0.0020456868512364838,
+        "se": 0.004538172087622175,
+        "n_blocks": 4,
+        "t_stat": -0.45077330954814976,
+        "passes_gt_2se": false,
+        "per_block": [
+          0.007683315334129762,
+          -0.009909440078956208,
+          0.0036890867972513078,
+          -0.009645709457370796
+        ]
+      },
+      "stage3_vs_stage2": {
+        "mean_delta": -0.0031063117320739627,
+        "se": 0.004584272700597032,
+        "n_blocks": 4,
+        "t_stat": -0.6776018651048863,
+        "passes_gt_2se": false,
+        "per_block": [
+          0.002141683351335237,
+          -0.004534295732961026,
+          0.0053593716503870445,
+          -0.015392006197057106
+        ]
+      },
+      "stage_means": {
+        "stage1": 0.06247523868642375,
+        "stage2": 0.06353586356726122,
+        "stage3": 0.060429551835187265
+      }
+    },
+    "canary": {
+      "features_tested": 644,
+      "not_cleared": [
+        {
+          "fold": "NW",
+          "feature": "stage1/ex_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/ex_mean",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/step_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/lapneg_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/lappos_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/downface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/upface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/cross_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/relief",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/coh100",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/strike",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/ex_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/ex_mean",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/step_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/lapneg_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/lappos_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/downface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/upface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/cross_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/relief",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/coh100",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/strike",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/ex_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/ex_mean",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/step_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/lapneg_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/lappos_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/downface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/upface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/cross_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/relief",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/coh100",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/strike",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/ex_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/ex_mean",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/step_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/lapneg_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/lappos_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/downface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/upface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/cross_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/relief",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/coh100",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/strike",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/ex_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/ex_mean",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/step_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/lapneg_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/lappos_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/downface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/upface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/cross_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/relief",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/coh100",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/strike",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/ex_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/ex_mean",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/step_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/lapneg_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/lappos_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/downface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/upface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/cross_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/relief",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/coh100",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/strike",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/ex_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/ex_mean",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/step_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/lapneg_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/lappos_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/downface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/upface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/cross_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/relief",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/coh100",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/strike",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/ex_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/ex_mean",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/step_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/lapneg_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/lappos_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/downface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/upface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/cross_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/relief",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/coh100",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/strike",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/ex_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/ex_mean",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/step_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/lapneg_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/lappos_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/downface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/upface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/cross_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/relief",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/coh100",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/strike",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/ex_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/ex_mean",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/step_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/lapneg_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/lappos_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/downface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/upface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/cross_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/relief",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/coh100",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/strike",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/ex_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/ex_mean",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/step_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/lapneg_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/lappos_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/downface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/upface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/cross_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/relief",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/coh100",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/strike",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/ex_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/ex_mean",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/step_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/lapneg_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/lappos_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/downface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/upface_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/cross_max",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/relief",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/coh100",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/strike",
+          "auc": null,
+          "flagged": true,
+          "constant": false,
+          "reason": "non-finite values; not cleared"
+        }
+      ],
+      "max_directional_auc": 0.6696009362647115,
+      "pass": false
+    },
+    "gate": {
+      "all_gt_2se": false,
+      "far_gt_1km_gt_2se": false,
+      "clean_canary": false,
+      "meets_protocol": false
+    }
+  },
+  "canary_results": [
+    {
+      "fold": "NW",
+      "feature": "stage1/mag_anom",
+      "auc": 0.5172503582410587,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/rtp",
+      "auc": 0.5334284135796008,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/tmi_hg",
+      "auc": 0.5485653185877826,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/geod_2ndinv",
+      "auc": 0.5192947998731181,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/iso_grav_anom_slope",
+      "auc": 0.5143352130341063,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/tc",
+      "auc": 0.5074484123410699,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/geod_shearrate",
+      "auc": 0.5264197068142736,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/geod_dilaterate",
+      "auc": 0.5140001335882869,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/tmi_vg",
+      "auc": 0.464722984135174,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/deq_n100a15",
+      "auc": 0.46807767266488887,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/iso_grav_anom_vg",
+      "auc": 0.5129857820417861,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/det_elev",
+      "auc": 0.6324917541683467,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/iso_grav_anom",
+      "auc": 0.4946046016567652,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/tmi",
+      "auc": 0.5069825299512241,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/depth_to_base_surf",
+      "auc": 0.4988434878008745,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/ieq_n100a15",
+      "auc": 0.4671438526807843,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/cond_surf",
+      "auc": 0.5684377120274619,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/iso_grav_anom_hg",
+      "auc": 0.4832450541911433,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/det_elev_slope",
+      "auc": 0.6393780681024434,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/det_elev_gx",
+      "auc": 0.5349112165214638,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/det_elev_gy",
+      "auc": 0.5269747472166177,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/det_elev_gmag",
+      "auc": 0.6468075779713456,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/mag_gx",
+      "auc": 0.46513599909571,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/mag_gy",
+      "auc": 0.5040946702870714,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/tilt_grad_mag",
+      "auc": 0.5528997987792627,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/ex_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/ex_mean",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/step_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/lapneg_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/lappos_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/downface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/upface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/cross_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/relief",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/coh100",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/strike",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/rad_K",
+      "auc": 0.47801880457953627,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/rad_Th",
+      "auc": 0.5268913491849085,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/rad_U",
+      "auc": 0.5200904344026075,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/rad_TC",
+      "auc": 0.5074657193256009,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/ext_ThK",
+      "auc": 0.5765278889886745,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/ext_UK",
+      "auc": 0.5205848462747662,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/ext_UTh",
+      "auc": 0.47266353680668277,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/ext_TMI_up150",
+      "auc": 0.5069162496089027,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/d_cat",
+      "auc": 0.5388501239477557,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/log_d_cat",
+      "auc": 0.5388501239477557,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/n_cat_3",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/n_cat_10",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/n_cat_30",
+      "auc": 0.49645601632697656,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/fault_cos2",
+      "auc": 0.5003120124804992,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/fault_sin2",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/fault_coh",
+      "auc": 0.4996879875195008,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/align",
+      "auc": 0.48802583824621837,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/d_cat_fwd",
+      "auc": 0.5424541412233712,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage1/d_cat_bwd",
+      "auc": 0.5372029587371743,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1",
+      "auc": 0.558767704842359,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_along1",
+      "auc": 0.5464073809962279,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_along2",
+      "auc": 0.5413514429292721,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_along3",
+      "auc": 0.5288736749677996,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_along5",
+      "auc": 0.5095059694223443,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_along8",
+      "auc": 0.5010822273764586,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_along12",
+      "auc": 0.49683590463743355,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_along15",
+      "auc": 0.49061350285524685,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_across1",
+      "auc": 0.5482908947143117,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_across2",
+      "auc": 0.5385610702639234,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_across3",
+      "auc": 0.525839787621666,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_across5",
+      "auc": 0.5037693260200506,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_across8",
+      "auc": 0.48814120011498324,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_across12",
+      "auc": 0.4780850037953676,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_across15",
+      "auc": 0.47931150111319065,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_boxalong4",
+      "auc": 0.5540658027777169,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_boxalong8",
+      "auc": 0.5465743663547894,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_boxacross2",
+      "auc": 0.5579693931387001,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_boxacross4",
+      "auc": 0.5530246794895196,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_iso2",
+      "auc": 0.5542801389642689,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/p1_iso8",
+      "auc": 0.5270427852995555,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/det_elev_gx",
+      "auc": 0.5349112165214638,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/det_elev_gy",
+      "auc": 0.5269747472166177,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/det_elev_gmag",
+      "auc": 0.6468075779713456,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/det_elev_slope",
+      "auc": 0.6393780681024434,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/mag_gx",
+      "auc": 0.46513599909571,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/mag_gy",
+      "auc": 0.5040946702870714,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/tmi_hg",
+      "auc": 0.5485653185877826,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/iso_grav_anom_hg",
+      "auc": 0.4832450541911433,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/tc",
+      "auc": 0.5074484123410699,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/tilt_grad_mag",
+      "auc": 0.5528997987792627,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/ex_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/ex_mean",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/step_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/lapneg_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/lappos_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/downface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/upface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/cross_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/relief",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/coh100",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/strike",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/d_cat",
+      "auc": 0.5388501239477557,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/log_d_cat",
+      "auc": 0.5388501239477557,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/n_cat_3",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/n_cat_10",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/n_cat_30",
+      "auc": 0.49645601632697656,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/fault_cos2",
+      "auc": 0.5003120124804992,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/fault_sin2",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/fault_coh",
+      "auc": 0.4996879875195008,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/align",
+      "auc": 0.48802583824621837,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/d_cat_fwd",
+      "auc": 0.5424541412233712,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage2/d_cat_bwd",
+      "auc": 0.5372029587371743,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2",
+      "auc": 0.5844307448845015,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_along1",
+      "auc": 0.5725948497118252,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_along2",
+      "auc": 0.5604811233530984,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_along3",
+      "auc": 0.5462487516661353,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_along5",
+      "auc": 0.5168898321195459,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_along8",
+      "auc": 0.5026304993957429,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_along12",
+      "auc": 0.4846141989205309,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_along15",
+      "auc": 0.48052734381866175,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_across1",
+      "auc": 0.5649276121850906,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_across2",
+      "auc": 0.5477514035558823,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_across3",
+      "auc": 0.5270302106936071,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_across5",
+      "auc": 0.5029223654645614,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_across8",
+      "auc": 0.48880481480309645,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_across12",
+      "auc": 0.4814401520418591,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_across15",
+      "auc": 0.47981397155002165,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_boxalong4",
+      "auc": 0.5868486387921455,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_boxalong8",
+      "auc": 0.5739700248436355,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_boxacross2",
+      "auc": 0.5902916199851322,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_boxacross4",
+      "auc": 0.5841619457810034,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_iso2",
+      "auc": 0.5878104203731331,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/p2_iso8",
+      "auc": 0.5468015475689231,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/det_elev_gx",
+      "auc": 0.5349112165214638,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/det_elev_gy",
+      "auc": 0.5269747472166177,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/det_elev_gmag",
+      "auc": 0.6468075779713456,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/det_elev_slope",
+      "auc": 0.6393780681024434,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/mag_gx",
+      "auc": 0.46513599909571,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/mag_gy",
+      "auc": 0.5040946702870714,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/tmi_hg",
+      "auc": 0.5485653185877826,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/iso_grav_anom_hg",
+      "auc": 0.4832450541911433,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/tc",
+      "auc": 0.5074484123410699,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/tilt_grad_mag",
+      "auc": 0.5528997987792627,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/ex_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/ex_mean",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/step_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/lapneg_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/lappos_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/downface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/upface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/cross_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/relief",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/coh100",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/strike",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/d_cat",
+      "auc": 0.5388501239477557,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/log_d_cat",
+      "auc": 0.5388501239477557,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/n_cat_3",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/n_cat_10",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/n_cat_30",
+      "auc": 0.49645601632697656,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/fault_cos2",
+      "auc": 0.5003120124804992,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/fault_sin2",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/fault_coh",
+      "auc": 0.4996879875195008,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/align",
+      "auc": 0.48802583824621837,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/d_cat_fwd",
+      "auc": 0.5424541412233712,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NW",
+      "feature": "stage3/d_cat_bwd",
+      "auc": 0.5372029587371743,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/mag_anom",
+      "auc": 0.48287870342258865,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/rtp",
+      "auc": 0.49371191226212985,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/tmi_hg",
+      "auc": 0.4708436609635124,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/geod_2ndinv",
+      "auc": 0.527844076299791,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/iso_grav_anom_slope",
+      "auc": 0.5242879267437475,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/tc",
+      "auc": 0.4346605174765189,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/geod_shearrate",
+      "auc": 0.47207401660167103,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/geod_dilaterate",
+      "auc": 0.5270511534729128,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/tmi_vg",
+      "auc": 0.4841492004999741,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/deq_n100a15",
+      "auc": 0.5454915309416604,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/iso_grav_anom_vg",
+      "auc": 0.5050392409787514,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/det_elev",
+      "auc": 0.46351077134568774,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/iso_grav_anom",
+      "auc": 0.4832024408279667,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/tmi",
+      "auc": 0.48327349599451264,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/depth_to_base_surf",
+      "auc": 0.513196645396523,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/ieq_n100a15",
+      "auc": 0.5010655062238865,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/cond_surf",
+      "auc": 0.44010335037336534,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/iso_grav_anom_hg",
+      "auc": 0.532978824989215,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/det_elev_slope",
+      "auc": 0.5146125547928861,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/det_elev_gx",
+      "auc": 0.5684032970596797,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/det_elev_gy",
+      "auc": 0.5237951990553107,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/det_elev_gmag",
+      "auc": 0.5236186766747182,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/mag_gx",
+      "auc": 0.4995782917809644,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/mag_gy",
+      "auc": 0.5629268017553714,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/tilt_grad_mag",
+      "auc": 0.4888157097422327,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/ex_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/ex_mean",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/step_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/lapneg_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/lappos_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/downface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/upface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/cross_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/relief",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/coh100",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/strike",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/rad_K",
+      "auc": 0.4244695538160337,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/rad_Th",
+      "auc": 0.44017690434004103,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/rad_U",
+      "auc": 0.4539902536085798,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/rad_TC",
+      "auc": 0.43469000331804963,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/ext_ThK",
+      "auc": 0.48027641727035003,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/ext_UK",
+      "auc": 0.5359943412886204,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/ext_UTh",
+      "auc": 0.5397197845534528,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/ext_TMI_up150",
+      "auc": 0.48308929872780726,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/d_cat",
+      "auc": 0.46092238923131373,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/log_d_cat",
+      "auc": 0.4609223892313138,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/n_cat_3",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/n_cat_10",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/n_cat_30",
+      "auc": 0.4976341360371779,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/fault_cos2",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/fault_sin2",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/fault_coh",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/align",
+      "auc": 0.5385147738880385,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/d_cat_fwd",
+      "auc": 0.4603407221068312,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage1/d_cat_bwd",
+      "auc": 0.46175365079161096,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1",
+      "auc": 0.6696009362647115,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_along1",
+      "auc": 0.6680725808625109,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_along2",
+      "auc": 0.6575124016342868,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_along3",
+      "auc": 0.6481330839530803,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_along5",
+      "auc": 0.6342908913916158,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_along8",
+      "auc": 0.6196958281996378,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_along12",
+      "auc": 0.5974490463418548,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_along15",
+      "auc": 0.5903517935762631,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_across1",
+      "auc": 0.6601943102678018,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_across2",
+      "auc": 0.6482995932845819,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_across3",
+      "auc": 0.6377445901423406,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_across5",
+      "auc": 0.619908868759269,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_across8",
+      "auc": 0.6052779477854295,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_across12",
+      "auc": 0.5876150184313282,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_across15",
+      "auc": 0.5710751212498142,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_boxalong4",
+      "auc": 0.6582524034441319,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_boxalong8",
+      "auc": 0.6504257152235292,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_boxacross2",
+      "auc": 0.6672375354048744,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_boxacross4",
+      "auc": 0.6606755434756418,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_iso2",
+      "auc": 0.6602334343384043,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/p1_iso8",
+      "auc": 0.6297487153043833,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/det_elev_gx",
+      "auc": 0.5684032970596797,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/det_elev_gy",
+      "auc": 0.5237951990553107,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/det_elev_gmag",
+      "auc": 0.5236186766747182,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/det_elev_slope",
+      "auc": 0.5146125547928861,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/mag_gx",
+      "auc": 0.4995782917809644,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/mag_gy",
+      "auc": 0.5629268017553714,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/tmi_hg",
+      "auc": 0.4708436609635124,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/iso_grav_anom_hg",
+      "auc": 0.532978824989215,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/tc",
+      "auc": 0.4346605174765189,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/tilt_grad_mag",
+      "auc": 0.4888157097422327,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/ex_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/ex_mean",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/step_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/lapneg_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/lappos_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/downface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/upface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/cross_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/relief",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/coh100",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/strike",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/d_cat",
+      "auc": 0.46092238923131373,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/log_d_cat",
+      "auc": 0.4609223892313138,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/n_cat_3",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/n_cat_10",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/n_cat_30",
+      "auc": 0.4976341360371779,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/fault_cos2",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/fault_sin2",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/fault_coh",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/align",
+      "auc": 0.5385147738880385,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/d_cat_fwd",
+      "auc": 0.4603407221068312,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage2/d_cat_bwd",
+      "auc": 0.46175365079161096,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2",
+      "auc": 0.6422185132888868,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_along1",
+      "auc": 0.6430680517872757,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_along2",
+      "auc": 0.6365112716411709,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_along3",
+      "auc": 0.6303355049691317,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_along5",
+      "auc": 0.6215137052940115,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_along8",
+      "auc": 0.6139513544299889,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_along12",
+      "auc": 0.5975163176110614,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_along15",
+      "auc": 0.5881931515384845,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_across1",
+      "auc": 0.6374488749955601,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_across2",
+      "auc": 0.6277456949689694,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_across3",
+      "auc": 0.6198288000636837,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_across5",
+      "auc": 0.6068009843130683,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_across8",
+      "auc": 0.5939357333594636,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_across12",
+      "auc": 0.5894476027493227,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_across15",
+      "auc": 0.5788276486522811,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_boxalong4",
+      "auc": 0.6360045685205801,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_boxalong8",
+      "auc": 0.6292159175710091,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_boxacross2",
+      "auc": 0.6424183102078306,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_boxacross4",
+      "auc": 0.6380205826166686,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_iso2",
+      "auc": 0.6373260589691842,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/p2_iso8",
+      "auc": 0.6123975112664652,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/det_elev_gx",
+      "auc": 0.5684032970596797,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/det_elev_gy",
+      "auc": 0.5237951990553107,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/det_elev_gmag",
+      "auc": 0.5236186766747182,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/det_elev_slope",
+      "auc": 0.5146125547928861,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/mag_gx",
+      "auc": 0.4995782917809644,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/mag_gy",
+      "auc": 0.5629268017553714,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/tmi_hg",
+      "auc": 0.4708436609635124,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/iso_grav_anom_hg",
+      "auc": 0.532978824989215,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/tc",
+      "auc": 0.4346605174765189,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/tilt_grad_mag",
+      "auc": 0.4888157097422327,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/ex_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/ex_mean",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/step_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/lapneg_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/lappos_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/downface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/upface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/cross_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/relief",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/coh100",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/strike",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/d_cat",
+      "auc": 0.46092238923131373,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/log_d_cat",
+      "auc": 0.4609223892313138,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/n_cat_3",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/n_cat_10",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/n_cat_30",
+      "auc": 0.4976341360371779,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/fault_cos2",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/fault_sin2",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/fault_coh",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/align",
+      "auc": 0.5385147738880385,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/d_cat_fwd",
+      "auc": 0.4603407221068312,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "NE",
+      "feature": "stage3/d_cat_bwd",
+      "auc": 0.46175365079161096,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/mag_anom",
+      "auc": 0.48072019782370695,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/rtp",
+      "auc": 0.5227034614881784,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/tmi_hg",
+      "auc": 0.5311576745347864,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/geod_2ndinv",
+      "auc": 0.5535679693026583,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/iso_grav_anom_slope",
+      "auc": 0.49633912683449544,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/tc",
+      "auc": 0.45656860703523183,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/geod_shearrate",
+      "auc": 0.5551649728199455,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/geod_dilaterate",
+      "auc": 0.5342220645397676,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/tmi_vg",
+      "auc": 0.49657401835385534,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/deq_n100a15",
+      "auc": 0.523387745671662,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/iso_grav_anom_vg",
+      "auc": 0.5095996554551316,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/det_elev",
+      "auc": 0.5573600473588309,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/iso_grav_anom",
+      "auc": 0.4806419449521442,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/tmi",
+      "auc": 0.49938761724377956,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/depth_to_base_surf",
+      "auc": 0.4765996423745141,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/ieq_n100a15",
+      "auc": 0.5196350283831916,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/cond_surf",
+      "auc": 0.4727769402840425,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/iso_grav_anom_hg",
+      "auc": 0.4624598444273876,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/det_elev_slope",
+      "auc": 0.567395224427375,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/det_elev_gx",
+      "auc": 0.47190564523784023,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/det_elev_gy",
+      "auc": 0.5111971136462949,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/det_elev_gmag",
+      "auc": 0.5685149532794611,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/mag_gx",
+      "auc": 0.4559726484984115,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/mag_gy",
+      "auc": 0.5136403072168426,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/tilt_grad_mag",
+      "auc": 0.5352605186877608,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/ex_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/ex_mean",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/step_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/lapneg_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/lappos_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/downface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/upface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/cross_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/relief",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/coh100",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/strike",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/rad_K",
+      "auc": 0.42954036458269573,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/rad_Th",
+      "auc": 0.4824493225743971,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/rad_U",
+      "auc": 0.491840261735465,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/rad_TC",
+      "auc": 0.45654578240665317,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/ext_ThK",
+      "auc": 0.5223673175941093,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/ext_UK",
+      "auc": 0.5528090136787587,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/ext_UTh",
+      "auc": 0.5107419431264536,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/ext_TMI_up150",
+      "auc": 0.49945076095269153,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/d_cat",
+      "auc": 0.4817572739601066,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/log_d_cat",
+      "auc": 0.4817572739601066,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/n_cat_3",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/n_cat_10",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/n_cat_30",
+      "auc": 0.4925815969979213,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/fault_cos2",
+      "auc": 0.5002909283258397,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/fault_sin2",
+      "auc": 0.4999206559111346,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/fault_coh",
+      "auc": 0.4997090716741603,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/align",
+      "auc": 0.48693719855559203,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/d_cat_fwd",
+      "auc": 0.48510803156220134,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage1/d_cat_bwd",
+      "auc": 0.4790067208493364,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1",
+      "auc": 0.5760383369820329,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_along1",
+      "auc": 0.5769344572218684,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_along2",
+      "auc": 0.5796499794592332,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_along3",
+      "auc": 0.5787901142147771,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_along5",
+      "auc": 0.5732936526617552,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_along8",
+      "auc": 0.5701162587111143,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_along12",
+      "auc": 0.5641773155368848,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_along15",
+      "auc": 0.5612071269640425,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_across1",
+      "auc": 0.5793619680411831,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_across2",
+      "auc": 0.5762657438698945,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_across3",
+      "auc": 0.5702727434692918,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_across5",
+      "auc": 0.5609483755586631,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_across8",
+      "auc": 0.5536292733311178,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_across12",
+      "auc": 0.5499111672170902,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_across15",
+      "auc": 0.5405696336188941,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_boxalong4",
+      "auc": 0.578423395251288,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_boxalong8",
+      "auc": 0.577974128496853,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_boxacross2",
+      "auc": 0.5770923689565186,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_boxacross4",
+      "auc": 0.5742883392029399,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_iso2",
+      "auc": 0.5772343461205581,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/p1_iso8",
+      "auc": 0.5680129583453677,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/det_elev_gx",
+      "auc": 0.47190564523784023,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/det_elev_gy",
+      "auc": 0.5111971136462949,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/det_elev_gmag",
+      "auc": 0.5685149532794611,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/det_elev_slope",
+      "auc": 0.567395224427375,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/mag_gx",
+      "auc": 0.4559726484984115,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/mag_gy",
+      "auc": 0.5136403072168426,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/tmi_hg",
+      "auc": 0.5311576745347864,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/iso_grav_anom_hg",
+      "auc": 0.4624598444273876,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/tc",
+      "auc": 0.45656860703523183,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/tilt_grad_mag",
+      "auc": 0.5352605186877608,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/ex_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/ex_mean",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/step_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/lapneg_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/lappos_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/downface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/upface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/cross_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/relief",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/coh100",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/strike",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/d_cat",
+      "auc": 0.4817572739601066,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/log_d_cat",
+      "auc": 0.4817572739601066,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/n_cat_3",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/n_cat_10",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/n_cat_30",
+      "auc": 0.4925815969979213,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/fault_cos2",
+      "auc": 0.5002909283258397,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/fault_sin2",
+      "auc": 0.4999206559111346,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/fault_coh",
+      "auc": 0.4997090716741603,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/align",
+      "auc": 0.48693719855559203,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/d_cat_fwd",
+      "auc": 0.48510803156220134,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage2/d_cat_bwd",
+      "auc": 0.4790067208493364,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2",
+      "auc": 0.5787892818118349,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_along1",
+      "auc": 0.5819188930355923,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_along2",
+      "auc": 0.5793810853289261,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_along3",
+      "auc": 0.5756646789956967,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_along5",
+      "auc": 0.5694857449597128,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_along8",
+      "auc": 0.5638321481151215,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_along12",
+      "auc": 0.5579242276892054,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_along15",
+      "auc": 0.5591021547974284,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_across1",
+      "auc": 0.5819840722844726,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_across2",
+      "auc": 0.5774197341472882,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_across3",
+      "auc": 0.5677831172035234,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_across5",
+      "auc": 0.5564038402175271,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_across8",
+      "auc": 0.551859360836253,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_across12",
+      "auc": 0.5466044780060606,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_across15",
+      "auc": 0.5420860619303592,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_boxalong4",
+      "auc": 0.5843657519770794,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_boxalong8",
+      "auc": 0.5854428743894867,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_boxacross2",
+      "auc": 0.5826826122427167,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_boxacross4",
+      "auc": 0.5815359527072017,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_iso2",
+      "auc": 0.5854901394876497,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/p2_iso8",
+      "auc": 0.5820264408947394,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/det_elev_gx",
+      "auc": 0.47190564523784023,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/det_elev_gy",
+      "auc": 0.5111971136462949,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/det_elev_gmag",
+      "auc": 0.5685149532794611,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/det_elev_slope",
+      "auc": 0.567395224427375,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/mag_gx",
+      "auc": 0.4559726484984115,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/mag_gy",
+      "auc": 0.5136403072168426,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/tmi_hg",
+      "auc": 0.5311576745347864,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/iso_grav_anom_hg",
+      "auc": 0.4624598444273876,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/tc",
+      "auc": 0.45656860703523183,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/tilt_grad_mag",
+      "auc": 0.5352605186877608,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/ex_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/ex_mean",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/step_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/lapneg_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/lappos_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/downface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/upface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/cross_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/relief",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/coh100",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/strike",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/d_cat",
+      "auc": 0.4817572739601066,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/log_d_cat",
+      "auc": 0.4817572739601066,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/n_cat_3",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/n_cat_10",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/n_cat_30",
+      "auc": 0.4925815969979213,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/fault_cos2",
+      "auc": 0.5002909283258397,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/fault_sin2",
+      "auc": 0.4999206559111346,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/fault_coh",
+      "auc": 0.4997090716741603,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/align",
+      "auc": 0.48693719855559203,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/d_cat_fwd",
+      "auc": 0.48510803156220134,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SW",
+      "feature": "stage3/d_cat_bwd",
+      "auc": 0.4790067208493364,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/mag_anom",
+      "auc": 0.5494810224852071,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/rtp",
+      "auc": 0.5366218224852071,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/tmi_hg",
+      "auc": 0.4953216662721894,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/geod_2ndinv",
+      "auc": 0.5017320520710059,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/iso_grav_anom_slope",
+      "auc": 0.5644835029585799,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/tc",
+      "auc": 0.4448358816568047,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/geod_shearrate",
+      "auc": 0.5163161940828402,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/geod_dilaterate",
+      "auc": 0.5054112284023669,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/tmi_vg",
+      "auc": 0.4960256,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/deq_n100a15",
+      "auc": 0.4228584804733728,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/iso_grav_anom_vg",
+      "auc": 0.531028449704142,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/det_elev",
+      "auc": 0.47708225325443787,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/iso_grav_anom",
+      "auc": 0.4784063715976331,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/tmi",
+      "auc": 0.5420400284023668,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/depth_to_base_surf",
+      "auc": 0.5616461065088758,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/ieq_n100a15",
+      "auc": 0.4981372591715976,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/cond_surf",
+      "auc": 0.47346929230769236,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/iso_grav_anom_hg",
+      "auc": 0.49664167573964496,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/det_elev_slope",
+      "auc": 0.5519947928994082,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/det_elev_gx",
+      "auc": 0.5608664899408284,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/det_elev_gy",
+      "auc": 0.5206788449704143,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/det_elev_gmag",
+      "auc": 0.5541142343195267,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/mag_gx",
+      "auc": 0.5004998816568047,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/mag_gy",
+      "auc": 0.4971912899408284,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/tilt_grad_mag",
+      "auc": 0.4979088852071005,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/ex_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/ex_mean",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/step_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/lapneg_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/lappos_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/downface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/upface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/cross_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/relief",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/coh100",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/strike",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/rad_K",
+      "auc": 0.44774348875739645,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/rad_Th",
+      "auc": 0.4458357869822485,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/rad_U",
+      "auc": 0.4398038627218935,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/rad_TC",
+      "auc": 0.44494251360946746,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/ext_ThK",
+      "auc": 0.45699172544378697,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/ext_UK",
+      "auc": 0.513780923076923,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/ext_UTh",
+      "auc": 0.5368037207100592,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/ext_TMI_up150",
+      "auc": 0.5304348781065088,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/d_cat",
+      "auc": 0.48124530177514796,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/log_d_cat",
+      "auc": 0.48124530177514796,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/n_cat_3",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/n_cat_10",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/n_cat_30",
+      "auc": 0.5044179976331361,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/fault_cos2",
+      "auc": 0.5001230769230769,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/fault_sin2",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/fault_coh",
+      "auc": 0.49987692307692305,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/align",
+      "auc": 0.5065629349112426,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/d_cat_fwd",
+      "auc": 0.48133648284023667,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage1/d_cat_bwd",
+      "auc": 0.4817121420118343,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1",
+      "auc": 0.6343763408284024,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_along1",
+      "auc": 0.6284668875739644,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_along2",
+      "auc": 0.6240972875739645,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_along3",
+      "auc": 0.6237514887573965,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_along5",
+      "auc": 0.6141944331360947,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_along8",
+      "auc": 0.600803001183432,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_along12",
+      "auc": 0.5708512662721893,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_along15",
+      "auc": 0.554794224852071,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_across1",
+      "auc": 0.6286460023668639,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_across2",
+      "auc": 0.6220358911242603,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_across3",
+      "auc": 0.6151039337278107,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_across5",
+      "auc": 0.6040912662721893,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_across8",
+      "auc": 0.5932896,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_across12",
+      "auc": 0.5711777325443788,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_across15",
+      "auc": 0.560622627218935,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_boxalong4",
+      "auc": 0.6339820402366864,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_boxalong8",
+      "auc": 0.6299904568047338,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_boxacross2",
+      "auc": 0.6334787881656805,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_boxacross4",
+      "auc": 0.6308175715976332,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_iso2",
+      "auc": 0.6331557112426035,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/p1_iso8",
+      "auc": 0.6117212591715977,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/det_elev_gx",
+      "auc": 0.5608664899408284,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/det_elev_gy",
+      "auc": 0.5206788449704143,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/det_elev_gmag",
+      "auc": 0.5541142343195267,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/det_elev_slope",
+      "auc": 0.5519947928994082,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/mag_gx",
+      "auc": 0.5004998816568047,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/mag_gy",
+      "auc": 0.4971912899408284,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/tmi_hg",
+      "auc": 0.4953216662721894,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/iso_grav_anom_hg",
+      "auc": 0.49664167573964496,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/tc",
+      "auc": 0.4448358816568047,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/tilt_grad_mag",
+      "auc": 0.4979088852071005,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/ex_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/ex_mean",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/step_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/lapneg_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/lappos_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/downface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/upface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/cross_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/relief",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/coh100",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/strike",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/d_cat",
+      "auc": 0.48124530177514796,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/log_d_cat",
+      "auc": 0.48124530177514796,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/n_cat_3",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/n_cat_10",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/n_cat_30",
+      "auc": 0.5044179976331361,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/fault_cos2",
+      "auc": 0.5001230769230769,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/fault_sin2",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/fault_coh",
+      "auc": 0.49987692307692305,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/align",
+      "auc": 0.5065629349112426,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/d_cat_fwd",
+      "auc": 0.48133648284023667,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage2/d_cat_bwd",
+      "auc": 0.4817121420118343,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2",
+      "auc": 0.6526855100591715,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_along1",
+      "auc": 0.6441167715976333,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_along2",
+      "auc": 0.6325691171597633,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_along3",
+      "auc": 0.6240238201183431,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_along5",
+      "auc": 0.6066600899408284,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_along8",
+      "auc": 0.5898976852071006,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_along12",
+      "auc": 0.5632631573964497,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_along15",
+      "auc": 0.5458064284023668,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_across1",
+      "auc": 0.6466862958579882,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_across2",
+      "auc": 0.6373567621301774,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_across3",
+      "auc": 0.6289384331360947,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_across5",
+      "auc": 0.6159915834319527,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_across8",
+      "auc": 0.6005420970414201,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_across12",
+      "auc": 0.5804760426035503,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_across15",
+      "auc": 0.5788619739644971,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_boxalong4",
+      "auc": 0.6570226366863906,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_boxalong8",
+      "auc": 0.6528260544378698,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_boxacross2",
+      "auc": 0.6548039857988166,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_boxacross4",
+      "auc": 0.6518849798816568,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_iso2",
+      "auc": 0.6569713325443787,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/p2_iso8",
+      "auc": 0.6409945467455622,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/det_elev_gx",
+      "auc": 0.5608664899408284,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/det_elev_gy",
+      "auc": 0.5206788449704143,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/det_elev_gmag",
+      "auc": 0.5541142343195267,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/det_elev_slope",
+      "auc": 0.5519947928994082,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/mag_gx",
+      "auc": 0.5004998816568047,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/mag_gy",
+      "auc": 0.4971912899408284,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/tmi_hg",
+      "auc": 0.4953216662721894,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/iso_grav_anom_hg",
+      "auc": 0.49664167573964496,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/tc",
+      "auc": 0.4448358816568047,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/tilt_grad_mag",
+      "auc": 0.4979088852071005,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/ex_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/ex_mean",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/step_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/lapneg_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/lappos_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/downface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/upface_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/cross_max",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/relief",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/coh100",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/strike",
+      "auc": null,
+      "flagged": true,
+      "constant": false,
+      "reason": "non-finite values; not cleared"
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/d_cat",
+      "auc": 0.48124530177514796,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/log_d_cat",
+      "auc": 0.48124530177514796,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/n_cat_3",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/n_cat_10",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": true,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/n_cat_30",
+      "auc": 0.5044179976331361,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/fault_cos2",
+      "auc": 0.5001230769230769,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/fault_sin2",
+      "auc": 0.5,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/fault_coh",
+      "auc": 0.49987692307692305,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/align",
+      "auc": 0.5065629349112426,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/d_cat_fwd",
+      "auc": 0.48133648284023667,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    },
+    {
+      "fold": "SE",
+      "feature": "stage3/d_cat_bwd",
+      "auc": 0.4817121420118343,
+      "flagged": false,
+      "constant": false,
+      "reason": null
+    }
+  ],
+  "elapsed_seconds": 1010.6,
+  "caveat": "Withheld catalogue components are NOT the unknown panel truth; this is not an organizer score. CI is conditional on these folds, trained models and emission budget."
+}

@@ -1,52 +1,7 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sources · GEMSDOE68</title><style>
-:root{--bg:#0b1020;--card:#141b2f;--ink:#e8ecf5;--muted:#9aa7c7;--ok:#2ecc71;--bad:#e74c3c;--warn:#f1c40f;--acc:#4ea1ff}
-*{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
-header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
-header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
-main{max-width:1100px;margin:0 auto;padding:24px}
-.card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
-.banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
-.banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
-.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0}
-.btn.secondary{background:#26304d;color:var(--ink)}
-table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
-th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
-pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
-.muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
-h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
-</style></head><body>
-<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="how-to-submit.html">How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html" style=color:#fff>Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
-<main><div class=card><h1>Sources (for manual review)</h1>
-<p>Status legend: <strong>verified-here</strong> = fetched/recomputed in this session's sandbox (which can reach only</p>
-<p>github.com, api.github.com, codeload.github.com, registry.npmjs.org, pypi.org, files.pythonhosted.org);</p>
-<p><strong>verified-by-lineage</strong> = recorded as verified with date in a sibling repository's <code>registry/sources.json</code></p>
-<p>(GEMSDOE32, 2026-10-04) and reused; <strong>listed</strong> = cited in the brief, not independently fetched.</p>
-<table>
-<tr><th>source</th><th>url</th><th>status</th><th>used for</th></tr>
-<tr><td>DOE GEMS Prize overview</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">https://www.drivendata.org/competitions/306/competition-doe-gems/</a></td><td>verified-by-lineage</td><td>rules, slots</td></tr>
-<tr><td>Problem description, metric, submission format</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/</a></td><td>verified-by-lineage (worked example TP 3.00 / FP 1.89 / FN 2.00 → 0.60 reproduced here as 0.6027)</td><td><code>src/gems68/metric.py</code></td></tr>
-<tr><td>About / resources</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/">https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/</a></td><td>listed</td><td>—</td></tr>
-<tr><td>Data page (login-walled)</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">https://www.drivendata.org/competitions/306/competition-doe-gems/data/</a></td><td>listed; not accessible</td><td>—</td></tr>
-<tr><td>Public leaderboard</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/</a></td><td>listed; brief quotes 0.3774 / 0.3195</td><td>context only</td></tr>
-<tr><td>Rules PDF NLR 96647</td><td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">https://docs.nlr.gov/docs/fy26osti/96647.pdf</a></td><td>listed (mirrored by lineage, sha256 50d854b1e0239fe6…)</td><td>submission rules</td></tr>
-<tr><td>Reference solution (U-Net, Tversky loss)</td><td><a href="https://github.com/drivendataorg/gems-prize-reference-solution">https://github.com/drivendataorg/gems-prize-reference-solution</a></td><td>verified-by-lineage</td><td>baseline design</td></tr>
-<tr><td>GeoDAWN airborne magnetic &amp; radiometric surveys</td><td><a href="https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and">https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and</a></td><td>listed</td><td>band provenance (mag_anom, rtp, tmi*, tc)</td></tr>
-<tr><td>INGENIOUS (GBCGE)</td><td><a href="https://gbcge.org/current-projects/ingenious/">https://gbcge.org/current-projects/ingenious/</a></td><td>listed</td><td>catalogue provenance</td></tr>
-<tr><td>EPSG:32611</td><td><a href="https://epsg.io/32611">https://epsg.io/32611</a></td><td>listed</td><td>CRS</td></tr>
-<tr><td>Tversky index</td><td><a href="https://en.wikipedia.org/wiki/Tversky_index">https://en.wikipedia.org/wiki/Tversky_index</a></td><td>listed</td><td>metric background</td></tr>
-<tr><td>GDR submission 1391</td><td><a href="https://gdr.openei.org/submissions/1391">https://gdr.openei.org/submissions/1391</a></td><td>listed</td><td>external data index</td></tr>
-<tr><td>Auto-context, Tu CVPR 2008</td><td><a href="https://doi.org/10.1109/CVPR.2008.4587436">https://doi.org/10.1109/CVPR.2008.4587436</a></td><td>listed (method citation from the brief)</td><td>lane method</td></tr>
-<tr><td>Auto-context, Tu &amp; Bai TPAMI 2010</td><td><a href="https://pages.ucsd.edu/~ztu/publication/pami_autocontext.pdf">https://pages.ucsd.edu/~ztu/publication/pami_autocontext.pdf</a></td><td>listed</td><td>lane method</td></tr>
-<tr><td>Koehler et al. 2021, 2020 M6.5 Monte Cristo Range earthquake, SRL 92(2A)</td><td><a href="https://doi.org/10.1785/0220200371">https://doi.org/10.1785/0220200371</a></td><td>verified-by-lineage</td><td>H68-5</td></tr>
-<tr><td>Salem et al. 2007, tilt-depth method, The Leading Edge 26(12):1502</td><td><a href="https://doi.org/10.1190/1.2821934">https://doi.org/10.1190/1.2821934</a></td><td>listed</td><td>H68-3</td></tr>
-<tr><td>USGS 3DEP / National Map (1 m DEM links provided by competition)</td><td><a href="https://apps.nationalmap.gov/downloader/">https://apps.nationalmap.gov/downloader/</a></td><td>listed; host unreachable from sandbox</td><td>H68-2</td></tr>
-<tr><td>USGS ComCat</td><td><a href="https://earthquake.usgs.gov/fdsnws/event/1/">https://earthquake.usgs.gov/fdsnws/event/1/</a></td><td>listed; host unreachable from sandbox</td><td>H68-5</td></tr>
-<tr><td>Competition rasters, GitHub mirror (sha256-pinned)</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE">https://github.com/buffedlizard55-lab/GEMSDOE</a> (training_features parts) · <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/tree/07345ea0604953d7efb858d9cfbc21e20c7aca0b/data/bridge">https://github.com/buffedlizard55-lab/GEMSDOE24/tree/07345ea0604953d7efb858d9cfbc21e20c7aca0b/data/bridge</a></td><td>verified-here: sha256 4371c82e… / 7ba308cc… / 2176d08e… match <code>registry/data_manifest.json</code></td><td>all modelling</td></tr>
-<tr><td>Champion raster h33-h33-2-b2 (0.2778 owner-report)</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE32/blob/main/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif">https://github.com/buffedlizard55-lab/GEMSDOE32/blob/main/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</a></td><td>verified-here: sha256 c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9 matches its audit JSON</td><td>uniqueness registry, analysis</td></tr>
-<tr><td>Shared template (metric, holdout, evaluator, validator)</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE65/tree/main/lane65-sarprop/src/gems65_sarprop/template">https://github.com/buffedlizard55-lab/GEMSDOE65/tree/main/lane65-sarprop/src/gems65_sarprop/template</a></td><td>verified-here: copied with provenance headers; <code>metric.py</code> byte-identical apart from header</td><td>rule 2 reuse</td></tr>
-<tr><td>Champion-ladder analysis (why 0.2778)</td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE65/blob/main/docs/research/why-02778-and-what-beats-it-2026-10-11.md">https://github.com/buffedlizard55-lab/GEMSDOE65/blob/main/docs/research/why-02778-and-what-beats-it-2026-10-11.md</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE32/blob/main/knowledge/01_why_0260_and_the_path_to_03195.md">https://github.com/buffedlizard55-lab/GEMSDOE32/blob/main/knowledge/01_why_0260_and_the_path_to_03195.md</a></td><td>verified-here (read; ladder subset relations not recomputed here)</td><td>knowledge/01</td></tr>
-</table>
-<p><strong>Irregularity to note:</strong> the brief states the "current leaderboard GEMSDOE high score" as 0.3774 in one</p>
-<p>place and 0.3195 in another, and the lineage's 2026-10-11 note quotes a #1 of 0.4133. None can be</p>
-<p>re-fetched from this sandbox; treat all three as unverified here.</p></div></main></body></html>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GEMSDOE68 research and fail-closed GEMS Prize submission decision.">
+<title>Historical page withdrawn · GEMSDOE68</title><link rel="stylesheet" href="assets/site.css"></head>
+<body><a class="skip" href="#main">Skip to content</a><header class="top"><div class="wrap bar"><a class="brand" href="index.html">GEMS<span>DOE68</span><small>Research run · 20 Oct 2026</small></a><nav aria-label="Main navigation"><a href="index.html" class="">Decision</a><a href="executive-summary.html" class="">How it works</a><a href="results.html" class="">Holdout results</a><a href="hypotheses.html" class="">Hypotheses</a><a href="research.html" class="">Sources &amp; methods</a><a href="irregularities.html" class="">Audit</a><a href="leaderboard.html" class="">Score ledger</a></nav></div></header>
+<main id="main" class="wrap"><section class="hero"><span class="badge danger">HISTORICAL PAGE WITHDRAWN · DO NOT SUBMIT</span><h1>Read the current release decision</h1><p>Older content and downloads here were invalidated by strict holdout or originality checks.</p><a class="button outline" href="research.html">Current audited page →</a></section></main><footer><div class="wrap">Experimental fault mapping, not a competition receipt. <a href="data/run-card.json">Read the machine-readable run card</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE68/blob/arena/fd107b38-gemsdoe68/README.md">Source & standing prompt</a> · Data: owner GitHub mirrors; organizer authentication unavailable.</div></footer>
+</body></html>

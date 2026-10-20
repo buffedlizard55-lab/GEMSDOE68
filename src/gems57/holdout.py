@@ -255,7 +255,7 @@ def score(prediction, fold, valid, restrict_to_region=True, extra=False):
     """
     from .metric import dti_exact
     region = fold['region'] if restrict_to_region else np.ones_like(valid, bool)
-    known = fold.get('masked_known', fold['visible'])
+    known = fold['masked_known'] if 'masked_known' in fold else fold['visible']
     r = dti_exact(prediction, fold['truth'], valid=np.asarray(valid, bool) & region, known=known)
     return {**r, 'tpw': r['tp'], 'fpw': r['fp'], 'fnw': r['fn']}
 

@@ -1,0 +1,21 @@
+[18:26:50] NW truth 1923 train pos 39744
+[18:28:15] NW stage1 107 s
+[18:29:57] NW stage2 209 s
+[18:30:22] NW stage3 234 s
+[18:30:32] NW scored 244 s
+[18:30:54] NE truth 2367 train pos 38220
+[18:32:12] NE stage1 99 s
+[18:33:45] NE stage2 192 s
+[18:34:11] NE stage3 218 s
+[18:34:21] NE scored 228 s
+[18:34:42] SW truth 3781 train pos 31493
+[18:36:23] SW stage1 122 s
+[18:38:18] SW stage2 237 s
+[18:38:50] SW stage3 270 s
+[18:39:08] SW scored 288 s
+[18:39:30] SE truth 3250 train pos 33697
+[18:40:57] SE stage1 109 s
+[18:42:39] SE stage2 211 s
+[18:43:04] SE stage3 236 s
+[18:43:28] SE scored 260 s
+[18:43:28] H68-M1 HOLDOUT-DTI {'stage1': 0.08098972460253454, 'stage2': 0.081385235744475, 'stage3': 0.07838900506373706} gate {'all_gt_2se': False, 'far_gt_1km_gt_2se': False, 'clean_canary': False, 'meets_protocol': False} elapsed 1025.0

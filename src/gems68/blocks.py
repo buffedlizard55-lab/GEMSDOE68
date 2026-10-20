@@ -22,7 +22,9 @@ from dataclasses import dataclass
 import numpy as np
 from scipy import ndimage as ndi
 
-PAD_STAGE2 = 18          # halo needed for the +/-15 px offset samples
+# scipy's default Gaussian truncate=4: sigma=8 reaches 32 px.  A smaller halo
+# silently changes the context values at every row-strip boundary.
+PAD_STAGE2 = 32
 OFFSETS = (1, 2, 3, 5, 8, 12, 15)
 ALONG_WIDTHS = (4, 8)         # oriented box half-widths along local orientation
 ACROSS_WIDTHS = (2, 4)         # oriented box half-widths across local orientation
@@ -85,7 +87,7 @@ def structure_tensor_orientation(field: np.ndarray, sigma: float = 3.0):
 class _StripIndex:
     """Precomputed flat-index base for one row strip, reused by every gather."""
 
-    __slots__ = ("flat", "h", "w", "base")
+    __slots__ = ("flat", "h", "w", "yy", "xx")
 
     def __init__(self, field: np.ndarray, rows: slice, pad: int,
                  cols: tuple[int, int] | None = None):
@@ -100,13 +102,14 @@ class _StripIndex:
             sub = np.concatenate([sub, np.repeat(sub[-1:], bot, axis=0)], axis=0)
         self.flat = sub.ravel()
         self.h, self.w = sub.shape
-        yy, xx = np.mgrid[0:self.h, 0:self.w]
-        self.base = (yy * self.w + xx).astype(np.int32)
+        self.yy, self.xx = np.mgrid[0:self.h, 0:self.w].astype(np.int32)
 
     def gather(self, dy: np.ndarray, dx: np.ndarray) -> np.ndarray:
-        idx = self.base + (dy.astype(np.int32) * self.w + dx.astype(np.int32))
-        np.clip(idx, 0, self.flat.size - 1, out=idx)
-        return self.flat[idx]
+        # Clamp each coordinate independently. Clamping a *flattened* index
+        # wraps a sample at the left/right edge into the previous/next row.
+        y = np.clip(self.yy + dy.astype(np.int32), 0, self.h - 1)
+        x = np.clip(self.xx + dx.astype(np.int32), 0, self.w - 1)
+        return self.flat[y * self.w + x]
 
 
 def _halo(field: np.ndarray, rows: slice, pad: int,
@@ -163,10 +166,15 @@ def build_context_block(prev: np.ndarray, rows: slice, cos2: np.ndarray,
         dy = np.rint(gx * d)
         dx = -np.rint(gy * d)
         channels.append(si.gather(dy, dx))
-    for wdt in ALONG_WIDTHS + ACROSS_WIDTHS:             # anisotropic box means
+    for wdt in ALONG_WIDTHS:                 # along-strike box means
         acc = np.zeros((si.h, si.w), np.float64)
         for d in range(-wdt, wdt + 1):
             acc += si.gather(np.rint(gy * d), np.rint(gx * d))
+        channels.append((acc / (2 * wdt + 1)).astype(np.float32))
+    for wdt in ACROSS_WIDTHS:                # perpendicular, not a second along mean
+        acc = np.zeros((si.h, si.w), np.float64)
+        for d in range(-wdt, wdt + 1):
+            acc += si.gather(np.rint(gx * d), -np.rint(gy * d))
         channels.append((acc / (2 * wdt + 1)).astype(np.float32))
     sub = _halo(prev, rows, pad, cols).astype(np.float64)
     for sg in ISO_SIGMAS:                               # isotropic smooths

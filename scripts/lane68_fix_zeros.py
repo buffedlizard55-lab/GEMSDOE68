@@ -1,39 +1,46 @@
 #!/usr/bin/env python3
-"""Rewrite the -zeros fallback so it is genuinely all-finite (IR-30, 2026-10-20 audit).
+"""Read-only audit of the archived diagnostic all-finite October 12 variant.
 
-The shipped -zeros file was pixel-identical (NaN-aware) to the -nan file: it still
-carried NaN outside the footprint, so it could not serve as the fallback for a
-portal range check that mishandles NaN. This script replaces NaN with 0.0,
-preserves CRS/shape/transform/dtype/tags, updates the receipt and emission
-evidence hashes, and asserts: all-finite, values in [0,1], same >0 dot cells.
-Run: /path/to/venv/bin/python scripts/lane68_fix_zeros.py
+The historical writer emitted a mislabelled zeros file with 7,113,308 NaNs.
+A parallel 2026-10-20 repair regenerated it at main commit 06fc4f3;
+this script is now intentionally READ ONLY and targets the archived paths.
+All-finite format is diagnostic, NOT an organizer-approved alternative to the
+published null/NaN exterior, and the candidate failed scientific/originality gates.
 """
-import hashlib, json
+from __future__ import annotations
+
+import hashlib
+import json
 from pathlib import Path
-import numpy as np
-import rasterio
 
 ROOT = Path(__file__).resolve().parents[1]
-NAN = ROOT / "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif"
-ZEROS = ROOT / "docs/downloads/GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif"
+ARCHIVE = ROOT / "evidence/archives/2026-10-12"
+NAN = ARCHIVE / "GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif"
+ZEROS = ARCHIVE / "GEMSDOE68-AC-stack2-20261012T042050Z-zeros.tif"
 
-with rasterio.open(NAN) as ds:
-    a, prof = ds.read(1), ds.profile.copy()
-assert np.isnan(a).sum() > 0
-b = np.where(np.isnan(a), np.float32(0), a).astype("float32")
-assert np.isfinite(b).all() and b.min() >= 0 and b.max() <= 1
-assert np.array_equal(b > 0, a > 0) and np.array_equal(b[np.isfinite(a)], a[np.isfinite(a)])
-prof.update(nodata=None)
-with rasterio.open(ZEROS, "w", **prof) as ds:
-    ds.write(b, 1)
-sha = hashlib.sha256(ZEROS.read_bytes()).hexdigest()
-receipt_p = Path(str(ZEROS) + ".receipt.json")
-r = json.loads(receipt_p.read_text())
-r.update({"sha256": sha, "nan_inside": 0, "nan_outside_count": 0, "all_finite": True,
-          "note_on_variant": "Regenerated 2026-10-20 (IR-30): NaN outside footprint replaced by 0; inside-footprint pixels identical to -nan file."})
-receipt_p.write_text(json.dumps(r, indent=1) + "\n")
-emis_p = ROOT / "evidence/ac68_emission.json"
-e = json.loads(emis_p.read_text())
-e["files"]["zeros"].update({"sha256": sha, "bytes": ZEROS.stat().st_size})
-emis_p.write_text(json.dumps(e, indent=1) + "\n")
-print(json.dumps({"zeros_sha256": sha, "bytes": ZEROS.stat().st_size, "finite": int(np.isfinite(b).sum()), "gt0": int((b > 0).sum())}))
+
+def main() -> int:
+    import numpy as np
+    import rasterio
+    with rasterio.open(NAN) as source:
+        a = source.read(1)
+        shape, crs, transform = source.shape, source.crs, source.transform
+    with rasterio.open(ZEROS) as source:
+        b = source.read(1)
+        assert source.shape == shape and source.crs == crs and source.transform == transform
+    assert int(np.isnan(a).sum()) == 7_113_308
+    assert np.isfinite(b).all() and b.min() >= 0 and b.max() <= 1
+    assert np.array_equal(b > 0, a > 0)
+    assert np.array_equal(b[np.isfinite(a)], a[np.isfinite(a)])
+    result = {"historical_original_nan_outside": int(np.isnan(a).sum()),
+              "diagnostic_finite": True, "positive_cells": int((b > 0).sum()),
+              "nan_variant_sha256": hashlib.sha256(NAN.read_bytes()).hexdigest(),
+              "diagnostic_sha256": hashlib.sha256(ZEROS.read_bytes()).hexdigest(),
+              "competition_download_allowed": False,
+              "portal_acceptance_confirmed": False}
+    print(json.dumps(result, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

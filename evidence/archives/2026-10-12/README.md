@@ -1,0 +1,11 @@
+# Historical candidate bytes — NOT CLEARED FOR SUBMISSION
+
+Withdrawn from `docs/downloads/` on 2026-10-20 after a release-gate audit. These are evidence files, **not download recommendations**. A parallel main-branch repair was merged afterward; the `GEMSDOE68-AC-stack2-…-zeros.tif` bytes in this archive are **no longer the original falsely named file**. The original remains inspectable at base commit `97a3e584` in `docs/downloads/` (SHA-256 `7175e1681ed2878cccaca89c6945700a043434118a31e4fe5ab4b0e557451260`).
+
+* `GEMSDOE68-AC-stack2-…-nan.tif` has a valid *local* GeoTIFF format check, but the `evidence/run-card-ac68.json` **at base commit `97a3e584`** reported a failed >1 km two-SE gate (t=1.97) **and** a 99.48% dot overlap with a dense prior registry raster (70% literal stop). A density-null argument cannot cancel the stop rule.
+* The **original** `-zeros.tif` at base commit had 7,113,308 NaNs—identical decoded pixels to `-nan.tif`. The merged main-branch IR-30 fix rewrote the `-zeros.tif` now archived here to be genuinely all-finite (SHA-256 `7412411520cb3f4e1f7ec82f0f9d22bd5b316f721ea0f681de584fc1ea303297`, 20,000 positive cells); `scripts/lane68_fix_zeros.py` is now a *read-only* audit. A zero exterior is a **diagnostic compatibility variant**, not a proven accepted organizer format; neither twin is cleared for download because science and originality gates fail.
+* The other sibling artifacts have incompatible/incomplete holdout and/or registry evidence. No archive artifact is selected for a competition slot. Related `*.zip` and receipts have the same historical status.
+
+The later `GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z` files from parallel PR #6 were archived separately in `evidence/archives/2026-10-20/`: 98.465625% of their dots overlap one prior registry raster at 3 px, above the required 70% stop. The stage-3 `-zeros.tif` also still has 7,113,308 NaNs. They are **not** alternate approved downloads.
+
+The canonical H68-M1 after shared-tool corrections is separately recorded in `evidence/ac68_m1_holdout.json`, and stopped before final candidate training. Official challenge scores are available only through the organizer submission receipt; none is claimed here.

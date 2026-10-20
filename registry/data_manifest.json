@@ -260,6 +260,39 @@
       "sha256": "33003374335d84bf885f2d8f5e9dd4c57044c8ec58fa6a0d7fa581e8bc41c11d",
       "bytes": 1635084,
       "provenance": "owner-supplied scored-artifact mirror (GEMSDOE27 primary candidate manifest, generated_utc 2026-10-03T00:32:37Z); UNSCORED on the leaderboard; added 2026-10-04 because scripts/run_pipeline.py required it and it was absent from this manifest, which made the documented reproduce command abort (IR-32-MANIFEST-01)"
+    },
+    {
+      "id": "ext_lidar_scarp_features_sidecar",
+      "repo": "buffedlizard55-lab/GEMSDOE24",
+      "ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+      "path": "data/external/lidar_scarp_features.json",
+      "dest": "external/lidar_scarp_features.json",
+      "group": "external",
+      "sha256": "9ef0df6e87598a8b0cd52fe821661e5fdb3a00568c5d9b1c5d61fd6b242dcd41",
+      "bytes": 3531,
+      "provenance": "owner-derived channel semantics / quantization sidecar, pinned to the GitHub commit; not independently organizer-authenticated"
+    },
+    {
+      "id": "ext_geodawn_rad_sidecar",
+      "repo": "buffedlizard55-lab/GEMSDOE24",
+      "ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+      "path": "data/external/geodawn_rad.json",
+      "dest": "external/geodawn_rad.json",
+      "group": "external",
+      "sha256": "d917fd08f89c160d2a0ba91af9c3321c8c8b5677fcdba39b10e684384cbc7488",
+      "bytes": 7985,
+      "provenance": "owner-derived channel semantics / quantization sidecar, pinned to the GitHub commit; not independently organizer-authenticated"
+    },
+    {
+      "id": "ext_geodawn_extensions_sidecar",
+      "repo": "buffedlizard55-lab/GEMSDOE24",
+      "ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+      "path": "data/external/geodawn_extensions.json",
+      "dest": "external/geodawn_extensions.json",
+      "group": "external",
+      "sha256": "56556f24c051043fd7a85587786118f8064624f2ad0604aaa3e6614f1a9f6d2f",
+      "bytes": 8927,
+      "provenance": "owner-derived channel semantics / quantization sidecar, pinned to the GitHub commit; not independently organizer-authenticated"
     }
   ]
 }

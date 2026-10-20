@@ -1,0 +1,1546 @@
+{
+  "generated_utc": "2026-10-20T18:43:28Z",
+  "hypothesis": "H68-M1 magnetic-edge-tangent auto-context (preregistered)",
+  "evidence_class": "HOLDOUT-DTI",
+  "evaluator_version": "gems57-pooled-hide-v2.1",
+  "evaluator_hashes": {
+    "evaluate_holdout.py": "a287288bb6fbc6fd5c76474a52e153104af19644b002b870ce8f345937d1d355",
+    "holdout.py": "3d91c74ed863218b1cabdf02ea8152d0ba7b35c6bcab365991cc4ca65e32e53f",
+    "metric.py": "4b10227952378d30cc1a60781cdff6ea58916abadde3af3b14185176c66c13e0",
+    "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+  },
+  "metric": {
+    "alpha": 0.2,
+    "beta": 0.8,
+    "triangular_radius_m": 300,
+    "spatial_bootstrap_cluster_m": 20000
+  },
+  "split": "gems57.holdout.buffered_component_draw v2, outer quadrant removed from fits and context, 12px outer/6px inner buffers, whole components + 3px feature collar",
+  "seed": 20,
+  "budget": 38000,
+  "emission": {
+    "nms": 5,
+    "exclude_px": 2.0
+  },
+  "features": {
+    "stack_channels": 45,
+    "stage1_channels": 44,
+    "stage2_channels": 53,
+    "orientation": "tangent to structure-tensor gradient of mag_anom, sigma=3 px"
+  },
+  "n_withheld": 11321,
+  "n_withheld_far": 4832,
+  "folds": [
+    {
+      "fold": "NW",
+      "n_truth": 1923,
+      "n_truth_far": 865,
+      "n_train_pos": 39744,
+      "n_train_rows": 158976,
+      "quota": 8018,
+      "dti": {
+        "stage1": {
+          "dti": 0.06623008270596624,
+          "tp": 209.73097867231135,
+          "fp": 7931.782290775708,
+          "fn": 1713.2690213276887,
+          "n_truth": 1923,
+          "n_emitted": 8018
+        },
+        "stage2": {
+          "dti": 0.07262619311552994,
+          "tp": 230.20092372410446,
+          "fp": 7926.139313379665,
+          "fn": 1692.7990762758955,
+          "n_truth": 1923,
+          "n_emitted": 8018
+        },
+        "stage3": {
+          "dti": 0.07276176766443782,
+          "tp": 230.64936360964393,
+          "fp": 7926.976821487376,
+          "fn": 1692.3506363903562,
+          "n_truth": 1923,
+          "n_emitted": 8018
+        }
+      },
+      "dti_far": {
+        "stage1": {
+          "dti": 0.04498428211771693,
+          "tp": 84.74442437159499,
+          "fp": 5874.592773211315,
+          "fn": 780.255575628405,
+          "n_truth": 865,
+          "n_emitted": 5909
+        },
+        "stage2": {
+          "dti": 0.05055458678980761,
+          "tp": 96.03768330751271,
+          "fp": 5942.3767441322325,
+          "fn": 768.9623166924873,
+          "n_truth": 865,
+          "n_emitted": 5980
+        },
+        "stage3": {
+          "dti": 0.052696270141142844,
+          "tp": 102.21030158769565,
+          "fp": 6135.848148653024,
+          "fn": 762.7896984123043,
+          "n_truth": 865,
+          "n_emitted": 6177
+        }
+      }
+    },
+    {
+      "fold": "NE",
+      "n_truth": 2367,
+      "n_truth_far": 1107,
+      "n_train_pos": 38220,
+      "n_train_rows": 152880,
+      "quota": 9941,
+      "dti": {
+        "stage1": {
+          "dti": 0.0870931464603953,
+          "tp": 341.59375270308647,
+          "fp": 9801.23480189636,
+          "fn": 2025.4062472969135,
+          "n_truth": 2367,
+          "n_emitted": 9941
+        },
+        "stage2": {
+          "dti": 0.07710453725505563,
+          "tp": 302.1085680227769,
+          "fp": 9820.733863430116,
+          "fn": 2064.891431977223,
+          "n_truth": 2367,
+          "n_emitted": 9941
+        },
+        "stage3": {
+          "dti": 0.07523717532272063,
+          "tp": 294.69842229609617,
+          "fp": 9821.9298570102,
+          "fn": 2072.3015777039036,
+          "n_truth": 2367,
+          "n_emitted": 9941
+        }
+      },
+      "dti_far": {
+        "stage1": {
+          "dti": 0.06625052397490963,
+          "tp": 154.8969070594315,
+          "fp": 7107.343242444436,
+          "fn": 952.1030929405686,
+          "n_truth": 1107,
+          "n_emitted": 7171
+        },
+        "stage2": {
+          "dti": 0.06179645435725168,
+          "tp": 146.7319068937972,
+          "fp": 7297.4627376018925,
+          "fn": 960.2680931062027,
+          "n_truth": 1107,
+          "n_emitted": 7357
+        },
+        "stage3": {
+          "dti": 0.057262158624290654,
+          "tp": 137.91955092512416,
+          "fp": 7476.898449531683,
+          "fn": 969.0804490748758,
+          "n_truth": 1107,
+          "n_emitted": 7536
+        }
+      }
+    },
+    {
+      "fold": "SW",
+      "n_truth": 3781,
+      "n_truth_far": 1244,
+      "n_train_pos": 31493,
+      "n_train_rows": 125972,
+      "quota": 9772,
+      "dti": {
+        "stage1": {
+          "dti": 0.07409178900507772,
+          "tp": 372.20271765333723,
+          "fp": 9621.473792211274,
+          "fn": 3408.7972823466625,
+          "n_truth": 3781,
+          "n_emitted": 9772
+        },
+        "stage2": {
+          "dti": 0.07229729817467744,
+          "tp": 363.10033565746306,
+          "fp": 9624.511358335345,
+          "fn": 3417.899664342537,
+          "n_truth": 3781,
+          "n_emitted": 9772
+        },
+        "stage3": {
+          "dti": 0.0776042093516474,
+          "tp": 389.97124875904206,
+          "fp": 9611.679280838393,
+          "fn": 3391.0287512409577,
+          "n_truth": 3781,
+          "n_emitted": 9772
+        }
+      },
+      "dti_far": {
+        "stage1": {
+          "dti": 0.05393844154733899,
+          "tp": 129.95889728775037,
+          "fp": 6941.005527304689,
+          "fn": 1114.0411027122495,
+          "n_truth": 1244,
+          "n_emitted": 6997
+        },
+        "stage2": {
+          "dti": 0.05226367971870378,
+          "tp": 125.6233696517914,
+          "fp": 6916.605190595765,
+          "fn": 1118.3766303482087,
+          "n_truth": 1244,
+          "n_emitted": 6968
+        },
+        "stage3": {
+          "dti": 0.05762305136909082,
+          "tp": 138.4502406136106,
+          "fp": 6898.992064515311,
+          "fn": 1105.5497593863895,
+          "n_truth": 1244,
+          "n_emitted": 6955
+        }
+      }
+    },
+    {
+      "fold": "SE",
+      "n_truth": 3250,
+      "n_truth_far": 1616,
+      "n_train_pos": 33697,
+      "n_train_rows": 134788,
+      "quota": 7868,
+      "dti": {
+        "stage1": {
+          "dti": 0.09459582378906478,
+          "tp": 399.43805759604766,
+          "fp": 7713.442067362616,
+          "fn": 2850.5619424039523,
+          "n_truth": 3250,
+          "n_emitted": 7868
+        },
+        "stage2": {
+          "dti": 0.10271271336047713,
+          "tp": 434.29695717898846,
+          "fp": 7707.046843894312,
+          "fn": 2815.7030428210114,
+          "n_truth": 3250,
+          "n_emitted": 7868
+        },
+        "stage3": {
+          "dti": 0.0864785526200598,
+          "tp": 364.82419328254764,
+          "fp": 7728.509484802276,
+          "fn": 2885.1758067174524,
+          "n_truth": 3250,
+          "n_emitted": 7868
+        }
+      },
+      "dti_far": {
+        "stage1": {
+          "dti": 0.08378243666359553,
+          "tp": 201.26145448342538,
+          "fp": 5345.695883241979,
+          "fn": 1414.7385455165745,
+          "n_truth": 1616,
+          "n_emitted": 5423
+        },
+        "stage2": {
+          "dti": 0.08952873340328184,
+          "tp": 212.64759016992537,
+          "fp": 5199.293355629847,
+          "fn": 1403.3524098300745,
+          "n_truth": 1616,
+          "n_emitted": 5278
+        },
+        "stage3": {
+          "dti": 0.07413672720622473,
+          "tp": 178.29244449845612,
+          "fp": 5382.276970503053,
+          "fn": 1437.707555501544,
+          "n_truth": 1616,
+          "n_emitted": 5449
+        }
+      }
+    }
+  ],
+  "summary": {
+    "pooled_all": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems57-pooled-hide-v2.1",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_radius_m": 300.0,
+      "pooled": true,
+      "scores": {
+        "stage1": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "dti": 0.08098972460253454,
+          "ci95": [
+            0.06939711848482058,
+            0.09290537728823944
+          ],
+          "withheld_positive_pixels": 11321,
+          "tpw": 1322.965506624783,
+          "fpw": 35067.93295224598,
+          "fnw": 9998.034493375213
+        },
+        "stage2": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "dti": 0.081385235744475,
+          "ci95": [
+            0.06991665311707503,
+            0.09219089247467846
+          ],
+          "withheld_positive_pixels": 11321,
+          "tpw": 1329.7067845833324,
+          "fpw": 35078.431379039444,
+          "fnw": 9991.293215416663
+        },
+        "stage3": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "dti": 0.07838900506373706,
+          "ci95": [
+            0.06679605654282125,
+            0.08975942955735845
+          ],
+          "withheld_positive_pixels": 11321,
+          "tpw": 1280.1432279473295,
+          "fpw": 35089.09544413824,
+          "fnw": 10040.85677205267
+        }
+      },
+      "best_comparable_control": "stage1",
+      "paired_differences": {
+        "stage1": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "delta": 0.00039551114194046055,
+          "ci95": [
+            -0.007345789677140065,
+            0.008249454336699897
+          ],
+          "withheld_positive_pixels": 11321
+        },
+        "stage3": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "delta": 0.0029962306807379407,
+          "ci95": [
+            -0.0037090944777432816,
+            0.010050975190934733
+          ],
+          "withheld_positive_pixels": 11321
+        }
+      },
+      "bootstrap": {
+        "method": "paired physical spatial-cluster percentile",
+        "clusters": 156,
+        "draws": 1000,
+        "seed": 520810,
+        "confidence": 0.95,
+        "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+      },
+      "implementation_sha256": {
+        "evaluate_holdout.py": "a287288bb6fbc6fd5c76474a52e153104af19644b002b870ce8f345937d1d355",
+        "holdout.py": "3d91c74ed863218b1cabdf02ea8152d0ba7b35c6bcab365991cc4ca65e32e53f",
+        "metric.py": "4b10227952378d30cc1a60781cdff6ea58916abadde3af3b14185176c66c13e0",
+        "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+      }
+    },
+    "pooled_far": {
+      "evidence_class": "HOLDOUT-DTI",
+      "evaluator_version": "gems57-pooled-hide-v2.1",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "triangular_radius_m": 300.0,
+      "pooled": true,
+      "scores": {
+        "stage1": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "dti": 0.06319385558844672,
+          "ci95": [
+            0.04973931667075854,
+            0.07789396935736212
+          ],
+          "withheld_positive_pixels": 4832,
+          "tpw": 570.8616832022025,
+          "fpw": 25268.63742620242,
+          "fnw": 4261.138316797799
+        },
+        "stage2": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "dti": 0.06418241381894776,
+          "ci95": [
+            0.05166746500597975,
+            0.07854707011296014
+          ],
+          "withheld_positive_pixels": 4832,
+          "tpw": 581.0405500230264,
+          "fpw": 25355.738027959742,
+          "fnw": 4250.959449976973
+        },
+        "stage3": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "dti": 0.060821981471772264,
+          "ci95": [
+            0.0493320735317426,
+            0.07327088069864308
+          ],
+          "withheld_positive_pixels": 4832,
+          "tpw": 556.8725376248865,
+          "fpw": 25894.015633203064,
+          "fnw": 4275.127462375112
+        }
+      },
+      "best_comparable_control": "stage1",
+      "paired_differences": {
+        "stage1": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "delta": 0.0009885582305010493,
+          "ci95": [
+            -0.008229750710816922,
+            0.00994794340583007
+          ],
+          "withheld_positive_pixels": 4832
+        },
+        "stage3": {
+          "evidence_class": "HOLDOUT-DTI",
+          "evaluator_version": "gems57-pooled-hide-v2.1",
+          "delta": 0.0033604323471755,
+          "ci95": [
+            -0.004022211283383476,
+            0.010876189135977252
+          ],
+          "withheld_positive_pixels": 4832
+        }
+      },
+      "bootstrap": {
+        "method": "paired physical spatial-cluster percentile",
+        "clusters": 153,
+        "draws": 1000,
+        "seed": 520810,
+        "confidence": 0.95,
+        "caveat": "Conditional on fitted folds, catalogue labels and fixed budgets; not a leaderboard interval."
+      },
+      "implementation_sha256": {
+        "evaluate_holdout.py": "a287288bb6fbc6fd5c76474a52e153104af19644b002b870ce8f345937d1d355",
+        "holdout.py": "3d91c74ed863218b1cabdf02ea8152d0ba7b35c6bcab365991cc4ca65e32e53f",
+        "metric.py": "4b10227952378d30cc1a60781cdff6ea58916abadde3af3b14185176c66c13e0",
+        "spatial.py": "fad7b09db9efc512247b9a176a7e7ce8631e287592b4e07902d0b9c38bed00f8"
+      }
+    },
+    "paired_outer_all": {
+      "stage2_vs_stage1": {
+        "mean_delta": 0.0006824749863090229,
+        "se": 0.004162566790810176,
+        "n_blocks": 4,
+        "t_stat": 0.16395532386789408,
+        "passes_gt_2se": false,
+        "per_block": [
+          0.006396110409563699,
+          -0.009988609205339671,
+          -0.001794490830400286,
+          0.00811688957141235
+        ]
+      },
+      "stage3_vs_stage1": {
+        "mean_delta": -0.0024822842504096006,
+        "se": 0.004442289270343696,
+        "n_blocks": 4,
+        "t_stat": -0.55878491906889,
+        "passes_gt_2se": false,
+        "per_block": [
+          0.006531684958471576,
+          -0.01185597113767467,
+          0.003512420346569678,
+          -0.008117271169004986
+        ]
+      },
+      "stage3_vs_stage2": {
+        "mean_delta": -0.0031647592367186235,
+        "se": 0.0046111630684407085,
+        "n_blocks": 4,
+        "t_stat": -0.6863255950279817,
+        "passes_gt_2se": false,
+        "per_block": [
+          0.0001355745489078769,
+          -0.0018673619323349988,
+          0.005306911176969964,
+          -0.016234160740417336
+        ]
+      },
+      "stage_means": {
+        "stage1": 0.08050271049012601,
+        "stage2": 0.08118518547643502,
+        "stage3": 0.07802042623971642
+      }
+    },
+    "paired_outer_far": {
+      "stage2_vs_stage1": {
+        "mean_delta": 0.0012969424913709567,
+        "se": 0.0025814005306930444,
+        "n_blocks": 4,
+        "t_stat": 0.5024181547769182,
+        "passes_gt_2se": false,
+        "per_block": [
+          0.00557030467209068,
+          -0.0044540696176579506,
+          -0.0016747618286352128,
+          0.00574629673968631
+        ]
+      },
+      "stage3_vs_stage1": {
+        "mean_delta": -0.001809369240703006,
+        "se": 0.0044138632287697285,
+        "n_blocks": 4,
+        "t_stat": -0.4099287057445433,
+        "passes_gt_2se": false,
+        "per_block": [
+          0.007711988023425917,
+          -0.008988365350618976,
+          0.0036846098217518317,
+          -0.009645709457370796
+        ]
+      },
+      "stage3_vs_stage2": {
+        "mean_delta": -0.0031063117320739627,
+        "se": 0.004584272700597032,
+        "n_blocks": 4,
+        "t_stat": -0.6776018651048863,
+        "passes_gt_2se": false,
+        "per_block": [
+          0.002141683351335237,
+          -0.004534295732961026,
+          0.0053593716503870445,
+          -0.015392006197057106
+        ]
+      },
+      "stage_means": {
+        "stage1": 0.06223892107589027,
+        "stage2": 0.06353586356726122,
+        "stage3": 0.060429551835187265
+      }
+    },
+    "canary": {
+      "features_tested": 644,
+      "not_cleared": [
+        {
+          "fold": "NW",
+          "feature": "stage1/ex_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/ex_mean",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/step_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/lapneg_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/lappos_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/downface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/upface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/cross_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/relief",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/coh100",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/strike",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/n_cat_3",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage1/n_cat_10",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/ex_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/ex_mean",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/step_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/lapneg_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/lappos_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/downface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/upface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/cross_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/relief",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/coh100",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/strike",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/n_cat_3",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage2/n_cat_10",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/ex_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/ex_mean",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/step_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/lapneg_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/lappos_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/downface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/upface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/cross_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/relief",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/coh100",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/strike",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/n_cat_3",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NW",
+          "feature": "stage3/n_cat_10",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/ex_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/ex_mean",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/step_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/lapneg_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/lappos_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/downface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/upface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/cross_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/relief",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/coh100",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/strike",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/n_cat_3",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/n_cat_10",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/fault_cos2",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/fault_sin2",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage1/fault_coh",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/ex_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/ex_mean",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/step_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/lapneg_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/lappos_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/downface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/upface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/cross_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/relief",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/coh100",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/strike",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/n_cat_3",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/n_cat_10",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/fault_cos2",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/fault_sin2",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage2/fault_coh",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/ex_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/ex_mean",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/step_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/lapneg_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/lappos_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/downface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/upface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/cross_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/relief",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/coh100",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/strike",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/n_cat_3",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/n_cat_10",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/fault_cos2",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/fault_sin2",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "NE",
+          "feature": "stage3/fault_coh",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/ex_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/ex_mean",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/step_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/lapneg_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/lappos_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/downface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/upface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/cross_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/relief",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/coh100",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/strike",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/n_cat_3",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage1/n_cat_10",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/ex_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/ex_mean",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/step_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/lapneg_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/lappos_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/downface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/upface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/cross_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/relief",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/coh100",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/strike",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/n_cat_3",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage2/n_cat_10",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/ex_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/ex_mean",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/step_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/lapneg_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/lappos_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/downface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/upface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/cross_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/relief",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/coh100",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/strike",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/n_cat_3",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SW",
+          "feature": "stage3/n_cat_10",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/ex_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/ex_mean",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/step_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/lapneg_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/lappos_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/downface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/upface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/cross_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/relief",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/coh100",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/strike",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/n_cat_3",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage1/n_cat_10",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/ex_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/ex_mean",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/step_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/lapneg_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/lappos_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/downface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/upface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/cross_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/relief",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/coh100",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/strike",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/n_cat_3",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage2/n_cat_10",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/ex_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/ex_mean",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/step_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/lapneg_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/lappos_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/downface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/upface_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/cross_max",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/relief",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/coh100",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/strike",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/n_cat_3",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        },
+        {
+          "fold": "SE",
+          "feature": "stage3/n_cat_10",
+          "auc": null,
+          "reason": "non-finite or constant; not cleared"
+        }
+      ],
+      "max_directional_auc": 0.6696009362647115,
+      "pass": false
+    },
+    "gate": {
+      "all_gt_2se": false,
+      "far_gt_1km_gt_2se": false,
+      "clean_canary": false,
+      "meets_protocol": false
+    }
+  },
+  "elapsed_seconds": 1025.0,
+  "caveat": "Withheld catalogue components are NOT the unknown panel truth; this is not an organizer score. CI is conditional on these folds, trained models and emission budget."
+}

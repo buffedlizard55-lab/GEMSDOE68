@@ -1,0 +1,8 @@
+{
+  "observed_utc_date": "2026-10-20",
+  "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+  "method": "Public page fetched in this session with the page-retrieval tool; no authenticated submission receipt or artifact hash was available.",
+  "evidence_class": "PUBLIC-LEADERBOARD-OBSERVATION (not ORGANIZER-CONFIRMED per-file score)",
+  "top_public": {"participant": "xiaofanhu", "displayed_score": 0.4413},
+  "limitations": "Snapshot only. The user-supplied 0.3774 and 0.3195 high values conflict and are not current verified highs. No team roster or selected-submission file hash is linked by this observation."
+}

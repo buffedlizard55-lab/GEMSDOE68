@@ -1,0 +1,72 @@
+{
+  "observed_utc_date": "2026-10-20",
+  "method": "Pages below were read in this session through the public web page retrieval tool; access to official competition downloads and submission receipt requires a separate DrivenData participant login. A URL is not a proof of the owner-mirror binary's identity.",
+  "sources": [
+    {
+      "id": "DD-OVERVIEW",
+      "kind": "organizer public",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/",
+      "verified_claim": "Predict faults relevant to geothermal resource mapping, not geothermal vents as labels; private and expanded-label final prize phases; deadline shown as 2026-12-03 23:59 UTC. Eligibility/licensing and final submission require organizer review."
+    },
+    {
+      "id": "DD-PROBLEM",
+      "kind": "organizer public",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+      "verified_claim": "New expert-identified faults are private target; official distance-weighted Tversky kernel support 300 m, alpha=0.2, beta=0.8; single-band float32 GeoTIFF in [0,1], EPSG:32611, 100 m, same grid; outside data null or NaN."
+    },
+    {
+      "id": "DD-DATA",
+      "kind": "organizer login-required",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/data/",
+      "verified_claim": "Public unauthenticated request redirected to a DrivenData login page. The pinned owner GitHub mirrors are consistency-checked but not organizer-authenticated."
+    },
+    {
+      "id": "DD-SUBMIT",
+      "kind": "organizer login-required",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/",
+      "verified_claim": "Unauthenticated request redirected to login. No portal upload, receipt, acceptance, private score or current team weekly-slot count can be obtained here."
+    },
+    {
+      "id": "DD-BOARD",
+      "kind": "organizer public leaderboard observation (NOT a per-file receipt)",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+      "verified_claim": "2026-10-20 public table showed top participant xiaofanhu 0.4413. This is an observed table cell, not a verified score for any GEMSDOE-family raster; it will go stale."
+    },
+    {
+      "id": "NLR-RULES",
+      "kind": "official rules PDF",
+      "url": "https://docs.nlr.gov/docs/fy26osti/96647.pdf",
+      "verified_claim": "Section 3.2 requires a single 100m GeoTIFF and says three submissions per week; generative AI use must be disclosed in the narrative if applicable; competition requires registration and eligibility."
+    },
+    {
+      "id": "DD-REFERENCE",
+      "kind": "organizer reference code",
+      "url": "https://github.com/drivendataorg/gems-prize-reference-solution",
+      "verified_claim": "Official DrivenData reference repo README supplies a U-Net notebook baseline and notes GPU is faster; it does not certify these owner-mirrored inputs or the current auto-context results."
+    },
+    {
+      "id": "USGS-GEODAWN",
+      "kind": "official government data-release landing page",
+      "url": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+      "verified_claim": "USGS DOI 10.5066/P93LGLVQ; magnetics inform subsurface geology/structure, radiometrics inform surface geology/soil; Area 1/2 flight lines east-west, 200/400m separation; terrain clearance varies. Rights on release page marked CC0."
+    },
+    {
+      "id": "INGENIOUS",
+      "kind": "research project's official page",
+      "url": "https://gbcge.org/current-projects/ingenious/",
+      "verified_claim": "INGENIOUS describes integrated geoscientific exploration of undiscovered geothermal systems and links its Great Basin regional compilation; it does not provide the private competition labels."
+    },
+    {
+      "id": "TU-BAI",
+      "kind": "author publication, scientific method not geothermal validation",
+      "url": "https://pages.ucsd.edu/~ztu/publication/pami_autocontext.pdf",
+      "verified_claim": "Tu and Bai propose iterating a classifier on previous classifier probability maps plus original image patches; no geothermal performance or blocked-fold validity is claimed by the paper."
+    },
+    {
+      "id": "H33-OWNER",
+      "kind": "owner site; not an organizer receipt",
+      "url": "https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html",
+      "verified_claim": "Owner page provides H33-2-B2 file/format description and a pruning rationale but says no organizer score exists there. The prompt's 0.2778 is therefore user/owner-reported, not organizer-confirmed in this session."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "evidence_class": "HOLDOUT-DTI (not organizer receipt)",
+  "run_card_created_utc": "2026-10-20T19:01:09Z",
+  "verdict": "negative",
+  "download_allowed": false,
+  "leaderboard_observed_utc_date": "2026-10-20",
+  "leaderboard_is_live": false,
+  "leaderboard_url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+  "public_top": {
+    "participant": "xiaofanhu",
+    "displayed_score": 0.4413
+  },
+  "organizer_confirmed_this_lane": null,
+  "message": "No submission slot or organizer receipt. Check official public leaderboard for current standings."
+}

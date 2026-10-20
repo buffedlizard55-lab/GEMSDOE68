@@ -1,176 +1,182 @@
 {
- "schema": "gemsdoe68-run-card/1",
- "generated_utc": "2026-10-12T03:28:09Z",
- "lane": "auto-context stacked refinement (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436)",
- "hypothesis": "A second classifier trained on the first classifier's probability maps plus the raw channels can recover withheld fault segments better than the per-pixel model alone, because the stacked features expose continuity, parallelism and en-echelon spacing that a per-pixel model cannot see.",
- "mechanism": "Stage 1 LightGBM scores every 100 m cell from 44 fold-invariant channels plus 11 catalogue-context features derived only from the visible faults. Stage 2/3 LightGBM adds stage-n probabilities sampled at +/-1,2,3,5,8,12,15 px along and across the local structure-tensor orientation, oriented box means at several half-widths (multi-scale anisotropic smooths), two isotropic smooths, the 21 raw gradient/tilt/scarp channels and the 11 catalogue-context features recomputed with the target block's labels masked. Out-of-fold probabilities come from 4 inner spatial blocks inside each outer training domain (600 m buffer); the outer folds are 4 label-blind quadrants with whole catalogue segments withheld inside a 1.2 km eroded domain.",
- "named_non_fault_process_that_could_mimic_it": "Range-front and basin-margin escarpments: the same detrended-elevation gradient, Laplacian and lidar scarp channels respond to a downhill-facing erosional escarpment or a terraced alluvial margin as they do to a fault scarp, and a stacked model that rewards local continuity will happily connect them into long lineaments.",
- "holdout_dti": {
-  "evidence_class": "HOLDOUT-DTI",
-  "evaluator": "gems57.metric.dti_binary / gems57.holdout (pooled hide-and-recover)",
-  "evaluator_version": "gems57-pooled-hide-v2 / gems57.metric.dti_binary",
-  "alpha": 0.2,
-  "beta": 0.8,
-  "triangular_radius_m": 300.0,
-  "outer_buffer_px": 12,
-  "inner_buffer_px": 6,
-  "withheld_positive_pixels": 11318,
-  "withheld_positive_pixels_far_gt_1km": 1330,
-  "pooled": {
-   "stage1": 0.13014032809345344,
-   "stage2": 0.19044851256926598,
-   "stage3": 0.18684342719137767
+  "schema": "gemsdoe68-run-card/1",
+  "generated_utc": "2026-10-12T03:28:09Z",
+  "lane": "auto-context stacked refinement (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436)",
+  "hypothesis": "A second classifier trained on the first classifier's probability maps plus the raw channels can recover withheld fault segments better than the per-pixel model alone, because the stacked features expose continuity, parallelism and en-echelon spacing that a per-pixel model cannot see.",
+  "mechanism": "Stage 1 LightGBM scores every 100 m cell from 44 fold-invariant channels plus 11 catalogue-context features derived only from the visible faults. Stage 2/3 LightGBM adds stage-n probabilities sampled at +/-1,2,3,5,8,12,15 px along and across the local structure-tensor orientation, oriented box means at several half-widths (multi-scale anisotropic smooths), two isotropic smooths, the 21 raw gradient/tilt/scarp channels and the 11 catalogue-context features recomputed with the target block's labels masked. Out-of-fold probabilities come from 4 inner spatial blocks inside each outer training domain (600 m buffer); the outer folds are 4 label-blind quadrants with whole catalogue segments withheld inside a 1.2 km eroded domain.",
+  "named_non_fault_process_that_could_mimic_it": "Range-front and basin-margin escarpments: the same detrended-elevation gradient, Laplacian and lidar scarp channels respond to a downhill-facing erosional escarpment or a terraced alluvial margin as they do to a fault scarp, and a stacked model that rewards local continuity will happily connect them into long lineaments.",
+  "holdout_dti": {
+    "evidence_class": "HOLDOUT-DTI",
+    "evaluator": "gems57.metric.dti_binary / gems57.holdout (pooled hide-and-recover)",
+    "evaluator_version": "gems57-pooled-hide-v2 / gems57.metric.dti_binary",
+    "alpha": 0.2,
+    "beta": 0.8,
+    "triangular_radius_m": 300.0,
+    "outer_buffer_px": 12,
+    "inner_buffer_px": 6,
+    "withheld_positive_pixels": 11318,
+    "withheld_positive_pixels_far_gt_1km": 1330,
+    "pooled": {
+      "stage1": 0.13014032809345344,
+      "stage2": 0.19044851256926598,
+      "stage3": 0.18684342719137767
+    },
+    "gate_all_pixels": {
+      "stage2_vs_stage1": {
+        "mean_delta": 0.06065845612980394,
+        "se": 0.007049341494211312,
+        "t_stat": 8.604840066212521,
+        "passes_gt_2se": true,
+        "n_blocks": 4
+      },
+      "stage3_vs_stage1": {
+        "mean_delta": 0.05738258311861622,
+        "se": 0.010058061945947203,
+        "t_stat": 5.705133198323358,
+        "passes_gt_2se": true,
+        "n_blocks": 4
+      },
+      "stage3_vs_stage2": {
+        "mean_delta": -0.003275873011187709,
+        "se": 0.00549276392124397,
+        "t_stat": -0.5963979261001641,
+        "passes_gt_2se": false,
+        "n_blocks": 4
+      }
+    },
+    "gate_far_gt_1km": {
+      "stage2_vs_stage1": {
+        "mean_delta": 0.007405528560726249,
+        "se": 0.003761553568962731,
+        "t_stat": 1.968742017083214,
+        "passes_gt_2se": false,
+        "n_blocks": 4
+      },
+      "stage3_vs_stage1": {
+        "mean_delta": 0.008361746412424936,
+        "se": 0.004444319766547876,
+        "t_stat": 1.8814457221020169,
+        "passes_gt_2se": false,
+        "n_blocks": 4
+      },
+      "stage3_vs_stage2": {
+        "mean_delta": 0.0009562178516986887,
+        "se": 0.0009654269997991912,
+        "t_stat": 0.9904610622010592,
+        "passes_gt_2se": false,
+        "n_blocks": 4
+      }
+    },
+    "ci95": "not computed for the pooled figure; the protocol CI is the paired physical-spatial-block percentile bootstrap in gems57.evaluate_holdout, which was not invoked for this run"
   },
-  "gate_all_pixels": {
-   "stage2_vs_stage1": {
-    "mean_delta": 0.06065845612980394,
-    "se": 0.007049341494211312,
-    "t_stat": 8.604840066212521,
-    "passes_gt_2se": true,
-    "n_blocks": 4
-   },
-   "stage3_vs_stage1": {
-    "mean_delta": 0.05738258311861622,
-    "se": 0.010058061945947203,
-    "t_stat": 5.705133198323358,
-    "passes_gt_2se": true,
-    "n_blocks": 4
-   },
-   "stage3_vs_stage2": {
-    "mean_delta": -0.003275873011187709,
-    "se": 0.00549276392124397,
-    "t_stat": -0.5963979261001641,
-    "passes_gt_2se": false,
-    "n_blocks": 4
-   }
+  "leakage_canary": {
+    "rule": "AUC above 0.90 on a single channel is leakage until disproven",
+    "max_auc_over_channels": 0.6114691972289384,
+    "channels_above_0_90": [],
+    "verdict": "no channel flagged"
   },
-  "gate_far_gt_1km": {
-   "stage2_vs_stage1": {
-    "mean_delta": 0.007405528560726249,
-    "se": 0.003761553568962731,
-    "t_stat": 1.968742017083214,
-    "passes_gt_2se": false,
-    "n_blocks": 4
-   },
-   "stage3_vs_stage1": {
-    "mean_delta": 0.008361746412424936,
-    "se": 0.004444319766547876,
-    "t_stat": 1.8814457221020169,
-    "passes_gt_2se": false,
-    "n_blocks": 4
-   },
-   "stage3_vs_stage2": {
-    "mean_delta": 0.0009562178516986887,
-    "se": 0.0009654269997991912,
-    "t_stat": 0.9904610622010592,
-    "passes_gt_2se": false,
-    "n_blocks": 4
-   }
+  "correlation_overlap_vs_registry": {
+    "registry_dir": "registry/rasters",
+    "n_registry_rasters": 60,
+    "max_abs_spearman": 0.0860995984050536,
+    "max_dot_overlap_3px": 0.98465625,
+    "exact_byte_matches": [],
+    "drift_limit_spearman": 0.9,
+    "drift_limit_dot_overlap": 0.7,
+    "literal_verdict": "LANE DRIFT - log duplicate and stop",
+    "rasters_flagged_by_literal_rule": [
+      "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif"
+    ],
+    "flagged_detail": [
+      {
+        "registry": "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
+        "absolute_spearman_rho": 0.020737250249696824,
+        "candidate_dots_within_3px": 0.98465625,
+        "registry_dots": 311617,
+        "exact_duplicate": false
+      }
+    ],
+    "density_null_control": {
+      "candidate": "GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
+      "registry": "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
+      "candidate_dots": 20000,
+      "registry_dots": 311617,
+      "registry_dot_density_per_1000_cells": 25.3777,
+      "observed_overlap_within_3px": 0.9948,
+      "overlap_limit": 0.7,
+      "literal_rule_fires": true,
+      "null_draws": 100,
+      "null_mean_overlap": 0.958387,
+      "null_sd_overlap": 0.0013380885620914668,
+      "null_p95_overlap": 0.960265,
+      "observed_minus_null_sd": 27.212698046746304,
+      "interpretation": "the observed overlap exceeds the random-null level; treat as genuine overlap"
+    },
+    "interpretation": "Literal 3-pixel overlap is 0.98465625 against the 311,617-dot gems61 prior raster, exceeding the fixed 0.70 stop; neither its density nor low Spearman is an exception. The retained density-null control was measured on an older 20k-dot stage2 artifact and cannot justify the new 32k-dot stage3 raster."
   },
-  "ci95": "not computed for the pooled figure; the protocol CI is the paired physical-spatial-block percentile bootstrap in gems57.evaluate_holdout, which was not invoked for this run"
- },
- "leakage_canary": {
-  "rule": "AUC above 0.90 on a single channel is leakage until disproven",
-  "max_auc_over_channels": 0.6114691972289384,
-  "channels_above_0_90": [],
-  "verdict": "no channel flagged"
- },
- "correlation_overlap_vs_registry": {
-  "registry_dir": "registry/rasters",
-  "n_registry_rasters": 60,
-  "max_abs_spearman": 0.0860995984050536,
-  "max_dot_overlap_3px": 0.98465625,
-  "exact_byte_matches": [],
-  "drift_limit_spearman": 0.9,
-  "drift_limit_dot_overlap": 0.7,
-  "literal_verdict": "LANE DRIFT - log duplicate and stop",
-  "rasters_flagged_by_literal_rule": [
-   "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif"
+  "raster": {
+    "primary_path": "evidence/archives/2026-10-20/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif",
+    "primary_sha256": "ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47",
+    "primary_bytes": 322971,
+    "fallback_path": "evidence/archives/2026-10-20/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif",
+    "fallback_sha256": "712ef781e870a9d5cb42142bd72490dfc39cdb2b23cf4f6087d9dcc40d4ec194",
+    "dot_count": 32000,
+    "emission_radius_px": 3,
+    "emission_budget": 32000
+  },
+  "validator_output": {
+    "tool": "gems.validate_submission (shared, unmodified)",
+    "passed": true,
+    "n_checks": 16,
+    "failures": [],
+    "skipped": []
+  },
+  "submission_name": "GEMSDOE68-AC-stack3-r3-N32000",
+  "note": "GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated",
+  "note_chars": 98,
+  "verdict": "negative",
+  "limitations": [
+    "The scored truth is login-walled; no ORGANIZER-CONFIRMED score exists for any raster produced in this checkout.",
+    "The holdout truth is the withheld catalogue itself, so it measures recovery of mapped faults, not discovery of genuinely unmapped ones.",
+    "The registry of prior rasters is the one committed in registry/rasters; completeness is not certified by the organisers.",
+    "The 3-px dot-overlap rule is degenerate for this family: the footprint contains cells that lie within 3 px of some registry raster's dots almost everywhere, so the rule is reported as measured and interpreted with that caveat rather than silently passed.",
+    "Stage3 -zeros raster was re-read after the main merge and still has 7,113,308 NaNs; it is not an all-finite fallback. Both variants moved out of GitHub Pages.",
+    "The current canonical H68-M1 run-card is evidence/run-card-2026-10-20.json. This older stage3 card lacks a pooled 95% CI and is not release evidence."
   ],
-  "flagged_detail": [
-   {
-    "registry": "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
-    "absolute_spearman_rho": 0.020737250249696824,
-    "candidate_dots_within_3px": 0.98465625,
-    "registry_dots": 311617,
-    "exact_duplicate": false
-   }
-  ],
-  "density_null_control": {
-   "candidate": "GEMSDOE68-AC-stack2-20261012T042050Z-nan.tif",
-   "registry": "gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif",
-   "candidate_dots": 20000,
-   "registry_dots": 311617,
-   "registry_dot_density_per_1000_cells": 25.3777,
-   "observed_overlap_within_3px": 0.9948,
-   "overlap_limit": 0.7,
-   "literal_rule_fires": true,
-   "null_draws": 100,
-   "null_mean_overlap": 0.958387,
-   "null_sd_overlap": 0.0013380885620914668,
-   "null_p95_overlap": 0.960265,
-   "observed_minus_null_sd": 27.212698046746304,
-   "interpretation": "the observed overlap exceeds the random-null level; treat as genuine overlap"
+  "budget": {
+    "experiments_run": 1,
+    "limit_experiments": 3,
+    "limit_hours": 2,
+    "note": "one holdout experiment (4 outer folds x 4 inner blocks) plus one release run"
   },
-  "interpretation": "The literal rule fires on exactly one registry raster, gems61-lane-buried-step-gravinversion-hgm-r3-k400k-b2zeros.tif, which carries 311617 dots (25.4 dots per 1000 footprint cells). The density-null control draws 100 random 20000-dot sets from the same eligible region and scores them with the same rule: the null overlap is 0.958 +- 0.001, so 95.8% of ANY dot set, related or not, lands within 3 px of that raster's dots. The observed 0.9948 is 3.6 percentage points above that baseline, and the rank correlation with that raster is 0.004. No registry raster is an exact pixel duplicate. The rule is therefore degenerate against this one dense raster and its firing is a density artefact, not duplication. Recorded as IR-28 and shipped with that caveat rather than silently passed."
- },
- "raster": {
-  "primary_path": "docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif",
-  "primary_sha256": "ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47",
-  "primary_bytes": 322971,
-  "fallback_path": "docs/downloads/GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-zeros.tif",
-  "fallback_sha256": "712ef781e870a9d5cb42142bd72490dfc39cdb2b23cf4f6087d9dcc40d4ec194",
-  "dot_count": 32000,
-  "emission_radius_px": 3,
-  "emission_budget": 32000
- },
- "validator_output": {
-  "tool": "gems.validate_submission (shared, unmodified)",
-  "passed": true,
-  "n_checks": 16,
-  "failures": [],
-  "skipped": []
- },
- "submission_name": "GEMSDOE68-AC-stack3-r3-N32000",
- "note": "GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage3, r=3px, 32000 dots; holdout-gated",
- "note_chars": 98,
- "verdict": "promote-with-caveats",
- "limitations": [
-  "The scored truth is login-walled; no ORGANIZER-CONFIRMED score exists for any raster produced in this checkout.",
-  "The holdout truth is the withheld catalogue itself, so it measures recovery of mapped faults, not discovery of genuinely unmapped ones.",
-  "The registry of prior rasters is the one committed in registry/rasters; completeness is not certified by the organisers.",
-  "The 3-px dot-overlap rule is degenerate for this family: the footprint contains cells that lie within 3 px of some registry raster's dots almost everywhere, so the rule is reported as measured and interpreted with that caveat rather than silently passed."
- ],
- "budget": {
-  "experiments_run": 1,
-  "limit_experiments": 3,
-  "limit_hours": 2,
-  "note": "one holdout experiment (4 outer folds x 4 inner blocks) plus one release run"
- },
- "submission_note_tag": "GEMSDOE68-AC-stack3-r3-N32000-nan",
- "receipt": {
-  "file": "GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif",
-  "sha256": "ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47",
-  "shape_hw": [
-   3730,
-   3292
+  "submission_note_tag": "GEMSDOE68-AC-stack3-r3-N32000-nan",
+  "receipt": {
+    "file": "GEMSDOE68-AC-stack3-r3-N32000-20261020T182552Z-nan.tif",
+    "sha256": "ace26de7233b69d2d2d5d42d5ccf9b898ef40ad9d358fbc8305fe247db6e2c47",
+    "shape_hw": [
+      3730,
+      3292
+    ],
+    "crs": "EPSG:32611",
+    "footprint_cells": 5165852,
+    "emitted_cells_gt0": 32000,
+    "min_inside": 0.0,
+    "max_inside": 1.0,
+    "nan_inside": 0,
+    "nan_outside_count": 7113308,
+    "receipt_kind": "local receipt written by submission_writer; NOT an organiser receipt"
+  },
+  "gate_all_pixels_met": true,
+  "gate_far_gt_1km_met": false,
+  "leakage_canary_clean": true,
+  "validator_passed": true,
+  "caveats": [
+    "The preregistered gate is met on the all-pixel stratum (stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60, positive on all 4 outer blocks) and narrowly MISSED on the >1 km stratum (mean +0.0074, SE 0.0038, t = 1.97, required > 2.0, positive on all 4 blocks). The far stratum is underpowered: only a minority of the 1925-3780 withheld pixels per fold are more than 1 km from a visible mapped fault, and the far DTI itself is ~0.01 because a 20000-dot budget over 5.16 M footprint cells almost never lands within 300 m of a sparse far pixel.",
+    "The literal duplicate rule fires on one dense registry raster (311617 dots); the density-null control shows 95.8% of any random dot set would also fire it. Recorded as IR-28.",
+    "No ORGANIZER-CONFIRMED score exists; every DTI here is a local HOLDOUT-DTI."
   ],
-  "crs": "EPSG:32611",
-  "footprint_cells": 5165852,
-  "emitted_cells_gt0": 32000,
-  "min_inside": 0.0,
-  "max_inside": 1.0,
-  "nan_inside": 0,
-  "nan_outside_count": 7113308,
-  "receipt_kind": "local receipt written by submission_writer; NOT an organiser receipt"
- },
- "gate_all_pixels_met": true,
- "gate_far_gt_1km_met": false,
- "leakage_canary_clean": true,
- "validator_passed": true,
- "caveats": [
-  "The preregistered gate is met on the all-pixel stratum (stage 2 vs stage 1, mean +0.0607, SE 0.0070, t = 8.60, positive on all 4 outer blocks) and narrowly MISSED on the >1 km stratum (mean +0.0074, SE 0.0038, t = 1.97, required > 2.0, positive on all 4 blocks). The far stratum is underpowered: only a minority of the 1925-3780 withheld pixels per fold are more than 1 km from a visible mapped fault, and the far DTI itself is ~0.01 because a 20000-dot budget over 5.16 M footprint cells almost never lands within 300 m of a sparse far pixel.",
-  "The literal duplicate rule fires on one dense registry raster (311617 dots); the density-null control shows 95.8% of any random dot set would also fire it. Recorded as IR-28.",
-  "No ORGANIZER-CONFIRMED score exists; every DTI here is a local HOLDOUT-DTI."
- ]
+  "download_cleared": false,
+  "verdict_reason": "Stage2 far t=1.9687 and stage3 far t=1.8814 both fail >2SE; stage3 32k final dots overlap a prior raster at 0.98465625 > 0.70. No selector approval.",
+  "historical_parallel_candidate": true,
+  "note_historical_not_for_submission": true
 }
