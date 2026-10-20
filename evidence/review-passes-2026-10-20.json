@@ -37,8 +37,9 @@
         "evidence/ac68_m1_holdout.json: 11,321 withheld, 4,832 >1 km; stage2 paired outer t=0.117 overall and t=0.385 far, both <2; pooled stage 1 0.081157, stage 2 0.081385",
         "644 per-feature/fold canary records saved; max measurable directional AUC 0.669601; 132 non-finite and not cleared; zero observed >0.90",
         "scripts/lane68_m1_candidate.py stopped before final fitting (expected exit 2); neither new pre-placement nor dot scan nor strict validator run — no file manufactured",
-        "PYTHONPATH=src .venv/bin/python -m pytest -q tests: 54 passed, 7 skipped",
+        "PYTHONPATH=src .venv/bin/python -m pytest -q tests: 56 passed, 7 skipped",
         "scripts/build_site_verified.py and scripts/check_site_release.py: negative run card at every legacy/current URL, no public TIFF or ZIP files or download anchors",
+        "parallel-main reconciliation: stage3 32k raster from PR #6 failed inherited far t=1.88 and new dot-overlap 0.98465625 >0.70; variants archived and old card changed to negative, not adopted for this lane",
         "README/site/knowledge qualified owner-reported H33 0.2778, dated public leaderboard observation 0.4413, and no organizer-confirmed scores"
       ],
       "decision": "NEGATIVE — do not download/submit. No weekly competition slot used. Further experiments deferred under the strict budget and to avoid holdout tuning."

@@ -15,7 +15,17 @@
 > **before final raster training**. No new TIFF was emitted, offered or sent
 > to DrivenData, and no organizer submission receipt exists.
 
-The live decision and step-by-step participant guide will be in
+**Parallel-main reconciliation:** PR #6 also produced a distinct 32,000-dot
+stage-3 artifact on 2026-10-20. It is **not an alternate cleared submission**:
+its inherited >1 km stage-3 paired t = 1.88 (&gt;2 required), and
+`evidence/ac68_lane_check.json` measures 0.98465625 final-dot overlap with a
+prior raster (>0.70 stop). Its `-zeros` twin still has 7,113,308 NaNs. Those
+files and receipts were moved from public downloads to
+`evidence/archives/2026-10-20/` during this merge; its old run card was set
+to negative. The separately repaired October-12 all-finite variant is a
+format diagnostic only, not a cleared download either.
+
+The live decision and step-by-step participant guide are in
 [`docs/index.html`](docs/index.html) and
 [`docs/executive-summary.html`](docs/executive-summary.html). A green format
 check alone cannot authorize a weekly contest slot. If any gate fails, **log
@@ -158,7 +168,7 @@ links each claim to a page. [The research site](docs/research.html) separates
 physical rationale from validation, and [the audit page](docs/irregularities.html)
 flags leakage, the mislabeled zeros twin, the literal duplicate, inherited
 holdout issues and the login-gated source provenance. Three iterative review passes found and regression-tested shared-tool bugs,
-then checked the final run card, full test suite (54 passed, 7 skipped), guarded
+then checked the final run card, full test suite (56 passed, 7 skipped), guarded
 candidate builder, format preflight (no new candidate to validate) and every
 Pages front door (zero public TIFF/ZIP links). The first scored attempt was
 quarantined because the emitter's tie handling violated NMS; the corrected
