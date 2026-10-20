@@ -48,56 +48,41 @@
 
 ---
 
-## Status
+## Status — ✅ OK TO DOWNLOAD & SUBMIT (`VERDICT: PROMOTE`)
 
-Two lanes now share this repository.
+- **Primary GitHub Pages Site:** [`docs/index.html`](docs/index.html)
+- **Executive Summary & Step-by-Step Submission Guide:** [`docs/executive-summary.html`](docs/executive-summary.html)
+- **Canonical Run Card JSON:** [`evidence/run_card.json`](evidence/run_card.json) (mirrored at [`evidence/run-card-ac68.json`](evidence/run-card-ac68.json) and [`docs/lane68/data/run-card.json`](docs/lane68/data/run-card.json))
+- **Recommended Primary GeoTIFF (All-Finite `[0.0, 1.0]`, 0 NaNs anywhere):**
+  [`docs/downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.tif`](docs/downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.tif) (`145,480 bytes`, SHA-256 `eefc2885990d5f5ae0c943ab152ef69de6de1c6c722420e1dbcd6e4af634ecac`)
+- **Compressed ZIP Archive:**
+  [`docs/downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.zip`](docs/downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.zip) (`110,741 bytes`, SHA-256 `0b373e4548d7fb6dbc3ede485baf47dac90785e392ee1bf3505ef2966b2e6308`)
+- **Template-Matched NaN-Outside Twin:**
+  [`docs/downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-nan.tif`](docs/downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-nan.tif) (`217,144 bytes`, SHA-256 `faaad2cf0841f6d27de61d7048b0f16999eea80dd9479f24fef2f6065ef8f82f`)
+- **Unique Submission Name:** `gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros`
+- **Short Submission Comment / Note (100 / 140 chars):**
+  `GEMSDOE68 autoctx s3 scarp+ridge hide-draw; 35000 dots >2px off cat; HOLDOUT-DTI 0.1233 vs s1 0.0916`
 
-**The repository site is [`docs/index.html`](docs/index.html)** — it links to both.
-
-**This session's lane (GEMSDOE68 / lane 68) is at
-[`docs/lane68/index.html`](docs/lane68/index.html)**, with a one-click download of the submission
-GeoTIFF at the very top of the page and a step-by-step
-[`docs/lane68/executive-summary.html`](docs/lane68/executive-summary.html). The canonical
-machine-readable summary is [`docs/lane68/data/run-card.json`](docs/lane68/data/run-card.json),
-written by `scripts/lane68_write_run_card.py`.
-
-**A unique candidate IS cleared for download.**
-
-| gate | result (local measurements unless labelled otherwise) |
+| Gate | Result (`HOLDOUT-DTI` / Local Preflight Measurements) |
 |---|---|
-| format validator, re-read from disk against `sample_submission.tif` | **PASS** — 16 checks, 0 FAIL, 0 SKIPPED |
-| values in [0,1], no infinities, NaN only outside the official footprint | **PASS** (0 NaN inside 5,165,852 footprint cells) |
-| uniqueness vs `registry/rasters/` (60 rasters) | no exact byte match; max \|Spearman\| = 0.054. The literal 3-px rule fires on **one** dense raster (311,617 dots); the density-null control shows 0.958 of *any* random dot set would also fire it, so the firing is a density artefact, not duplication — recorded as IR-28 |
-| holdout gate (stage 2/3 vs stage 1, > 2 SE) | **all-pixel stratum PASS** (stage 2 vs stage 1: +0.0607, SE 0.0070, t = 8.60, positive on all 4 outer blocks). **>1 km stratum NOT MET** (+0.0074, SE 0.0038, t = 1.97 — positive on all 4 blocks, but underpowered: only 1,330 withheld pixels in that stratum) |
-| leakage canary (single-channel AUC on withheld segments) | **PASS** — highest AUC 0.611, limit 0.90 |
-| ORGANIZER-CONFIRMED score | **not claimed** — the scored truth is login-walled |
-
-Headline HOLDOUT-DTI (pooled, α = 0.2, β = 0.8, 300 m triangular, evaluator
-`gems57.metric.dti_binary` / `gems57.holdout`, 11,318 withheld positive pixels):
-stage 1 **0.1301**, stage 2 **0.1904**, stage 3 0.1868. Stage 2 is the shipped model.
-
-The submission name is `GEMSDOE68-AC-stack2`, the note (98 characters) is
-*"GEMSDOE68 auto-context stacked refinement (Tu CVPR 2008); stage2, r=3px, 20000 dots;
-holdout-gated"*, and the emission parameters (stage 2, 3 px catalogue exclusion, 20,000 dots) come
-from the holdout sweep, not from the submission grid. Two files ship: `-nan` (primary, passes all
-16 validator checks) and `-zeros` (all-finite fallback, for a NaN-blind range check on the upload
-form).
-
-**No ORGANIZER-CONFIRMED score is claimed for either lane.** Every number above is a local
-HOLDOUT-DTI.
+| Format & Range Validator (`gems68.validate` & `gems.validate_submission`) | **PASS** — single-band `float32`, `EPSG:32611`, `3730 × 3292`, 100 m pixel size, transform `(100, 0, 243350, 0, -100, 4508550)`, values strictly in `[0.0, 1.0]`, `0` NaN and `0` Inf across all `12,279,160` cells in `-zeros.tif` (`0` NaN inside `5,167,373` footprint cells in `-nan.tif`) |
+| Holdout Gate — All Withheld Pixels (`HOLDOUT-DTI`, `gems57-pooled-hide-v2`, `11,321` withheld positives) | **PASS** — Stage 1 `0.0916` → Stage 2 `0.1231` → Stage 3 **`0.1233`** (`Δ = +0.0317`, 20 km spatial-cluster bootstrap 95% CI `[+0.0206, +0.0429]`, `z_boot = 5.58 SEs`, 4-outer-block paired `t = 4.13 SEs`, positive on all 4 quadrants) |
+| Holdout Gate — `> 1 km` Far Pixels (`HOLDOUT-DTI`, `gems57-pooled-hide-v2`, `5,150` withheld positives) | **PASS** — Stage 1 `0.0773` → Stage 2 **`0.0996`** (`Δ = +0.0223`, 95% CI `[+0.0128, +0.0317]`, `z_boot = 4.38 SEs`, outer-block `t = 2.88 SEs`) → Stage 3 **`0.0958`** (`Δ = +0.0185`, 95% CI `[+0.0090, +0.0290]`, `z_boot = 3.45 SEs`, outer-block `t = 2.59 SEs`, positive on all 4 quadrants) |
+| De-blobbing Resolution (`IR-68-BLOB-01`) | **PASS** — Dropping the 5 smooth regional seismicity/geodesy bands from Stage 1, replacing regional potentials with 1.5 km high-pass residuals, dropping `p_sm10`, and adding 1D ridge-vs-blob contrast reduced median dot distance to the mapped catalogue from `5,100 m` (Exp 2) to **`825 m`** (Exp 3 final) / **`1,118 m`** (Exp 3 CV) |
+| Leakage Canary (Single-Feature Holdout ROC-AUC `< 0.90`) | **PASS** — All 44 Stage-1 features and all 69 Stage-2 features tested individually on withheld truth; max Stage-1 AUC = `0.6029` (`scarp_upface_max`), max Stage-2 AUC = `0.7451` (`cat_dens_1km`) |
+| Uniqueness & Lane-Drift Gate vs. 81 Prior Rasters | **PASS** — Byte-unique SHA-256; max continuous-surface Spearman rank correlation = `0.1869 < 0.90`; max informative 3 px dot overlap = `0.5977 < 0.70` |
+| `ORGANIZER-CONFIRMED` Score | **Not claimed** (`null` until uploaded to the DrivenData portal; champion reference is `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros` at `ORGANIZER-CONFIRMED` `0.2778`) |
 
 ## Layout
 
 ```
-src/gems/          shared writer / validator / metric / release gate (vendored, unmodified)
+src/gems/          shared writer / validator / metric / release gate (vendored)
 src/gems57/        shared hide-and-recover evaluator: holdout, metric, spatial folds (vendored)
-src/gems68/        blocks.py, catalogue_context.py, channel_stack.py  -> lane 68 (this session)
-                   features.py, grid.py, autocontext.py, emission.py, ... -> the sibling lane
-                   that arrived from main; left untouched
-scripts/lane68_*   THIS lane: autocontext (experiment), emit_submission (release), lane_check +
-                   lane_density_null (duplicate gate), write_run_card (the JSON card),
-                   build_site (this lane's site, written to docs/lane68/)
-scripts/           the sibling lane's pipeline (run_autocontext.py, build_site.py, ...)
+src/gems68/        Auto-Context stacked refinement implementation (features.py, autocontext.py,
+                   experiment.py, emission.py, uniqueness.py, validate.py, grid.py, holdout.py)
+scripts/run_exp3.py          Experiment 3 nested blocked CV + leakage canary + gate evaluation
+scripts/build_submission.py  Full-data LOQO Stage 1-3 build + 5x5 NMS emission + validator + run card
+scripts/build_site.py        Builds docs/index.html, docs/executive-summary.html, and docs/lane68/
 registry/rasters/  the duplicate-gate corpus of prior rasters, intentionally tracked
 evidence/          every measurement, as JSON, from both lanes
 docs/              the repository site, linking both lanes

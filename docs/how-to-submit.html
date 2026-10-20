@@ -1,36 +1,398 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>How to submit · GEMSDOE68</title><style>
-:root{--bg:#0b1020;--card:#141b2f;--ink:#e8ecf5;--muted:#9aa7c7;--ok:#2ecc71;--bad:#e74c3c;--warn:#f1c40f;--acc:#4ea1ff}
-*{box-sizing:border-box}body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
-header{padding:20px 24px;border-bottom:1px solid #26304d;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
-header a{color:var(--muted);text-decoration:none;font-weight:600}header a:hover{color:var(--ink)}
-main{max-width:1100px;margin:0 auto;padding:24px}
-.card{background:var(--card);border:1px solid #26304d;border-radius:14px;padding:20px 22px;margin:18px 0}
-.banner{font-size:20px;font-weight:800;padding:18px 22px;border-radius:14px;margin:18px 0}
-.banner.ok{background:#123d2a;border:2px solid var(--ok)}.banner.bad{background:#4a1c1c;border:2px solid var(--bad)}
-.btn{display:inline-block;background:var(--acc);color:#061024;font-weight:800;padding:12px 18px;border-radius:10px;text-decoration:none;margin:6px 8px 6px 0}
-.btn.secondary{background:#26304d;color:var(--ink)}
-table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid #26304d;padding:7px 8px;text-align:left;vertical-align:top}
-th{color:var(--muted);font-weight:700}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
-pre{background:#0a0f1d;padding:12px;border-radius:10px;overflow:auto}
-.muted{color:var(--muted)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
-h1{font-size:28px;margin:8px 0}h2{font-size:21px;margin-top:26px}small{color:var(--muted)}
-</style></head><body>
-<header><strong>GEMSDOE68 · auto-context lane</strong><a href="index.html">Executive summary</a> <a href="how-to-submit.html" style=color:#fff>How to submit</a> <a href="hypotheses.html">Hypotheses</a> <a href="experiments.html">Experiments</a> <a href="knowledge.html">Why 0.2778</a> <a href="sources.html">Sources</a> <a href="irregularities.html">Irregularities</a> <a href="leaderboard.html">Score ledger</a><a href="https://github.com/buffedlizard55-lab/GEMSDOE68">GitHub ↗</a></header>
-<main>
-<h1>How to make a submission (step by step)</h1>
-<div class=card>
-<ol>
-<li>Download the primary file: <a class=btn href="downloads/gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.tif" download>⬇ gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.tif</a> (or the <a href="downloads/gems68-autoctx-s3-hidedraw-38000dots-20261012T022132Z-4c18def6-zeros.zip">ZIP</a> containing only that TIFF). Verify its SHA-256 matches <code>3495c83f82b723d84dea1e99adbe5fbd94e46133cf5f3deb9fe310b42135bc59</code>.</li>
-<li>Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">the competition's submission page</a> (login required) and click <b>New submission</b>.</li>
-<li><b>File to submit</b>: choose the downloaded <code>.tif</code> (or <code>.zip</code>). The form accepts a single-band GeoTIFF matching the sample's CRS (EPSG:32611), shape (3730×3292) and geotransform.</li>
-<li><b>Note</b> (optional, ≤140 characters): paste <code>GEMSDOE68 auto-context s3 hide-draw; 38000 dots &gt;2px off catalogue; HOLDOUT-DTI 0.1189 vs s1 0.0816; UNSCORED</code></li>
-<li>Submit. Copy the score from the receipt into <code>registry/score_ledger.csv</code> tagged <b>ORGANIZER-CONFIRMED</b> with the exact file name and SHA-256.</li>
-</ol>
-<h2>About the earlier "Predicted values must be in range [0, 1]" error</h2>
-<p>The primary file here is <b>all-finite</b>: 0.0 outside the footprint, values exactly 0.0 or 1.0 inside, no NaN, no nodata tag, no sentinel. The family's champion (0.2778) was uploaded in this "zeros" form. A NaN-outside variant is also published (the public spec permits NaN outside the footprint and several NaN-variants scored in the ledger), but if the portal rejects it for range, use the zeros file. The local validator re-reads the bytes on disk and checks: single band, float32, 3730×3292, EPSG:32611, pinned transform, no NaN/inf anywhere, min ≥ 0, max ≤ 1, zero positive pixels outside the footprint, zero positive pixels on the mapped catalogue.</p>
-<h2>Rules you should know</h2>
-<ul><li>Weekly submission cap is shown on the submission page; promotion to a slot is a separate selector decision (<a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">rules PDF 96647</a>).</li>
-<li>Metric: distance-weighted Tversky index, α = 0.2 (FP), β = 0.8 (FN), 300 m triangular kernel (<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">problem description</a>).</li>
-<li>Known/mapped faults are excluded from scoring; the truth is new faults mapped by the expert panel.</li></ul>
-</div></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Executive Summary &amp; How to Submit — GEMSDOE68</title>
+  <style>
+:root {
+  --bg: #0b1020;
+  --panel: #131b33;
+  --panel-alt: #182242;
+  --text: #eef2ff;
+  --muted: #9fb0d9;
+  --accent: #38bdf8;
+  --green: #22c55e;
+  --green-bg: rgba(34, 197, 94, 0.14);
+  --amber: #f59e0b;
+  --amber-bg: rgba(245, 158, 11, 0.14);
+  --red: #ef4444;
+  --border: #26345e;
+  --mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.6;
+}
+.container {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 24px 20px 72px;
+}
+nav.topnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+nav.topnav a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.94rem;
+}
+nav.topnav a:hover { text-decoration: underline; }
+.hero-banner {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.18), rgba(56, 189, 248, 0.12));
+  border: 2px solid var(--green);
+  border-radius: 14px;
+  padding: 24px 26px;
+  margin-bottom: 28px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+.status-pill {
+  display: inline-block;
+  background: var(--green);
+  color: #04130a;
+  font-weight: 800;
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.hero-banner h1 {
+  margin: 6px 0 10px;
+  font-size: 1.75rem;
+  line-height: 1.25;
+}
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 18px 0 14px;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--green);
+  color: #03150a;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 14px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.35);
+}
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel-alt);
+  color: var(--text);
+  border: 1px solid var(--accent);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 12px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+.btn-secondary:hover { background: rgba(56, 189, 248, 0.15); }
+.copy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+.copy-box {
+  background: rgba(11, 16, 32, 0.78);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.copy-box .label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.copy-box code {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: #fff;
+  word-break: break-all;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 24px;
+  margin-bottom: 24px;
+}
+.card h2 {
+  margin-top: 0;
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  color: var(--accent);
+}
+.card h3 {
+  font-size: 1.08rem;
+  color: #dbeafe;
+  margin-top: 18px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 0.9rem;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 9px 11px;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background: var(--panel-alt);
+  color: #cfe0ff;
+  font-weight: 700;
+}
+tr:nth-child(even) td { background: rgba(255, 255, 255, 0.02); }
+.tag-holdout {
+  display: inline-block;
+  background: rgba(56, 189, 248, 0.16);
+  color: var(--accent);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.tag-org {
+  display: inline-block;
+  background: var(--amber-bg);
+  color: var(--amber);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.tag-pass {
+  display: inline-block;
+  background: var(--green-bg);
+  color: var(--green);
+  border: 1px solid rgba(34, 197, 94, 0.45);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+pre {
+  background: #070b16;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+code { font-family: var(--mono); }
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 14px 0;
+}
+.kpi {
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.kpi .k-title { font-size: 0.8rem; color: var(--muted); }
+.kpi .k-val { font-size: 1.45rem; font-weight: 800; color: #fff; margin: 4px 0; font-family: var(--mono); }
+.kpi .k-sub { font-size: 0.78rem; color: var(--muted); }
+</style>
+</head>
+<body>
+  <div class="container">
+    <nav class="topnav">
+      <div><strong>GEMSDOE68 — Executive Summary &amp; Competition Submission Guide</strong></div>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <a href="index.html">← Back to Main Audit Site</a>
+        <a href="downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.tif" download>⬇ Download Primary TIF</a>
+        <a href="downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-runcard.json" download>⬇ Run Card JSON</a>
+      </div>
+    </nav>
+
+    
+    <div class="hero-banner" id="download-top">
+      <div class="status-pill">✅ OK TO DOWNLOAD &amp; SUBMIT — VERDICT: PROMOTE (ALL GATES PASSED)</div>
+      <h1>DOE GEMS (#306) — Auto-Context Stacked Refinement GeoTIFF Submission</h1>
+      <p style="margin:6px 0 12px; color:#dbeafe;">
+        <strong>Experiment 3 (De-blobbed Stage-3 Auto-Context + 2 m USGS 3DEP LiDAR Scarp + 1D Ridge Contrast + Hide-Draw Context)</strong>
+        passed all nested blocked CV holdout gates (<code>&gt; 2 SEs</code> on outer blocks and <code>95%</code> spatial-cluster bootstrap CI excluding zero on both all withheld pixels and <code>&gt; 1 km</code> far-from-catalogue pixels), passed the 113-feature leakage canary (max AUC <code>0.7451 &lt; 0.90</code>), passed surface &amp; dot uniqueness checks across all <code>81</code> prior rasters, and passed both format/range validators with zero NaNs and strict <code>[0.0, 1.0]</code> float32 values.
+      </p>
+      <div class="btn-row">
+        <a class="btn-primary" href="downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.tif" download>
+          ⬇ Download Primary GeoTIFF (-zeros.tif, 142 KB)
+        </a>
+        <a class="btn-secondary" href="downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.zip" download>
+          ⬇ Download Compressed ZIP (108 KB)
+        </a>
+        <a class="btn-secondary" href="downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-nan.tif" download>
+          ⬇ Download NaN-Outside Twin (-nan.tif, 212 KB)
+        </a>
+        <a class="btn-secondary" href="downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-runcard.json" download>
+          ⬇ Run Card JSON
+        </a>
+        <a class="btn-secondary" href="executive-summary.html">
+          📖 Executive Summary &amp; Step-by-Step Submission Guide →
+        </a>
+      </div>
+      <div class="copy-grid">
+        <div class="copy-box">
+          <div class="label">Unique Submission Name (copy &amp; paste into portal)</div>
+          <code>gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros</code>
+        </div>
+        <div class="copy-box">
+          <div class="label">Short Submission Comment / Note (100 / 140 chars)</div>
+          <code>GEMSDOE68 autoctx s3 scarp+ridge hide-draw; 35000 dots &gt;2px off cat; HOLDOUT-DTI 0.1233 vs s1 0.0916</code>
+        </div>
+        <div class="copy-box">
+          <div class="label">Primary GeoTIFF SHA-256 (byte-unique across all 81 rasters)</div>
+          <code>eefc2885990d5f5ae0c943ab152ef69de6de1c6c722420e1dbcd6e4af634ecac</code>
+        </div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="k-title">Stage 3 HOLDOUT-DTI (All Withheld)</div>
+          <div class="k-val">0.1233</div>
+          <div class="k-sub"><span class="tag-holdout">HOLDOUT-DTI</span> vs Stage 1 <code>0.0916</code> (<code>Δ = +0.0317</code>, 95% CI <code>[+0.0206, +0.0429]</code>, <code>z = 5.58 SE</code>, <code>t = 4.13 SE</code>)</div>
+        </div>
+        <div class="kpi">
+          <div class="k-title">Stage 2 / 3 HOLDOUT-DTI (&gt; 1 km Far)</div>
+          <div class="k-val">0.0996 / 0.0958</div>
+          <div class="k-sub"><span class="tag-holdout">HOLDOUT-DTI</span> vs Stage 1 <code>0.0773</code> (S3 <code>Δ = +0.0185</code>, 95% CI <code>[+0.0090, +0.0290]</code>, <code>z = 3.45 SE</code>, <code>t = 2.59 SE</code>)</div>
+        </div>
+        <div class="kpi">
+          <div class="k-title">Range &amp; NaN Portal Safety</div>
+          <div class="k-val">[0.0, 1.0]</div>
+          <div class="k-sub"><span class="tag-pass">PASS</span> 12,279,160 finite float32 cells, 0 NaN, 0 Inf, 35,000 dots (&gt;2 px off catalogue, median 825 m)</div>
+        </div>
+        <div class="kpi">
+          <div class="k-title">Uniqueness vs 81 Prior Rasters</div>
+          <div class="k-val">ρ = 0.1869</div>
+          <div class="k-sub"><span class="tag-pass">UNIQUE</span> Surface Spearman <code>&lt; 0.90</code>; max informative 3 px dot overlap <code>0.5977 &lt; 0.70</code></div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="card">
+      <h2>Step-by-Step Guide: How to Submit to DrivenData DOE GEMS (#306)</h2>
+      <ol style="font-size:1.02rem; line-height:1.85;">
+        <li>
+          <strong>Confirm Gate Status:</strong> Verify the green banner above reads
+          <span class="tag-pass">VERDICT: PROMOTE (ALL GATES PASSED)</span>.
+          Our Experiment 3 Stage-3 Auto-Context model beat Stage 1 by <code>+0.0317</code>
+          (<span class="tag-holdout">HOLDOUT-DTI</span> <code>0.1233</code> vs. <code>0.0916</code>,
+          <code>z_boot = 5.58 SEs</code>, outer-block <code>t = 4.13 SEs</code>) on all withheld pixels and by
+          <code>+0.0185</code> (<span class="tag-holdout">HOLDOUT-DTI</span> <code>0.0958</code> vs. <code>0.0773</code>,
+          Stage 2 <code>0.0996</code>, <code>z_boot = 3.45 SEs</code>, outer-block <code>t = 2.59 SEs</code>) on pixels <code>&gt; 1 km</code> from any mapped fault.
+        </li>
+        <li>
+          <strong>Download the Primary GeoTIFF File:</strong> Click
+          <a href="downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.tif" download style="color:var(--green); font-weight:700;">gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.tif</a>
+          (<code>145,480 bytes</code>, SHA-256 <code>eefc2885990d5f5ae0c943ab152ef69de6de1c6c722420e1dbcd6e4af634ecac</code>).
+          <br><em>Why choose the <code>-zeros.tif</code> file?</em> Every single cell of the <code>3,730 × 3,292 = 12,279,160</code> grid is a finite <code>float32</code> value in <code>[0.0, 1.0]</code> (<code>0.0</code> outside the footprint, <code>0.0</code> on background/mapped faults, and <code>1.0</code> on the 35,000 predicted new-fault dots). Because there are <strong>zero <code>NaN</code> or <code>Inf</code> values anywhere in the file</strong>, it permanently prevents the DrivenData portal validator from raising <code>"Predicted values must be in range [0, 1]"</code>.
+        </li>
+        <li>
+          <strong>Open the DrivenData Competition Submission Portal:</strong> Go to the DrivenData DOE GEMS Challenge (#306) submission page and upload <code>gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.tif</code> (or, if the portal requests a NaN-masked outside-footprint raster, upload the companion <a href="downloads/gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-nan.tif" download style="color:var(--accent);">gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-nan.tif</a>).
+        </li>
+        <li>
+          <strong>Enter the Unique Submission Name &amp; Short Comment (≤ 140 chars):</strong>
+          <ul>
+            <li><strong>Submission Name:</strong> <code>gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros</code></li>
+            <li><strong>Comment / Note (100 chars):</strong> <code>GEMSDOE68 autoctx s3 scarp+ridge hide-draw; 35000 dots &gt;2px off cat; HOLDOUT-DTI 0.1233 vs s1 0.0916</code></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Record the Organizer-Confirmed Receipt:</strong> After the portal scores the file, record the returned score in <code>registry/score_ledger.csv</code> with label <span class="tag-org">ORGANIZER-CONFIRMED</span>. Never record a local holdout number as a leaderboard score.
+        </li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h2>Pre-Submission Verification Checklist (All Checks Green)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Requirement</th>
+            <th>Measured Value on <code>gems68-autoctx-s3-scarp-ridge-35000dots-20261020T193800Z-e8956566-zeros.tif</code></th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CRS &amp; Grid Alignment</td>
+            <td><code>EPSG:32611</code>, <code>3730 × 3292</code>, 100 m pixel size, transform <code>(100, 0, 243350, 0, -100, 4508550)</code></td>
+            <td><code>EPSG:32611</code>, <code>[3730, 3292]</code>, <code>[100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0]</code></td>
+            <td><span class="tag-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td>Data Type &amp; Band Count</td>
+            <td>Single-band <code>float32</code> GeoTIFF</td>
+            <td><code>count = 1</code>, <code>dtype = float32</code></td>
+            <td><span class="tag-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td>Value Range <code>[0, 1]</code> &amp; NaN Check</td>
+            <td>All values in <code>[0.0, 1.0]</code>; zero NaN inside footprint (zero NaN anywhere in <code>-zeros.tif</code>)</td>
+            <td><code>min = 0.0</code>, <code>max = 1.0</code>, <code>n_nan = 0</code>, <code>n_inf = 0</code>, <code>n_finite = 12,279,160</code></td>
+            <td><span class="tag-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td>Catalogue Exclusion</td>
+            <td>Zero dots on mapped catalogue (excluded within <code>≤ 2.0 px = 200 m</code>)</td>
+            <td><code>0</code> dots on catalogue; minimum distance <code>2.24 px (224 m)</code>, median <code>825 m</code></td>
+            <td><span class="tag-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td>Byte &amp; Lane Uniqueness</td>
+            <td>Unique SHA-256; surface Spearman <code>&lt; 0.90</code>; informative 3 px dot overlap <code>&lt; 70%</code></td>
+            <td>SHA-256 unique across all 81 rasters; max Spearman <code>0.1869</code>; max overlap <code>0.5977</code></td>
+            <td><span class="tag-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td>Holdout Gate (All &amp; &gt;1 km)</td>
+            <td>Stage 2/3 beats Stage 1 by <code>&gt; 2 SEs</code> on outer blocks and 95% cluster CI excludes 0</td>
+            <td>All: <code>+0.0317</code> (<code>z=5.58</code>, <code>t=4.13</code>); &gt;1 km: <code>+0.0185</code> (<code>z=3.45</code>, <code>t=2.59</code>)</td>
+            <td><span class="tag-pass">PASS</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
