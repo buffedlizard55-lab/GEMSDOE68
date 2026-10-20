@@ -8,15 +8,21 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.11"}
       - run: pip install -r requirements.txt
-      - run: pytest -q tests   # data-dependent tests skip when .cache is absent
-      - name: canonical run card + raster hash
+      - run: PYTHONPATH=src pytest -q tests   # data-dependent checks skip cleanly when .cache is absent
+      - name: canonical S68 v3 + historical run card & raster SHA-256 verification
         run: |
           python - <<'PYEOF'
           import hashlib, json
-          c = json.load(open('evidence/run_card_exp4.json'))
-          assert c['verdict'] in ('promote', 'promote-with-caveats', 'negative'), c['verdict']
-          r = c['raster']['primary']
-          h = hashlib.sha256(open('docs/downloads/' + r['name'], 'rb').read()).hexdigest()
-          assert h == r['sha256'], (h, r['sha256'])
-          print('canonical card OK:', c['verdict'], c['submission_name'])
+          s68 = json.load(open('evidence/s68_run_card.json'))
+          assert s68['winner']['ok_to_download_and_submit'] is True
+          p = s68['submission_artifacts']['recommended_portal_upload_tif']
+          h68 = hashlib.sha256(open(p['relpath'], 'rb').read()).hexdigest()
+          assert h68 == p['sha256'], (h68, p['sha256'])
+          print('S68 v3 champion card OK:', s68['verdict'], s68['submission_name'], f"ALL={s68['winner']['all_dti']:.4f}", f"FAR={s68['winner']['far_gt_1km_dti']:.4f}")
+
+          c4 = json.load(open('evidence/run_card_exp4.json'))
+          assert c4['verdict'] in ('promote', 'promote-with-caveats', 'negative'), c4['verdict']
+          r4 = c4['raster']['primary']
+          h4 = hashlib.sha256(open('docs/downloads/' + r4['name'], 'rb').read()).hexdigest()
+          assert h4 == r4['sha256'], (h4, r4['sha256'])
           PYEOF

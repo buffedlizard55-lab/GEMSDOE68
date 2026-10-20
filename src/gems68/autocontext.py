@@ -220,6 +220,10 @@ class FoldSpec:
     train_mask: np.ndarray
     n_hidden: int
 
+    @property
+    def index(self) -> int:
+        return self.fold_id
+
 
 def quadrant_blocks(footprint: np.ndarray) -> np.ndarray:
     ys, xs = np.nonzero(footprint)

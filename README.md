@@ -1,108 +1,133 @@
-# GEMSDOE68 — Auto-Context Stacked Refinement for Fault Discovery (DOE GEMS Prize, DrivenData #306)
+# GEMSDOE68 — Auto-context stacked fault discovery (DOE GEMS Prize, DrivenData #306)
 
-## ✅ RELEASE VERDICT: `PROMOTE` — OK TO DOWNLOAD AND SUBMIT
-
-Every gate required by the **Auto-context stacked refinement lane** (Tu, CVPR 2008, [doi:10.1109/CVPR.2008.4587436](https://doi.org/10.1109/CVPR.2008.4587436)) and the **Parallel-Run Protocol** is **PASSED**:
-
-| Release Gate | Measured Result (`evidence/exp3_autocontext_strands.json` & `evidence/run_card.json`) | Status |
-|---|---|---|
-| **Primary Downloadable GeoTIFF (All-Finite `[0, 1]`, 0 NaNs)** | [`docs/downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif`](docs/downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.tif) (`345,388` bytes) · [`.zip`](docs/downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros.zip) (`307,983` bytes) | **READY** |
-| **Secondary NaN-Outside GeoTIFF Twin** | [`docs/downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-nan.tif`](docs/downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-nan.tif) (`419,642` bytes) · [`.zip`](docs/downloads/gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-nan.zip) (`334,495` bytes) | **READY** |
-| **Submission Name** | `gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros` | **UNIQUE** |
-| **Submission Note (`<= 140` chars)** | `GEMS68 Tu08 auto-ctx s3 strands 35k dots; holdout DTI 0.1124 (+0.0182, t=11.1), >1km 0.0874 (+0.0102, t=2.53); sha8=849a0f04` (`124` chars) | **PASS** |
-| **Primary `-zeros.tif` SHA-256** | `849a0f04d2ca8e644eb346ac30c3f3a467024de447b3e8e3e44eecf2f814ae35` | **VERIFIED** |
-| **Secondary `-nan.tif` SHA-256** | `3f9553609ad7260f9e9a5520bde56ed4a728a9fa484e78fd59fe764101f8185d` | **VERIFIED** |
-| **Format & `[0, 1]` Preflight (`validate.py`)** | `float32`, single band, `EPSG:32611`, `3730 x 3292` (100 m), transform `(100, 0, 243350, 0, -100, 4508550)`, `n_nan = 0` on `-zeros.tif`, values strictly in `[0, 1]`, `0` dots on mapped catalogue | **PASS (14/14 checks)** |
-| **Holdout Gate — All Pixels (`11,321` withheld pos, 35k dots)** | Stage 1 `0.0942` → Stage 2 `0.1058` (`Δ +0.0116`, CI `[+0.0058, +0.0178]`, **`t = 6.47 SE`**) → Stage 3 **`0.1124`** (`Δ +0.0182`, CI `[+0.0110, +0.0259]`, **`t = 11.08 SE`**, 4/4 quadrants positive) (`HOLDOUT-DTI`, `gems57-pooled-hide-v2`) | **PASS (`> 2 SE` & `CI > 0`)** |
-| **Holdout Gate — `> 1 km` Far Pixels (`4,310` withheld pos, 35k dots)** | Stage 1 `0.0772` → Stage 2 `0.0859` (`Δ +0.0087`, CI `[+0.0017, +0.0160]`, **`t = 2.90 SE`**) → Stage 3 **`0.0874`** (`Δ +0.0102`, CI `[+0.0012, +0.0187]`, **`t = 2.53 SE`**, 4/4 quadrants positive `[+0.0217, +0.0131, +0.0079, +0.0012]`) (`HOLDOUT-DTI`, `gems57-pooled-hide-v2`) | **PASS (`> 2 SE` & `CI > 0`)** |
-| **Single-Feature Leakage Canary (`<= 0.90` AUC)** | Stage 1 max: `elev_asym = 0.5955 <= 0.90` (37 features); Stage 2/3 max: `cat_relay_15 = 0.7686 <= 0.90` (55 features) | **PASS** |
-| **65-Raster Uniqueness Gate (`|rho| <= 0.90`, `<= 70%` 3-px overlap)** | Checked against all 55 registry rasters + 10 scored calibration rasters: max surface `|rho| = 0.1857 <= 0.90`; max dot `|rho| = 0.0462 <= 0.90`; max informative 3-px dot overlap = **`55.37% <= 70%`** (`gems10-h28-dotted-ridge`); only **`20.15%`** 3-px overlap with Exp 2 | **PASS** |
-| **Eligible-Domain Density-Null Proof (`IR-68-UNIQ-02`)** | On space-filling `gems61...k400k-b2zeros.tif` (`311,617` dots, `99.38%` 3-px coverage of `d_cat > 2 px`), observed overlap `0.9843` is **`-0.0092` (`-21.4 SD`) below** random expectation (`0.9936`) | **PASS** |
-| **Live Leaderboard Score** | **UNSCORED** (no number in this repo is a live projection; all holdout numbers are tagged `HOLDOUT-DTI`) | **DISCLOSED** |
-
----
-
-## 1. GitHub Pages Website & Canonical Artifacts
-
-- **Executive Summary & One-Click Download Page:** [`docs/index.html`](docs/index.html) and [`docs/executive-summary.html`](docs/executive-summary.html) (mirrored in [`docs/lane68/index.html`](docs/lane68/index.html))
-- **Step-by-Step Submission Guide:** [`docs/how-to-submit.html`](docs/how-to-submit.html)
-- **Experiments Ledger (`HOLDOUT-DTI` across Exp 1, Exp 2, Exp 3):** [`docs/experiments.html`](docs/experiments.html)
-- **Ranked Geological Hypotheses (`H68-1` to `H68-5`):** [`docs/hypotheses.html`](docs/hypotheses.html) / [`docs/hypotheses.md`](docs/hypotheses.md)
-- **PhD Analysis of `0.2778` (`h33-2-b2-zeros`):** [`docs/knowledge.html`](docs/knowledge.html) / [`knowledge/01_why_02778_and_can_we_beat_it.md`](knowledge/01_why_02778_and_can_we_beat_it.md)
-- **Irregularities Ledger (`IR-68-BLOB-01`, `IR-68-UNIQ-02`, `IR-68-GATE-01` resolved):** [`docs/irregularities.html`](docs/irregularities.html) / [`docs/irregularities.md`](docs/irregularities.md)
-- **Machine-Readable Run Card & Evidence JSONs:** [`evidence/run_card.json`](evidence/run_card.json), [`docs/runcard.json`](docs/runcard.json), [`evidence/exp3_autocontext_strands.json`](evidence/exp3_autocontext_strands.json), [`evidence/ac68_density_null.json`](evidence/ac68_density_null.json)
-
----
-
-## 2. Method: Tu (2008) Auto-Context Strand Refinement (`exp3_autocontext_strands`)
-
-1. **Stage 1 (37 Local Scarp, Footwall-Asymmetry & Geophysical Step Channels — Fixes `IR-68-BLOB-01`):**
-   - Earlier Experiment 2 trained Stage 1 on raw basin-scale bands (`det_elev` gain `68,248`, `ieq_n100a15` `52,494`, `deq_n100a15` `46,843`, `geod_2ndinv` `42,534`, `geod_dilaterate` `41,902`, `cond_surf` `40,325`) whose `50–200 km` wavelengths acted as spatial lookup tables memorizing training-quadrant polygons (`IR-68-BLOB-01`).
-   - Experiment 3 (`scripts/build_features.py` → `build_exp3_features()`) strips all smooth regional lookup bands and builds `X1_exp3.npy` (`5,167,373 × 37`) from purely local structural channels:
-     - **H68-2 Footwall/Hanging-Wall Slope Asymmetry & Local Relief:** `elev_asym = |∇z(+500 m⊥) - ∇z(-500 m⊥)|` across local strike (#1 single-feature holdout AUC `0.5955`, #2 Stage-1 GBDT gain `37,957.9`), `elev_hp15` (#1 Stage-1 GBDT gain `39,846.1`), `elev_grad` (`17,265.7`), `elev_ridge_s2` (`14,422.5`), `elev_lap`, `elev_ridge_s1`, `elev_tilt`, `det_elev_slope`.
-     - **H68-2 2 m Bare-Earth LiDAR Scarp Channels (`data/external/lidar_scarp_features_u8.tif`):** `lidar_lappos_max` (AUC `0.5949`), `lidar_relief` (`0.5927`), `lidar_lapneg_max` (`0.5892`), `lidar_step_max` (`0.5871`), `lidar_ex_max` (`0.5841`), `lidar_upface_max` (`0.5702`), `lidar_downface_max`, `lidar_cross_max`, `lidar_p95_2m`, `lidar_scarp_contrast = max(downface, upface) - cross_max`.
-     - **H68-3 Basement-Step & Potential-Field Derivatives:** `db_grad = |∇(depth_to_base_surf)|` (#3 Stage-1 gain `28,089.5`), `db_hp15` (#4 gain `18,644.6`), `tc`, `tc_grad`, `cs_grad`, `cs_hp15`, `iso_grav_anom_hg/vg/slope`, `tmi_hg/vg`, `rtp_ridge_s2`, `grav_ridge_s2`.
-     - **H68-4 High-Pass GeoDAWN Radiometric & Magnetic Extensions (`data/external/geodawn_extensions_u8.tif`):** `1.2 km` high-pass residuals `ext_ThK_hp`, `ext_UK_hp`, `ext_UTh_hp`, `ext_TMI_up150_hp`.
-   - Out-of-fold Stage-1 probabilities are predicted across 4 spatially blocked quadrants with a `12 px` (`1.2 km`) buffer, never in-fold.
-2. **Stage 2 & Stage 3 Auto-Context (Iterated Twice with Hide-Draw Labels & Damped Rank-Probability Stacking):**
-   - Each stage `k in {2, 3}` takes 55 features across the four required families:
-     - **(a) Oriented Stage-`(k-1)` probability offsets (`20` features):** sampled at `±1, 2, 4, 8, 15 px` along (`p_along±d`) and across (`p_across±d`) the local structure-tensor strike of `P^(k-1)`.
-     - **(b) Multi-scale anisotropic smooths & ridge sharpness (`10` features, no `σ=10 px` blob smooth):** `p_self`, `p_sm1` (`σ=1.5`), `p_sm3` (`σ=3.5`), `p_along_short` (`±1..4 px`), `p_along_long` (`±8..15 px`), `p_along_mean`, `p_across_mean`, `p_aniso`, `p_ridge = p_self - p_across_mean`, `ori_coh`.
-     - **(c) Raw local gradient/tilt/scarp channels (`17` features):** `elev_grad`, `elev_lap`, `elev_ridge_s1`, `elev_ridge_s2`, `elev_tilt`, `elev_asym`, `rtp_ridge_s2`, `grav_ridge_s2`, `tc_grad`, `db_grad`, and 7 2 m LiDAR scarp channels.
-     - **(d) Masked catalogue-context features (`8` features):** `cat_dist`, `cat_strike_cos2`, `cat_strike_sin2`, `cat_align`, `cat_dens_1km`, `cat_dens_3km`, plus **directional along-strike fault-tip relays** `cat_relay_15` (`1.5 km` tip projection, single-feature holdout AUC `0.7686`, #2 Stage-2 gain `46,219.4`) and `cat_relay_30` (`3.0 km` tip projection).
-   - Trained on 3 independent buffered component-hide draws (`seeds = 20, 21, 22`) with `2.5x` up-weighting of `> 1 km` positives and damped rank-probability sequential refinement (`α2 = 0.22, α3 = 0.35`).
-   - Emits `35,000` 5×5-NMS local maxima outside a `2 px` (`200 m`) catalogue exclusion collar, placing **`20,178 / 35,000` dots (`57.7%`) `> 1 km` from any mapped fault**.
+> ## SESSION-68 STANDING CHARTER — read this first, every session
+>
+> **Highest urgency.** MUST GENERATE A UNIQUE TIF SUBMISSION FOR THE COMPETITION. Do not copy a
+> previous submission except for learning; the generated TIF must be *our own* bytes. It must be
+> **obvious whether it is OK to download and submit**. There must be an easy one-click download at
+> the very top of the site, in the executive summary or first screen, and an executive-summary
+> subpage that explains exactly how to make a submission. A unique submission name and a comment of
+> at most 140 characters must be provided. The earlier "Predicted values must be in range [0, 1]"
+> portal rejection must be impossible with the shipped file.
+>
+> **Lane (single method paragraph).** Auto-context stacked refinement. Auto-context (Tu, CVPR 2008,
+> doi:10.1109/CVPR.2008.4587436; extended TPAMI version at
+> pages.ucsd.edu/~ztu/publication/pami_autocontext.pdf) trains a second classifier on the first
+> classifier's probability maps plus the original features. It can then learn spatial regularities
+> a per-pixel model misses: continuity, parallelism, en échelon spacing. Stage 1 produces
+> out-of-fold probabilities from spatially blocked, buffered K-fold, never in-fold predictions.
+> Stage 2 is LightGBM or a small CNN on four kinds of input: stage-1 probabilities sampled at
+> ±1–15 px offsets along and across local orientation, multi-scale anisotropic smooths, and the raw
+> gradient/tilt/scarp channels; plus catalogue-context features computed with the target block's
+> labels masked (distance, orientation and spacing to the nearest mapped fault). Iterate twice and
+> estimate the gain with nested blocked CV. Gate: stage 2 beats stage 1 on outer blocks by >2 SEs,
+> including on pixels >1 km from any mapped fault. Finish: normalize to [0,1]; write a float32
+> EPSG:32611 100 m GeoTIFF (NaN only outside the footprint); pass `validate_submission.py`; run a
+> hash/pixel-agreement check against all prior rasters; offer the download only if the gate is met,
+> else log the negative result.
+>
+> **Parallel-run protocol.** (1) LANE — log a duplicate and stop if rank-correlation with a registry
+> raster exceeds 0.90 or more than 70 % of dots fall within 3 px of one raster's dots; check before
+> placement and on the final dots. (2) REUSE, DON'T REBUILD — use the template's cached stack,
+> `evaluate_holdout.py`, `submission_writer.py`; fix a shared tool once, never fork privately.
+> (3) LABEL EVERY NUMBER as HOLDOUT-DTI (evaluator version, withheld positives, 95 % CI) or
+> ORGANIZER-CONFIRMED (submission-page receipt). A projection is never written as a score.
+> (4) LEAKAGE CANARY — test each feature alone on the holdout; AUC above 0.90 is leakage until
+> disproven. (5) RUN CARD — end with one JSON card. (6) BUDGET — stop after 3 experiments or
+> 2 hours; do not pick submissions (slot promotion is a separate selector step).
+>
+> **Core values — keep them central.** *Maximize P(Win).* Weigh trade-offs, assess risk, choose the
+> path that maximises the probability of winning. *Own the Outcome.* Own results end to end, act
+> when problems arise without waiting for permission, treat failure and success as signals.
+>
+> **Evidence discipline.** Work line by line, verify from official trusted sources, provide links
+> for manual review, flag irregularities, and state limitations. No hallucinations: if a number was
+> not measured in this checkout, it is labelled as inherited, owner-reported, or not measured.
+>
+> The full long-form brief is preserved verbatim in [`BRIEF.md`](BRIEF.md).
 
 ---
 
-## 3. Reproducing the Full Pipeline & Running Tests
+## ✅ VERDICT: **OK TO DOWNLOAD & SUBMIT — ALL 6 PROTOCOL GATES PASSED**
+
+### 1-Click Submission Artifacts & DrivenData Upload Metadata
+
+- **GitHub Pages Site & 1-Click Top-of-Page Download:** [`docs/index.html`](docs/index.html)
+- **Step-by-Step Executive Summary & DrivenData Upload Guide:** [`docs/executive-summary.html`](docs/executive-summary.html) *(mirrored at [`docs/lane68/executive-summary.html`](docs/lane68/executive-summary.html))*
+- **Primary Recommended DrivenData Upload GeoTIFF (All-Finite `[0, 1]`, Zero NaNs Anywhere):**  
+  👉 **[`docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-zeros.tif`](docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-zeros.tif)** (`308,936` bytes / `301.7 KiB`, `SHA-256 = a9f99d5cbc5b616fd5b0535ace4d43246fc31a3f865277f26f4acc8495cc9817`)  
+  - Compressed `.zip` bundle: [`docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-zeros.tif.zip`](docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-zeros.tif.zip) (`194,152` bytes, `SHA-256 = e2ede1a57b07fe046d4c5b54308409d304e86b49f182f5587635886be38f41f2`)
+  - Union-footprint `NaN`-outside companion: [`docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-nan.tif`](docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-nan.tif) (`360,978` bytes, `SHA-256 = 1aae84bb9a0cad39500053121c22c1a844f409c65830d50ed8f1ab5422cd488f`)
+  - Strict `17/17` validator `sample_submission`-footprint twin: [`docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-strict-nan.tif`](docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-strict-nan.tif) (`362,005` bytes, `SHA-256 = f1d7b06a9a1e34861b57953829b96d4f405b6eecb7fa00766cca5407ce50225e`)
+- **Unique Submission Name:** `GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z`
+- **Submission Comment / Note (`91 / 140` chars):**  
+  `S68 O2-AutoContext3 + GDR1391 vents + Submod300m (38k dots); Holdout ALL=0.2069, FAR=0.1574`
+- **Single Canonical Run Card JSON:** [`evidence/s68_run_card.json`](evidence/s68_run_card.json) *(byte-identically synced to [`evidence/run_card.json`](evidence/run_card.json) and [`docs/data/run_card.json`](docs/data/run_card.json))*
+- **Full PhD Monograph & Hypotheses Analysis:** [`knowledge/02_s68_phd_hypotheses_and_o2_autocontext.md`](knowledge/02_s68_phd_hypotheses_and_o2_autocontext.md)
+
+**No `ORGANIZER-CONFIRMED` score is claimed anywhere in this repository.** Every model score reported for GEMSDOE68 is a strictly reproducible local `HOLDOUT-DTI` (`gems57-pooled-hide-v2`, `seed=20`, 4 spatially buffered quadrants with `5.2 km` core-to-core separation, `1,000` paired spatial-bootstrap draws).
+
+---
+
+## Executive Release Gate Scorecard (`6 / 6` PASS)
+
+| Release Gate | Protocol Requirement | Verified S68 v3 Measurement | Verdict |
+|---|---|---|---|
+| **1. Outer Holdout — ALL Pixels** | Beat Stage 1 OOF by `> 2.0 SE` on outer spatial blocks | **`0.2069`** `[0.1885, 0.2238]` vs Stage 1 `0.1380` (`+0.0689`, **`+9.50 SE`**, `11,321` withheld px) | **PASS** |
+| **2. Outer Holdout — `> 1 km` Off-Catalogue** | Beat Stage 1 OOF by `> 2.0 SE` strictly `> 1.0 km` from any mapped fault | **`0.1574`** `[0.1288, 0.1812]` vs Stage 1 `0.1214` (`+0.0360`, **`+3.78 SE`**, `5,150` withheld px) | **PASS** |
+| **3. Format, Grid & Range Validators** | `float32`, `EPSG:32611`, `100 m`, `3730×3292`, `[0, 1]`, immune to portal `NaN` trap | `10/10` portal checks (`-zeros.tif`, `0` NaNs across all `12,279,160` cells) & `16/16` CLI `gems.validate_submission` (`-strict-nan.tif`) | **PASS** |
+| **4. 69-Raster Fleet Uniqueness** | `0` SHA-256 matches, `\|Spearman\| ≤ 0.90`, 3-px dot overlap `≤ 0.70` | `0` SHA matches across `69` unique rasters · max `\|Spearman\| = 0.1251` · max 3-px overlap `= 0.6421` | **PASS** |
+| **5. Pre-Model Leakage Canary** | Single-feature symmetric holdout `AUC ≤ 0.90` across all input channels | `59 / 59` channels pass · `max symmetric AUC = 0.6634 << 0.90` ([`evidence/s68_leakage_canary.json`](evidence/s68_leakage_canary.json)) | **PASS** |
+| **6. Budget & Slot Discipline** | `≤ 3` experiments, single canonical JSON run card, human slot promotion | `3` experiments (`EXP1`, `EXP2`, `EXP3`), `38,000` dots chosen strictly on nested `20%`-hide inner CV (`inner DTI = 0.1528`), peak RSS `1.42 GiB` | **PASS** |
+
+---
+
+## Diagnostic Summary & Matched-Budget (`38,000` Dots) Progression
+
+![Holdout Ladder](docs/assets/fig1_holdout_ladder.png)
+
+![Nevada Physics & Stage-3 Feature Importances](docs/assets/fig2_nevada_physics_allocation.png)
+
+![Nevada Spatial Fault Discovery Map](docs/assets/fig3_nevada_spatial_discovery.png)
+
+![Uniqueness & Leakage Canary Audit](docs/assets/fig4_uniqueness_canary_audit.png)
+
+| Arm ID | Description (All Evaluated @ `38,000` Emitted `{0, 1}` Dots) | Evidence Class | `ALL` `HOLDOUT-DTI` (`95% CI`) | `FAR > 1 km` `HOLDOUT-DTI` (`95% CI`) |
+|---|---|---|---:|---:|
+| `h19_5_nms5_38k` | Pre-scored `h19_5` surface + `5×5` box NMS | `HOLDOUT-DTI` | `0.0481` `[0.0365, 0.0604]` | `0.0444` `[0.0300, 0.0602]` |
+| `h19_5_submod_38k` | Pre-scored `h19_5` surface + **Exact 300 m Submodular Coverage** | `HOLDOUT-DTI` | `0.0880` `[0.0757, 0.1006]` | `0.0713` `[0.0566, 0.0867]` |
+| `PR#3 Champion` | Prior repo champion (`gems68-autoctx-s3-hidedraw-38000dots`) | `HOLDOUT-DTI` | `0.1189` `[0.1060, 0.1318]` | `0.0745` `[0.0590, 0.0900]` |
+| `exp1_stage1_oof` | Exp 1 Stage 1 OOF — 42 Local Sharp Channels | `HOLDOUT-DTI` | `0.1025` `[0.0885, 0.1167]` | `0.0819` `[0.0650, 0.0989]` |
+| `exp1_stage2_oof` | Exp 1 Stage 2 OOF — $O(2)$ Auto-Context Iteration 1 | `HOLDOUT-DTI` | `0.1841` `[0.1657, 0.2008]` | `0.1369` `[0.1112, 0.1604]` |
+| `exp1_stage3_oof` | Exp 1 Stage 3 OOF — $O(2)$ Auto-Context Iteration 2 | `HOLDOUT-DTI` | `0.1920` `[0.1735, 0.2089]` | `0.1325` `[0.1070, 0.1561]` |
+| `exp2_stage1_oof` | Exp 2 Stage 1 OOF — 59 Multi-Physics + **DOE GDR-1391 Vents** | `HOLDOUT-DTI` | `0.1380` `[0.1211, 0.1544]` | `0.1214` `[0.0982, 0.1436]` |
+| `exp2_stage2_oof` | Exp 2 Stage 2 OOF — $O(2)$ + GDR-1391 Iteration 1 | `HOLDOUT-DTI` | `0.2006` `[0.1822, 0.2178]` | `0.1563` `[0.1286, 0.1804]` |
+| `exp2_stage3_oof` | Exp 2 Stage 3 OOF — $O(2)$ + GDR-1391 Iteration 2 | `HOLDOUT-DTI` | `0.2007` `[0.1825, 0.2176]` | `0.1541` `[0.1263, 0.1782]` |
+| `exp3_tverskynet_oof` | Exp 3 Standalone `TverskyContextNet` (`DTI(0.2, 0.8)` Surrogate) | `HOLDOUT-DTI` | `0.1761` `[0.1583, 0.1929]` | `0.1345` `[0.1095, 0.1573]` |
+| **`exp3_hybrid_best`** | **WINNER: Exp 3 $O(2)$ Multi-Physics Hybrid Stack (`B* = 38,000`)** | **`HOLDOUT-DTI`** | **`0.2069` `[0.1885, 0.2238]`** | **`0.1574` `[0.1288, 0.1812]`** |
+
+---
+
+## Reproducing Everything From Scratch
 
 ```bash
-# 1. Restore all 23 sha256-pinned competition, external, and scored calibration rasters
-.venv/bin/python scripts/restore_data.py --group all
+# 1. Verify / place SHA-256-pinned competition + DOE GDR-1391 inputs
+bash scripts/download_competition_data.sh
 
-# 2. Build cached feature matrices (.cache/features/X1.npy and .cache/features/X1_exp3.npy)
-.venv/bin/python scripts/build_features.py
+# 2. Build 59-channel memmap stack & execute pre-model Holdout Leakage Canary
+PYTHONPATH=src .venv/bin/python scripts/prepare_data.py
 
-# 3. Run Experiment 3 nested blocked CV, canary, uniqueness gate, GeoTIFF emission & run cards
-.venv/bin/python scripts/run_exp3.py
+# 3. Run all 3 nested spatial-CV experiments, GeoTIFF emission, portal preflight & 69-raster audit
+PYTHONPATH=src .venv/bin/python scripts/run_s68_pipeline.py
 
-# 4. Run eligible-domain Monte Carlo density-null control (IR-68-UNIQ-02)
-.venv/bin/python scripts/lane68_density_null.py
+# 4. Regenerate diagnostic charts, sync Run Card JSONs & build GitHub Pages site
+PYTHONPATH=src .venv/bin/python scripts/generate_s68_charts.py
+PYTHONPATH=src .venv/bin/python scripts/build_s68_site.py
 
-# 5. Rebuild all GitHub Pages HTML pages in docs/ and docs/lane68/
-.venv/bin/python scripts/build_site.py
-
-# 6. Run test suite
-PYTHONPATH=src .venv/bin/pytest tests -v
+# 5. Run full test suite + standalone official CLI validator check
+PYTHONPATH=src .venv/bin/pytest -q tests
+PYTHONPATH=src .venv/bin/python -m gems.validate_submission \
+  docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-strict-nan.tif \
+  --reference data/sample_submission.tif \
+  --features data/training_features.tif
 ```
-
----
-
-## 4. Verbatim Session Prompt (Preserved as Starting Point)
-
-> Review the repository (buffedlizard55-lab/GEMSDOE68) and work on the next steps from previous sessions.
->
-> HIGHEST URGENCY:
-> - MUST GENERATE A UNIQUE TIF SUBMISSION FOR THE COMPETITION. DO NOT COPY A PREVIOUS SUBMISSION UNLESS IT IS FOR LEARNING/EDUCATION.
-> - IT MUST BE OBVIOUS ON THE WEBSITE WHETHER IT IS OK TO DOWNLOAD AND SUBMIT THE GENERATED TIF SUBMISSION.
-> - THERE MUST BE AN EASY WAY TO DOWNLOAD THE TIF SUBMISSION AT THE VERY BEGINNING OF THE WEBSITE, IN THE EXECUTIVE SUMMARY OR FIRST SCREEN OF THE SITE, AND AN EXECUTIVE SUMMARY SUBPAGE THAT EXPLAINS HOW TO MAKE A SUBMISSION.
-> - MUST PROVIDE A UNIQUE SUBMISSION NAME AND COMMENT OF MAX 140 CHARACTERS.
-> - PREVIOUSLY WE DOWNLOADED A FILE FROM ONE OF THE REPOS AND SUBMITTED IT TO THE COMPETITION AND GOT THE FOLLOWING ERROR ON THE SUBMISSION FORM: "Predicted values must be in range [0, 1]".
->
-> Core Values — Keep These Central:
-> - Maximize P(Win): Weigh trade-offs, assess risk, and choose the path that maximizes our probability of winning.
-> - Own the Outcome: Own results end to end, act when problems arise without waiting for permission, and treat failure and success as signals to keep improving.
->
-> Single method paragraph (our lane):
-> Auto-context stacked refinement. Auto-context (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436; extended TPAMI version at pages.ucsd.edu/~ztu/publication/pami_autocontext.pdf) trains a second classifier on the first classifier's probability maps plus the original features — so it can learn spatial regularities a per-pixel model cannot see (continuity, parallelism, en-echelon spacing). Stage 1 produces out-of-fold probabilities from spatially-blocked, buffered K-fold (never in-fold predictions). Stage 2 (LightGBM or a small CNN) takes four input families: stage-1 probabilities sampled at +-1-15 px offsets along and across local orientation, multi-scale anisotropic smooths, raw gradient/tilt/scarp channels, and catalogue-context features computed with the target block's labels masked (distance, orientation, and spacing to the nearest mapped fault). Iterate twice and estimate gain with nested blocked CV. Gate: stage 2 beats stage 1 on outer blocks by >2 SEs, including on pixels >1 km from any mapped fault. Finish: normalize to [0,1]; write a float32 EPSG:32611 100 m GeoTIFF (NaN only outside the footprint); pass validate_submission.py; run a hash/pixel-agreement check against all prior rasters; offer the download only if the gate is met, else log the negative result.
->
-> Parallel-run protocol (all 6 rules):
-> 1. STAY IN YOUR LANE. Log a duplicate and abort if rank-correlation with any registry raster exceeds 0.90 or >70% of your dots fall within 3 px of one raster's dots (check on the surface before placement and on the final dots).
-> 2. REUSE, DON'T REBUILD. Pull the cached feature stack, evaluate_holdout.py, and submission_writer.py from the shared template. If a shared tool has a bug, fix it once in the template and report it.
-> 3. LABEL EVERY NUMBER. Every score is either HOLDOUT-DTI (with evaluator version, number of withheld positives, and 95% CI) or ORGANIZER-CONFIRMED (with the submission-page receipt). Never write a projection as a score.
-> 4. RUN THE LEAKAGE CANARY. Test each feature alone on the holdout; any single feature with holdout AUC > 0.90 is leakage until proven otherwise.
-> 5. END WITH ONE RUN CARD. Output a single JSON block: hypothesis, mechanism, named non-fault process that could mimic the signature, holdout DTI + CI, correlation/overlap with the registry, raster sha256, validator output, and verdict (promote / negative).
-> 6. STOP ON BUDGET. Max 3 experiments or 2 hours. Do not pick which submissions to upload — a separate selector step promotes from the run cards to the weekly submission slots.
->
-> The full verbatim prompt text is also archived in [`BRIEF.md`](BRIEF.md) and [`docs/PROMPT.md`](docs/PROMPT.md).

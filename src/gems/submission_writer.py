@@ -29,7 +29,8 @@ NOTE_MAX_CHARS = 140  # brief: note must be at most 140 characters
 
 
 def write_submission(out_path: str | Path, prediction, footprint, reference_path: str | Path,
-                     overwrite: bool = False, name: str | None = None, note: str | None = None) -> dict:
+                     overwrite: bool = False, name: str | None = None, note: str | None = None,
+                     outside_fill: float = np.nan) -> dict:
     import rasterio
 
     if name is not None and (not name.strip() or len(name) > 120):
@@ -65,7 +66,10 @@ def write_submission(out_path: str | Path, prediction, footprint, reference_path
     above = int((inside > 1.0 + CLIP_TOLERANCE).sum())
     if below or above:
         raise ValueError(f"{below + above} values outside [0, 1] (refusing to clip silently)")
-    out = np.full(ref_shape, np.nan, dtype=np.float32)
+    if not (np.isnan(outside_fill) or (0.0 <= float(outside_fill) <= 1.0)):
+        raise ValueError("outside_fill must be NaN or within [0, 1]")
+    fill_val = np.float32(np.nan) if np.isnan(outside_fill) else np.float32(outside_fill)
+    out = np.full(ref_shape, fill_val, dtype=np.float32)
     out[fp] = np.clip(inside, 0.0, 1.0).astype(np.float32)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)

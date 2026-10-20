@@ -52,3 +52,5 @@ Thumbs.store
 # The registry rasters and audited artifacts are INTENTIONALLY tracked: they are the
 # duplicate-gate corpus and the audit trail. They are already in the index, so these
 # patterns only stop NEW stray rasters from being added by accident.
+
+/cache

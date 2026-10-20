@@ -1,11 +1,15 @@
 {
- "generated_utc": "20261020T203735Z",
- "site": "GEMSDOE68",
- "lane": "auto-context stacked refinement (Tu, CVPR 2008, doi:10.1109/CVPR.2008.4587436)",
- "status": "promote-with-caveats",
- "download_cleared": true,
- "submission": "gems68-ac-ext-s2-38000dots-20261020T203735Z-b6d210c8-zeros",
- "sha256": "e15f2d96c585bf2446dead518f1916f7307490b2ed2f6d72ee8c5788dfed2f63",
- "evidence_class": "HOLDOUT-DTI",
- "run_card": "evidence/run_card_current.json"
+  "schema": "gems.feed.v2",
+  "site": "GEMSDOE68",
+  "generated_utc": "2026-10-20T22:18:11Z",
+  "verdict": "promote",
+  "ok_to_download_and_submit": true,
+  "unique_submission_name": "GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z",
+  "submission_note": "S68 O2-AutoContext3 + GDR1391 vents + Submod300m (38k dots); Holdout ALL=0.2069, FAR=0.1574",
+  "recommended_tif": "docs/downloads/GEMSDOE68-O2AC-MultiPhys-v3-20261020T201500Z-zeros.tif",
+  "recommended_sha256": "a9f99d5cbc5b616fd5b0535ace4d43246fc31a3f865277f26f4acc8495cc9817",
+  "holdout_all_dti": 0.2069,
+  "holdout_far_gt_1km_dti": 0.1574,
+  "evidence_class": "HOLDOUT-DTI",
+  "organizer_confirmed_score": null
 }
